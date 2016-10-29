@@ -3,13 +3,13 @@ namespace Ridibooks\Platform\Cms\Controller;
 
 use Ridibooks\Platform\Cms\Auth\AdminMenuService;
 use Ridibooks\Platform\Cms\CmsApplication;
-use Ridibooks\Platform\Cms\Dto\AdminMenuAjaxDto;
 use Ridibooks\Platform\Cms\Dto\AdminMenuDto;
 use Ridibooks\Platform\Common\Base\JsonDto;
 use Silex\Application;
 use Silex\ControllerCollection;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdminMenuControllerProvider implements ControllerProviderInterface
 {
@@ -20,9 +20,11 @@ class AdminMenuControllerProvider implements ControllerProviderInterface
 
 		$controllers->get('menus', [$this, 'menus']);
 		$controllers->post('menus', [$this, 'createMenu']);
-		$controllers->match('menu_action.ajax', [$this, 'menuAction']);
+		$controllers->put('menus/{menu_id}', [$this, 'updateMenu']);
 
 		$controllers->get('menus/{menu_id}/submenus', [$this, 'submenus']);
+		$controllers->post('menus/{menu_id}/submenus', [$this, 'createSubmenu']);
+		$controllers->put('menus/{menu_id}/submenus/{submenu_id}', [$this, 'updateSubmenu']);
 		$controllers->delete('menus/{menu_id}/submenus/{submenu_id}', [$this, 'deleteSubmenu']);
 
 		return $controllers;
@@ -56,6 +58,24 @@ class AdminMenuControllerProvider implements ControllerProviderInterface
 		return $app->redirect('/super/menus');
 	}
 
+	public function updateMenu(CmsApplication $app, Request $request, $menu_id)
+	{
+		$json_dto = new JsonDto();
+
+		$menu_dto = new AdminMenuDto($request);
+		$menu_dto->id = $menu_id;
+
+		try {
+			AdminMenuService::updateMenu($menu_dto);
+			$json_dto->setMsg('성공적으로 수정하였습니다.');
+		} catch (\Exception $e) {
+			$json_dto->setException($e);
+		}
+
+		return $app->json((array)$json_dto);
+
+	}
+
 	public function submenus(CmsApplication $app, $menu_id)
 	{
 		$json = new JsonDto();
@@ -64,48 +84,40 @@ class AdminMenuControllerProvider implements ControllerProviderInterface
 		return $app->json((array)$json);
 	}
 
-	public function deleteSubmenu(CmsApplication $app, $menu_id, $submenu_id)
+	public function createSubmenu(CmsApplication $app, Request $request, $menu_id)
 	{
-		$json_dto = new JsonDto();
-		try {
-			AdminMenuService::deleteMenuAjax($menu_id, $submenu_id);
-			$json_dto->setMsg('성공적으로 삭제하였습니다.');
+		$submenu_url = $request->get('ajax_url');
 
+		try {
+			AdminMenuService::insertMenuAjax($menu_id, $submenu_url);
 		} catch (\Exception $e) {
-			$json_dto->setException($e);
+			return $app->abort(Response::HTTP_INTERNAL_SERVER_ERROR, $e->getMessage());
 		}
 
-		return $app->json((array)$json_dto);
+		return Response::create('성공적으로 등록하였습니다.', Response::HTTP_CREATED);
 	}
 
-	public function menuAction(Application $app, Request $request)
+	public function updateSubmenu(CmsApplication $app, Request $request, $menu_id, $submenu_id)
 	{
-		$menu_service = new AdminMenuService();
-		$json_dto = new JsonDto();
-
-		$menu_dto = new AdminMenuDto($request);
-		$menu_ajax_dto = new AdminMenuAjaxDto($request);
+		$submenu_url = $request->get('ajax_url');
 
 		try {
-			switch ($menu_dto->command) {
-				case 'update': //메뉴 수정
-					$menu_service->updateMenu($menu_dto);
-					$json_dto->setMsg('성공적으로 수정하였습니다.');
-					break;
-				case 'ajax_insert': //Ajax 메뉴 등록
-					$menu_service->insertMenuAjax($menu_ajax_dto);
-					$json_dto->setMsg('성공적으로 등록하였습니다.');
-					break;
-				case 'ajax_update': //Ajax 메뉴 수정
-					$menu_service->updateMenuAjax($menu_ajax_dto);
-					$json_dto->setMsg('성공적으로 수정하였습니다.');
-					break;
-			}
-
+			AdminMenuService::updateMenuAjax($menu_id, $submenu_id, $submenu_url);
 		} catch (\Exception $e) {
-			$json_dto->setException($e);
+			return $app->abort(Response::HTTP_INTERNAL_SERVER_ERROR, $e->getMessage());
 		}
 
-		return $app->json((array)$json_dto);
+		return Response::create('성공적으로 수정하였습니다.');
+	}
+
+	public function deleteSubmenu(CmsApplication $app, $menu_id, $submenu_id)
+	{
+		try {
+			AdminMenuService::deleteMenuAjax($menu_id, $submenu_id);
+		} catch (\Exception $e) {
+			return $app->abort(Response::HTTP_INTERNAL_SERVER_ERROR, $e->getMessage());
+		}
+
+		return Response::create('성공적으로 삭제하였습니다.', Response::HTTP_NO_CONTENT);
 	}
 }

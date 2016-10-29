@@ -86,41 +86,31 @@ export default class MenuList extends React.Component {
         $("#insertAjaxUrlBtn").click();
       }
     });
+  }
 
-    // 수정
-    $('#updateBtn').click(function () {
+  onUpdate() {
+    $.when.apply($,
+      $('#modifyForm').find('input:checked').map((i, e) => {
+        const $tr = $(e).parents('tr');
+        const menuId = $tr.find('input[name=id]').val();
+        const data = {
+          menu_title: $tr.find('input[name=menu_title]').val(),
+          menu_url: $tr.find('input[name=menu_url]').val(),
+          menu_deep: $tr.find('input[name=menu_deep]').val(),
+          menu_order: $tr.find('input[name=menu_order]').val(),
+          is_newtab: $tr.find('select[name=is_newtab]').val() == "true" ? "1" : "0",
+          is_use: $tr.find('select[name=is_use]').val() == "true" ? "1" : "0",
+          is_show: $tr.find('select[name=is_show]').val() == "true" ? "1" : "0",
+        };
 
-      var container = '';
-      $('#modifyForm').find('input:checked').each(function (i) {
-        var id = $(this).parents('tr').find('input[name=id]').val();
-        var menu_title = $(this).parents('tr').find('input[name=menu_title]').val();
-        var menu_url = $(this).parents('tr').find('input[name=menu_url]').val();
-        var menu_deep = $(this).parents('tr').find('input[name=menu_deep]').val();
-        var menu_order = $(this).parents('tr').find('input[name=menu_order]').val();
-        var is_newtab = $(this).parents('tr').find('select[name=is_newtab]').val() == "true" ? "1" : "0";
-        var is_use = $(this).parents('tr').find('select[name=is_use]').val() == "true" ? "1" : "0";
-        var is_show = $(this).parents('tr').find('select[name=is_show]').val() == "true" ? "1" : "0";
-
-        container += '<input type="text" name="menu_list[' + i + '][id]" value="' + id + '" />';
-        container += '<input type="text" name="menu_list[' + i + '][menu_title]" value="' + menu_title + '" />';
-        container += '<input type="text" name="menu_list[' + i + '][menu_url]" value="' + menu_url + '" />';
-        container += '<input type="text" name="menu_list[' + i + '][menu_deep]" value="' + menu_deep + '" />';
-        container += '<input type="text" name="menu_list[' + i + '][menu_order]" value="' + menu_order + '" />';
-        container += '<input type="text" name="menu_list[' + i + '][is_newtab]" value="' + is_newtab + '" />';
-        container += '<input type="text" name="menu_list[' + i + '][is_use]" value="' + is_use + '" />';
-        container += '<input type="text" name="menu_list[' + i + '][is_show]" value="' + is_show + '" />';
-
-      });
-      container += '<input type="text" name="command" value="update" />\n';
-
-      $.post('/super/menu_action.ajax', $('<form />').append(container).serializeArray(), function (returnData) {
-        if (returnData.success) {
-          alert(returnData.msg);
-          window.location.reload();
-        } else {
-          alert(returnData.msg);
-        }
-      }, 'json');
+        return $.ajax({
+          url: `/super/menus/${menuId}`,
+          type: 'PUT',
+          data: data
+        });
+      })
+    ).done((result) => {
+      window.location.reload();
     });
   }
 
@@ -190,7 +180,7 @@ export default class MenuList extends React.Component {
 
           <nav className="navbar navbar-default navbar-fixed-bottom">
             <div className="pull-right">
-              <button type="button" className="btn btn-primary" id="updateBtn">저장</button>
+              <button type="button" className="btn btn-primary" onClick={this.onUpdate}>저장</button>
             </div>
           </nav>
         </form>
