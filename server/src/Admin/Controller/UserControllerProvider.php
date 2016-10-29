@@ -1,8 +1,8 @@
 <?php
-namespace Ridibooks\Platform\Cms\Controller;
+namespace Ridibooks\Platform\Cms\Admin\Controller;
 
 use Ridibooks\Library\Util;
-use Ridibooks\Platform\Cms\Auth\AdminUserService;
+use Ridibooks\Platform\Cms\Admin\UserService as AdminUserService;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Cms\Dto\AdminUserDto;
 use Ridibooks\Platform\Cms\PaginationHelper;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-class AdminUserControllerProvider implements ControllerProviderInterface
+class UserControllerProvider implements ControllerProviderInterface
 {
 	public function connect(Application $app)
 	{

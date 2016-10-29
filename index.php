@@ -1,9 +1,9 @@
 <?php
 use Ridibooks\Platform\Cms\Auth\LoginService;
 use Ridibooks\Platform\Cms\CmsApplication;
-use Ridibooks\Platform\Cms\Controller\AdminMenuControllerProvider;
-use Ridibooks\Platform\Cms\Controller\AdminTagControllerProvider;
-use Ridibooks\Platform\Cms\Controller\AdminUserControllerProvider;
+use Ridibooks\Platform\Cms\Admin\Controller\MenuControllerProvider as AdminMenuController;
+use Ridibooks\Platform\Cms\Admin\Controller\TagControllerProvider as AdminTagController;
+use Ridibooks\Platform\Cms\Admin\Controller\UserControllerProvider as AdminUserController;
 use Ridibooks\Platform\Cms\MiniRouter;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -35,8 +35,8 @@ $app->error(function (\Exception $e) use ($app) {
 	throw $e;
 });
 
-$app->mount('/', new AdminUserControllerProvider());
-$app->mount('/', new AdminTagControllerProvider());
-$app->mount('/', new AdminMenuControllerProvider());
+$app->mount('/', new AdminUserController());
+$app->mount('/', new AdminTagController());
+$app->mount('/', new AdminMenuController());
 
 $app->run();

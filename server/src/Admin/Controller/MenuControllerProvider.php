@@ -1,7 +1,7 @@
 <?php
-namespace Ridibooks\Platform\Cms\Controller;
+namespace Ridibooks\Platform\Cms\Admin\Controller;
 
-use Ridibooks\Platform\Cms\Auth\AdminMenuService;
+use Ridibooks\Platform\Cms\Admin\MenuService as AdminMenuService;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Cms\Dto\AdminMenuDto;
 use Ridibooks\Platform\Common\Base\JsonDto;
@@ -11,7 +11,7 @@ use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMenuControllerProvider implements ControllerProviderInterface
+class MenuControllerProvider implements ControllerProviderInterface
 {
 	public function connect(Application $app)
 	{

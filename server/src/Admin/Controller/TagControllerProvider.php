@@ -1,7 +1,7 @@
 <?php
-namespace Ridibooks\Platform\Cms\Controller;
+namespace Ridibooks\Platform\Cms\Admin\Controller;
 
-use Ridibooks\Platform\Cms\Auth\AdminTagService;
+use Ridibooks\Platform\Cms\Admin\TagService as AdminTagService;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Common\Base\JsonDto;
 use Silex\Application;
@@ -10,7 +10,7 @@ use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminTagControllerProvider implements ControllerProviderInterface
+class TagControllerProvider implements ControllerProviderInterface
 {
 	public function connect(Application $app)
 	{
