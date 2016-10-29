@@ -1,16 +1,15 @@
 <?php
-use Ridibooks\Platform\Cms\Auth\LoginService;
-use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Cms\Admin\Controller\MenuControllerProvider as AdminMenuController;
 use Ridibooks\Platform\Cms\Admin\Controller\TagControllerProvider as AdminTagController;
 use Ridibooks\Platform\Cms\Admin\Controller\UserControllerProvider as AdminUserController;
+use Ridibooks\Platform\Cms\Auth\LoginService;
+use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Cms\MiniRouter;
 use Symfony\Component\HttpFoundation\Request;
 
-require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../config.php';
 
-$autoloader = require __DIR__ . "/../vendor/autoload.php";
-$autoloader->addPsr4('Ridibooks\\Platform\\Cms\\', __DIR__ . '/server/src');
+$autoloader = require __DIR__ . "/server/vendor/autoload.php";
 
 LoginService::startSession();
 
