@@ -1,9 +1,9 @@
 <?php
 namespace Ridibooks\Platform\Cms\Admin\Controller;
 
+use Ridibooks\Platform\Cms\Admin\Dto\AdminMenuDto;
 use Ridibooks\Platform\Cms\Admin\MenuService as AdminMenuService;
 use Ridibooks\Platform\Cms\CmsApplication;
-use Ridibooks\Platform\Cms\Dto\AdminMenuDto;
 use Ridibooks\Platform\Common\Base\JsonDto;
 use Silex\Application;
 use Silex\ControllerCollection;
