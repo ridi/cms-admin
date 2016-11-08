@@ -11,15 +11,11 @@ export default class Submenus extends React.Component {
   onCreate() {
     const menu_id = $("#ajax_menu_id").val();
     const data = $("#ajaxMenuInsertForm").serialize();
-    $.ajax(`/super/menus/${menu_id}/submenus`, data, (returnData) => {
-      if (returnData.success) {
-        alert(returnData.msg);
-        $("#ajax_url").val('');
-        this.show(menu_id, $("#ajax_menu_title").val());
-      } else {
-        alert(returnData.msg);
-      }
-    }, 'json');
+    $.post(`/super/menus/${menu_id}/submenus`, data, (result) => {
+      alert(result);
+      $("#ajax_url").val('');
+      this.show(menu_id, $("#ajax_menu_title").val());
+    });
   }
 
   onUpdate() {
@@ -57,9 +53,7 @@ export default class Submenus extends React.Component {
         url: `/super/menus/${menu_id}/submenus/${submenu_id}`,
         type: 'DELETE'
       }).done((result) => {
-        if (result.success) {
-          $tr.detach();
-        }
+        $tr.detach();
       });
     });
   }
