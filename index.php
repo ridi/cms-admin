@@ -13,10 +13,7 @@ $autoloader = require __DIR__ . "/server/vendor/autoload.php";
 
 LoginService::startSession();
 
-
-// Try Silex Route next
 $app = new CmsApplication();
-$app['debug'] = \Config::$UNDER_DEV;
 $app['twig.path'] = [
 	__DIR__ . '/server/views'
 ];
@@ -24,14 +21,6 @@ $app['twig.path'] = [
 // Try MiniRouter first
 $app->before(function (Request $request) {
 	return MiniRouter::shouldRedirectForLogin($request);
-});
-
-$app->error(function (\Exception $e) use ($app) {
-	if ($app['debug']) {
-		return null;
-	}
-
-	throw $e;
 });
 
 $app->mount('/', new AdminUserController());
