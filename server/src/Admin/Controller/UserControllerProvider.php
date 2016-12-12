@@ -2,9 +2,9 @@
 namespace Ridibooks\Platform\Cms\Admin\Controller;
 
 use Ridibooks\Library\Util;
+use Ridibooks\Platform\Cms\Admin\Dto\AdminUserDto;
 use Ridibooks\Platform\Cms\Admin\UserService as AdminUserService;
 use Ridibooks\Platform\Cms\CmsApplication;
-use Ridibooks\Platform\Cms\Dto\AdminUserDto;
 use Ridibooks\Platform\Cms\PaginationHelper;
 use Ridibooks\Platform\Common\PagingUtil;
 use Silex\Application;
