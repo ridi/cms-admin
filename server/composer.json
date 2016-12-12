@@ -8,7 +8,8 @@
     }
   ],
   "require": {
-    "ridibooks/platform-cms": "dev-master"
+    "ridibooks/platform-cms": "dev-master",
+    "ridibooks/platform-common": "dev-master"
   },
   "require-dev": {
     "silex/silex": "^1.3"
