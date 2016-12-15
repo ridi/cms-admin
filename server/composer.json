@@ -1,14 +1,8 @@
 {
   "name": "ridibooks/cms-admin",
   "type": "project",
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@gitlab.ridi.io:platform/cms.git"
-    }
-  ],
   "require": {
-    "ridibooks/platform-cms": "dev-master",
+    "ridibooks/cms": "dev-master",
     "ridibooks/platform-common": "dev-master"
   },
   "require-dev": {
