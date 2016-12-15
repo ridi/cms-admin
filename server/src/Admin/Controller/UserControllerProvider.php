@@ -131,8 +131,18 @@ class UserControllerProvider implements ControllerProviderInterface
 	public function updateUserPermissions(CmsApplication $app, Request $request, $user_id)
 	{
 		try {
-			$tag_ids = Util::splitAndIntval(',', $request->get('tag_ids'));
-			$menu_ids = Util::splitAndIntval(',', $request->get('menu_ids'));
+			if ($request->get('tag_ids')) {
+				$tag_ids = Util::splitAndIntval(',', $request->get('tag_ids'));
+			} else {
+				$tag_ids = [];
+			}
+
+			if ($request->get('menu_ids')) {
+				$menu_ids = Util::splitAndIntval(',', $request->get('menu_ids'));
+			} else {
+				$menu_ids = [];
+			}
+
 			AdminUserService::updateUserPermissions($user_id, $tag_ids, $menu_ids);
 			$app->addFlashInfo('성공적으로 수정하였습니다.');
 		} catch (\Exception $e) {
