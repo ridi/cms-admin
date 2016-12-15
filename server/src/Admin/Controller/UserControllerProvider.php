@@ -108,8 +108,7 @@ class UserControllerProvider implements ControllerProviderInterface
 			$app->addFlashError($e->getMessage());
 		}
 
-		$subRequest = Request::create('/super/users/' . $user_id);
-		return $app->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
+		return $app->redirect('/super/users/' . $user_id);
 	}
 
 	public function deleteUser(CmsApplication $app, $user_id)
