@@ -2,7 +2,7 @@
   "name": "ridibooks/cms-admin",
   "type": "project",
   "require": {
-    "ridibooks/cms": "dev-master",
+    "ridibooks/cms": "^0.1",
     "ridibooks/platform-common": "dev-master"
   },
   "require-dev": {
