@@ -15,8 +15,8 @@ ReactDOM.render(
     </div>
     <div className="col-xs-12 col-md-6">
       <UserPermissionForm id={window.userDetail.id}
-                          userTag={window.userTag}
-                          userMenu={window.userMenu}/>
+                          userTag={window.userTag===''? [] : window.userTag.split(',')}
+                          userMenu={window.userMenu===''? [] : window.userMenu.split(',')}/>
 
       <UserCpForm id={window.userDetail.id}
                   admin_id={window.admin_id}/>

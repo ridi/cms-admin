@@ -1,39 +1,49 @@
 import React from 'react';
 
 class Select2Input extends React.Component {
-  renderInput() {
-    if (this.props.fetching) {
-      return (
-        <div className="progress">
-          <div className="progress-bar progress-bar-striped active" style={{'width':'100%'}}>로딩중...</div>
-        </div>
-      );
-
-    } else {
-      const { value } = this.props;
-
-      return (
-        <input type="hidden"
-               ref={(input) => {this.selectInput = input}}
-               className="form-control select2-offscreen"
-               style={{'width':'100%'}}
-               value={value}/>
-      );
+  componentWillUpdate(nextProps, nextState) {
+    if (JSON.stringify(this.props.value) !== JSON.stringify(nextProps.value)) {
+      $(this.selectInput).val(nextProps.value).trigger('change');
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.data !== this.props.data
-     || prevProps.value !== this.props.value) {
-      const {multiple, placeholder, tokenSeparators, data} = this.props;
-      $(this.selectInput).select2({multiple, placeholder, tokenSeparators, data});
-    }
+  componentDidMount() {
+    const {onAdd, onRemove} = this.props;
+
+    $(this.selectInput).select2();
+    $(this.selectInput).on('select2:select', (e) => {
+      const data = e.params.data;
+      onAdd && onAdd(data.id);
+    });
+
+    $(this.selectInput).on('select2:unselect', (e) => {
+      const data = e.params.data;
+      onRemove && onRemove(data.id);
+    });
+  }
+
+  renderOption(data) {
+    return (
+      <option key={data.id} value={data.id}>
+        {data.text}
+      </option>
+    );
   }
 
   render() {
+    const { value, name, placeholder, multiple } = this.props;
+
     return (
       <div>
-        { this.renderInput() }
+        <select ref={(input) => {this.selectInput = input}}
+                name={name}
+                data-placeholder={placeholder}
+                value={value}
+                multiple={multiple}
+                style={{ width: '100%' }}
+                onChange={() => {}}>
+          {this.props.data.map(this.renderOption)}
+        </select>
       </div>
     );
   }
@@ -43,9 +53,10 @@ Select2Input.defaultProps = {
   fetching: false,
   value: [],
   data: [],
-  multiple: true,
   placeholder: '',
-  tokenSeparators: [','],
+  multiple: true,
+  onAdd: undefined,
+  onRemove: undefined,
 };
 
 export default  Select2Input;

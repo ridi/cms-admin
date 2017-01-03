@@ -3,13 +3,15 @@ import axios from 'axios';
 import Select2Input from './Select2Input';
 
 class UserPermissionForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       tagFetching: true,
+      tags: props.userTag,
       tagList: [],
       menuFetching: true,
+      menues: props.userMenu,
       menuList: []
     };
   }
@@ -46,9 +48,77 @@ class UserPermissionForm extends React.Component {
     });
   }
 
+  onMenuAdd = (id) => {
+    this.setState(Object.assign({}, this.state, {
+      menues: this.state.menues.concat(id)
+    }));
+  };
+
+  onMenuRemove = (id) => {
+    let targetIndex = this.state.menues.indexOf(id);
+    if (targetIndex !== -1) {
+      this.setState(Object.assign({}, this.state, {
+        menues: this.state.menues.filter((_, i) => i!==targetIndex)
+      }));
+    }
+  };
+
+  onTagAdd = (id) => {
+    this.setState(Object.assign({}, this.state, {
+      tags: this.state.tags.concat(id)
+    }));
+  };
+
+  onTagRemove = (id) => {
+    let targetIndex = this.state.tags.indexOf(id);
+    if (targetIndex !== -1) {
+      this.setState(Object.assign({}, this.state, {
+        tags: this.state.tags.filter((_, i) => i!==targetIndex)
+      }));
+    }
+  };
+
+  renderLoading() {
+    return (
+      <div className="progress">
+        <div className="progress-bar progress-bar-striped active" style={{'width': '100%'}}>로딩중...</div>
+      </div>
+    )
+  }
+
+  renderTagInput() {
+    const { tags, tagList } = this.state;
+
+    return (
+      <Select2Input name="tag_ids"
+                    value={tags}
+                    data={tagList}
+                    multiple={true}
+                    placeholder="태그를 지정하세요"
+                    tokenSeparators={[',', ' ']}
+                    onAdd={this.onTagAdd}
+                    onRemove={this.onTagRemove}/>
+    );
+  }
+
+  renderMenuInput() {
+    const { menues, menuList } = this.state;
+
+    return (
+      <Select2Input name="menu_ids"
+                    value={menues}
+                    data={menuList}
+                    multiple={true}
+                    placeholder="메뉴를 지정하세요"
+                    tokenSeparators={[',', ' ']}
+                    onAdd={this.onMenuAdd}
+                    onRemove={this.onMenuRemove}/>
+    );
+  }
+
   render() {
-    const { id, userTag, userMenu } = this.props;
-    const { tagFetching, tagList, menuFetching, menuList } = this.state;
+    const { id } = this.props;
+    const { tagFetching, menuFetching } = this.state;
 
     return (
       <form className="form-horizontal" id="permissions" action={"/super/users/" + id + "/permissions"} method="POST">
@@ -58,29 +128,17 @@ class UserPermissionForm extends React.Component {
           </div>
           <div className="panel-body">
             <div className="form-group form-group-sm">
-              <label className="col-xs-2 control-label">메뉴</label>
-              <div className="col-xs-10">
-                <Select2Input fetching={tagFetching}
-                              value={userTag}
-                              data={tagList}
-                              multiple={true}
-                              placeholder="태그를 지정하세요"
-                              tokenSeparators={[',', ' ']}/>
-              </div>
-            </div>
-
-            <div className="form-group form-group-sm">
               <label className="col-xs-2 control-label">태그</label>
               <div className="col-xs-10">
-                <Select2Input fetching={menuFetching}
-                              value={userMenu}
-                              data={menuList}
-                              multiple={true}
-                              placeholder="메뉴를 지정하세요"
-                              tokenSeparators={[',', ' ']}/>
+                {tagFetching? this.renderLoading() : this.renderTagInput()}
               </div>
             </div>
-
+            <div className="form-group form-group-sm">
+              <label className="col-xs-2 control-label">메뉴</label>
+              <div className="col-xs-10">
+                {menuFetching? this.renderLoading() : this.renderMenuInput()}
+              </div>
+            </div>
             <div className="btn-group btn-group-sm pull-right">
               <button type="submit" className="btn btn-default">
                 <i className="glyphicon glyphicon-file"/> 저장
