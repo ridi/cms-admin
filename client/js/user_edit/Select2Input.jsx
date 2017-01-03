@@ -31,7 +31,7 @@ class Select2Input extends React.Component {
   }
 
   render() {
-    const { value, name, placeholder, multiple } = this.props;
+    const { value, name, placeholder, multiple, disabled } = this.props;
 
     return (
       <div>
@@ -41,6 +41,7 @@ class Select2Input extends React.Component {
                 value={value}
                 multiple={multiple}
                 style={{ width: '100%' }}
+                disabled={disabled}
                 onChange={() => {}}>
           {this.props.data.map(this.renderOption)}
         </select>

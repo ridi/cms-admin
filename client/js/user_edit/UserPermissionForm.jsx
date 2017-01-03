@@ -87,6 +87,7 @@ class UserPermissionForm extends React.Component {
   }
 
   renderTagInput() {
+    const { id } = this.props;
     const { tags, tagList } = this.state;
 
     return (
@@ -95,13 +96,14 @@ class UserPermissionForm extends React.Component {
                     data={tagList}
                     multiple={true}
                     placeholder="태그를 지정하세요"
-                    tokenSeparators={[',', ' ']}
+                    disabled={!id}
                     onAdd={this.onTagAdd}
                     onRemove={this.onTagRemove}/>
     );
   }
 
   renderMenuInput() {
+    const { id } = this.props;
     const { menues, menuList } = this.state;
 
     return (
@@ -110,7 +112,7 @@ class UserPermissionForm extends React.Component {
                     data={menuList}
                     multiple={true}
                     placeholder="메뉴를 지정하세요"
-                    tokenSeparators={[',', ' ']}
+                    disabled={!id}
                     onAdd={this.onMenuAdd}
                     onRemove={this.onMenuRemove}/>
     );

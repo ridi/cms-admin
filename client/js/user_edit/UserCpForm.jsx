@@ -183,6 +183,7 @@ class UserCpForm extends React.Component {
                     data={this.state.allCpList}
                     multiple={true}
                     placeholder="담당할 CP를 입력하세요."
+                    disabled={!this.props.id}
                     onAdd={(id) => { this.onCpAdd(id, cpType) }}
                     onRemove={(id) => { this.onCpRemove(id, cpType) }}/>
     );

@@ -13,6 +13,7 @@ class UserDetailForm extends React.Component {
     };
 
     this.initialState = this.state;
+    this.isNewUser = !!props.id;
   }
 
   onSave = () => {
@@ -41,7 +42,7 @@ class UserDetailForm extends React.Component {
               <div className="col-xs-10">
                 <input type="text" name="id" className="form-control"
                        value={id}
-                       disabled={!!id}
+                       disabled={this.isNewUser}
                        onChange={(e) => {
                          this.setState(Object.assign({}, this.state, {
                            id: e.target.value
