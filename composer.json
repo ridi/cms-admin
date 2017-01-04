@@ -1,6 +1,9 @@
 {
   "name": "ridibooks/cms-admin",
   "type": "project",
+  "config": {
+    "vendor-dir": "server/vender"
+  },
   "require": {
     "ridibooks/cms": "^0.1",
     "ridibooks/platform-common": "dev-master"
