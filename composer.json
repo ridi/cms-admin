@@ -1,6 +1,8 @@
 {
   "name": "ridibooks/cms-admin",
+  "description": "Ridibooks CMS admin service",
   "type": "project",
+  "license": "MIT",
   "config": {
     "vendor-dir": "server/vender"
   },
