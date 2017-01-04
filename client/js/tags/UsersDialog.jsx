@@ -15,14 +15,12 @@ export default class UsersDialog extends React.Component {
 
       // clear
       this.setState({ admins: [], loading: true });
-      //$('#tag_admins').html('불러오는 중입니다...');
-
       this.loadUsers(tagId);
     });
   }
 
   loadUsers(tagId) {
-    $.get('/super/tags/' + tagId + '/users', (result) => {
+    $.get(`/super/tags/${tagId}/users`, (result) => {
       if (!result.success) {
         return;
       }
@@ -37,10 +35,10 @@ export default class UsersDialog extends React.Component {
     }
 
     return <ul id="tag_admins">
-      {this.state.admins.map((admin) => (
+      {this.state.admins.map(admin => (
         <li key={admin.id}>
           <h4>
-            <a className="label label-default" href={"/super/users/" + admin.id} target="_blank">{admin.name}</a>
+            <a className="label label-default" href={`/super/users/${admin.id}`} target="_blank" rel="noopener noreferrer">{admin.name}</a>
           </h4>
         </li>
       ))}
@@ -48,20 +46,22 @@ export default class UsersDialog extends React.Component {
   }
 
   render() {
-    return <div id="js_users_dialog" className="modal fade" role="dialog">
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 className="modal-title">태그 사용자 관리</h4>
-          </div>
-          <div className="modal-body">
-            {this.renderAdmins()}
+    return (
+      <div id="js_users_dialog" className="modal fade" role="dialog">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 className="modal-title">태그 사용자 관리</h4>
+            </div>
+            <div className="modal-body">
+              {this.renderAdmins()}
+            </div>
           </div>
         </div>
       </div>
-    </div>;
+    );
   }
 }

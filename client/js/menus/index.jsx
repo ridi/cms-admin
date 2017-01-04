@@ -1,6 +1,6 @@
-import '../base';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import '../base';
 import MenuList from './MenuList';
 
 const MenuCreate = () =>
@@ -9,13 +9,13 @@ const MenuCreate = () =>
     <input type="hidden" id="command" name="command"/>
     <table className="table table-bordered table-condensed">
       <colgroup>
-        <col width="250"/>
-        <col width="400"/>
-        <col width="80"/>
-        <col width="80"/>
-        <col width="80"/>
-        <col width="80"/>
-        <col width="80"/>
+        <col width="250" />
+        <col width="400" />
+        <col width="80" />
+        <col width="80" />
+        <col width="80" />
+        <col width="80" />
+        <col width="80" />
       </colgroup>
       <thead>
       <tr>
@@ -30,10 +30,10 @@ const MenuCreate = () =>
       </thead>
       <tbody>
       <tr>
-        <td><input type="text" className="form-control" name="menu_title"/></td>
-        <td><input type="text" className="form-control" name="menu_url"/></td>
-        <td><input type="text" className="form-control" name="menu_deep" placeholder="0"/></td>
-        <td><input type="text" className="form-control" name="menu_order" placeholder="0"/></td>
+        <td><input type="text" className="form-control" name="menu_title" /></td>
+        <td><input type="text" className="form-control" name="menu_url" /></td>
+        <td><input type="text" className="form-control" name="menu_deep" placeholder="0" /></td>
+        <td><input type="text" className="form-control" name="menu_order" placeholder="0" /></td>
         <td>
           <select className="form-control" name="is_newtab">
             <option value="0">N</option>
@@ -63,14 +63,14 @@ const MenuCreate = () =>
 
 ReactDOM.render(
   <div>
-    <MenuCreate/>
+    <MenuCreate />
 
     <div className="alert alert-info">
       메뉴 순서 변경시 변경할 메뉴는 해당 순서로 이동하고 기존에 위치한 메뉴는 아래로 밀려 내려갑니다.<br/>
       메뉴 수정 시 좌측의 체크박스가 자동으로 선택되고, 체크박스가 선택된 메뉴만 저장이 됩니다.
     </div>
 
-    <MenuList menus={window.menus}/>
+    <MenuList menus={window.menus} />
   </div>,
   document.getElementById('content')
 );

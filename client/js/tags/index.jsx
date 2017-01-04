@@ -1,6 +1,6 @@
-import '../base';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import '../base';
 import TagList from './TagList';
 import UsersDialog from './UsersDialog';
 import MenusDialog from './MenusDialog';
@@ -10,25 +10,25 @@ const TagCreate = () =>
     <h4>태그 등록</h4>
     <table className="table table-bordered">
       <colgroup>
-        <col width="200"/>
-        <col width="80"/>
+        <col width="200" />
+        <col width="80" />
       </colgroup>
       <thead>
-      <tr>
-        <th>태그 이름</th>
-        <th>사용 여부</th>
-      </tr>
+        <tr>
+          <th>태그 이름</th>
+          <th>사용 여부</th>
+        </tr>
       </thead>
       <tbody>
-      <tr>
-        <td><input type="text" className="input-block-level" name="name"/></td>
-        <td>
-          <select className="input-block-level" name="is_use">
-            <option value="1">Y</option>
-            <option value="0">N</option>
-          </select>
-        </td>
-      </tr>
+        <tr>
+          <td><input type="text" className="input-block-level" name="name" /></td>
+          <td>
+            <select className="input-block-level" name="is_use">
+              <option value="1">Y</option>
+              <option value="0">N</option>
+            </select>
+          </td>
+        </tr>
       </tbody>
     </table>
     <div className="pull-right">
@@ -40,10 +40,10 @@ const TagCreate = () =>
 ReactDOM.render(
   <div>
     <TagCreate />
-    <TagList tags={window.tags}/>
+    <TagList tags={window.tags} />
 
-    <MenusDialog/>
-    <UsersDialog/>
+    <MenusDialog />
+    <UsersDialog />
   </div>,
   document.getElementById('content')
 );

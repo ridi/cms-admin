@@ -42,10 +42,10 @@ class UserCpForm extends React.Component {
     ]).then((res) => {
 
       let allCpList = [];
-      var data = res[3].data.data;
+      let data = res[3].data.data;
       if (data.length !== 0) {
-        for (var cp in data) {
-          var pubId = data[cp].id;
+        for (let cp in data) {
+          let pubId = data[cp].id;
           allCpList.push({ id: pubId, text: data[cp].name + ' (' + pubId + ')' });
         }
       }
