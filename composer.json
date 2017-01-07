@@ -15,7 +15,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Ridibooks\\Platform\\Cms\\Admin\\": "src/Admin"
+      "Ridibooks\\Platform\\Cms\\Admin\\": "server/src/Admin"
     }
   }
 }
