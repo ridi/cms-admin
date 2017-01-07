@@ -4,7 +4,7 @@
   "type": "project",
   "license": "MIT",
   "config": {
-    "vendor-dir": "server/vender"
+    "vendor-dir": "server/vendor"
   },
   "require": {
     "ridibooks/cms": "^0.1",
