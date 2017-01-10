@@ -107,7 +107,7 @@ class UserCpForm extends React.Component {
           return;
 
         assigned = {
-          partnerCpList: this.state.operatorCpList.filter((_, i) => i!==targetIndex)
+          operatorCpList: this.state.operatorCpList.filter((_, i) => i!==targetIndex)
         };
         break;
 
@@ -117,7 +117,7 @@ class UserCpForm extends React.Component {
           return;
 
         assigned = {
-          partnerCpList: this.state.productionCpList.filter((_, i) => i!==targetIndex)
+          productionCpList: this.state.productionCpList.filter((_, i) => i!==targetIndex)
         };
         break;
     }
