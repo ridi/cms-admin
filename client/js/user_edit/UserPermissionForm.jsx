@@ -78,6 +78,26 @@ class UserPermissionForm extends React.Component {
     }
   };
 
+  onSave = () => {
+    let data = {
+      tag_ids: this.state.tags.join(','),
+      menu_ids: this.state.menues.join(','),
+    };
+
+    $.ajax({
+      type: 'POST',
+      url: `/super/users/${this.props.id}/permissions`,
+      data: data,
+      cache: false,
+      success: function (res) {
+        alert('성공적으로 업데이트 되었습니다.');
+      },
+      error: function (xhr) {
+        alert(xhr.responseText);
+      }
+    });
+  };
+
   renderLoading() {
     return (
       <div className="progress">
@@ -142,9 +162,9 @@ class UserPermissionForm extends React.Component {
               </div>
             </div>
             <div className="btn-group btn-group-sm pull-right">
-              <button type="submit" className="btn btn-default">
+              <a id="js_cp_update" className="btn btn-default" onClick={this.onSave}>
                 <i className="glyphicon glyphicon-file"/> 저장
-              </button>
+              </a>
             </div>
           </div>
         </div>
