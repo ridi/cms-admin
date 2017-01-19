@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import Select2Input from './Select2Input';
+import Select2Input from '../Select2Input';
 
 const PRODUCTION_CP_TYPE = 1;
 const PARTNER_CP_TYPE = 2;

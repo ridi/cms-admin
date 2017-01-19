@@ -1,67 +1,48 @@
 import React from 'react';
+import { Modal, Button } from 'react-bootstrap';
 
 export default class UsersDialog extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      admins: [],
-      loading: false
-    };
-  }
-
-  componentDidMount() {
-    $('#js_users_dialog').on('show.bs.modal', (e) => {
-      const tagId = $(e.relatedTarget).data('tag-id');
-
-      // clear
-      this.setState({ admins: [], loading: true });
-      this.loadUsers(tagId);
-    });
-  }
-
-  loadUsers(tagId) {
-    $.get(`/super/tags/${tagId}/users`, (result) => {
-      if (!result.success) {
-        return;
-      }
-
-      this.setState({ admins: result.data, loading: false });
-    });
-  }
-
   renderAdmins() {
-    if (this.state.loading) {
+    const { loading, data } = this.props;
+
+    if (loading) {
       return <span>불러오는 중입니다</span>;
     }
 
-    return <ul id="tag_admins">
-      {this.state.admins.map(admin => (
-        <li key={admin.id}>
-          <h4>
-            <a className="label label-default" href={`/super/users/${admin.id}`} target="_blank" rel="noopener noreferrer">{admin.name}</a>
-          </h4>
-        </li>
-      ))}
-    </ul>;
+    return (
+      <ul id="tag_admins">
+        {data.map(admin => (
+          <li key={admin.id}>
+            <h4>
+              <a className="label label-default" href={`/super/users/${admin.id}`} target="_blank" rel="noopener noreferrer">{admin.name}</a>
+            </h4>
+          </li>
+        ))}
+      </ul>
+    );
   }
 
   render() {
+    const { show, onClose } = this.props;
     return (
-      <div id="js_users_dialog" className="modal fade" role="dialog">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <h4 className="modal-title">태그 사용자 관리</h4>
-            </div>
-            <div className="modal-body">
-              {this.renderAdmins()}
-            </div>
-          </div>
-        </div>
-      </div>
+      <Modal show={show} onHide={onClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>태그 사용자 관리</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {this.renderAdmins()}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={onClose}>Close</Button>
+        </Modal.Footer>
+      </Modal>
     );
   }
 }
+
+UsersDialog.propTypes = {
+  loading: React.PropTypes.bool,
+  data: React.PropTypes.array,
+  show: React.PropTypes.bool,
+  onClose: React.PropTypes.func,
+};

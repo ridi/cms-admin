@@ -1,41 +1,5 @@
 import React from 'react';
-
-
-const Tag = props =>
-  <tr id={props.id} className={!props.is_use ? 'danger' : ''}>
-    <td>
-      <input type="checkbox" name="changed" />
-      <input type="hidden" name="id" value={props.id} />
-    </td>
-    <td>{props.id}</td>
-    <td><input type="text" className="input-block-level" name="name" defaultValue={props.name} /></td>
-    <td>{props.creator}</td>
-    <td>
-      <input type="checkbox" className="input-block-level" name="is_use" defaultChecked={props.is_use} />
-    </td>
-    <td>{props.created_at}</td>
-    <td>{props.updated_at}</td>
-    <td>
-      <button data-toggle="modal" data-target="#js_menus_dialog" data-tag-id={props.id}>
-        {props.menus_count}
-      </button>
-    </td>
-    <td>
-      <button data-toggle="modal" data-target="#js_users_dialog" data-tag-id={props.id}>
-        {props.users_count}
-      </button>
-    </td>
-  </tr>;
-
-Tag.propTypes = {
-  id: React.PropTypes.number,
-  creator: React.PropTypes.string,
-  is_use: React.PropTypes.bool,
-  created_at: React.PropTypes.string,
-  updated_at: React.PropTypes.string,
-  menus_count: React.PropTypes.number,
-  users_count: React.PropTypes.number
-};
+import TagRow from './TagRow';
 
 
 export default class TagList extends React.Component {
@@ -89,6 +53,8 @@ export default class TagList extends React.Component {
   }
 
   render() {
+    const { tags, onMenusCountClick, onUsersCountClick } = this.props;
+
     return (
       <form id="updateForm" className="form-horizontal form-inline">
         <h4>태그 목록</h4>
@@ -118,7 +84,22 @@ export default class TagList extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.tags.map((tag) => <Tag key={tag.id} {...tag} data-id={tag.id} />)}
+            {
+              tags.map(tag =>
+                <TagRow
+                  key={tag.id}
+                  isUse={tag.is_use}
+                  name={tag.name}
+                  creator={tag.creator}
+                  createdAt={tag.created_at}
+                  updatedAt={tag.updated_at}
+                  menusCount={tag.menus_count}
+                  usersCount={tag.users_count}
+                  data-id={tag.id}
+                  onMenusCountClick={() => onMenusCountClick(tag.id)}
+                  onUsersCountClick={() => onUsersCountClick(tag.id)}
+                />)
+            }
           </tbody>
         </table>
         <div>
@@ -131,3 +112,10 @@ export default class TagList extends React.Component {
     );
   }
 }
+
+TagList.propTypes = {
+  tags: React.PropTypes.array,
+  onMenusCountClick: React.PropTypes.func,
+  onUsersCountClick: React.PropTypes.func,
+};
+

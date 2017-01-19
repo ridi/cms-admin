@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import Select2Input from './Select2Input';
+import Select2Input from '../Select2Input';
 
 class UserPermissionForm extends React.Component {
   constructor(props) {
