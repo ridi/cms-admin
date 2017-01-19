@@ -16,7 +16,7 @@ export default class TagList extends React.Component {
       return;
     }
 
-    $('#updateForm input[name=changed]:checked').forEach((i, e) => {
+    $('#updateForm input[name=changed]:checked').map((i, e) => {
       const $tr = $(e).parents('tr');
       const tagId = $tr.find('input[name=id]').val();
 
@@ -88,6 +88,7 @@ export default class TagList extends React.Component {
               tags.map(tag =>
                 <TagRow
                   key={tag.id}
+                  id={tag.id}
                   isUse={tag.is_use}
                   name={tag.name}
                   creator={tag.creator}
@@ -95,7 +96,6 @@ export default class TagList extends React.Component {
                   updatedAt={tag.updated_at}
                   menusCount={tag.menus_count}
                   usersCount={tag.users_count}
-                  data-id={tag.id}
                   onMenusCountClick={() => onMenusCountClick(tag.id)}
                   onUsersCountClick={() => onUsersCountClick(tag.id)}
                 />)
