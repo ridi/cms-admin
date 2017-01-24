@@ -12,6 +12,9 @@ class Config
 
 	public static $UNDER_DEV = true;
 
+	public static $ENABLE_SSL = false;
+	public static $COUCHBASE_ENABLE = false;
+
 	public static function getConnectionParams($name)
 	{
 		if (isset(static::$DB_PARAMS[$name])) {

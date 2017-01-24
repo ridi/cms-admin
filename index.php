@@ -15,7 +15,7 @@ if (is_readable('/htdocs/platform/config.php')) {
 
 $autoloader = require __DIR__ . "/server/vendor/autoload.php";
 
-if (\Config::$COUCHBASE_ENABLE) {
+if (isset(\Config::$COUCHBASE_ENABLE) && \Config::$COUCHBASE_ENABLE) {
 	LoginService::startCouchbaseSession(\Config::$COUCHBASE_SERVER_HOSTS);
 } else {
 	LoginService::startSession();
