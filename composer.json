@@ -13,7 +13,7 @@
     }
   ],
   "require": {
-    "ridibooks/cms": "^0.1",
+    "ridibooks/cms": "^0.2",
     "ridibooks/core": "dev-master",
     "ridibooks/platform-common": "dev-master",
     "silex/silex": "^1.3"
