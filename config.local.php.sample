@@ -2,7 +2,7 @@
 
 class Config
 {
-	public static $DB_PARAMS = [];
+    public static $DB_PARAMS = [];
 
     public static $DOMAIN;
     public static $MISC_URL;
@@ -10,31 +10,31 @@ class Config
     public static $HTTP_HOST_LINK;
     public static $SSL_HOST_LINK;
 
-	public static $UNDER_DEV = true;
+    public static $UNDER_DEV = true;
 
-	public static $ENABLE_SSL = false;
-	public static $COUCHBASE_ENABLE = false;
+    public static $ENABLE_SSL = false;
+    public static $COUCHBASE_ENABLE = false;
 
-	public static function getConnectionParams($name)
-	{
-		if (isset(static::$DB_PARAMS[$name])) {
-			return static::$DB_PARAMS[$name];
-		}
+    public static function getConnectionParams($name)
+    {
+        if (isset(static::$DB_PARAMS[$name])) {
+            return static::$DB_PARAMS[$name];
+        }
 
-		if (!isset(static::$DB_PARAMS['default'])) {
-			throw new \Exception("Default DB connection parameters are missing.");
-		}
+        if (!isset(static::$DB_PARAMS['default'])) {
+            throw new \Exception("Default DB connection parameters are missing.");
+        }
 
-		return static::$DB_PARAMS['default'];
-	}
+        return static::$DB_PARAMS['default'];
+    }
 }
 
 Config::$DB_PARAMS['default'] = [
-	'host' => '',
-	'user' => '',
-	'password' => '',
-	'dbname' => '',
-	'driver' => 'pdo_mysql',
-	'charset' => 'utf8',
-	'driverOptions' => [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8']
+    'host' => '',
+    'user' => '',
+    'password' => '',
+    'dbname' => '',
+    'driver' => 'pdo_mysql',
+    'charset' => 'utf8',
+    'driverOptions' => [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8']
 ];
