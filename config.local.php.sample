@@ -1,10 +1,24 @@
 <?php
 
-class Config extends ConfigDefault
+class Config
 {
-	public static $ENABLE_SSL = true;
+	public static $DB_PARAMS = [];
 
+	public static $ENABLE_SSL = true;
 	public static $UNDER_DEV = true;
+
+	public static function getConnectionParams($name)
+	{
+		if (isset(static::$DB_PARAMS[$name])) {
+			return static::$DB_PARAMS[$name];
+		}
+
+		if (!isset(static::$DB_PARAMS['default'])) {
+			throw new \Exception("Default DB connection parameters are missing.");
+		}
+
+		return static::$DB_PARAMS['default'];
+	}
 }
 
 Config::$DB_PARAMS['default'] = [
