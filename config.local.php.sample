@@ -1,0 +1,18 @@
+<?php
+
+class Config extends ConfigDefault
+{
+	public static $ENABLE_SSL = true;
+
+	public static $UNDER_DEV = true;
+}
+
+Config::$DB_PARAMS['default'] = [
+	'host' => '',
+	'user' => '',
+	'password' => '',
+	'dbname' => '',
+	'driver' => 'pdo_mysql',
+	'charset' => 'utf8',
+	'driverOptions' => [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8']
+];
