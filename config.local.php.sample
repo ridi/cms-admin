@@ -4,7 +4,12 @@ class Config
 {
 	public static $DB_PARAMS = [];
 
-	public static $ENABLE_SSL = true;
+    public static $DOMAIN;
+    public static $MISC_URL;
+    public static $ACTIVE_URL;
+    public static $HTTP_HOST_LINK;
+    public static $SSL_HOST_LINK;
+
 	public static $UNDER_DEV = true;
 
 	public static function getConnectionParams($name)

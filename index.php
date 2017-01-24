@@ -15,7 +15,11 @@ if (is_readable('/htdocs/platform/config.php')) {
 
 $autoloader = require __DIR__ . "/server/vendor/autoload.php";
 
-LoginService::startSession();
+if (\Config::$COUCHBASE_ENABLE) {
+	LoginService::startCouchbaseSession(\Config::$COUCHBASE_SERVER_HOSTS);
+} else {
+	LoginService::startSession();
+}
 
 $app = new CmsApplication();
 $app['twig.path'] = [
@@ -24,7 +28,7 @@ $app['twig.path'] = [
 
 // Try MiniRouter first
 $app->before(function (Request $request) {
-	return MiniRouter::shouldRedirectForLogin($request);
+	return MiniRouter::shouldRedirectForLogin($request, \Config::$ENABLE_SSL);
 });
 
 $app->mount('/', new AdminUserController());
