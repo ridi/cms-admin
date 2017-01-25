@@ -7,11 +7,19 @@ use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Cms\MiniRouter;
 use Symfony\Component\HttpFoundation\Request;
 
-require_once __DIR__ . '/../config.php';
+if (is_readable('/htdocs/platform/config.php')) {
+	require_once '/htdocs/platform/config.php';
+} else {
+	require_once 'config.local.php';
+}
 
 $autoloader = require __DIR__ . "/server/vendor/autoload.php";
 
-LoginService::startSession();
+if (isset(\Config::$COUCHBASE_ENABLE) && \Config::$COUCHBASE_ENABLE) {
+	LoginService::startCouchbaseSession(\Config::$COUCHBASE_SERVER_HOSTS);
+} else {
+	LoginService::startSession();
+}
 
 $app = new CmsApplication();
 $app['twig.path'] = [
@@ -20,7 +28,7 @@ $app['twig.path'] = [
 
 // Try MiniRouter first
 $app->before(function (Request $request) {
-	return MiniRouter::shouldRedirectForLogin($request);
+	return MiniRouter::shouldRedirectForLogin($request, \Config::$ENABLE_SSL);
 });
 
 $app->mount('/', new AdminUserController());
