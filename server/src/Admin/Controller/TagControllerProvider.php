@@ -4,9 +4,9 @@ namespace Ridibooks\Platform\Cms\Admin\Controller;
 use Ridibooks\Platform\Cms\Admin\TagService as AdminTagService;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Common\Base\JsonDto;
+use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
-use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

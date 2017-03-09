@@ -5,9 +5,9 @@ use Ridibooks\Platform\Cms\Admin\Dto\AdminMenuDto;
 use Ridibooks\Platform\Cms\Admin\MenuService as AdminMenuService;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Common\Base\JsonDto;
+use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
-use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

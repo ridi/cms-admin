@@ -7,9 +7,9 @@ use Ridibooks\Platform\Cms\Admin\UserService as AdminUserService;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Cms\PaginationHelper;
 use Ridibooks\Platform\Common\PagingUtil;
+use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
-use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

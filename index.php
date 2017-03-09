@@ -21,7 +21,13 @@ if (isset(\Config::$COUCHBASE_ENABLE) && \Config::$COUCHBASE_ENABLE) {
 	LoginService::startSession();
 }
 
-$app = new CmsApplication();
+$app = new CmsApplication([
+    'cms' => [
+        'url' => \Config::$CMS_SERVER_HOST,
+        'login_path' => '/login',
+        'thrift_path' => '/',
+    ]
+]);
 $app['twig.path'] = [
 	__DIR__ . '/server/views'
 ];
