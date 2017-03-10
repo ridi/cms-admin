@@ -17,13 +17,17 @@
     "ridibooks/core": "dev-master",
     "ridibooks/platform-common": "dev-master",
     "silex/silex": "^2.0",
-    "twig/twig": "^1.0.0"
+    "twig/twig": "^1.0.0",
+    "illuminate/database": "^5.4"
   },
   "require-dev": {
   },
   "autoload": {
     "psr-4": {
       "Ridibooks\\Platform\\Cms\\Admin\\": "server/src/Admin"
-    }
+    },
+    "files": [
+      "bootstrap.php"
+    ]
   }
 }
