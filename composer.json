@@ -13,11 +13,11 @@
     }
   ],
   "require": {
-    "ridibooks/cms": "^1.0.0",
+    "ridibooks/cms-sdk": "dev-master",
     "ridibooks/core": "dev-master",
     "ridibooks/platform-common": "dev-master",
     "silex/silex": "^2.0",
-    "twig/twig": "^1.0.0",
+    "twig/twig": "^2.0.0",
     "illuminate/database": "^5.4"
   },
   "require-dev": {
