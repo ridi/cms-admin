@@ -8,6 +8,6 @@ RewriteRule ^(.*) http://%1/$1 [L,R]
 RewriteCond %{REQUEST_URI} !index\.php
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteRule (.*) /super/index.php?$0 [QSA,L]
+RewriteRule (.*) /index.php?$0 [QSA,L]
 
 </IfModule>
