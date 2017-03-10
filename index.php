@@ -37,8 +37,8 @@ $app->before(function (Request $request) {
 	return MiniRouter::shouldRedirectForLogin($request, \Config::$ENABLE_SSL);
 });
 
-$app->mount('/', new AdminUserController());
-$app->mount('/', new AdminTagController());
-$app->mount('/', new AdminMenuController());
+$app->mount('/super', new AdminUserController());
+$app->mount('/super', new AdminTagController());
+$app->mount('/super', new AdminMenuController());
 
 $app->run();
