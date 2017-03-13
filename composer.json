@@ -13,7 +13,6 @@
     }
   ],
   "require": {
-    "ridibooks/cms": "dev-master",
     "ridibooks/cms-sdk": "dev-master",
     "ridibooks/core": "dev-master",
     "ridibooks/platform-common": "dev-master",
