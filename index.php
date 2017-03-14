@@ -26,7 +26,8 @@ $app = new CmsApplication([
         'url' => \Config::$CMS_SERVER_HOST,
         'login_path' => '/login',
         'thrift_path' => '/',
-    ]
+    ],
+	'login_encrypt_key' => \Config::$LOGIN_ENCRYPT_KEY,
 ]);
 $app['twig.path'] = [
 	__DIR__ . '/server/views'
