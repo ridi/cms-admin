@@ -24,10 +24,9 @@ if (isset(\Config::$COUCHBASE_ENABLE) && \Config::$COUCHBASE_ENABLE) {
 $app = new CmsApplication([
     'cms' => [
         'url' => \Config::$CMS_SERVER_HOST,
-        'login_path' => '/login',
-        'thrift_path' => '/',
+        'login_path' => \Config::$CMS_LOGIN_PATH,
+        'rpc_path' => \Config::$CMS_RPC_PATH,
     ],
-	'login_encrypt_key' => \Config::$LOGIN_ENCRYPT_KEY,
 ]);
 $app['twig.path'] = [
 	__DIR__ . '/server/views'

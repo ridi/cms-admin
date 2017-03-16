@@ -14,6 +14,12 @@ class Config
 
     public static $ENABLE_SSL = false;
     public static $COUCHBASE_ENABLE = false;
+    public static $COUCHBASE_SERVER_HOSTS = [];
+
+    public static $CMS_SERVER_HOST;
+    public static $CMS_LOGIN_PATH = '/login/form';
+    public static $CMS_RPC_PATH = '/';
+
 
     public static $CMS_SERVER_HOST;
 
