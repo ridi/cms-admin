@@ -3,7 +3,6 @@ namespace Deployer;
 
 require 'recipe/common.php';
 
-
 // Configuration
 
 //symlink를 상대 주소로 생성하는 옵션. 현재 버그가 있어서 off
@@ -15,7 +14,6 @@ set('git_cache', false);
 
 //web server user 지정.
 set('http_user', 'www-data');
-
 
 // Servers
 foreach (glob(__DIR__ . '/servers/*.yml') as $filename) {
@@ -56,8 +54,7 @@ shared_files와 shared_dirs에 지정된 데로 shared 하위를 가리키는 sy
 */
 
 desc('Build client code');
-task('deploy:build', 'make -C {{release_path}} client');
-
+task('deploy:build', 'make -C {{release_path}}');
 
 desc('Deploy your project');
 task('deploy', [

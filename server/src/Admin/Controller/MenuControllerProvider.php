@@ -73,7 +73,6 @@ class MenuControllerProvider implements ControllerProviderInterface
         }
 
         return $app->json((array)$json_dto);
-
     }
 
     public function submenus(CmsApplication $app, $menu_id)

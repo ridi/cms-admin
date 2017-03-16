@@ -2,8 +2,8 @@
 namespace Ridibooks\Platform\Cms\Admin;
 
 use Ridibooks\Exception\MsgException;
-use Ridibooks\Platform\Cms\Auth\LoginService;
 use Ridibooks\Platform\Cms\Admin\Model\AdminTag;
+use Ridibooks\Platform\Cms\Auth\LoginService;
 use Ridibooks\Platform\Common\ValidationUtils;
 
 class TagService

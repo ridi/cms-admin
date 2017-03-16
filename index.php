@@ -8,33 +8,33 @@ use Ridibooks\Platform\Cms\MiniRouter;
 use Symfony\Component\HttpFoundation\Request;
 
 if (is_readable('/htdocs/platform/config.php')) {
-	require_once '/htdocs/platform/config.php';
+    require_once '/htdocs/platform/config.php';
 } else {
-	require_once 'config.local.php';
+    require_once 'config.local.php';
 }
 
 $autoloader = require __DIR__ . "/server/vendor/autoload.php";
 
 if (isset(\Config::$COUCHBASE_ENABLE) && \Config::$COUCHBASE_ENABLE) {
-	LoginService::startCouchbaseSession(\Config::$COUCHBASE_SERVER_HOSTS);
+    LoginService::startCouchbaseSession(\Config::$COUCHBASE_SERVER_HOSTS);
 } else {
-	LoginService::startSession();
+    LoginService::startSession();
 }
 
 $app = new CmsApplication([
     'cms' => [
-        'url' => \Config::$CMS_SERVER_HOST,
-        'login_path' => \Config::$CMS_LOGIN_PATH,
-        'rpc_path' => \Config::$CMS_RPC_PATH,
+        'rpc_url' => \Config::$CMS_RPC_URL,
+        'login_url' => \Config::$CMS_LOGIN_URL,
+        'bower_url' => \Config::$CMS_BOWER_URL,
     ],
 ]);
 $app['twig.path'] = [
-	__DIR__ . '/server/views'
+    __DIR__ . '/server/views'
 ];
 
 // Try MiniRouter first
 $app->before(function (Request $request) {
-	return MiniRouter::shouldRedirectForLogin($request, \Config::$ENABLE_SSL);
+    return MiniRouter::shouldRedirectForLogin($request, \Config::$ENABLE_SSL);
 });
 
 $app->mount('/super', new AdminUserController());

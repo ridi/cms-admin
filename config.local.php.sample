@@ -20,9 +20,6 @@ class Config
     public static $CMS_LOGIN_PATH = '/login/form';
     public static $CMS_RPC_PATH = '/';
 
-
-    public static $CMS_SERVER_HOST;
-
     public static function getConnectionParams($name)
     {
         if (isset(static::$DB_PARAMS[$name])) {
