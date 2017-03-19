@@ -17,7 +17,6 @@ class Config
     public static $COUCHBASE_SERVER_HOSTS = [];
 
     public static $CMS_RPC_URL;
-    public static $CMS_LOGIN_URL;
     public static $CMS_BOWER_URL;
 
     public static function getConnectionParams($name)

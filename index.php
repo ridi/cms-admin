@@ -24,7 +24,6 @@ if (isset(\Config::$COUCHBASE_ENABLE) && \Config::$COUCHBASE_ENABLE) {
 $app = new CmsApplication([
     'cms' => [
         'rpc_url' => \Config::$CMS_RPC_URL,
-        'login_url' => \Config::$CMS_LOGIN_URL,
         'bower_url' => \Config::$CMS_BOWER_URL,
     ],
 ]);
@@ -34,11 +33,11 @@ $app['twig.path'] = [
 
 // Try MiniRouter first
 $app->before(function (Request $request) {
-    return MiniRouter::shouldRedirectForLogin($request, \Config::$ENABLE_SSL);
+    return MiniRouter::shouldRedirectForLogin($request);
 });
 
-$app->mount('/super', new AdminUserController());
-$app->mount('/super', new AdminTagController());
-$app->mount('/super', new AdminMenuController());
+$app->mount('/', new AdminUserController());
+$app->mount('/', new AdminTagController());
+$app->mount('/', new AdminMenuController());
 
 $app->run();

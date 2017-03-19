@@ -7,9 +7,9 @@ RewriteCond %{HTTPS} off [OR]
 RewriteCond %{HTTPS}:s on:(s)
 RewriteRule ^(.*) http%2://%1/$1 [R=301,L]
 
-RewriteCond %{REQUEST_URI} !index\.php
+RewriteCond %{REQUEST_URI} !%{CONTEXT_PREFIX}\/index\.php
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteRule (.*) /index.php?$0 [QSA,L]
+RewriteRule (.*) %{CONTEXT_PREFIX}/index.php?$0 [QSA,L]
 
 </IfModule>
