@@ -8,12 +8,7 @@ use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Cms\MiniRouter;
 use Symfony\Component\HttpFoundation\Request;
 
-if (is_readable('/htdocs/platform/config.php')) {
-    require_once '/htdocs/platform/config.php';
-} else {
-    require_once 'config.local.php';
-}
-
+require_once 'config.local.php';
 $autoloader = require __DIR__ . "/server/vendor/autoload.php";
 
 if (isset(\Config::$CMS_RPC_URL)) {
