@@ -1,4 +1,5 @@
 <?php
+use Ridibooks\Cms\Thrift\ThriftService;
 use Ridibooks\Platform\Cms\Admin\Controller\MenuControllerProvider as AdminMenuController;
 use Ridibooks\Platform\Cms\Admin\Controller\TagControllerProvider as AdminTagController;
 use Ridibooks\Platform\Cms\Admin\Controller\UserControllerProvider as AdminUserController;
@@ -14,6 +15,10 @@ if (is_readable('/htdocs/platform/config.php')) {
 }
 
 $autoloader = require __DIR__ . "/server/vendor/autoload.php";
+
+if (isset(\Config::$CMS_RPC_URL)) {
+    ThriftService::setEndPoint(\Config::$CMS_RPC_URL);
+}
 
 if (isset(\Config::$COUCHBASE_ENABLE) && \Config::$COUCHBASE_ENABLE) {
     LoginService::startCouchbaseSession(\Config::$COUCHBASE_SERVER_HOSTS);
