@@ -30,9 +30,10 @@ if (isset(\Config::$COUCHBASE_ENABLE) && \Config::$COUCHBASE_ENABLE) {
     LoginService::startSession();
 }
 
-$app = new CmsApplication([
-    'twig.path' => __DIR__ . '/server/views'
-]);
+$app = new CmsApplication();
+$app['twig.path'] = [
+    __DIR__ . '/server/views'
+];
 
 // try MiniRouter first
 $app->before(function (Request $request) {

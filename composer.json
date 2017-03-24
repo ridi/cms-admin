@@ -19,8 +19,7 @@
     "silex/silex": "^2.0",
     "twig/twig": "^2.0.0",
     "illuminate/database": "^5.4",
-    "sentry/sentry": "^1.6",
-    "moriony/silex-sentry-provider": "~2.0.0"
+    "sentry/sentry": "^1.6"
   },
   "require-dev": {
   },
