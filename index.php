@@ -11,22 +11,30 @@ use Symfony\Component\HttpFoundation\Request;
 require_once 'config.local.php';
 $autoloader = require __DIR__ . "/server/vendor/autoload.php";
 
+// set sentry service
+$sentry_dsn = \Config::$SENTRY_KEY;
+if (isset($sentry_dsn)) {
+    $client = new Raven_Client($sentry_dsn);
+    $client->install();
+}
+
+// set thrift end point
 if (isset(\Config::$CMS_RPC_URL)) {
     ThriftService::setEndPoint(\Config::$CMS_RPC_URL);
 }
 
+// start session
 if (isset(\Config::$COUCHBASE_ENABLE) && \Config::$COUCHBASE_ENABLE) {
     LoginService::startCouchbaseSession(\Config::$COUCHBASE_SERVER_HOSTS);
 } else {
     LoginService::startSession();
 }
 
-$app = new CmsApplication();
-$app['twig.path'] = [
-    __DIR__ . '/server/views'
-];
+$app = new CmsApplication([
+    'twig.path' => __DIR__ . '/server/views'
+]);
 
-// Try MiniRouter first
+// try MiniRouter first
 $app->before(function (Request $request) {
     return MiniRouter::shouldRedirectForLogin($request);
 });

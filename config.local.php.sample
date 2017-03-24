@@ -11,6 +11,7 @@ class Config
     public static $SSL_HOST_LINK;
 
     public static $UNDER_DEV = true;
+    public static $SENTRY_KEY = null;
 
     public static $ENABLE_SSL = false;
     public static $COUCHBASE_ENABLE = false;
