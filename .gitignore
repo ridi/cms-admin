@@ -2,5 +2,6 @@
 client/dist
 client/node_modules
 composer.lock
+docs/deploy/servers/*
 server/vendor
 config.local.php
