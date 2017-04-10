@@ -78,7 +78,7 @@ class UserControllerProvider implements ControllerProviderInterface
 
     public function createUser(CmsApplication $app, Request $request)
     {
-        $user_id = $request->get('id');
+        $user_id = trim($request->get('id'));
 
         try {
             $adminUserDto = new AdminUserDto($request);
