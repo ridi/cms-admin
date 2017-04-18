@@ -109,7 +109,7 @@ class MenuService
         $submenu->delete();
     }
 
-    public static function getUsers($menu_id)
+    public static function getUsersByMenuId($menu_id)
     {
         return AdminMenu::find($menu_id)->users->toArray();
     }

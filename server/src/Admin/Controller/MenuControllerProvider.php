@@ -124,8 +124,8 @@ class MenuControllerProvider implements ControllerProviderInterface
 
     public function users(CmsApplication $app, $menu_id)
     {
-        $users = AdminMenuService::getUsers($menu_id);
+        $users = AdminMenuService::getUsersByMenuId($menu_id);
 
-        return $app->json((array)$users);
+        return $app->json($users);
     }
 }
