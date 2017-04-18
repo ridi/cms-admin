@@ -1,5 +1,6 @@
 import React from 'react';
 import {Modal} from 'react-bootstrap/lib';
+import axios from 'axios';
 
 
 class UserRow extends React.Component {
@@ -24,24 +25,18 @@ class MenuUsersTable extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`/super/menus/${this.props.menuId}/users`, {credentials: 'same-origin'})
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          console.log(response);
-        }
-      })
-      .then(json => {
-        this.setState({users: json.data});
+    axios.get(`/super/menus/${this.props.menuId}/users`)
+      .then(res => {
+        console.log(res);
+        this.setState({users: res.data.data});
       }).catch(err => {
         console.log(err);
       });
   }
 
   render() {
-    const userRows = this.state.users.map(
-      user => <UserRow key={user.id} id={user.id} name={user.name}/>
+    const userRows = this.state.users.map(user =>
+      <UserRow key={user.id} id={user.id} name={user.name}/>
     );
 
     return (
