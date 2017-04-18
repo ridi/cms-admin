@@ -27,7 +27,7 @@ class MenuControllerProvider implements ControllerProviderInterface
         $controllers->put('menus/{menu_id}/submenus/{submenu_id}', [$this, 'updateSubmenu']);
         $controllers->delete('menus/{menu_id}/submenus/{submenu_id}', [$this, 'deleteSubmenu']);
 
-		$controllers->get('menus/{menu_id}/users', [$this, 'users']);
+        $controllers->get('menus/{menu_id}/users', [$this, 'users']);
 
         return $controllers;
     }
@@ -122,11 +122,10 @@ class MenuControllerProvider implements ControllerProviderInterface
         return Response::create('성공적으로 삭제하였습니다.', Response::HTTP_NO_CONTENT);
     }
 
-	public function users(CmsApplication $app, $menu_id)
-	{
-		$json = new JsonDto();
-		$json->data = AdminMenuService::getUsers($menu_id);
+    public function users(CmsApplication $app, $menu_id)
+    {
+        $users = AdminMenuService::getUsers($menu_id);
 
-		return $app->json((array)$json);
-	}
+        return $app->json((array)$users);
+    }
 }

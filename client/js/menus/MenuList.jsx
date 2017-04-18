@@ -161,8 +161,8 @@ export default class MenuList extends React.Component {
     this.setState({
       menuUsers: {
         show: true,
-        menuId: menuId
-      }
+        menuId,
+      },
     });
   }
 
@@ -170,8 +170,8 @@ export default class MenuList extends React.Component {
     this.setState({
       menuUsers: {
         show: false,
-        menuId: 0
-      }
+        menuId: 0,
+      },
     });
   }
 
@@ -197,7 +197,7 @@ export default class MenuList extends React.Component {
             <thead>
               <tr>
                 <th />
-                <th>ID <span className="glyphicon glyphicon-resize-vertical"/></th>
+                <th>ID <span className="glyphicon glyphicon-resize-vertical" /></th>
                 <th>메뉴 제목</th>
                 <th>메뉴 URL</th>
                 <th>메뉴 깊이</th>
@@ -220,7 +220,7 @@ export default class MenuList extends React.Component {
               {this.props.menus.map(menu =>
                 <Menu
                   key={menu.id} {...menu} onShowAjaxMenus={this.showAjaxMenus}
-                  onShowMenuUsers={()=>this.showMenuUsers(menu.id)}
+                  onShowMenuUsers={() => this.showMenuUsers(menu.id)}
                 />
               )}
             </Sortable>
@@ -233,10 +233,16 @@ export default class MenuList extends React.Component {
           </nav>
         </form>
 
-        <Submenus ref={(e) => this.modal = e} />
-        <MenuUsers showModal={this.state.menuUsers.show} menuId={this.state.menuUsers.menuId}
-                   closeModal={this.hideMenuUsers} />
+        <Submenus ref={(e) => { this.modal = e; }} />
+        <MenuUsers
+          showModal={this.state.menuUsers.show} menuId={this.state.menuUsers.menuId}
+          closeModal={this.hideMenuUsers}
+        />
       </div>
     );
   }
 }
+
+MenuList.propTypes = {
+  menus: React.PropTypes.array.isRequired,
+};

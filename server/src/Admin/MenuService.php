@@ -110,9 +110,9 @@ class MenuService
     }
 
     public static function getUsers($menu_id)
-	{
-		return AdminMenu::find($menu_id)->users->toArray();
-	}
+    {
+        return AdminMenu::find($menu_id)->users->toArray();
+    }
 
     private static function _validateMenu(array $menuArray)
     {
