@@ -10,26 +10,30 @@ use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Cms\MiniRouter;
 use Symfony\Component\HttpFoundation\Request;
 
-require_once 'config.local.php';
 $autoloader = require __DIR__ . "/server/vendor/autoload.php";
 
-require_once 'bootstrap.php';
+$dotenv = new Dotenv\Dotenv(__DIR__, '.env');
+$dotenv->load();
+
+require_once __DIR__ . "/bootstrap.php";
 
 // set sentry service
-$sentry_dsn = \Config::$SENTRY_KEY;
+$sentry_dsn = $_ENV['SENTRY_KEY'];
 if (!empty($sentry_dsn)) {
     $client = new Raven_Client($sentry_dsn);
     $client->install();
 }
 
 // set thrift end point
-if (!empty(\Config::$CMS_RPC_URL)) {
-    ThriftService::setEndPoint(\Config::$CMS_RPC_URL);
+$cms_rpc_url = $_ENV['CMS_RPC_URL'];
+if (!empty($cms_rpc_url)) {
+    ThriftService::setEndPoint($cms_rpc_url);
 }
 
 // start session
-if (isset(\Config::$COUCHBASE_ENABLE) && \Config::$COUCHBASE_ENABLE) {
-    LoginService::startCouchbaseSession(\Config::$COUCHBASE_SERVER_HOSTS);
+$couchbase_host = $_ENV['COUCHBASE_HOST'];
+if (isset($couchbase_host) && $couchbase_host !== '') {
+    LoginService::startCouchbaseSession(explode(',', $couchbase_host));
 } else {
     LoginService::startSession();
 }

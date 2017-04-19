@@ -1,13 +1,12 @@
 <?php
 
 $capsule = new Illuminate\Database\Capsule\Manager();
-$params = \Config::getConnectionParams('default');
 $capsule->addConnection([
-    'driver' => 'mysql',
-    'host' => $params['host'],
-    'database' => 'bom',
-    'username' => $params['user'],
-    'password' => $params['password'],
+'driver' => 'mysql',
+    'host' => $_ENV['MYSQL_HOST'],
+    'database' => $_ENV['MYSQL_DATABASE'],
+    'username' => $_ENV['MYSQL_USER'],
+    'password' => $_ENV['MYSQL_PASSWORD'],
     'charset' => 'utf8',
     'collation' => 'utf8_unicode_ci',
     'prefix' => '',
