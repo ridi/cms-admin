@@ -1,6 +1,7 @@
 import React from 'react';
 import Sortable from 'react-sortablejs';
 import Submenus from './Submenus';
+import MenuUsers from './MenuUsers';
 
 
 function getMenuTypeString(menu) {
@@ -47,6 +48,14 @@ const Menu = props => (
         보기
       </button>
     </td>
+    <td>
+      <button
+        type="button" className="btn btn-default btn-sm js_show_ajax_menus"
+        onClick={() => props.onShowMenuUsers()}
+      >
+        보기
+      </button>
+    </td>
   </tr>
 );
 
@@ -60,6 +69,7 @@ Menu.propTypes = {
   is_newtab: React.PropTypes.bool.isRequired,
   is_show: React.PropTypes.bool.isRequired,
   onShowAjaxMenus: React.PropTypes.func.isRequired,
+  onShowMenuUsers: React.PropTypes.func.isRequired,
 };
 
 
@@ -71,6 +81,15 @@ export default class MenuList extends React.Component {
   constructor() {
     super();
     this.showAjaxMenus = this.showAjaxMenus.bind(this);
+    this.showMenuUsers = this.showMenuUsers.bind(this);
+    this.hideMenuUsers = this.hideMenuUsers.bind(this);
+
+    this.state = {
+      menuUsers: {
+        show: false,
+        menuId: 0
+      }
+    };
   }
 
   componentDidMount() {
@@ -138,6 +157,24 @@ export default class MenuList extends React.Component {
     this.modal.show(menuId, menuTitle);
   }
 
+  showMenuUsers(menuId) {
+    this.setState({
+      menuUsers: {
+        show: true,
+        menuId,
+      },
+    });
+  }
+
+  hideMenuUsers() {
+    this.setState({
+      menuUsers: {
+        show: false,
+        menuId: 0,
+      },
+    });
+  }
+
   render() {
     return (
       <div>
@@ -155,11 +192,12 @@ export default class MenuList extends React.Component {
               <col width="80" />
               <col width="80" />
               <col width="80" />
+              <col width="80" />
             </colgroup>
             <thead>
               <tr>
                 <th />
-                <th>ID <span className="glyphicon glyphicon-resize-vertical"/></th>
+                <th>ID <span className="glyphicon glyphicon-resize-vertical" /></th>
                 <th>메뉴 제목</th>
                 <th>메뉴 URL</th>
                 <th>메뉴 깊이</th>
@@ -168,6 +206,7 @@ export default class MenuList extends React.Component {
                 <th>사용 여부</th>
                 <th>노출 여부</th>
                 <th>Ajax 관리</th>
+                <th>사용자</th>
               </tr>
             </thead>
             <Sortable
@@ -179,7 +218,10 @@ export default class MenuList extends React.Component {
               id="js_menu_list"
             >
               {this.props.menus.map(menu =>
-                <Menu key={menu.id} {...menu} onShowAjaxMenus={this.showAjaxMenus} />
+                <Menu
+                  key={menu.id} {...menu} onShowAjaxMenus={this.showAjaxMenus}
+                  onShowMenuUsers={() => this.showMenuUsers(menu.id)}
+                />
               )}
             </Sortable>
           </table>
@@ -191,8 +233,16 @@ export default class MenuList extends React.Component {
           </nav>
         </form>
 
-        <Submenus ref={(e) => this.modal = e} />
+        <Submenus ref={(e) => { this.modal = e; }} />
+        <MenuUsers
+          showModal={this.state.menuUsers.show} menuId={this.state.menuUsers.menuId}
+          closeModal={this.hideMenuUsers}
+        />
       </div>
     );
   }
 }
+
+MenuList.propTypes = {
+  menus: React.PropTypes.array.isRequired,
+};

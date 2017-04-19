@@ -109,6 +109,11 @@ class MenuService
         $submenu->delete();
     }
 
+    public static function getUsersByMenuId($menu_id)
+    {
+        return AdminMenu::find($menu_id)->users->toArray();
+    }
+
     private static function _validateMenu(array $menuArray)
     {
         ValidationUtils::checkNullField($menuArray['menu_title'], '메뉴 제목을 입력하여 주십시오.');
