@@ -3,7 +3,7 @@
 all: server client
 
 server:
-	composer update --no-dev --optimize-autoloader
+	composer install --no-dev --optimize-autoloader
 
 client:
 	@cd client && npm install && npm run build
