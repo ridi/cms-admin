@@ -41,4 +41,12 @@ class AdminUser extends Model
             'menu_id'
         );
     }
+
+    public function permissionLogs()
+    {
+        return $this->hasMany(
+            AdminUserPermissionLog::class,
+            'user_id'
+        );
+    }
 }

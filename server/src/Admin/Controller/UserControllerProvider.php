@@ -22,6 +22,7 @@ class UserControllerProvider implements ControllerProviderInterface
         $controllers->post('users/{user_id}', [$this, 'updateUser']);
         $controllers->delete('users/{user_id}', [$this, 'deleteUser']);
         $controllers->post('users/{user_id}/permissions', [$this, 'updateUserPermissions']);
+        $controllers->get('users/{user_id}/logs/permissions', [$this, 'permissionLogs']);
 
         return $controllers;
     }
@@ -157,5 +158,12 @@ class UserControllerProvider implements ControllerProviderInterface
         }
 
         return $app->redirect('/super/users/' . $user_id);
+    }
+
+    public function permissionLogs(CmsApplication $app, $user_id)
+    {
+        $logs = AdminUserService::permissionLogs($user_id);
+
+        return $app->json($logs);
     }
 }
