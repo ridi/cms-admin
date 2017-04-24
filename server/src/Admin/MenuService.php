@@ -2,7 +2,6 @@
 namespace Ridibooks\Platform\Cms\Admin;
 
 use Illuminate\Database\Capsule\Manager as DB;
-use Ridibooks\Exception\MsgException;
 use Ridibooks\Platform\Cms\Admin\Dto\AdminMenuDto;
 use Ridibooks\Platform\Cms\Admin\Model\AdminMenu;
 use Ridibooks\Platform\Cms\Admin\Model\AdminMenuAjax;
@@ -101,10 +100,10 @@ class MenuService
         /** @var AdminMenuAjax $submenu */
         $submenu = AdminMenuAjax::find($submenu_id);
         if (!$submenu) {
-            throw new MsgException('존재하지 않는 서브메뉴입니다.');
+            throw new \Exception('존재하지 않는 서브메뉴입니다.');
         }
         if ($submenu->menu_id != $menu_id) {
-            throw new MsgException('잘못된 서브메뉴입니다.');
+            throw new \Exception('잘못된 서브메뉴입니다.');
         }
         $submenu->delete();
     }
