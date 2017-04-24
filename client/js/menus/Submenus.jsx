@@ -51,7 +51,7 @@ export default class Submenus extends React.Component {
     }
 
     const menuId = $('#ajax_menu_id').val();
-    $('#ajaxMenuUpdateForm').find('input:checked').forEach((i, e) => {
+    $('#ajaxMenuUpdateForm').find('input:checked').map((i, e) => {
       const $tr = $(e).parents('tr');
       const submenuId = $tr.find('input[type=checkbox]').val();
 
