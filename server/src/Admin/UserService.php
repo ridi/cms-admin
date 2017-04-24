@@ -1,12 +1,8 @@
 <?php
 namespace Ridibooks\Platform\Cms\Admin;
 
-use Illuminate\Database\Capsule\Manager as DB;
 use Ridibooks\Platform\Cms\Admin\Model\AdminUser;
-use Ridibooks\Platform\Cms\Admin\Model\AdminUserPermissionLog;
-use Ridibooks\Platform\Cms\Auth\LoginService;
 use Ridibooks\Platform\Cms\Auth\PasswordService;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class UserService
 {
@@ -102,37 +98,6 @@ class UserService
         AdminUser::destroy($user_id);
     }
 
-    public static function updateUserPermissions($user_id, $tag_ids, $menu_ids)
-    {
-        /** @var AdminUser $user */
-        $user = AdminUser::find($user_id);
-        if (!$user) {
-            throw new ResourceNotFoundException();
-        }
-
-        $log_record = self::_createPermissionLog($user_id,
-            self::_arrayToString($tag_ids),
-            self::_arrayToString($menu_ids));
-
-        DB::connection()->transaction(function () use ($user, $tag_ids, $menu_ids, $log_record) {
-            $user->tags()->sync($tag_ids);
-            $user->menus()->sync($menu_ids);
-            if ($log_record) {
-                $log_record->save();
-            }
-        });
-    }
-
-    public static function permissionLogs($user_id)
-    {
-        $user = AdminUser::find($user_id);
-        if (!$user) {
-            throw new ResourceNotFoundException();
-        }
-
-        return $user->permissionLogs->toArray();
-    }
-
     /**Admin 계정 insert validator
      */
     private static function _validateAdminUserInsert(array $adminUser)
@@ -167,29 +132,5 @@ class UserService
         if (!isset($adminUser['is_use']) || $adminUser['is_use'] === '') {
             throw new \Exception('사용 여부를 입력하여 주십시오.');
         }
-    }
-
-    private static function _arrayToString($array)
-    {
-        return implode(",", array_map('strval', $array));
-    }
-
-    private static function _createPermissionLog($user_id, $tag_ids, $menu_ids)
-    {
-        $last_log = AdminUserPermissionLog::where('user_id', $user_id)->latest()->first();
-        if ($last_log &&
-            $last_log->menu_ids === $menu_ids &&
-            $last_log->tag_ids === $tag_ids
-        ) {
-            return null;
-        }
-
-        $new_log = new AdminUserPermissionLog();
-        $new_log->user_id = $user_id;
-        $new_log->menu_ids = $menu_ids;
-        $new_log->tag_ids = $tag_ids;
-        $new_log->edited_by = LoginService::GetAdminID();
-
-        return $new_log;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace Ridibooks\Platform\Cms\Admin\Controller;
 
+use Ridibooks\Platform\Cms\Admin\LogService as AdminLogService;
 use Ridibooks\Platform\Cms\Admin\UserService as AdminUserService;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Silex\Api\ControllerProviderInterface;
@@ -151,8 +152,9 @@ class UserControllerProvider implements ControllerProviderInterface
                 $menu_ids = [];
             }
 
-            AdminUserService::updateUserPermissions($user_id, $tag_ids, $menu_ids);
+            AdminLogService::updateUserPermissions($user_id, $tag_ids, $menu_ids);
             $app->addFlashInfo('성공적으로 수정하였습니다.');
+
         } catch (\Exception $e) {
             $app->addFlashError($e->getMessage());
         }
@@ -163,7 +165,6 @@ class UserControllerProvider implements ControllerProviderInterface
     public function permissionLogs(CmsApplication $app, $user_id)
     {
         $logs = AdminUserService::permissionLogs($user_id);
-
         return $app->json($logs);
     }
 }

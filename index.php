@@ -4,6 +4,7 @@ use Ridibooks\Cms\Thrift\ThriftService;
 use Ridibooks\Platform\Cms\Admin\Controller\MenuControllerProvider as AdminMenuController;
 use Ridibooks\Platform\Cms\Admin\Controller\TagControllerProvider as AdminTagController;
 use Ridibooks\Platform\Cms\Admin\Controller\UserControllerProvider as AdminUserController;
+use Ridibooks\Platform\Cms\Admin\Controller\LogController as AdminLogController;
 use Ridibooks\Platform\Cms\Auth\LoginService;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Cms\MiniRouter;
@@ -53,5 +54,6 @@ $app->before(function (Request $request) {
 $app->mount('/', new AdminUserController());
 $app->mount('/', new AdminTagController());
 $app->mount('/', new AdminMenuController());
+$app->mount('/', new AdminLogController());
 
 $app->run();
