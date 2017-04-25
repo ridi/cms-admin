@@ -23,11 +23,11 @@
     "css-loader": "^0.24.0",
     "eslint": "^3.19.0",
     "eslint-config-ridibooks": "*",
-    "extract-text-webpack-plugin": "^1.0.1",
+    "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.9.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.2"
+    "webpack": "^2.4.1"
   },
   "scripts": {
     "lint": "eslint js/**",
