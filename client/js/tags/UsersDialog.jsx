@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 export default class UsersDialog extends React.Component {
   renderAdmins() {
@@ -41,8 +42,8 @@ export default class UsersDialog extends React.Component {
 }
 
 UsersDialog.propTypes = {
-  loading: React.PropTypes.bool,
-  data: React.PropTypes.array,
-  show: React.PropTypes.bool,
-  onClose: React.PropTypes.func,
+  loading: PropTypes.bool,
+  data: PropTypes.array,
+  show: PropTypes.bool,
+  onClose: PropTypes.func,
 };

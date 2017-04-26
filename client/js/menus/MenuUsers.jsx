@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap/lib';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 
@@ -14,8 +15,8 @@ function UserRow(props) {
 }
 
 UserRow.propTypes = {
-  id: React.PropTypes.string.isRequired,
-  name: React.PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 class MenuUsersTable extends React.Component {
@@ -50,7 +51,7 @@ class MenuUsersTable extends React.Component {
 }
 
 MenuUsersTable.propTypes = {
-  menuId: React.PropTypes.number.isRequired,
+  menuId: PropTypes.number.isRequired,
 };
 
 export default function MenuUsers(props) {
@@ -72,7 +73,7 @@ export default function MenuUsers(props) {
 }
 
 MenuUsers.propTypes = {
-  menuId: React.PropTypes.number.isRequired,
-  showModal: React.PropTypes.bool.isRequired,
-  closeModal: React.PropTypes.func.isRequired,
+  menuId: PropTypes.number.isRequired,
+  showModal: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
 };

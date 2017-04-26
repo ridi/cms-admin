@@ -1,5 +1,6 @@
 import React from 'react';
 import Sortable from 'react-sortablejs';
+import PropTypes from 'prop-types';
 import Submenus from './Submenus';
 import MenuUsers from './MenuUsers';
 
@@ -60,16 +61,16 @@ const Menu = props => (
 );
 
 Menu.propTypes = {
-  id: React.PropTypes.number.isRequired,
-  menu_title: React.PropTypes.string.isRequired,
-  menu_url: React.PropTypes.string.isRequired,
-  menu_deep: React.PropTypes.number.isRequired,
-  menu_order: React.PropTypes.number.isRequired,
-  is_use: React.PropTypes.bool.isRequired,
-  is_newtab: React.PropTypes.bool.isRequired,
-  is_show: React.PropTypes.bool.isRequired,
-  onShowAjaxMenus: React.PropTypes.func.isRequired,
-  onShowMenuUsers: React.PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+  menu_title: PropTypes.string.isRequired,
+  menu_url: PropTypes.string.isRequired,
+  menu_deep: PropTypes.number.isRequired,
+  menu_order: PropTypes.number.isRequired,
+  is_use: PropTypes.bool.isRequired,
+  is_newtab: PropTypes.bool.isRequired,
+  is_show: PropTypes.bool.isRequired,
+  onShowAjaxMenus: PropTypes.func.isRequired,
+  onShowMenuUsers: PropTypes.func.isRequired,
 };
 
 
@@ -87,8 +88,8 @@ export default class MenuList extends React.Component {
     this.state = {
       menuUsers: {
         show: false,
-        menuId: 0
-      }
+        menuId: 0,
+      },
     };
   }
 
@@ -244,5 +245,5 @@ export default class MenuList extends React.Component {
 }
 
 MenuList.propTypes = {
-  menus: React.PropTypes.array.isRequired,
+  menus: PropTypes.array.isRequired,
 };

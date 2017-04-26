@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TagRow from './TagRow';
-
 
 export default class TagList extends React.Component {
   componentDidMount() {
@@ -114,8 +114,8 @@ export default class TagList extends React.Component {
 }
 
 TagList.propTypes = {
-  tags: React.PropTypes.array,
-  onMenusCountClick: React.PropTypes.func,
-  onUsersCountClick: React.PropTypes.func,
+  tags: PropTypes.array,
+  onMenusCountClick: PropTypes.func,
+  onUsersCountClick: PropTypes.func,
 };
 

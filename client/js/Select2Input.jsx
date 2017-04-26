@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Select2Input extends React.Component {
   componentWillUpdate(nextProps) {
@@ -57,14 +58,14 @@ class Select2Input extends React.Component {
 }
 
 Select2Input.propTypes = {
-  name: React.PropTypes.string,
-  value: React.PropTypes.array,
-  data: React.PropTypes.array,
-  multiple: React.PropTypes.bool,
-  placeholder: React.PropTypes.string,
-  disabled: React.PropTypes.bool,
-  onAdd: React.PropTypes.func,
-  onRemove: React.PropTypes.func,
+  name: PropTypes.string,
+  value: PropTypes.array,
+  data: PropTypes.array,
+  multiple: PropTypes.bool,
+  placeholder: PropTypes.string,
+  disabled: PropTypes.bool,
+  onAdd: PropTypes.func,
+  onRemove: PropTypes.func,
 };
 
 Select2Input.defaultProps = {
