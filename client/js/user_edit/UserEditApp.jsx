@@ -1,27 +1,34 @@
+/* eslint-env browser */
+/* global $ */
 import React from 'react';
 import UserDetailForm from './UserDetailForm';
 import UserPermissionForm from './UserPermissionForm';
 import UserCpForm from './UserCpForm';
 
 class UserEditApp extends React.Component {
-  onDelete = (id) => {
+  constructor() {
+    super();
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  handleDelete(id) {
     if (!confirm('삭제하시겠습니까?')) {
       return;
     }
 
-    $.ajax('/super/users/'+id,
+    $.ajax(`/super/users/${id}`,
       {
         type: 'delete',
-        success: function () {
+        success: () => {
           alert('성공적으로 삭제되었습니다.');
-          location.href='/super/users';
+          location.href = '/super/users';
         },
-        error: function (xhr, status, e) {
+        error: (xhr, status, e) => {
           alert(e);
-        }
+        },
       }
     );
-  };
+  }
 
   renderDetailForm() {
     let { userDetail } = this.props;
@@ -53,7 +60,7 @@ class UserEditApp extends React.Component {
 
     const { admin_id } = this.props;
     return (
-      <UserCpForm id={this.props.userDetail.id} admin_id={admin_id}/>
+      <UserCpForm id={this.props.userDetail.id} admin_id={admin_id} />
     );
   }
 
@@ -63,7 +70,7 @@ class UserEditApp extends React.Component {
     }
 
     return (
-      <a className="btn btn-default btn-danger pull-right" onClick={() => {this.onDelete(this.props.userDetail.id)}}>삭제</a>
+      <a className="btn btn-default btn-danger pull-right" onClick={() => { this.handleDelete(this.props.userDetail.id); }}>삭제</a>
     );
   }
 

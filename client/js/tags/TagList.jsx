@@ -1,3 +1,5 @@
+/* eslint-env browser */
+/* global $ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import TagRow from './TagRow';
@@ -28,6 +30,8 @@ export default class TagList extends React.Component {
           $tr.detach();
         }
       });
+
+      return null;
     });
   }
 
@@ -46,7 +50,7 @@ export default class TagList extends React.Component {
           type: 'PUT',
           data,
         });
-      })
+      }),
     ).done(() => {
       window.location.reload();
     });
@@ -114,8 +118,8 @@ export default class TagList extends React.Component {
 }
 
 TagList.propTypes = {
-  tags: PropTypes.array,
-  onMenusCountClick: PropTypes.func,
-  onUsersCountClick: PropTypes.func,
+  tags: PropTypes.array.isRequired,
+  onMenusCountClick: PropTypes.func.isRequired,
+  onUsersCountClick: PropTypes.func.isRequired,
 };
 

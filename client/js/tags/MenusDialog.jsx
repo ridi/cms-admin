@@ -44,12 +44,12 @@ export default class MenusDialog extends React.Component {
 }
 
 MenusDialog.propTypes = {
-  tagId: PropTypes.number,
-  show: PropTypes.bool,
-  loading: PropTypes.bool,
-  selected: PropTypes.array,
-  data: PropTypes.array,
-  onAdd: PropTypes.func,
-  onDelete: PropTypes.func,
-  onClose: PropTypes.func,
+  tagId: PropTypes.number.isRequired,
+  show: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+  selected: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+  onAdd: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };

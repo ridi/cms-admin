@@ -1,3 +1,5 @@
+/* eslint-env browser */
+/* global $ */
 import React from 'react';
 
 export default class Submenus extends React.Component {
@@ -39,7 +41,7 @@ export default class Submenus extends React.Component {
           type: 'PUT',
           data,
         });
-      })
+      }),
     ).done(() => {
       this.show($('#ajax_menu_id').val(), $('#ajax_menu_title').val());
     });
@@ -61,6 +63,8 @@ export default class Submenus extends React.Component {
       }).done(() => {
         $tr.detach();
       });
+
+      return null;
     });
   }
 

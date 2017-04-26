@@ -15,7 +15,9 @@ export default class UsersDialog extends React.Component {
         {data.map(admin => (
           <li key={admin.id}>
             <h4>
-              <a className="label label-default" href={`/super/users/${admin.id}`} target="_blank" rel="noopener noreferrer">{admin.name}</a>
+              <a className="label label-default" href={`/super/users/${admin.id}`} target="_blank" rel="noopener noreferrer">
+                {admin.name}
+              </a>
             </h4>
           </li>
         ))}
@@ -42,8 +44,8 @@ export default class UsersDialog extends React.Component {
 }
 
 UsersDialog.propTypes = {
-  loading: PropTypes.bool,
-  data: PropTypes.array,
-  show: PropTypes.bool,
-  onClose: PropTypes.func,
+  loading: PropTypes.bool.isRequired,
+  data: PropTypes.array.isRequired,
+  show: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };

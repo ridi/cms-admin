@@ -31,16 +31,16 @@ const TagRow = (props) => {
 };
 
 TagRow.propTypes = {
-  id: PropTypes.number,
-  name: PropTypes.string,
-  creator: PropTypes.string,
-  isUse: PropTypes.bool,
-  createdAt: PropTypes.string,
-  updatedAt: PropTypes.string,
-  menusCount: PropTypes.number,
-  usersCount: PropTypes.number,
-  onMenusCountClick: PropTypes.func,
-  onUsersCountClick: PropTypes.func,
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  creator: PropTypes.string.isRequired,
+  isUse: PropTypes.bool.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  updatedAt: PropTypes.string.isRequired,
+  menusCount: PropTypes.number.isRequired,
+  usersCount: PropTypes.number.isRequired,
+  onMenusCountClick: PropTypes.func.isRequired,
+  onUsersCountClick: PropTypes.func.isRequired,
 };
 
 export default TagRow;

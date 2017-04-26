@@ -1,3 +1,5 @@
+/* eslint-env browser */
+/* global $ */
 import React from 'react';
 import axios from 'axios';
 import Select2Input from '../Select2Input';
@@ -5,6 +7,12 @@ import Select2Input from '../Select2Input';
 class UserPermissionForm extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleMenuAdd = this.handleMenuAdd.bind(this);
+    this.handleMenuRemove = this.handleMenuRemove.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.handleTagAdd = this.handleTagAdd.bind(this);
+    this.handleTagRemove = this.handleTagRemove.bind(this);
 
     this.state = {
       tagFetching: true,
@@ -48,13 +56,13 @@ class UserPermissionForm extends React.Component {
     });
   }
 
-  onMenuAdd = (id) => {
+  handleMenuAdd(id) {
     this.setState(Object.assign({}, this.state, {
       menues: this.state.menues.concat(id)
     }));
   };
 
-  onMenuRemove = (id) => {
+  handleMenuRemove(id) {
     let targetIndex = this.state.menues.indexOf(id);
     if (targetIndex !== -1) {
       this.setState(Object.assign({}, this.state, {
@@ -63,13 +71,13 @@ class UserPermissionForm extends React.Component {
     }
   };
 
-  onTagAdd = (id) => {
+  handleTagAdd(id) {
     this.setState(Object.assign({}, this.state, {
       tags: this.state.tags.concat(id)
     }));
   };
 
-  onTagRemove = (id) => {
+  handleTagRemove(id) {
     let targetIndex = this.state.tags.indexOf(id);
     if (targetIndex !== -1) {
       this.setState(Object.assign({}, this.state, {
@@ -78,7 +86,7 @@ class UserPermissionForm extends React.Component {
     }
   };
 
-  onSave = () => {
+  handleSave() {
     let data = {
       tag_ids: this.state.tags.join(','),
       menu_ids: this.state.menues.join(','),
@@ -111,14 +119,16 @@ class UserPermissionForm extends React.Component {
     const { tags, tagList } = this.state;
 
     return (
-      <Select2Input name="tag_ids"
-                    value={tags}
-                    data={tagList}
-                    multiple={true}
-                    placeholder="태그를 지정하세요"
-                    disabled={!id}
-                    onAdd={this.onTagAdd}
-                    onRemove={this.onTagRemove}/>
+      <Select2Input
+        name="tag_ids"
+        value={tags}
+        data={tagList}
+        multiple
+        placeholder="태그를 지정하세요"
+        disabled={!id}
+        onAdd={this.handleTagAdd}
+        onRemove={this.handleTagRemove}
+      />
     );
   }
 
@@ -127,14 +137,16 @@ class UserPermissionForm extends React.Component {
     const { menues, menuList } = this.state;
 
     return (
-      <Select2Input name="menu_ids"
-                    value={menues}
-                    data={menuList}
-                    multiple={true}
-                    placeholder="메뉴를 지정하세요"
-                    disabled={!id}
-                    onAdd={this.onMenuAdd}
-                    onRemove={this.onMenuRemove}/>
+      <Select2Input
+        name="menu_ids"
+        value={menues}
+        data={menuList}
+        multiple
+        placeholder="메뉴를 지정하세요"
+        disabled={!id}
+        onAdd={this.handleMenuAdd}
+        onRemove={this.handleMenuRemove}
+      />
     );
   }
 
@@ -143,7 +155,7 @@ class UserPermissionForm extends React.Component {
     const { tagFetching, menuFetching } = this.state;
 
     return (
-      <form className="form-horizontal" id="permissions" action={"/super/users/" + id + "/permissions"} method="POST">
+      <form className="form-horizontal" id="permissions" action={`/super/users/${id}/permissions`} method="POST">
         <div className="panel panel-primary">
           <div className="panel-heading">
             <h4 className="panel-title">유저 권한 관리</h4>
@@ -152,18 +164,18 @@ class UserPermissionForm extends React.Component {
             <div className="form-group form-group-sm">
               <label className="col-xs-2 control-label">태그</label>
               <div className="col-xs-10">
-                {tagFetching? this.renderLoading() : this.renderTagInput()}
+                {tagFetching ? this.renderLoading() : this.renderTagInput()}
               </div>
             </div>
             <div className="form-group form-group-sm">
               <label className="col-xs-2 control-label">메뉴</label>
               <div className="col-xs-10">
-                {menuFetching? this.renderLoading() : this.renderMenuInput()}
+                {menuFetching ? this.renderLoading() : this.renderMenuInput()}
               </div>
             </div>
             <div className="btn-group btn-group-sm pull-right">
-              <a id="js_cp_update" className="btn btn-default" onClick={this.onSave}>
-                <i className="glyphicon glyphicon-file"/> 저장
+              <a id="js_cp_update" className="btn btn-default" onClick={this.handleSave}>
+                <i className="glyphicon glyphicon-file" /> 저장
               </a>
             </div>
           </div>

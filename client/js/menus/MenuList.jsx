@@ -1,3 +1,5 @@
+/* eslint-env browser */
+/* global $ */
 import React from 'react';
 import Sortable from 'react-sortablejs';
 import PropTypes from 'prop-types';
@@ -12,7 +14,7 @@ function getMenuTypeString(menu) {
   return '';
 }
 
-const Menu = props => (
+const MenuRow = props => (
   <tr className={getMenuTypeString(props)}>
     <td>
       <input type="checkbox" />
@@ -60,7 +62,7 @@ const Menu = props => (
   </tr>
 );
 
-Menu.propTypes = {
+MenuRow.propTypes = {
   id: PropTypes.number.isRequired,
   menu_title: PropTypes.string.isRequired,
   menu_url: PropTypes.string.isRequired,
@@ -75,7 +77,7 @@ Menu.propTypes = {
 
 
 function checkChangedRow($tr) {
-  $tr.find('input[type=checkbox]').attr('checked', 'checked');
+  $tr.find('input[type=checkbox]').prop('checked', true);
 }
 
 export default class MenuList extends React.Component {
@@ -132,7 +134,7 @@ export default class MenuList extends React.Component {
           type: 'PUT',
           data,
         });
-      })
+      }),
     )
     .done(() => {
       window.location.reload();
@@ -219,10 +221,10 @@ export default class MenuList extends React.Component {
               id="js_menu_list"
             >
               {this.props.menus.map(menu =>
-                <Menu
+                <MenuRow
                   key={menu.id} {...menu} onShowAjaxMenus={this.showAjaxMenus}
                   onShowMenuUsers={() => this.showMenuUsers(menu.id)}
-                />
+                />,
               )}
             </Sortable>
           </table>

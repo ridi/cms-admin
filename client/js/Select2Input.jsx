@@ -1,13 +1,8 @@
+/* global $ */
 import React from 'react';
 import PropTypes from 'prop-types';
 
 class Select2Input extends React.Component {
-  componentWillUpdate(nextProps) {
-    if (JSON.stringify(this.props.value) !== JSON.stringify(nextProps.value)) {
-      $(this.selectInput).val(nextProps.value).trigger('change');
-    }
-  }
-
   componentDidMount() {
     const {onAdd, onRemove} = this.props;
 
@@ -25,6 +20,12 @@ class Select2Input extends React.Component {
         onRemove(data.id);
       }
     });
+  }
+
+  componentWillUpdate(nextProps) {
+    if (JSON.stringify(this.props.value) !== JSON.stringify(nextProps.value)) {
+      $(this.selectInput).val(nextProps.value).trigger('change');
+    }
   }
 
   renderOption(data) {
@@ -69,10 +70,11 @@ Select2Input.propTypes = {
 };
 
 Select2Input.defaultProps = {
-  fetching: false,
+  name: '',
   value: [],
   data: [],
   placeholder: '',
+  disabled: false,
   multiple: true,
   onAdd: undefined,
   onRemove: undefined,
