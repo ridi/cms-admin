@@ -47,8 +47,14 @@ MenusDialog.propTypes = {
   tagId: PropTypes.number.isRequired,
   show: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
-  selected: PropTypes.array.isRequired,
-  data: PropTypes.array.isRequired,
+  selected: PropTypes.arrayOf(PropTypes.number).isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    text: PropTypes.string,
+  })).isRequired,
   onAdd: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,

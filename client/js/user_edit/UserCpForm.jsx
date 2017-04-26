@@ -1,7 +1,6 @@
-/* eslint-env browser */
-/* global $ */
 import React from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import Select2Input from '../Select2Input';
 
 const PRODUCTION_CP_TYPE = 1;
@@ -55,7 +54,7 @@ class UserCpForm extends React.Component {
   getManagingCpList(type) {
     return axios('/admin/publisher/managers.ajax', {
       params: {
-        id: this.props.admin_id,
+        id: this.props.id,
         type,
       },
     });
@@ -169,7 +168,7 @@ class UserCpForm extends React.Component {
       <div className="progress">
         <div className="progress-bar progress-bar-striped active" style={{ width: '100%' }}>로딩중...</div>
       </div>
-    )
+    );
   }
 
   renderInput(cpType) {
@@ -253,5 +252,9 @@ class UserCpForm extends React.Component {
     );
   }
 }
+
+UserCpForm.propTypes = {
+  id: PropTypes.string.isRequired,
+};
 
 export default UserCpForm;

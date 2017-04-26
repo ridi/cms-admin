@@ -1,5 +1,3 @@
-/* eslint-env browser */
-/* global $ */
 import React from 'react';
 import Sortable from 'react-sortablejs';
 import PropTypes from 'prop-types';
@@ -114,28 +112,27 @@ export default class MenuList extends React.Component {
   }
 
   onUpdate() {
-    $.when.apply(
-      $,
-      $('#modifyForm').find('input:checked').map((i, e) => {
-        const $tr = $(e).parents('tr');
-        const menuId = $tr.find('input[name=id]').val();
-        const data = {
-          menu_title: $tr.find('input[name=menu_title]').val(),
-          menu_url: $tr.find('input[name=menu_url]').val(),
-          menu_deep: $tr.find('input[name=menu_deep]').val(),
-          menu_order: $tr.find('input[name=menu_order]').val(),
-          is_newtab: $tr.find('select[name=is_newtab]').val() === 'true' ? '1' : '0',
-          is_use: $tr.find('select[name=is_use]').val() === 'true' ? '1' : '0',
-          is_show: $tr.find('select[name=is_show]').val() === 'true' ? '1' : '0',
-        };
+    const args = $('#modifyForm').find('input:checked').map((i, e) => {
+      const $tr = $(e).parents('tr');
+      const menuId = $tr.find('input[name=id]').val();
+      const data = {
+        menu_title: $tr.find('input[name=menu_title]').val(),
+        menu_url: $tr.find('input[name=menu_url]').val(),
+        menu_deep: $tr.find('input[name=menu_deep]').val(),
+        menu_order: $tr.find('input[name=menu_order]').val(),
+        is_newtab: $tr.find('select[name=is_newtab]').val() === 'true' ? '1' : '0',
+        is_use: $tr.find('select[name=is_use]').val() === 'true' ? '1' : '0',
+        is_show: $tr.find('select[name=is_show]').val() === 'true' ? '1' : '0',
+      };
 
-        return $.ajax({
-          url: `/super/menus/${menuId}`,
-          type: 'PUT',
-          data,
-        });
-      }),
-    )
+      return $.ajax({
+        url: `/super/menus/${menuId}`,
+        type: 'PUT',
+        data,
+      });
+    });
+
+    $.when(...args)
     .done(() => {
       window.location.reload();
     });
@@ -216,7 +213,7 @@ export default class MenuList extends React.Component {
               tag="tbody"
               options={{
                 handle: '.js_sortable_handle',
-                onEnd: this.onSortEnd
+                onEnd: this.onSortEnd,
               }}
               id="js_menu_list"
             >
@@ -247,5 +244,14 @@ export default class MenuList extends React.Component {
 }
 
 MenuList.propTypes = {
-  menus: PropTypes.array.isRequired,
+  menus: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    menu_title: PropTypes.string,
+    menu_url: PropTypes.string,
+    menu_deep: PropTypes.number,
+    menu_order: PropTypes.number,
+    is_use: PropTypes.bool,
+    is_show: PropTypes.bool,
+    is_newtab: PropTypes.bool,
+  })).isRequired,
 };

@@ -1,6 +1,5 @@
-/* eslint-env browser */
-/* global $ */
 import React from 'react';
+import PropTypes from 'prop-types';
 import UserDetailForm from './UserDetailForm';
 import UserPermissionForm from './UserPermissionForm';
 import UserCpForm from './UserCpForm';
@@ -37,7 +36,7 @@ class UserEditApp extends React.Component {
     }
     const { id, name, team, is_use } = userDetail;
     return (
-      <UserDetailForm id={id} name={name} team={team} is_use={is_use}/>
+      <UserDetailForm id={id} name={name} team={team} is_use={is_use} />
     );
   }
 
@@ -58,9 +57,8 @@ class UserEditApp extends React.Component {
       return null;
     }
 
-    const { admin_id } = this.props;
     return (
-      <UserCpForm id={this.props.userDetail.id} admin_id={admin_id} />
+      <UserCpForm id={this.props.userDetail.id} />
     );
   }
 
@@ -93,5 +91,17 @@ class UserEditApp extends React.Component {
     );
   }
 }
+
+UserEditApp.propTypes = {
+  admin_id: PropTypes.string.isRequired,
+  userDetail: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    team: PropTypes.string,
+    is_use: PropTypes.string,
+  }).isRequired,
+  userTag: PropTypes.string.isRequired,
+  userMenu: PropTypes.string.isRequired,
+};
 
 export default UserEditApp;

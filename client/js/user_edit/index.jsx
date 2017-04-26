@@ -1,4 +1,3 @@
-/* eslint-env browser */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import '../base';
@@ -12,5 +11,5 @@ ReactDOM.render(
     userTag={window.userTag}
     userMenu={window.userMenu}
   />,
-  document.getElementById('content')
+  document.getElementById('content'),
 );

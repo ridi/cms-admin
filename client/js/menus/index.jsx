@@ -1,4 +1,3 @@
-/* eslint-env browser */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import '../base';
@@ -67,7 +66,7 @@ ReactDOM.render(
     <MenuCreate />
 
     <div className="alert alert-info">
-      메뉴 순서 변경시 변경할 메뉴는 해당 순서로 이동하고 기존에 위치한 메뉴는 아래로 밀려 내려갑니다.<br/>
+      메뉴 순서 변경시 변경할 메뉴는 해당 순서로 이동하고 기존에 위치한 메뉴는 아래로 밀려 내려갑니다.<br />
       메뉴 수정 시 좌측의 체크박스가 자동으로 선택되고, 체크박스가 선택된 메뉴만 저장이 됩니다.
     </div>
 

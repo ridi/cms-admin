@@ -1,5 +1,3 @@
-/* eslint-env browser */
-/* global $ */
 import React from 'react';
 import axios from 'axios';
 import Select2Input from '../Select2Input';

@@ -45,7 +45,13 @@ export default class UsersDialog extends React.Component {
 
 UsersDialog.propTypes = {
   loading: PropTypes.bool.isRequired,
-  data: PropTypes.array.isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    name: PropTypes.string,
+  })).isRequired,
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };

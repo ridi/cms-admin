@@ -1,4 +1,3 @@
-/* eslint-env browser */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import '../base';
@@ -8,5 +7,5 @@ ReactDOM.render(
   <div>
     <TagEdit tags={window.tags} />
   </div>,
-  document.getElementById('content')
+  document.getElementById('content'),
 );

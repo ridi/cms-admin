@@ -1,5 +1,3 @@
-/* eslint-env browser */
-/* global $ */
 import React from 'react';
 
 class UserDetailForm extends React.Component {
@@ -148,6 +146,7 @@ class UserDetailForm extends React.Component {
 UserDetailForm.defaultProps = {
   id: '',
   password: '',
+  name: '',
   team: '',
   is_use: '1',
 };

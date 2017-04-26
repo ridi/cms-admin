@@ -1,6 +1,5 @@
-/* eslint-env browser */
-/* global $ */
 import React from 'react';
+import PropTypes from 'prop-types';
 import TagList from './TagList';
 import UsersDialog from './UsersDialog';
 import MenusDialog from './MenusDialog';
@@ -45,11 +44,12 @@ export default class TagEdit extends React.Component {
     this.handleMenusCountClick = this.handleMenusCountClick.bind(this);
     this.handleMenusDlgClose = this.handleMenusDlgClose.bind(this);
     this.handleUsersCountClick = this.handleUsersCountClick.bind(this);
+    this.handleUsersDlgClose = this.handleUsersDlgClose.bind(this);
 
     this.state = {
       tags: props.tags,
       menus: [],
-      menusTag: undefined,
+      menusTag: 0,
       menusLoading: true,
       showMenusDlg: false,
       users: [],
@@ -81,18 +81,24 @@ export default class TagEdit extends React.Component {
           alert(returnData.msg);
         }
 
-        const newTags = this.state.tags.map(tag => {
+        const newTags = this.state.tags.map((tag) => {
+          let result = tag;
           if (tag.id === tagId) {
-            ++tag.menus_count;
+            result = Object.assign({}, tag, {
+              menus_count: tag.menus_count + 1,
+            });
           }
-          return tag;
+          return result;
         });
 
-        const newMenu = this.state.menus.map(menu => {
+        const newMenu = this.state.menus.map((menu) => {
+          let result = menu;
           if (menu.id === menuId) {
-            menu.selected = 'selected';
+            result = Object.assign({}, menu, {
+              selected: 'selected',
+            });
           }
-          return menu;
+          return result;
         });
 
         this.setState(Object.assign({}, this.state, {
@@ -109,17 +115,23 @@ export default class TagEdit extends React.Component {
       type: 'DELETE',
       success: () => {
         const newTags = this.state.tags.map((tag) => {
+          let result = tag;
           if (tag.id === tagId) {
-            --tag.menus_count;
+            result = Object.assign({}, tag, {
+              menus_count: tag.menus_count - 1,
+            });
           }
-          return tag;
+          return result;
         });
 
         const newMenu = this.state.menus.map((menu) => {
+          let result = menu;
           if (menu.id === menuId) {
-            delete menu.selected;
+            result = Object.assign({}, menu, {
+              selected: null,
+            });
           }
-          return menu;
+          return result;
         });
 
         this.setState(Object.assign({}, this.state, {
@@ -214,3 +226,12 @@ export default class TagEdit extends React.Component {
     );
   }
 }
+
+TagEdit.propTypes = {
+  tags: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    is_use: PropTypes.bool,
+    creator: PropTypes.string,
+  })).isRequired,
+};

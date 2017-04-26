@@ -1,10 +1,14 @@
-/* eslint-env browser */
-/* global $ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import TagRow from './TagRow';
 
 export default class TagList extends React.Component {
+  constructor() {
+    super();
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+  }
+
   componentDidMount() {
     // 태그 목록 컬럼 변동 시 check
     $('#updateForm input[name=name], #updateForm input[name=is_use]').change(function () {
@@ -13,7 +17,7 @@ export default class TagList extends React.Component {
     });
   }
 
-  onDelete() {
+  handleDelete() {
     if (!confirm('선택한 항목들을 삭제하시겠습니까?')) {
       return;
     }
@@ -35,23 +39,23 @@ export default class TagList extends React.Component {
     });
   }
 
-  onUpdate() {
-    $.when.apply($,
-      $('#updateForm input[name=changed]:checked').map((i, e) => {
-        const $tr = $(e).parents('tr');
-        const tagId = $tr.find('input[name=id]').val();
-        const data = {
-          name: $tr.find('input[name=name]').val(),
-          is_use: $tr.find('input[name=is_use]').prop('checked'),
-        };
+  handleUpdate() {
+    const args = $('#updateForm input[name=changed]:checked').map((i, e) => {
+      const $tr = $(e).parents('tr');
+      const tagId = $tr.find('input[name=id]').val();
+      const data = {
+        name: $tr.find('input[name=name]').val(),
+        is_use: $tr.find('input[name=is_use]').prop('checked'),
+      };
 
-        return $.ajax({
-          url: `/super/tags/${tagId}`,
-          type: 'PUT',
-          data,
-        });
-      }),
-    ).done(() => {
+      return $.ajax({
+        url: `/super/tags/${tagId}`,
+        type: 'PUT',
+        data,
+      });
+    });
+
+    $.when(...args).done(() => {
       window.location.reload();
     });
   }
@@ -76,7 +80,7 @@ export default class TagList extends React.Component {
           </colgroup>
           <thead>
             <tr>
-              <th></th>
+              <th />
               <th>ID</th>
               <th>태그 이름</th>
               <th>생성자</th>
@@ -95,7 +99,7 @@ export default class TagList extends React.Component {
                   id={tag.id}
                   isUse={tag.is_use}
                   name={tag.name}
-                  creator={tag.creator}
+                  creator={tag.creator ? tag.creator : ''}
                   createdAt={tag.created_at}
                   updatedAt={tag.updated_at}
                   menusCount={tag.menus_count}
@@ -108,8 +112,8 @@ export default class TagList extends React.Component {
         </table>
         <div>
           <div className="pull-right">
-            <button type="button" className="btn btn-danger" id="js_delete" onClick={this.onDelete}>삭제</button>
-            <button type="button" className="btn btn-primary" id="updateBtn" onClick={this.onUpdate}>저장</button>
+            <button type="button" className="btn btn-danger" id="js_delete" onClick={this.handleDelete}>삭제</button>
+            <button type="button" className="btn btn-primary" id="updateBtn" onClick={this.handleUpdate}>저장</button>
           </div>
         </div>
       </form>
@@ -118,7 +122,12 @@ export default class TagList extends React.Component {
 }
 
 TagList.propTypes = {
-  tags: PropTypes.array.isRequired,
+  tags: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    is_use: PropTypes.bool,
+    creator: PropTypes.string,
+  })).isRequired,
   onMenusCountClick: PropTypes.func.isRequired,
   onUsersCountClick: PropTypes.func.isRequired,
 };

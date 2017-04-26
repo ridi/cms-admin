@@ -1,10 +1,9 @@
-/* global $ */
 import React from 'react';
 import PropTypes from 'prop-types';
 
 class Select2Input extends React.Component {
   componentDidMount() {
-    const {onAdd, onRemove} = this.props;
+    const { onAdd, onRemove } = this.props;
 
     $(this.selectInput).select2();
     $(this.selectInput).on('select2:select', (e) => {
@@ -60,8 +59,17 @@ class Select2Input extends React.Component {
 
 Select2Input.propTypes = {
   name: PropTypes.string,
-  value: PropTypes.array,
-  data: PropTypes.array,
+  value: PropTypes.arrayOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ])),
+  data: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    text: PropTypes.string,
+  })),
   multiple: PropTypes.bool,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
