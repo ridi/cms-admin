@@ -2,10 +2,8 @@
 namespace Ridibooks\Platform\Cms\Admin;
 
 use Illuminate\Database\Capsule\Manager as DB;
-use Ridibooks\Platform\Cms\Admin\Dto\AdminMenuDto;
 use Ridibooks\Platform\Cms\Admin\Model\AdminMenu;
 use Ridibooks\Platform\Cms\Admin\Model\AdminMenuAjax;
-use Ridibooks\Platform\Common\ValidationUtils;
 
 class MenuService
 {
@@ -18,41 +16,45 @@ class MenuService
         return $query->orderBy('menu_order')->get()->toArray();
     }
 
-    public static function insertMenu(AdminMenuDto $menuDto)
+    public static function insertMenu(array $menu)
     {
-        DB::connection()->transaction(function () use ($menuDto) {
-            self::_validateMenu((array)$menuDto);
+        DB::connection()->transaction(function () use ($menu) {
+            self::_validateMenu($menu);
 
-            if ($menuDto->menu_order == null) { //메뉴 순서값이 없을 경우 메뉴 순서값을 max+1 해준다.
-                $menuDto->menu_order = AdminMenu::max('menu_order') + 1;
+            if ($menu['menu_order'] == null) { //메뉴 순서값이 없을 경우 메뉴 순서값을 max+1 해준다.
+                $menu['menu_order'] = AdminMenu::max('menu_order') + 1;
             }
 
-            ValidationUtils::checkNumberField($menuDto->menu_order, "메뉴 순서는 숫자만 입력 가능합니다.");
+            if (!is_numeric($menu['menu_order'])) {
+                throw new \Exception('메뉴 순서는 숫자만 입력 가능합니다.');
+            }
 
             // push down every menu below
-            AdminMenu::where('menu_order', '>=', $menuDto->menu_order)
+            AdminMenu::where('menu_order', '>=', $menu['menu_order'])
                 ->increment('menu_order');
 
             // then insert
-            AdminMenu::create((array)$menuDto);
+            AdminMenu::create($menu);
         });
     }
 
-    public static function updateMenu(AdminMenuDto $menuDto)
+    public static function updateMenu(array $menu)
     {
-        DB::connection()->transaction(function () use ($menuDto) {
-            self::_validateMenu((array)$menuDto);
+        DB::connection()->transaction(function () use ($menu) {
+            self::_validateMenu($menu);
 
             /** @var AdminMenu $adminMenu */
-            $adminMenu = AdminMenu::find($menuDto->id);
+            $adminMenu = AdminMenu::find($menu['id']);
             $old_menu_order = $adminMenu->menu_order;
-            $new_menu_order = $menuDto->menu_order;
+            $new_menu_order = $menu['menu_order'];
 
             if ($new_menu_order == null) { // 입력받은 메뉴 순서값 없을 경우 메뉴 순서값을 max+1 해준다.
                 $max_order = AdminMenu::max('menu_order');
-                $menuDto->menu_order = $max_order + 1;
+                $menu['menu_order'] = $max_order + 1;
             } else {
-                ValidationUtils::checkNumberField($new_menu_order, "메뉴 순서는 숫자만 입력 가능합니다.");
+                if (!is_numeric($new_menu_order)) {
+                    throw new \Exception('메뉴 순서는 숫자만 입력 가능합니다.');
+                }
 
                 if (AdminMenu::where('menu_order',
                     $new_menu_order)->first()
@@ -69,7 +71,7 @@ class MenuService
                 }
             }
 
-            $adminMenu->fill((array)$menuDto);
+            $adminMenu->fill($menu);
             $adminMenu->save();
         });
     }
@@ -115,14 +117,27 @@ class MenuService
 
     private static function _validateMenu(array $menuArray)
     {
-        ValidationUtils::checkNullField($menuArray['menu_title'], '메뉴 제목을 입력하여 주십시오.');
-        ValidationUtils::checkNullField($menuArray['menu_url'], '메뉴 URL을 입력하여 주십시오.');
-        ValidationUtils::checkNumberField($menuArray['menu_deep'], '메뉴 깊이는 숫자만 입력 가능합니다.');
+        if (!isset($menuArray['menu_title']) || $menuArray['menu_title'] === '') {
+            throw new \Exception('메뉴 제목을 입력하여 주십시오.');
+        }
+
+        if (!isset($menuArray['menu_url']) || $menuArray['menu_url'] === '') {
+            throw new \Exception('메뉴 URL을 입력하여 주십시오.');
+        }
+
+        if (!is_numeric($menuArray['menu_deep'])) {
+            throw new \Exception('메뉴 깊이는 숫자만 입력 가능합니다.');
+        }
     }
 
     private static function _validateMenuAjax($menu_id, $ajax_url)
     {
-        ValidationUtils::checkNullField($menu_id, '잘못된 메뉴 ID 입니다.' . ' / ' . $menu_id);
-        ValidationUtils::checkNullField($ajax_url, '메뉴 Ajax URL을 입력하여 주십시오.');
+        if (!isset($menu_id) || $menu_id === '') {
+            throw new \Exception('잘못된 메뉴 ID 입니다.' . ' / ' . $menu_id);
+        }
+
+        if (!isset($ajax_url) || $ajax_url === '') {
+            throw new \Exception('메뉴 Ajax URL을 입력하여 주십시오.');
+        }
     }
 }

@@ -1,7 +1,6 @@
 <?php
 namespace Ridibooks\Platform\Cms\Admin\Controller;
 
-use Ridibooks\Library\Util;
 use Ridibooks\Platform\Cms\Admin\Dto\AdminUserDto;
 use Ridibooks\Platform\Cms\Admin\UserService as AdminUserService;
 use Ridibooks\Platform\Cms\CmsApplication;
@@ -129,13 +128,15 @@ class UserControllerProvider implements ControllerProviderInterface
     {
         try {
             if ($request->get('tag_ids')) {
-                $tag_ids = Util::splitAndIntval(',', $request->get('tag_ids'));
+                $splited = explode(',', $request->get('tag_ids'));
+                $tag_ids = array_map('intval', $splited);
             } else {
                 $tag_ids = [];
             }
 
             if ($request->get('menu_ids')) {
-                $menu_ids = Util::splitAndIntval(',', $request->get('menu_ids'));
+                $splited = explode(',', $request->get('menu_ids'));
+                $menu_ids = array_map('intval', $splited);
             } else {
                 $menu_ids = [];
             }

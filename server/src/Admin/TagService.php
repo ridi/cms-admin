@@ -3,7 +3,6 @@ namespace Ridibooks\Platform\Cms\Admin;
 
 use Ridibooks\Platform\Cms\Admin\Model\AdminTag;
 use Ridibooks\Platform\Cms\Auth\LoginService;
-use Ridibooks\Platform\Common\ValidationUtils;
 
 class TagService
 {
@@ -43,7 +42,9 @@ class TagService
 
     public static function insertTag($name, $is_use)
     {
-        ValidationUtils::checkNullField($name, '태그 이름을 입력하여 주십시오.');
+        if (!isset($name) || $name === '') {
+            throw new \Exception('태그 이름을 입력하여 주십시오.');
+        }
 
         $tag = new AdminTag();
         $tag->name = $name;
@@ -54,7 +55,9 @@ class TagService
 
     public static function updateTag($tag_id, $name, $is_use)
     {
-        ValidationUtils::checkNullField($name, '태그 이름을 입력하여 주십시오.');
+        if (!isset($name) || $name === '') {
+            throw new \Exception('태그 이름을 입력하여 주십시오.');
+        }
 
         if (!$is_use) {
             $user_count = AdminTag::find($tag_id)->users()->count();
@@ -77,8 +80,13 @@ class TagService
 
     public static function insertTagMenu($tag_id, $menu_id)
     {
-        ValidationUtils::checkNullField($tag_id, "태그 ID가 없습니다.");
-        ValidationUtils::checkNullField($menu_id, "메뉴 ID가 없습니다.");
+        if (!isset($tag_id) || $tag_id === '') {
+            throw new \Exception('태그 ID가 없습니다.');
+        }
+
+        if (!isset($menu_id) || $menu_id === '') {
+            throw new \Exception('메뉴 ID가 없습니다.');
+        }
 
         /** @var AdminTag $tag */
         $tag = AdminTag::find($tag_id);
