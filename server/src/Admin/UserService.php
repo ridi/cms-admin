@@ -2,7 +2,6 @@
 namespace Ridibooks\Platform\Cms\Admin;
 
 use Illuminate\Database\Capsule\Manager as DB;
-use Ridibooks\Platform\Cms\Admin\Dto\AdminUserDto;
 use Ridibooks\Platform\Cms\Admin\Model\AdminUser;
 use Ridibooks\Platform\Cms\Auth\PasswordService;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -60,38 +59,38 @@ class UserService
         return $user->menus->pluck('id')->all();
     }
 
-    public static function insertAdminUser($adminUserDto)
+    public static function insertAdminUser(array $adminUser)
     {
-        self::_validateAdminUserInsert($adminUserDto);
+        self::_validateAdminUserInsert($adminUser);
 
         // password encrypt
-        $adminUserDto->passwd = PasswordService::getPasswordAsHashed($adminUserDto->passwd);
-        AdminUser::create((array)$adminUserDto);
+        $adminUser['passwd'] = PasswordService::getPasswordAsHashed($adminUser['passwd']);
+        AdminUser::create($adminUser);
     }
 
-    public static function updateUserInfo(AdminUserDto $adminUserDto)
+    public static function updateUserInfo(array $adminUser)
     {
-        if (isset($adminUserDto->new_passwd) && $adminUserDto->new_passwd !== '') {
-            if ($adminUserDto->new_passwd != $adminUserDto->chk_passwd) {
+        if (isset($adminUser['new_passwd']) && $adminUser['new_passwd'] !== '') {
+            if ($adminUser['new_passwd'] != $adminUser['chk_passwd']) {
                 throw new \Exception('변경할 비밀번호가 일치하지 않습니다.');
             }
-            $adminUserDto->passwd = $adminUserDto->new_passwd;
+            $adminUser['passwd'] = $adminUser['new_passwd'];
         }
 
-        self::_validateAdminUserUpdate($adminUserDto);
+        self::_validateAdminUserUpdate($adminUser);
 
         $filler = [
-            'name' => $adminUserDto->name,
-            'team' => $adminUserDto->team,
-            'is_use' => $adminUserDto->is_use
+            'name' => $adminUser['name'],
+            'team' => $adminUser['team'],
+            'is_use' => $adminUser['is_use']
         ];
 
-        if (isset($adminUserDto->passwd) && trim($adminUserDto->passwd) !== '') {
-            $filler['passwd'] = PasswordService::getPasswordAsHashed($adminUserDto->passwd);
+        if (isset($adminUser['passwd']) && trim($adminUser['passwd']) !== '') {
+            $filler['passwd'] = PasswordService::getPasswordAsHashed($adminUser['passwd']);
         }
 
         /** @var AdminUser $admin */
-        $admin = AdminUser::find(trim($adminUserDto->id));
+        $admin = AdminUser::find(trim($adminUser['id']));
         $admin->fill($filler);
         $admin->save();
     }
@@ -116,39 +115,37 @@ class UserService
     }
 
     /**Admin 계정 insert validator
-     * @param AdminUserDto $adminUserDto
      */
-    private static function _validateAdminUserInsert($adminUserDto)
+    private static function _validateAdminUserInsert(array $adminUser)
     {
-        if (!isset($adminUserDto->id) || $adminUserDto->id === '') {
+        if (!isset($adminUser['id']) || $adminUser['id'] === '') {
             throw new \Exception('계정 ID를 입력하여 주십시오.');
         }
 
-        if (!isset($adminUserDto->passwd) || $adminUserDto->passwd === '') {
+        if (!isset($adminUser['passwd']) || $adminUser['passwd'] === '') {
             throw new \Exception('계정 비밀번호를 입력하여 주십시오.');
         }
 
-        self::_validateAdminUserUpdate($adminUserDto);
+        self::_validateAdminUserUpdate($adminUser);
     }
 
     /**Admin 계정 update validator
-     * @param AdminUserDto $adminUserDto
      */
-    private static function _validateAdminUserUpdate($adminUserDto)
+    private static function _validateAdminUserUpdate(array $adminUser)
     {
-        if (!isset($adminUserDto->id) || $adminUserDto->id === '') {
+        if (!isset($adminUser['id']) || $adminUser['id'] === '') {
             throw new \Exception('계정ID를 입력하여 주십시오.');
         }
 
-        if (!isset($adminUserDto->name) || $adminUserDto->name === '') {
+        if (!isset($adminUser['name']) || $adminUser['name'] === '') {
             throw new \Exception('이름을 입력하여 주십시오.');
         }
 
-        if (!isset($adminUserDto->team) || $adminUserDto->team === '') {
+        if (!isset($adminUser['team']) || $adminUser['team'] === '') {
             throw new \Exception('팀을 입력하여 주십시오.');
         }
 
-        if (!isset($adminUserDto->is_use) || $adminUserDto->is_use === '') {
+        if (!isset($adminUser['is_use']) || $adminUser['is_use'] === '') {
             throw new \Exception('사용 여부를 입력하여 주십시오.');
         }
     }
