@@ -2,12 +2,9 @@
 namespace Ridibooks\Platform\Cms\Admin;
 
 use Illuminate\Database\Capsule\Manager as DB;
-use Ridibooks\Exception\MsgException;
 use Ridibooks\Platform\Cms\Admin\Dto\AdminUserDto;
 use Ridibooks\Platform\Cms\Admin\Model\AdminUser;
 use Ridibooks\Platform\Cms\Auth\PasswordService;
-use Ridibooks\Platform\Common\StringUtils;
-use Ridibooks\Platform\Common\ValidationUtils;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class UserService
@@ -74,9 +71,9 @@ class UserService
 
     public static function updateUserInfo(AdminUserDto $adminUserDto)
     {
-        if (StringUtils::isEmpty($adminUserDto->new_passwd) === false) {
+        if (isset($adminUserDto->new_passwd) && $adminUserDto->new_passwd !== '') {
             if ($adminUserDto->new_passwd != $adminUserDto->chk_passwd) {
-                throw new MsgException('변경할 비밀번호가 일치하지 않습니다.');
+                throw new \Exception('변경할 비밀번호가 일치하지 않습니다.');
             }
             $adminUserDto->passwd = $adminUserDto->new_passwd;
         }
@@ -123,8 +120,14 @@ class UserService
      */
     private static function _validateAdminUserInsert($adminUserDto)
     {
-        ValidationUtils::checkNullField($adminUserDto->id, '계정 ID를 입력하여 주십시오.');
-        ValidationUtils::checkNullField($adminUserDto->passwd, '계정 비밀번호를 입력하여 주십시오.');
+        if (!isset($adminUserDto->id) || $adminUserDto->id === '') {
+            throw new \Exception('계정 ID를 입력하여 주십시오.');
+        }
+
+        if (!isset($adminUserDto->passwd) || $adminUserDto->passwd === '') {
+            throw new \Exception('계정 비밀번호를 입력하여 주십시오.');
+        }
+
         self::_validateAdminUserUpdate($adminUserDto);
     }
 
@@ -133,9 +136,20 @@ class UserService
      */
     private static function _validateAdminUserUpdate($adminUserDto)
     {
-        ValidationUtils::checkNullField($adminUserDto->id, '계정ID를 입력하여 주십시오.');
-        ValidationUtils::checkNullField($adminUserDto->name, '이름을 입력하여 주십시오.');
-        ValidationUtils::checkNullField($adminUserDto->team, '팀을 입력하여 주십시오.');
-        ValidationUtils::checkNullField($adminUserDto->is_use, '사용 여부를 선택하여 주십시오.');
+        if (!isset($adminUserDto->id) || $adminUserDto->id === '') {
+            throw new \Exception('계정ID를 입력하여 주십시오.');
+        }
+
+        if (!isset($adminUserDto->name) || $adminUserDto->name === '') {
+            throw new \Exception('이름을 입력하여 주십시오.');
+        }
+
+        if (!isset($adminUserDto->team) || $adminUserDto->team === '') {
+            throw new \Exception('팀을 입력하여 주십시오.');
+        }
+
+        if (!isset($adminUserDto->is_use) || $adminUserDto->is_use === '') {
+            throw new \Exception('사용 여부를 입력하여 주십시오.');
+        }
     }
 }

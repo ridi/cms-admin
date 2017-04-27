@@ -1,7 +1,6 @@
 <?php
 namespace Ridibooks\Platform\Cms\Admin\Controller;
 
-use Ridibooks\Platform\Cms\Admin\Dto\AdminMenuDto;
 use Ridibooks\Platform\Cms\Admin\MenuService as AdminMenuService;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Common\Base\JsonDto;
@@ -48,10 +47,18 @@ class MenuControllerProvider implements ControllerProviderInterface
 
     public function createMenu(CmsApplication $app, Request $request)
     {
-        $menu_dto = new AdminMenuDto($request);
+        $menu = [
+            'menu_title' => $request->get('menu_title'),
+            'menu_url' => $request->get('menu_url'),
+            'menu_order' => $request->get('menu_order'),
+            'menu_deep' => $request->get('menu_deep', 0),
+            'is_newtab' => $request->get('is_newtab', 0),
+            'is_use' => $request->get('is_use', 0),
+            'is_show' => $request->get('is_show', 0),
+        ];
 
         try {
-            AdminMenuService::insertMenu($menu_dto);
+            AdminMenuService::insertMenu($menu);
             $app->addFlashInfo('성공적으로 등록하였습니다.');
         } catch (\Exception $e) {
             $app->addFlashError($e->getMessage());
@@ -64,11 +71,19 @@ class MenuControllerProvider implements ControllerProviderInterface
     {
         $json_dto = new JsonDto();
 
-        $menu_dto = new AdminMenuDto($request);
-        $menu_dto->id = $menu_id;
+        $menu = [
+            'id' => $menu_id,
+            'menu_title' => $request->get('menu_title'),
+            'menu_url' => $request->get('menu_url'),
+            'menu_order' => $request->get('menu_order'),
+            'menu_deep' => $request->get('menu_deep', 0),
+            'is_newtab' => $request->get('is_newtab', 0),
+            'is_use' => $request->get('is_use', 0),
+            'is_show' => $request->get('is_show', 0),
+        ];
 
         try {
-            AdminMenuService::updateMenu($menu_dto);
+            AdminMenuService::updateMenu($menu);
             $json_dto->setMsg('성공적으로 수정하였습니다.');
         } catch (\Exception $e) {
             $json_dto->setException($e);
