@@ -1,9 +1,9 @@
 <?php
 namespace Ridibooks\Platform\Cms\Admin\Controller;
 
+use Moriony\Silex\Provider\SentryServiceProvider;
 use Ridibooks\Platform\Cms\Admin\TagService as AdminTagService;
 use Ridibooks\Platform\Cms\CmsApplication;
-use Ridibooks\Platform\Common\Base\JsonDto;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
@@ -29,18 +29,29 @@ class TagControllerProvider implements ControllerProviderInterface
         return $controllers;
     }
 
+    private function responseError(CmsApplication $app, \Exception $e)
+    {
+        $sentry_client = $app[SentryServiceProvider::SENTRY];
+        if ($sentry_client) {
+            $sentry_client->captureException($e);
+        }
+
+        return $app->json([
+            'success' => false,
+            'msg' => ['오류가 발생하였습니다. 다시 시도하여 주세요. 문제가 다시 발생할 경우 개발그룹에 문의하여주세요.'],
+        ]);
+    }
+
     public function tags(CmsApplication $app, Request $request)
     {
         if (in_array('application/json', $request->getAcceptableContentTypes())) {
             return $app->json(AdminTagService::getAllTags());
         }
 
-        return $app->render('super/tags.twig',
-            [
-                'title' => '태그 관리',
-                'tags' => AdminTagService::getTagListWithUseCount()
-            ]
-        );
+        return $app->render('super/tags.twig', [
+            'title' => '태그 관리',
+            'tags' => AdminTagService::getTagListWithUseCount()
+        ]);
     }
 
     public function createTag(CmsApplication $app, Request $request)
@@ -63,67 +74,73 @@ class TagControllerProvider implements ControllerProviderInterface
         $name = $request->get('name');
         $is_use = $request->request->getBoolean('is_use');
 
-        $jsonDto = new JsonDto();
-
         try {
             AdminTagService::updateTag($tag_id, $name, $is_use);
-            $jsonDto->setMsg("성공적으로 수정하였습니다.");
+
         } catch (\Exception $e) {
-            $jsonDto->setException($e);
+            return $this->responseError($app, $e);
         }
 
-        return $app->json((array)$jsonDto);
+        return $app->json([
+            'success' => true,
+            'msg' => ['성공적으로 수정하였습니다'],
+        ]);
     }
 
     public function deleteTag($tag_id, CmsApplication $app)
     {
-        $jsonDto = new JsonDto();
-
         try {
             AdminTagService::deleteTag($tag_id);
-            $jsonDto->setMsg('성공적으로 삭제되었습니다.');
+
         } catch (\Exception $e) {
-            $jsonDto->setException($e);
+            return $this->responseError($app, $e);
         }
 
-        return $app->json((array)$jsonDto);
+        return $app->json([
+            'success' => true,
+            'msg' => ['성공적으로 수정하였습니다'],
+        ]);
     }
 
     public function tagUsers($tag_id, Application $app)
     {
-        $json = new JsonDto();
-        $json->data = AdminTagService::getMappedAdmins($tag_id);
-
-        return $app->json((array)$json);
+        return $app->json([
+            'success' => true,
+            'data' => AdminTagService::getMappedAdmins($tag_id),
+        ]);
     }
 
     public function tagMenus(Application $app, $tag_id)
     {
-        $jsonDto = new JsonDto();
-        $jsonDto->data = [
-            'menus' => AdminTagService::getMappedAdminMenuListForSelectBox($tag_id),
-            'admins' => AdminTagService::getMappedAdmins($tag_id)
-        ];
-
-        return $app->json((array)$jsonDto);
+        return $app->json([
+            'success' => true,
+            'data' =>[
+                'menus' => AdminTagService::getMappedAdminMenuListForSelectBox($tag_id),
+                'admins' => AdminTagService::getMappedAdmins($tag_id)
+            ],
+        ]);
     }
 
     public function addTagMenu(CmsApplication $app, $tag_id, $menu_id)
     {
-        $jsonDto = new JsonDto();
         try {
             AdminTagService::insertTagMenu($tag_id, $menu_id);
+
         } catch (\Exception $e) {
-            $jsonDto->setException($e);
+            return $this->responseError($app, $e);
         }
 
-        return $app->json((array)$jsonDto);
+        return $app->json([
+            'success' => true,
+            'msg' => ['성공적으로 수정하였습니다'],
+        ]);
     }
 
     public function deleteTagMenu(Application $app, $tag_id, $menu_id)
     {
         try {
             AdminTagService::deleteTagMenu($tag_id, $menu_id);
+
         } catch (\Exception $e) {
             return $app->abort(Response::HTTP_INTERNAL_SERVER_ERROR);
         }

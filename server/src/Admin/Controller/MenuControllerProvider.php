@@ -1,9 +1,9 @@
 <?php
 namespace Ridibooks\Platform\Cms\Admin\Controller;
 
+use Moriony\Silex\Provider\SentryServiceProvider;
 use Ridibooks\Platform\Cms\Admin\MenuService as AdminMenuService;
 use Ridibooks\Platform\Cms\CmsApplication;
-use Ridibooks\Platform\Common\Base\JsonDto;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
@@ -31,18 +31,29 @@ class MenuControllerProvider implements ControllerProviderInterface
         return $controllers;
     }
 
+    private function responseError(CmsApplication $app, \Exception $e)
+    {
+        $sentry_client = $app[SentryServiceProvider::SENTRY];
+        if ($sentry_client) {
+            $sentry_client->captureException($e);
+        }
+
+        return $app->json([
+            'success' => false,
+            'msg' => ['오류가 발생하였습니다. 다시 시도하여 주세요. 문제가 다시 발생할 경우 개발그룹에 문의하여주세요.'],
+        ]);
+    }
+
     public function menus(CmsApplication $app, Request $request)
     {
         if (in_array('application/json', $request->getAcceptableContentTypes())) {
             return $app->json(AdminMenuService::getMenuList(1));
         }
 
-        return $app->render('super/menus.twig',
-            [
-                'title' => '메뉴 관리',
-                'menu_list' => AdminMenuService::getMenuList()
-            ]
-        );
+        return $app->render('super/menus.twig', [
+            'title' => '메뉴 관리',
+            'menu_list' => AdminMenuService::getMenuList()
+        ]);
     }
 
     public function createMenu(CmsApplication $app, Request $request)
@@ -69,8 +80,6 @@ class MenuControllerProvider implements ControllerProviderInterface
 
     public function updateMenu(CmsApplication $app, Request $request, $menu_id)
     {
-        $json_dto = new JsonDto();
-
         $menu = [
             'id' => $menu_id,
             'menu_title' => $request->get('menu_title'),
@@ -84,20 +93,23 @@ class MenuControllerProvider implements ControllerProviderInterface
 
         try {
             AdminMenuService::updateMenu($menu);
-            $json_dto->setMsg('성공적으로 수정하였습니다.');
+
         } catch (\Exception $e) {
-            $json_dto->setException($e);
+            return $this->responseError($app, $e);
         }
 
-        return $app->json((array)$json_dto);
+        return $app->json([
+            'success' => true,
+            'msg' => ['성공적으로 수정하였습니다'],
+        ]);
     }
 
     public function submenus(CmsApplication $app, $menu_id)
     {
-        $json = new JsonDto();
-        $json->data = AdminMenuService::getMenuAjaxList($menu_id);
-
-        return $app->json((array)$json);
+        return $app->json([
+            'success' => true,
+            'data' => AdminMenuService::getMenuAjaxList($menu_id),
+        ]);
     }
 
     public function createSubmenu(CmsApplication $app, Request $request, $menu_id)
