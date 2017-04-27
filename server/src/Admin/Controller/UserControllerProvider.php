@@ -1,7 +1,6 @@
 <?php
 namespace Ridibooks\Platform\Cms\Admin\Controller;
 
-use Ridibooks\Platform\Cms\Admin\Dto\AdminUserDto;
 use Ridibooks\Platform\Cms\Admin\UserService as AdminUserService;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Cms\PaginationHelper;
@@ -77,11 +76,18 @@ class UserControllerProvider implements ControllerProviderInterface
     public function createUser(CmsApplication $app, Request $request)
     {
         $user_id = trim($request->get('id'));
+        $adminUser = [
+            'id' => $user_id,
+            'passwd' => $request->get('passwd'),
+            'new_passwd' => $request->get('new_passwd'),
+            'chk_passwd' => $request->get('chk_passwd'),
+            'name' => $request->get('name'),
+            'team' => $request->get('team'),
+            'is_use' => $request->get('is_use', 0),
+        ];
 
         try {
-            $adminUserDto = new AdminUserDto($request);
-            $adminUserDto->id = $user_id;
-            AdminUserService::insertAdminUser($adminUserDto);
+            AdminUserService::insertAdminUser($adminUser);
         } catch (\Exception $e) {
             $app->addFlashError($e->getMessage());
         }
@@ -97,9 +103,16 @@ class UserControllerProvider implements ControllerProviderInterface
         }
 
         try {
-            $adminUserDto = new AdminUserDto($request);
-            $adminUserDto->id = $user_id;
-            AdminUserService::updateUserInfo($adminUserDto);
+            $adminUser = [
+                'id' => $user_id,
+                'passwd' => $request->get('passwd'),
+                'new_passwd' => $request->get('new_passwd'),
+                'chk_passwd' => $request->get('chk_passwd'),
+                'name' => $request->get('name'),
+                'team' => $request->get('team'),
+                'is_use' => $request->get('is_use', 0),
+            ];
+            AdminUserService::updateUserInfo($adminUser);
             $app->addFlashInfo('성공적으로 수정하였습니다.');
         } catch (\Exception $e) {
             $app->addFlashError($e->getMessage());
