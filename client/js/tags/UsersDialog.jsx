@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 export default class UsersDialog extends React.Component {
   renderAdmins() {
@@ -14,7 +15,9 @@ export default class UsersDialog extends React.Component {
         {data.map(admin => (
           <li key={admin.id}>
             <h4>
-              <a className="label label-default" href={`/super/users/${admin.id}`} target="_blank" rel="noopener noreferrer">{admin.name}</a>
+              <a className="label label-default" href={`/super/users/${admin.id}`} target="_blank" rel="noopener noreferrer">
+                {admin.name}
+              </a>
             </h4>
           </li>
         ))}
@@ -41,8 +44,14 @@ export default class UsersDialog extends React.Component {
 }
 
 UsersDialog.propTypes = {
-  loading: React.PropTypes.bool,
-  data: React.PropTypes.array,
-  show: React.PropTypes.bool,
-  onClose: React.PropTypes.func,
+  loading: PropTypes.bool.isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    name: PropTypes.string,
+  })).isRequired,
+  show: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };

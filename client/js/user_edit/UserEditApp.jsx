@@ -1,36 +1,44 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import UserDetailForm from './UserDetailForm';
 import UserPermissionForm from './UserPermissionForm';
 import UserCpForm from './UserCpForm';
 
 class UserEditApp extends React.Component {
-  onDelete = (id) => {
+  constructor() {
+    super();
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  handleDelete(id) {
     if (!confirm('삭제하시겠습니까?')) {
       return;
     }
 
-    $.ajax('/super/users/'+id,
+    $.ajax(`/super/users/${id}`,
       {
         type: 'delete',
-        success: function () {
+        success: () => {
           alert('성공적으로 삭제되었습니다.');
-          location.href='/super/users';
+          location.href = '/super/users';
         },
-        error: function (xhr, status, e) {
+        error: (xhr, status, e) => {
           alert(e);
-        }
+        },
       }
     );
-  };
+  }
 
   renderDetailForm() {
     let { userDetail } = this.props;
     if (!userDetail) {
       userDetail = {};
     }
-    const { id, name, team, is_use } = userDetail;
+    const { id, name, team } = userDetail;
+    const isUse = userDetail.is_use;
     return (
-      <UserDetailForm id={id} name={name} team={team} is_use={is_use}/>
+      <UserDetailForm id={id} name={name} team={team} isUse={isUse} />
     );
   }
 
@@ -51,9 +59,8 @@ class UserEditApp extends React.Component {
       return null;
     }
 
-    const { admin_id } = this.props;
     return (
-      <UserCpForm id={this.props.userDetail.id} admin_id={admin_id}/>
+      <UserCpForm id={this.props.userDetail.id} />
     );
   }
 
@@ -63,7 +70,7 @@ class UserEditApp extends React.Component {
     }
 
     return (
-      <a className="btn btn-default btn-danger pull-right" onClick={() => {this.onDelete(this.props.userDetail.id)}}>삭제</a>
+      <Button className="btn btn-default btn-danger pull-right" onClick={() => { this.handleDelete(this.props.userDetail.id); }}>삭제</Button>
     );
   }
 
@@ -86,5 +93,20 @@ class UserEditApp extends React.Component {
     );
   }
 }
+
+UserEditApp.propTypes = {
+  userDetail: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    team: PropTypes.string,
+    is_use: PropTypes.string,
+  }),
+  userTag: PropTypes.string.isRequired,
+  userMenu: PropTypes.string.isRequired,
+};
+
+UserEditApp.defaultProps = {
+  userDetail: null,
+};
 
 export default UserEditApp;

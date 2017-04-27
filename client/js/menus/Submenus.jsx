@@ -3,8 +3,9 @@ import React from 'react';
 export default class Submenus extends React.Component {
   constructor() {
     super();
-    this.onUpdate = this.onUpdate.bind(this);
-    this.onCreate = this.onCreate.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleCreate = this.handleCreate.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -14,7 +15,7 @@ export default class Submenus extends React.Component {
     });
   }
 
-  onCreate() {
+  handleCreate() {
     const menuId = $('#ajax_menu_id').val();
     const data = $('#ajaxMenuInsertForm').serialize();
     $.post(`/super/menus/${menuId}/submenus`, data, (result) => {
@@ -24,28 +25,28 @@ export default class Submenus extends React.Component {
     });
   }
 
-  onUpdate() {
+  handleUpdate() {
     const menuId = $('#ajax_menu_id').val();
-    $.when.apply($,
-      $('#ajaxMenuUpdateForm').find('input:checked').map((i, e) => {
-        const $tr = $(e).parents('tr');
-        const submenuId = $tr.find('input[type=checkbox]').val();
-        const data = {
-          ajax_url: $tr.find('input[name=ajax_url]').val(),
-        };
+    const args = $('#ajaxMenuUpdateForm').find('input:checked').map((i, e) => {
+      const $tr = $(e).parents('tr');
+      const submenuId = $tr.find('input[type=checkbox]').val();
+      const data = {
+        ajax_url: $tr.find('input[name=ajax_url]').val(),
+      };
 
-        return $.ajax({
-          url: `/super/menus/${menuId}/submenus/${submenuId}`,
-          type: 'PUT',
-          data,
-        });
-      })
-    ).done(() => {
+      return $.ajax({
+        url: `/super/menus/${menuId}/submenus/${submenuId}`,
+        type: 'PUT',
+        data,
+      });
+    });
+
+    $.when(...args).done(() => {
       this.show($('#ajax_menu_id').val(), $('#ajax_menu_title').val());
     });
   }
 
-  onDelete() {
+  handleDelete() {
     if (!confirm('선택한 항목들을 삭제하시겠습니까?')) {
       return;
     }
@@ -61,6 +62,8 @@ export default class Submenus extends React.Component {
       }).done(() => {
         $tr.detach();
       });
+
+      return null;
     });
   }
 
@@ -113,7 +116,7 @@ export default class Submenus extends React.Component {
 
                 <div className="form-group">
                   <input type="text" className="form-control" id="ajax_url" name="ajax_url" placeholder="Ajax 메뉴 Url 입력" />
-                  <button type="button" className="btn btn-success" onClick={this.onCreate}>추가</button>
+                  <button type="button" className="btn btn-success" onClick={this.handleCreate}>추가</button>
                 </div>
               </form>
               <form id="ajaxMenuUpdateForm" className="form-group">
@@ -137,10 +140,10 @@ export default class Submenus extends React.Component {
             </div>
             <div className="modal-footer">
               <div className="btn-group pull-left">
-                <button className="btn btn-warning btn-sm" onClick={this.onDelete}>삭제</button>
+                <button className="btn btn-warning btn-sm" onClick={this.handleDelete}>삭제</button>
               </div>
               <div className="btn-group pull-right">
-                <button className="btn btn-primary btn-sm" onClick={this.onUpdate}>저장</button>
+                <button className="btn btn-primary btn-sm" onClick={this.handleUpdate}>저장</button>
                 <button className="btn btn-default btn-sm" data-dismiss="modal" aria-hidden="true">Close</button>
               </div>
             </div>

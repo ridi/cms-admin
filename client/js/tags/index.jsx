@@ -7,5 +7,5 @@ ReactDOM.render(
   <div>
     <TagEdit tags={window.tags} />
   </div>,
-  document.getElementById('content')
+  document.getElementById('content'),
 );

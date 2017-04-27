@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 
 const TagRow = (props) => {
@@ -30,16 +31,16 @@ const TagRow = (props) => {
 };
 
 TagRow.propTypes = {
-  id: React.PropTypes.number,
-  name: React.PropTypes.string,
-  creator: React.PropTypes.string,
-  isUse: React.PropTypes.bool,
-  createdAt: React.PropTypes.string,
-  updatedAt: React.PropTypes.string,
-  menusCount: React.PropTypes.number,
-  usersCount: React.PropTypes.number,
-  onMenusCountClick: React.PropTypes.func,
-  onUsersCountClick: React.PropTypes.func,
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  creator: PropTypes.string.isRequired,
+  isUse: PropTypes.bool.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  updatedAt: PropTypes.string.isRequired,
+  menusCount: PropTypes.number.isRequired,
+  usersCount: PropTypes.number.isRequired,
+  onMenusCountClick: PropTypes.func.isRequired,
+  onUsersCountClick: PropTypes.func.isRequired,
 };
 
 export default TagRow;

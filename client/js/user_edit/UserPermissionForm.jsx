@@ -1,10 +1,18 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import Select2Input from '../Select2Input';
 
 class UserPermissionForm extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleMenuAdd = this.handleMenuAdd.bind(this);
+    this.handleMenuRemove = this.handleMenuRemove.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.handleTagAdd = this.handleTagAdd.bind(this);
+    this.handleTagRemove = this.handleTagRemove.bind(this);
 
     this.state = {
       tagFetching: true,
@@ -36,8 +44,8 @@ class UserPermissionForm extends React.Component {
       let data = res.data;
       this.setState(Object.assign({}, this.state, {
         menuList: data.map((menu) => {
-          const menu_url_array = menu.menu_url.split('#');
-          const text = menu.menu_title + (menu_url_array[1] ? '#' + menu_url_array[1] : '');
+          const menuUrlArray = menu.menu_url.split('#');
+          const text = menu.menu_title + (menuUrlArray[1] ? '#' + menuUrlArray[1] : '');
           return { id: menu.id, text: text };
         }),
         menuFetching: false
@@ -48,13 +56,13 @@ class UserPermissionForm extends React.Component {
     });
   }
 
-  onMenuAdd = (id) => {
+  handleMenuAdd(id) {
     this.setState(Object.assign({}, this.state, {
       menues: this.state.menues.concat(id)
     }));
   };
 
-  onMenuRemove = (id) => {
+  handleMenuRemove(id) {
     let targetIndex = this.state.menues.indexOf(id);
     if (targetIndex !== -1) {
       this.setState(Object.assign({}, this.state, {
@@ -63,13 +71,13 @@ class UserPermissionForm extends React.Component {
     }
   };
 
-  onTagAdd = (id) => {
+  handleTagAdd(id) {
     this.setState(Object.assign({}, this.state, {
       tags: this.state.tags.concat(id)
     }));
   };
 
-  onTagRemove = (id) => {
+  handleTagRemove(id) {
     let targetIndex = this.state.tags.indexOf(id);
     if (targetIndex !== -1) {
       this.setState(Object.assign({}, this.state, {
@@ -78,7 +86,7 @@ class UserPermissionForm extends React.Component {
     }
   };
 
-  onSave = () => {
+  handleSave() {
     let data = {
       tag_ids: this.state.tags.join(','),
       menu_ids: this.state.menues.join(','),
@@ -87,14 +95,14 @@ class UserPermissionForm extends React.Component {
     $.ajax({
       type: 'POST',
       url: `/super/users/${this.props.id}/permissions`,
-      data: data,
+      data,
       cache: false,
-      success: function (res) {
+      success: () => {
         alert('성공적으로 업데이트 되었습니다.');
       },
-      error: function (xhr) {
+      error: (xhr) => {
         alert(xhr.responseText);
-      }
+      },
     });
   };
 
@@ -106,35 +114,39 @@ class UserPermissionForm extends React.Component {
     )
   }
 
-  renderTagInput() {
+  renderTagInput(inputId) {
     const { id } = this.props;
     const { tags, tagList } = this.state;
 
     return (
-      <Select2Input name="tag_ids"
-                    value={tags}
-                    data={tagList}
-                    multiple={true}
-                    placeholder="태그를 지정하세요"
-                    disabled={!id}
-                    onAdd={this.onTagAdd}
-                    onRemove={this.onTagRemove}/>
+      <Select2Input
+        id={inputId}
+        value={tags}
+        data={tagList}
+        multiple
+        placeholder="태그를 지정하세요"
+        disabled={!id}
+        onAdd={this.handleTagAdd}
+        onRemove={this.handleTagRemove}
+      />
     );
   }
 
-  renderMenuInput() {
+  renderMenuInput(inputId) {
     const { id } = this.props;
     const { menues, menuList } = this.state;
 
     return (
-      <Select2Input name="menu_ids"
-                    value={menues}
-                    data={menuList}
-                    multiple={true}
-                    placeholder="메뉴를 지정하세요"
-                    disabled={!id}
-                    onAdd={this.onMenuAdd}
-                    onRemove={this.onMenuRemove}/>
+      <Select2Input
+        id={inputId}
+        value={menues}
+        data={menuList}
+        multiple
+        placeholder="메뉴를 지정하세요"
+        disabled={!id}
+        onAdd={this.handleMenuAdd}
+        onRemove={this.handleMenuRemove}
+      />
     );
   }
 
@@ -143,28 +155,28 @@ class UserPermissionForm extends React.Component {
     const { tagFetching, menuFetching } = this.state;
 
     return (
-      <form className="form-horizontal" id="permissions" action={"/super/users/" + id + "/permissions"} method="POST">
+      <form className="form-horizontal" id="permissions" action={`/super/users/${id}/permissions`} method="POST">
         <div className="panel panel-primary">
           <div className="panel-heading">
             <h4 className="panel-title">유저 권한 관리</h4>
           </div>
           <div className="panel-body">
             <div className="form-group form-group-sm">
-              <label className="col-xs-2 control-label">태그</label>
+              <label className="col-xs-2 control-label" htmlFor="tag_ids">태그</label>
               <div className="col-xs-10">
-                {tagFetching? this.renderLoading() : this.renderTagInput()}
+                {tagFetching ? this.renderLoading() : this.renderTagInput("tag_ids")}
               </div>
             </div>
             <div className="form-group form-group-sm">
-              <label className="col-xs-2 control-label">메뉴</label>
+              <label className="col-xs-2 control-label" htmlFor="menu_ids">메뉴</label>
               <div className="col-xs-10">
-                {menuFetching? this.renderLoading() : this.renderMenuInput()}
+                {menuFetching ? this.renderLoading() : this.renderMenuInput("menu_ids")}
               </div>
             </div>
             <div className="btn-group btn-group-sm pull-right">
-              <a id="js_cp_update" className="btn btn-default" onClick={this.onSave}>
-                <i className="glyphicon glyphicon-file"/> 저장
-              </a>
+              <Button id="js_cp_update" className="btn btn-default" onClick={this.handleSave}>
+                <i className="glyphicon glyphicon-file" /> 저장
+              </Button>
             </div>
           </div>
         </div>
@@ -172,5 +184,11 @@ class UserPermissionForm extends React.Component {
     );
   }
 }
+
+UserPermissionForm.propTypes = {
+  id: PropTypes.string.isRequired,
+  userTag: PropTypes.arrayOf(PropTypes.string).isRequired,
+  userMenu: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default UserPermissionForm;

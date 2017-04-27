@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import Select2Input from '../Select2Input';
 
 export default class MenusDialog extends React.Component {
@@ -12,7 +13,7 @@ export default class MenusDialog extends React.Component {
 
     return (
       <Select2Input
-        name="menuSelect"
+        id="menuSelect"
         value={loading ? [] : selected}
         data={data}
         multiple
@@ -43,12 +44,18 @@ export default class MenusDialog extends React.Component {
 }
 
 MenusDialog.propTypes = {
-  tagId: React.PropTypes.number,
-  show: React.PropTypes.bool,
-  loading: React.PropTypes.bool,
-  selected: React.PropTypes.array,
-  data: React.PropTypes.array,
-  onAdd: React.PropTypes.func,
-  onDelete: React.PropTypes.func,
-  onClose: React.PropTypes.func,
+  tagId: PropTypes.number.isRequired,
+  show: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+  selected: PropTypes.arrayOf(PropTypes.number).isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    text: PropTypes.string,
+  })).isRequired,
+  onAdd: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };

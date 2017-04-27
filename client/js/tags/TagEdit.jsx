@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TagList from './TagList';
 import UsersDialog from './UsersDialog';
 import MenusDialog from './MenusDialog';
@@ -12,21 +13,21 @@ const TagCreate = () =>
         <col width="80" />
       </colgroup>
       <thead>
-      <tr>
-        <th>태그 이름</th>
-        <th>사용 여부</th>
-      </tr>
+        <tr>
+          <th>태그 이름</th>
+          <th>사용 여부</th>
+        </tr>
       </thead>
       <tbody>
-      <tr>
-        <td><input type="text" className="input-block-level" name="name" /></td>
-        <td>
-          <select className="input-block-level" name="is_use">
-            <option value="1">Y</option>
-            <option value="0">N</option>
-          </select>
-        </td>
-      </tr>
+        <tr>
+          <td><input type="text" className="input-block-level" name="name" /></td>
+          <td>
+            <select className="input-block-level" name="is_use">
+              <option value="1">Y</option>
+              <option value="0">N</option>
+            </select>
+          </td>
+        </tr>
       </tbody>
     </table>
     <div className="pull-right">
@@ -37,15 +38,23 @@ const TagCreate = () =>
 export default class TagEdit extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleAddMenu = this.handleAddMenu.bind(this);
+    this.handleDeleteMenu = this.handleDeleteMenu.bind(this);
+    this.handleMenusCountClick = this.handleMenusCountClick.bind(this);
+    this.handleMenusDlgClose = this.handleMenusDlgClose.bind(this);
+    this.handleUsersCountClick = this.handleUsersCountClick.bind(this);
+    this.handleUsersDlgClose = this.handleUsersDlgClose.bind(this);
+
     this.state = {
       tags: props.tags,
       menus: [],
-      menusTag: undefined,
+      menusTag: 0,
       menusLoading: true,
       showMenusDlg: false,
       users: [],
       usersLoading: true,
-      showUsersDlg: false
+      showUsersDlg: false,
     };
   }
 
@@ -58,14 +67,12 @@ export default class TagEdit extends React.Component {
 
       this.setState(Object.assign({}, this.state, {
         menus: returnData.data.menus,
-        menusLoading: false
+        menusLoading: false,
       }));
     }, 'json');
-
-    return false;
   }
 
-  onAddMenu = (tagId, menuId) => {
+  handleAddMenu(tagId, menuId) {
     $.ajax({
       url: `/super/tags/${tagId}/menus/${menuId}`,
       type: 'PUT',
@@ -74,54 +81,66 @@ export default class TagEdit extends React.Component {
           alert(returnData.msg);
         }
 
-        const newTags = this.state.tags.map(tag => {
-          if (tag.id == tagId) {
-            ++tag.menus_count;
+        const newTags = this.state.tags.map((tag) => {
+          let result = tag;
+          if (tag.id === tagId) {
+            result = Object.assign({}, tag, {
+              menus_count: tag.menus_count + 1,
+            });
           }
-          return tag;
+          return result;
         });
 
-        const newMenu = this.state.menus.map(menu => {
-          if (menu.id == menuId) {
-            menu.selected = 'selected'
+        const newMenu = this.state.menus.map((menu) => {
+          let result = menu;
+          if (menu.id === menuId) {
+            result = Object.assign({}, menu, {
+              selected: 'selected',
+            });
           }
-          return menu;
+          return result;
         });
 
         this.setState(Object.assign({}, this.state, {
           tags: newTags,
           menus: newMenu,
         }));
-      }
+      },
     });
-  };
+  }
 
-  onDeleteMenu = (tagId, menuId) => {
+  handleDeleteMenu(tagId, menuId) {
     $.ajax({
       url: `/super/tags/${tagId}/menus/${menuId}`,
       type: 'DELETE',
-      success: (returnData) => {
-        const newTags = this.state.tags.map(tag => {
-          if (tag.id == tagId) {
-            --tag.menus_count;
+      success: () => {
+        const newTags = this.state.tags.map((tag) => {
+          let result = tag;
+          if (tag.id === tagId) {
+            result = Object.assign({}, tag, {
+              menus_count: tag.menus_count - 1,
+            });
           }
-          return tag;
+          return result;
         });
 
-        const newMenu = this.state.menus.map(menu => {
-          if (menu.id == menuId) {
-            delete menu.selected;
+        const newMenu = this.state.menus.map((menu) => {
+          let result = menu;
+          if (menu.id === menuId) {
+            result = Object.assign({}, menu, {
+              selected: null,
+            });
           }
-          return menu;
+          return result;
         });
 
         this.setState(Object.assign({}, this.state, {
           tags: newTags,
           menus: newMenu,
         }));
-      }
+      },
     });
-  };
+  }
 
   loadUsers(tagId) {
     $.get(`/super/tags/${tagId}/users`, (result) => {
@@ -131,39 +150,39 @@ export default class TagEdit extends React.Component {
 
       this.setState(Object.assign({}, this.state, {
         users: result.data,
-        usersLoading: false
+        usersLoading: false,
       }));
     });
   }
 
-  onMenusCountClick = (id) => {
+  handleMenusCountClick(id) {
     this.loadMenus(id);
     this.setState(Object.assign({}, this.state, {
       menusTag: id,
       showMenusDlg: true,
     }));
-  };
+  }
 
-  onMenusDlgClose = () => {
+  handleMenusDlgClose() {
     this.setState(Object.assign({}, this.state, {
       menusLoading: true,
       showMenusDlg: false,
     }));
-  };
+  }
 
-  onUsersCountClick = (id) => {
+  handleUsersCountClick(id) {
     this.loadUsers(id);
     this.setState(Object.assign({}, this.state, {
       showUsersDlg: true,
     }));
-  };
+  }
 
-  onUsersDlgClose = () => {
+  handleUsersDlgClose() {
     this.setState(Object.assign({}, this.state, {
       usersLoading: true,
       showUsersDlg: false,
     }));
-  };
+  }
 
   render() {
     const { tags, menus, menusTag, menusLoading, showMenusDlg, users, usersLoading, showUsersDlg } = this.state;
@@ -171,10 +190,10 @@ export default class TagEdit extends React.Component {
     const menuSelected = menus.filter(menu => menu.selected === 'selected')
       .map(menu => menu.id);
 
-    const menuDatas = menus.map(menu => {
+    const menuDatas = menus.map((menu) => {
       const menuUrls = menu.menu_url.split('#');
       const text = menu.menu_title + (menuUrls[1] ? `#${menuUrls[1]}` : '');
-      return {id:menu.id, text:text};
+      return { id: menu.id, text };
     });
 
     return (
@@ -182,8 +201,8 @@ export default class TagEdit extends React.Component {
         <TagCreate />
         <TagList
           tags={tags}
-          onMenusCountClick={this.onMenusCountClick}
-          onUsersCountClick={this.onUsersCountClick}
+          onMenusCountClick={this.handleMenusCountClick}
+          onUsersCountClick={this.handleUsersCountClick}
         />
 
         <MenusDialog
@@ -192,16 +211,27 @@ export default class TagEdit extends React.Component {
           loading={menusLoading}
           data={menuDatas}
           selected={menuSelected}
-          onAdd={this.onAddMenu}
-          onDelete={this.onDeleteMenu}
-          onClose={this.onMenusDlgClose} />
+          onAdd={this.handleAddMenu}
+          onDelete={this.handleDeleteMenu}
+          onClose={this.handleMenusDlgClose}
+        />
 
         <UsersDialog
           show={showUsersDlg}
           loading={usersLoading}
           data={users}
-          onClose={this.onUsersDlgClose} />
+          onClose={this.handleUsersDlgClose}
+        />
       </div>
     );
   }
 }
+
+TagEdit.propTypes = {
+  tags: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    is_use: PropTypes.bool,
+    creator: PropTypes.string,
+  })).isRequired,
+};

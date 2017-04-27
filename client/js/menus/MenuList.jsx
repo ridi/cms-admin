@@ -1,49 +1,50 @@
 import React from 'react';
 import Sortable from 'react-sortablejs';
+import PropTypes from 'prop-types';
 import Submenus from './Submenus';
 import MenuUsers from './MenuUsers';
 
 
-function getMenuTypeString(menu) {
-  if (!menu.is_use) return 'danger';
-  else if (!menu.is_show) return 'warning';
-  else if (menu.menu_deep === 0) return 'success';
+function getMenuTypeString(isUse, isShow, menuDeep) {
+  if (!isUse) return 'danger';
+  else if (!isShow) return 'warning';
+  else if (menuDeep === 0) return 'success';
   return '';
 }
 
-const Menu = props => (
-  <tr className={getMenuTypeString(props)}>
+const MenuRow = ({ id, menuTitle, menuUrl, menuDeep, menuOrder, isUse, isShow, isNewtab, onShowAjaxMenus, onShowMenuUsers }) => (
+  <tr className={getMenuTypeString(isUse, isShow, menuDeep)}>
     <td>
       <input type="checkbox" />
-      <input type="hidden" name="id" defaultValue={props.id} />
+      <input type="hidden" name="id" defaultValue={id} />
     </td>
-    <td className="js_sortable_handle">{props.id}</td>
-    <td><input type="text" className="form-control" name="menu_title" defaultValue={props.menu_title} /></td>
-    <td><input type="text" className="form-control" name="menu_url" defaultValue={props.menu_url} /></td>
-    <td><input type="text" className="form-control" name="menu_deep" defaultValue={props.menu_deep} /></td>
-    <td><input type="text" className="form-control" name="menu_order" defaultValue={props.menu_order} /></td>
+    <td className="js_sortable_handle">{id}</td>
+    <td><input type="text" className="form-control" name="menu_title" defaultValue={menuTitle} /></td>
+    <td><input type="text" className="form-control" name="menu_url" defaultValue={menuUrl} /></td>
+    <td><input type="text" className="form-control" name="menu_deep" defaultValue={menuDeep} /></td>
+    <td><input type="text" className="form-control" name="menu_order" defaultValue={menuOrder} /></td>
     <td>
-      <select className="form-control" name="is_newtab" defaultValue={props.is_newtab}>
-        <option value>Y</option>
+      <select className="form-control" name="is_newtab" defaultValue={isNewtab}>
+        <option value={true}>Y</option>
         <option value={false}>N</option>
       </select>
     </td>
     <td>
-      <select className="form-control" name="is_use" defaultValue={props.is_use}>
-        <option value>Y</option>
+      <select className="form-control" name="is_use" defaultValue={isUse}>
+        <option value={true}>Y</option>
         <option value={false}>N</option>
       </select>
     </td>
     <td>
-      <select className="form-control" name="is_show" defaultValue={props.is_show}>
-        <option value>Y</option>
+      <select className="form-control" name="is_show" defaultValue={isShow}>
+        <option value={true}>Y</option>
         <option value={false}>N</option>
       </select>
     </td>
     <td>
       <button
         type="button" className="btn btn-default btn-sm js_show_ajax_menus"
-        onClick={() => props.onShowAjaxMenus(props.id, props.menu_title)}
+        onClick={() => onShowAjaxMenus(id, menuTitle)}
       >
         보기
       </button>
@@ -51,7 +52,7 @@ const Menu = props => (
     <td>
       <button
         type="button" className="btn btn-default btn-sm js_show_ajax_menus"
-        onClick={() => props.onShowMenuUsers()}
+        onClick={() => onShowMenuUsers()}
       >
         보기
       </button>
@@ -59,22 +60,22 @@ const Menu = props => (
   </tr>
 );
 
-Menu.propTypes = {
-  id: React.PropTypes.number.isRequired,
-  menu_title: React.PropTypes.string.isRequired,
-  menu_url: React.PropTypes.string.isRequired,
-  menu_deep: React.PropTypes.number.isRequired,
-  menu_order: React.PropTypes.number.isRequired,
-  is_use: React.PropTypes.bool.isRequired,
-  is_newtab: React.PropTypes.bool.isRequired,
-  is_show: React.PropTypes.bool.isRequired,
-  onShowAjaxMenus: React.PropTypes.func.isRequired,
-  onShowMenuUsers: React.PropTypes.func.isRequired,
+MenuRow.propTypes = {
+  id: PropTypes.number.isRequired,
+  menuTitle: PropTypes.string.isRequired,
+  menuUrl: PropTypes.string.isRequired,
+  menuDeep: PropTypes.number.isRequired,
+  menuOrder: PropTypes.number.isRequired,
+  isUse: PropTypes.bool.isRequired,
+  isNewtab: PropTypes.bool.isRequired,
+  isShow: PropTypes.bool.isRequired,
+  onShowAjaxMenus: PropTypes.func.isRequired,
+  onShowMenuUsers: PropTypes.func.isRequired,
 };
 
 
 function checkChangedRow($tr) {
-  $tr.find('input[type=checkbox]').attr('checked', 'checked');
+  $tr.find('input[type=checkbox]').prop('checked', true);
 }
 
 export default class MenuList extends React.Component {
@@ -87,8 +88,8 @@ export default class MenuList extends React.Component {
     this.state = {
       menuUsers: {
         show: false,
-        menuId: 0
-      }
+        menuId: 0,
+      },
     };
   }
 
@@ -111,28 +112,27 @@ export default class MenuList extends React.Component {
   }
 
   onUpdate() {
-    $.when.apply(
-      $,
-      $('#modifyForm').find('input:checked').map((i, e) => {
-        const $tr = $(e).parents('tr');
-        const menuId = $tr.find('input[name=id]').val();
-        const data = {
-          menu_title: $tr.find('input[name=menu_title]').val(),
-          menu_url: $tr.find('input[name=menu_url]').val(),
-          menu_deep: $tr.find('input[name=menu_deep]').val(),
-          menu_order: $tr.find('input[name=menu_order]').val(),
-          is_newtab: $tr.find('select[name=is_newtab]').val() === 'true' ? '1' : '0',
-          is_use: $tr.find('select[name=is_use]').val() === 'true' ? '1' : '0',
-          is_show: $tr.find('select[name=is_show]').val() === 'true' ? '1' : '0',
-        };
+    const args = $('#modifyForm').find('input:checked').map((i, e) => {
+      const $tr = $(e).parents('tr');
+      const menuId = $tr.find('input[name=id]').val();
+      const data = {
+        menu_title: $tr.find('input[name=menu_title]').val(),
+        menu_url: $tr.find('input[name=menu_url]').val(),
+        menu_deep: $tr.find('input[name=menu_deep]').val(),
+        menu_order: $tr.find('input[name=menu_order]').val(),
+        is_newtab: $tr.find('select[name=is_newtab]').val() === 'true' ? '1' : '0',
+        is_use: $tr.find('select[name=is_use]').val() === 'true' ? '1' : '0',
+        is_show: $tr.find('select[name=is_show]').val() === 'true' ? '1' : '0',
+      };
 
-        return $.ajax({
-          url: `/super/menus/${menuId}`,
-          type: 'PUT',
-          data,
-        });
-      })
-    )
+      return $.ajax({
+        url: `/super/menus/${menuId}`,
+        type: 'PUT',
+        data,
+      });
+    });
+
+    $.when(...args)
     .done(() => {
       window.location.reload();
     });
@@ -213,15 +213,24 @@ export default class MenuList extends React.Component {
               tag="tbody"
               options={{
                 handle: '.js_sortable_handle',
-                onEnd: this.onSortEnd
+                onEnd: this.onSortEnd,
               }}
               id="js_menu_list"
             >
               {this.props.menus.map(menu =>
-                <Menu
-                  key={menu.id} {...menu} onShowAjaxMenus={this.showAjaxMenus}
+                <MenuRow
+                  key={menu.id}
+                  id={menu.id}
+                  menuTitle={menu.menu_title}
+                  menuUrl={menu.menu_url}
+                  menuDeep={menu.menu_deep}
+                  menuOrder={menu.menu_order}
+                  isUse={menu.is_use}
+                  isNewtab={menu.is_newtab}
+                  isShow={menu.is_show}
+                  onShowAjaxMenus={this.showAjaxMenus}
                   onShowMenuUsers={() => this.showMenuUsers(menu.id)}
-                />
+                />,
               )}
             </Sortable>
           </table>
@@ -244,5 +253,14 @@ export default class MenuList extends React.Component {
 }
 
 MenuList.propTypes = {
-  menus: React.PropTypes.array.isRequired,
+  menus: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    menu_title: PropTypes.string,
+    menu_url: PropTypes.string,
+    menu_deep: PropTypes.number,
+    menu_order: PropTypes.number,
+    is_use: PropTypes.bool,
+    is_show: PropTypes.bool,
+    is_newtab: PropTypes.bool,
+  })).isRequired,
 };
