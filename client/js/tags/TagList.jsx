@@ -11,7 +11,7 @@ export default class TagList extends React.Component {
 
   componentDidMount() {
     // 태그 목록 컬럼 변동 시 check
-    $('#updateForm input[name=name], #updateForm input[name=is_use]').change(function () {
+    $('#updateForm input[name=name], #updateForm input[name=is_use]').change(function onChange() {
       const $tr = $(this).parents('tr');
       $tr.find('input[name=changed]').prop('checked', true);
     });

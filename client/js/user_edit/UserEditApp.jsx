@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import UserDetailForm from './UserDetailForm';
 import UserPermissionForm from './UserPermissionForm';
@@ -34,9 +35,10 @@ class UserEditApp extends React.Component {
     if (!userDetail) {
       userDetail = {};
     }
-    const { id, name, team, is_use } = userDetail;
+    const { id, name, team } = userDetail;
+    const isUse = userDetail.is_use;
     return (
-      <UserDetailForm id={id} name={name} team={team} is_use={is_use} />
+      <UserDetailForm id={id} name={name} team={team} isUse={isUse} />
     );
   }
 
@@ -68,7 +70,7 @@ class UserEditApp extends React.Component {
     }
 
     return (
-      <a className="btn btn-default btn-danger pull-right" onClick={() => { this.handleDelete(this.props.userDetail.id); }}>삭제</a>
+      <Button className="btn btn-default btn-danger pull-right" onClick={() => { this.handleDelete(this.props.userDetail.id); }}>삭제</Button>
     );
   }
 
@@ -93,15 +95,18 @@ class UserEditApp extends React.Component {
 }
 
 UserEditApp.propTypes = {
-  admin_id: PropTypes.string.isRequired,
   userDetail: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
     team: PropTypes.string,
     is_use: PropTypes.string,
-  }).isRequired,
+  }),
   userTag: PropTypes.string.isRequired,
   userMenu: PropTypes.string.isRequired,
+};
+
+UserEditApp.defaultProps = {
+  userDetail: null,
 };
 
 export default UserEditApp;

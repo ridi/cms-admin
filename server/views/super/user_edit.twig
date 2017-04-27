@@ -6,7 +6,6 @@
 
 {% block script %}
   <script>
-    window.admin_id = '{{ admin_id }}';
     window.userDetail = {{ userDetail|json_encode|raw }};
     window.userTag = {{ userTag|json_encode|raw }};
     window.userMenu = {{ userMenu|json_encode|raw }};

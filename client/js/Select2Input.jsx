@@ -36,13 +36,14 @@ class Select2Input extends React.Component {
   }
 
   render() {
-    const { value, name, placeholder, multiple, disabled } = this.props;
+    const { value, id, placeholder, multiple, disabled } = this.props;
 
     return (
       <div>
         <select
           ref={(input) => { this.selectInput = input; }}
-          name={name}
+          id={id}
+          name={id}
           data-placeholder={placeholder}
           value={value}
           multiple={multiple}
@@ -58,7 +59,7 @@ class Select2Input extends React.Component {
 }
 
 Select2Input.propTypes = {
-  name: PropTypes.string,
+  id: PropTypes.string.isRequired,
   value: PropTypes.arrayOf(PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
@@ -78,7 +79,6 @@ Select2Input.propTypes = {
 };
 
 Select2Input.defaultProps = {
-  name: '',
   value: [],
   data: [],
   placeholder: '',

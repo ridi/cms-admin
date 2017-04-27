@@ -5,46 +5,46 @@ import Submenus from './Submenus';
 import MenuUsers from './MenuUsers';
 
 
-function getMenuTypeString(menu) {
-  if (!menu.is_use) return 'danger';
-  else if (!menu.is_show) return 'warning';
-  else if (menu.menu_deep === 0) return 'success';
+function getMenuTypeString(isUse, isShow, menuDeep) {
+  if (!isUse) return 'danger';
+  else if (!isShow) return 'warning';
+  else if (menuDeep === 0) return 'success';
   return '';
 }
 
-const MenuRow = props => (
-  <tr className={getMenuTypeString(props)}>
+const MenuRow = ({ id, menuTitle, menuUrl, menuDeep, menuOrder, isUse, isShow, isNewtab, onShowAjaxMenus, onShowMenuUsers }) => (
+  <tr className={getMenuTypeString(isUse, isShow, menuDeep)}>
     <td>
       <input type="checkbox" />
-      <input type="hidden" name="id" defaultValue={props.id} />
+      <input type="hidden" name="id" defaultValue={id} />
     </td>
-    <td className="js_sortable_handle">{props.id}</td>
-    <td><input type="text" className="form-control" name="menu_title" defaultValue={props.menu_title} /></td>
-    <td><input type="text" className="form-control" name="menu_url" defaultValue={props.menu_url} /></td>
-    <td><input type="text" className="form-control" name="menu_deep" defaultValue={props.menu_deep} /></td>
-    <td><input type="text" className="form-control" name="menu_order" defaultValue={props.menu_order} /></td>
+    <td className="js_sortable_handle">{id}</td>
+    <td><input type="text" className="form-control" name="menu_title" defaultValue={menuTitle} /></td>
+    <td><input type="text" className="form-control" name="menu_url" defaultValue={menuUrl} /></td>
+    <td><input type="text" className="form-control" name="menu_deep" defaultValue={menuDeep} /></td>
+    <td><input type="text" className="form-control" name="menu_order" defaultValue={menuOrder} /></td>
     <td>
-      <select className="form-control" name="is_newtab" defaultValue={props.is_newtab}>
-        <option value>Y</option>
+      <select className="form-control" name="is_newtab" defaultValue={isNewtab}>
+        <option value={true}>Y</option>
         <option value={false}>N</option>
       </select>
     </td>
     <td>
-      <select className="form-control" name="is_use" defaultValue={props.is_use}>
-        <option value>Y</option>
+      <select className="form-control" name="is_use" defaultValue={isUse}>
+        <option value={true}>Y</option>
         <option value={false}>N</option>
       </select>
     </td>
     <td>
-      <select className="form-control" name="is_show" defaultValue={props.is_show}>
-        <option value>Y</option>
+      <select className="form-control" name="is_show" defaultValue={isShow}>
+        <option value={true}>Y</option>
         <option value={false}>N</option>
       </select>
     </td>
     <td>
       <button
         type="button" className="btn btn-default btn-sm js_show_ajax_menus"
-        onClick={() => props.onShowAjaxMenus(props.id, props.menu_title)}
+        onClick={() => onShowAjaxMenus(id, menuTitle)}
       >
         보기
       </button>
@@ -52,7 +52,7 @@ const MenuRow = props => (
     <td>
       <button
         type="button" className="btn btn-default btn-sm js_show_ajax_menus"
-        onClick={() => props.onShowMenuUsers()}
+        onClick={() => onShowMenuUsers()}
       >
         보기
       </button>
@@ -62,13 +62,13 @@ const MenuRow = props => (
 
 MenuRow.propTypes = {
   id: PropTypes.number.isRequired,
-  menu_title: PropTypes.string.isRequired,
-  menu_url: PropTypes.string.isRequired,
-  menu_deep: PropTypes.number.isRequired,
-  menu_order: PropTypes.number.isRequired,
-  is_use: PropTypes.bool.isRequired,
-  is_newtab: PropTypes.bool.isRequired,
-  is_show: PropTypes.bool.isRequired,
+  menuTitle: PropTypes.string.isRequired,
+  menuUrl: PropTypes.string.isRequired,
+  menuDeep: PropTypes.number.isRequired,
+  menuOrder: PropTypes.number.isRequired,
+  isUse: PropTypes.bool.isRequired,
+  isNewtab: PropTypes.bool.isRequired,
+  isShow: PropTypes.bool.isRequired,
   onShowAjaxMenus: PropTypes.func.isRequired,
   onShowMenuUsers: PropTypes.func.isRequired,
 };
@@ -219,7 +219,16 @@ export default class MenuList extends React.Component {
             >
               {this.props.menus.map(menu =>
                 <MenuRow
-                  key={menu.id} {...menu} onShowAjaxMenus={this.showAjaxMenus}
+                  key={menu.id}
+                  id={menu.id}
+                  menuTitle={menu.menu_title}
+                  menuUrl={menu.menu_url}
+                  menuDeep={menu.menu_deep}
+                  menuOrder={menu.menu_order}
+                  isUse={menu.is_use}
+                  isNewtab={menu.is_newtab}
+                  isShow={menu.is_show}
+                  onShowAjaxMenus={this.showAjaxMenus}
                   onShowMenuUsers={() => this.showMenuUsers(menu.id)}
                 />,
               )}

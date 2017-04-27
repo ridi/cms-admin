@@ -68,7 +68,6 @@ class UserControllerProvider implements ControllerProviderInterface
 
         return $app->render('super/user_edit.twig',
             [
-                'admin_id' => $user_id,
                 'userDetail' => $user,
                 'userTag' => implode(',', $tags),
                 'userMenu' => implode(',', $menus),

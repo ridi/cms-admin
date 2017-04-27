@@ -13,7 +13,7 @@ export default class MenusDialog extends React.Component {
 
     return (
       <Select2Input
-        name="menuSelect"
+        id="menuSelect"
         value={loading ? [] : selected}
         data={data}
         multiple

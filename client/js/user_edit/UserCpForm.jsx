@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Select2Input from '../Select2Input';
@@ -34,10 +35,10 @@ class UserCpForm extends React.Component {
       const allCpList = [];
       const data = res[3].data.data;
       if (data.length !== 0) {
-        for (let cp in data) {
-          const pubId = data[cp].id;
-          allCpList.push({ id: pubId, text: `${data[cp].name} (${pubId})` });
-        }
+        data.map((cp) => {
+          allCpList.push({ id: cp.id, text: `${cp.name} (${cp.id})` });
+          return null;
+        });
       }
 
       this.setState({
@@ -47,7 +48,6 @@ class UserCpForm extends React.Component {
         operatorCpList: res[2].data.slice(),
         allCpList,
       });
-
     });
   }
 
@@ -171,38 +171,33 @@ class UserCpForm extends React.Component {
     );
   }
 
-  renderInput(cpType) {
-    let name;
+  renderInput(id, cpType) {
     let value;
 
-    switch(cpType) {
+    switch (cpType) {
       case PARTNER_CP_TYPE:
-        name = 'partner_cp_ids';
         value = this.state.partnerCpList;
         break;
       case OPERATOR_CP_TYPE:
-        name = 'operator_cp_ids';
         value = this.state.operatorCpList;
         break;
       case PRODUCTION_CP_TYPE:
-        name = 'production_cp_ids';
         value = this.state.productionCpList;
         break;
       default:
-        name = 'unknown';
         value = [];
     }
 
     return (
       <Select2Input
-        name={name}
+        id={id}
         value={value}
         data={this.state.allCpList}
         multiple
         placeholder="담당할 CP를 입력하세요."
         disabled={!this.props.id}
-        onAdd={(id) => { this.handleCpAdd(id, cpType); }}
-        onRemove={(id) => { this.handleCpRemove(id, cpType); }}
+        onAdd={(dataId) => { this.handleCpAdd(dataId, cpType); }}
+        onRemove={(dataId) => { this.handleCpRemove(dataId, cpType); }}
       />
     );
   }
@@ -213,7 +208,7 @@ class UserCpForm extends React.Component {
 
     return (
       <form className="form-horizontal" id="managing-cps" method="POST">
-        <input type="hidden" name="user_id" value={id}/>
+        <input type="hidden" name="user_id" value={id} />
         <div className="panel panel-primary">
           <div className="panel-heading">
             <h4 className="panel-title">담당 CP 관리</h4>
@@ -221,30 +216,30 @@ class UserCpForm extends React.Component {
 
           <div className="panel-body">
             <div className="form-group form-group-sm">
-              <label className="col-xs-2 control-label">제휴담당 CP</label>
+              <label className="col-xs-2 control-label" htmlFor="partner_cp_ids">제휴담당 CP</label>
               <div className="col-xs-10">
-                { cpFetching ? this.renderLoading() : this.renderInput(PARTNER_CP_TYPE) }
+                { cpFetching ? this.renderLoading() : this.renderInput("partner_cp_ids", PARTNER_CP_TYPE) }
               </div>
             </div>
 
             <div className="form-group form-group-sm">
-              <label className="col-xs-2 control-label">운영담당 CP</label>
+              <label className="col-xs-2 control-label" htmlFor="operator_cp_ids">운영담당 CP</label>
               <div className="col-xs-10">
-                { cpFetching ? this.renderLoading() : this.renderInput(OPERATOR_CP_TYPE) }
+                { cpFetching ? this.renderLoading() : this.renderInput("operator_cp_ids", OPERATOR_CP_TYPE) }
               </div>
             </div>
 
             <div className="form-group form-group-sm">
-              <label className="col-xs-2 control-label">제작 CP</label>
+              <label className="col-xs-2 control-label" htmlFor="production_cp_ids">제작 CP</label>
               <div className="col-xs-10">
-                { cpFetching ? this.renderLoading() : this.renderInput(PRODUCTION_CP_TYPE) }
+                { cpFetching ? this.renderLoading() : this.renderInput("production_cp_ids", PRODUCTION_CP_TYPE) }
               </div>
             </div>
 
             <div className="btn-group btn-group-sm pull-right">
-              <a id="js_cp_update" className="btn btn-default" onClick={this.handleSave}>
+              <Button id="js_cp_update" className="btn btn-default" onClick={this.handleSave}>
                 <i className="glyphicon glyphicon-file" /> 저장
-              </a>
+              </Button>
             </div>
           </div>
         </div>

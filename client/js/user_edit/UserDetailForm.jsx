@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class UserDetailForm extends React.Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class UserDetailForm extends React.Component {
       password: props.password,
       name: props.name,
       team: props.team,
-      is_use: props.is_use,
+      isUse: props.isUse,
     };
 
     this.handleReset = this.handleReset.bind(this);
@@ -20,7 +21,7 @@ class UserDetailForm extends React.Component {
   }
 
   handleSave() {
-    let $form = $('form');
+    const $form = $('form');
     if ($form[0].checkValidity()) {
       $form.submit();
     }
@@ -31,7 +32,7 @@ class UserDetailForm extends React.Component {
   }
 
   render() {
-    const { id, password, name, team, is_use } = this.state;
+    const { id, password, name, team, isUse } = this.state;
 
     return (
       <form className="form-horizontal" method="POST">
@@ -41,10 +42,12 @@ class UserDetailForm extends React.Component {
           </div>
           <div className="panel-body">
             <div className="form-group form-group-sm">
-              <label className="col-xs-2 control-label">ID</label>
+              <label className="col-xs-2 control-label" htmlFor="id">ID</label>
               <div className="col-xs-10">
                 <input
-                  type="text" name="id" className="form-control"
+                  id="id"
+                  name="id"
+                  type="text" className="form-control"
                   value={id}
                   disabled={this.isNewUser}
                   onChange={(e) => {
@@ -58,10 +61,12 @@ class UserDetailForm extends React.Component {
             </div>
 
             <div className="form-group form-group-sm">
-              <label className="col-xs-2 control-label">비밀번호</label>
+              <label className="col-xs-2 control-label" htmlFor="passwd">비밀번호</label>
               <div className="col-xs-10">
                 <input
-                  type="password" name="passwd" className="form-control"
+                  id="passwd"
+                  name="passwd"
+                  type="password" className="form-control"
                   value={password}
                   onChange={(e) => {
                     this.setState(Object.assign({}, this.state, {
@@ -73,10 +78,12 @@ class UserDetailForm extends React.Component {
             </div>
 
             <div className="form-group form-group-sm">
-              <label className="col-xs-2 control-label">이름</label>
+              <label className="col-xs-2 control-label" htmlFor="name">이름</label>
               <div className="col-xs-10">
                 <input
-                  type="text" name="name" className="form-control"
+                  id="name"
+                  name="name"
+                  type="text" className="form-control"
                   value={name}
                   onChange={(e) => {
                     this.setState(Object.assign({}, this.state, {
@@ -89,10 +96,12 @@ class UserDetailForm extends React.Component {
             </div>
 
             <div className="form-group form-group-sm">
-              <label className="col-xs-2 control-label">팀</label>
+              <label className="col-xs-2 control-label" htmlFor="team">팀</label>
               <div className="col-xs-10">
                 <input
-                  type="text" name="team" className="form-control"
+                  id="team"
+                  name="team"
+                  type="text" className="form-control"
                   value={team}
                   onChange={(e) => {
                     this.setState(Object.assign({}, this.state, {
@@ -105,14 +114,14 @@ class UserDetailForm extends React.Component {
             </div>
 
             <div className="form-group form-group-sm">
-              <label className="col-xs-2 control-label">사용여부</label>
+              <label className="col-xs-2 control-label" htmlFor="is_use">사용여부</label>
               <div className="col-xs-10">
                 <select
-                  name="is_use" className="form-control"
-                  value={is_use}
+                  id="is_use" name="is_use" className="form-control"
+                  value={isUse}
                   onChange={(e) => {
                     this.setState(Object.assign({}, this.state, {
-                      is_use: e.target.value,
+                      isUse: e.target.value,
                     }));
                   }}
                 >
@@ -143,12 +152,20 @@ class UserDetailForm extends React.Component {
   }
 }
 
+UserDetailForm.propTypes = {
+  id: PropTypes.string,
+  password: PropTypes.string,
+  name: PropTypes.string,
+  team: PropTypes.string,
+  isUse: PropTypes.string,
+};
+
 UserDetailForm.defaultProps = {
   id: '',
   password: '',
   name: '',
   team: '',
-  is_use: '1',
+  isUse: '1',
 };
 
 export default UserDetailForm;
