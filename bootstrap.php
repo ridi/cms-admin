@@ -1,10 +1,9 @@
 <?php
-use Ridibooks\Library\DB\ConnectionProvider;
 
 $capsule = new Illuminate\Database\Capsule\Manager();
-$params = \Config::getConnectionParams(ConnectionProvider::CONNECTION_GROUP_PLATFORM_WRITE);
+$params = \Config::getConnectionParams('default');
 $capsule->addConnection([
-'driver' => 'mysql',
+    'driver' => 'mysql',
     'host' => $params['host'],
     'database' => 'bom',
     'username' => $params['user'],
@@ -15,11 +14,10 @@ $capsule->addConnection([
     'options' => [
         // mysqlnd 5.0.12-dev - 20150407 에서 PDO->prepare 가 매우 느린 현상
         PDO::ATTR_EMULATE_PREPARES => true
-]
+    ]
 ]);
 
 $capsule->setAsGlobal();
-
 $capsule->bootEloquent();
 
 ini_set('max_execution_time', 300);

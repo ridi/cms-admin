@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b7ee1639251d3bea5a200f7756924f1",
+    "hash": "971f0c9c7afa0a046c37432201623916",
+    "content-hash": "a4db0f7d6c9331bb7abccfe36fca3c62",
     "packages": [
         {
             "name": "apache/thrift",
@@ -39,7 +40,7 @@
             ],
             "description": "Apache Thrift RPC system",
             "homepage": "http://thrift.apache.org/",
-            "time": "2016-04-04T18:25:03+00:00"
+            "time": "2016-04-04 18:25:03"
         },
         {
             "name": "doctrine/inflector",
@@ -106,20 +107,20 @@
                 "singularize",
                 "string"
             ],
-            "time": "2015-11-06T14:35:42+00:00"
+            "time": "2015-11-06 14:35:42"
         },
         {
             "name": "illuminate/container",
-            "version": "v5.4.17",
+            "version": "v5.4.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
-                "reference": "1fc0d2451e23d2ea73c10462d74add4767e2b74c"
+                "reference": "50aa19491d478edd907d1f67e0928944e8b2dcb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/container/zipball/1fc0d2451e23d2ea73c10462d74add4767e2b74c",
-                "reference": "1fc0d2451e23d2ea73c10462d74add4767e2b74c",
+                "url": "https://api.github.com/repos/illuminate/container/zipball/50aa19491d478edd907d1f67e0928944e8b2dcb5",
+                "reference": "50aa19491d478edd907d1f67e0928944e8b2dcb5",
                 "shasum": ""
             },
             "require": {
@@ -149,11 +150,11 @@
             ],
             "description": "The Illuminate Container package.",
             "homepage": "https://laravel.com",
-            "time": "2017-03-13T14:14:19+00:00"
+            "time": "2017-04-16 13:32:45"
         },
         {
             "name": "illuminate/contracts",
-            "version": "v5.4.17",
+            "version": "v5.4.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -191,20 +192,20 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
-            "time": "2017-03-29T13:17:47+00:00"
+            "time": "2017-03-29 13:17:47"
         },
         {
             "name": "illuminate/database",
-            "version": "v5.4.17",
+            "version": "v5.4.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
-                "reference": "7323bfc4e3e0aa46f427c705091dc373160d3983"
+                "reference": "890564c6b84bcb2b45d41d3da072fabf422c07f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/database/zipball/7323bfc4e3e0aa46f427c705091dc373160d3983",
-                "reference": "7323bfc4e3e0aa46f427c705091dc373160d3983",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/890564c6b84bcb2b45d41d3da072fabf422c07f5",
+                "reference": "890564c6b84bcb2b45d41d3da072fabf422c07f5",
                 "shasum": ""
             },
             "require": {
@@ -251,20 +252,20 @@
                 "orm",
                 "sql"
             ],
-            "time": "2017-04-02T22:04:36+00:00"
+            "time": "2017-04-11 22:53:18"
         },
         {
             "name": "illuminate/support",
-            "version": "v5.4.17",
+            "version": "v5.4.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "c7e7c9daf5044e76b46085b8351f8235a3e979c6"
+                "reference": "b8cb37e15331c59da51c8ee5838038baa22d7955"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/c7e7c9daf5044e76b46085b8351f8235a3e979c6",
-                "reference": "c7e7c9daf5044e76b46085b8351f8235a3e979c6",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/b8cb37e15331c59da51c8ee5838038baa22d7955",
+                "reference": "b8cb37e15331c59da51c8ee5838038baa22d7955",
                 "shasum": ""
             },
             "require": {
@@ -308,64 +309,35 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2017-03-28T12:49:45+00:00"
+            "time": "2017-04-09 14:34:57"
         },
         {
-            "name": "monolog/monolog",
-            "version": "1.22.1",
+            "name": "moriony/silex-sentry-provider",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "1e044bc4b34e91743943479f1be7a1d5eb93add0"
+                "url": "https://github.com/moriony/silex-sentry-provider.git",
+                "reference": "ae590e98aec36e8b51d7af262d1e87a01c7076a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1e044bc4b34e91743943479f1be7a1d5eb93add0",
-                "reference": "1e044bc4b34e91743943479f1be7a1d5eb93add0",
+                "url": "https://api.github.com/repos/moriony/silex-sentry-provider/zipball/ae590e98aec36e8b51d7af262d1e87a01c7076a8",
+                "reference": "ae590e98aec36e8b51d7af262d1e87a01c7076a8",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0",
-                "psr/log": "~1.0"
-            },
-            "provide": {
-                "psr/log-implementation": "1.0.0"
+                "php": ">=5.6",
+                "pimple/pimple": "~3.0",
+                "sentry/sentry": "~1.1"
             },
             "require-dev": {
-                "aws/aws-sdk-php": "^2.4.9 || ^3.0",
-                "doctrine/couchdb": "~1.0@dev",
-                "graylog2/gelf-php": "~1.0",
-                "jakub-onderka/php-parallel-lint": "0.9",
-                "php-amqplib/php-amqplib": "~2.4",
-                "php-console/php-console": "^3.1.3",
-                "phpunit/phpunit": "~4.5",
-                "phpunit/phpunit-mock-objects": "2.3.0",
-                "ruflin/elastica": ">=0.90 <3.0",
-                "sentry/sentry": "^0.13",
-                "swiftmailer/swiftmailer": "~5.3"
-            },
-            "suggest": {
-                "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
-                "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
-                "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
-                "ext-mongo": "Allow sending log messages to a MongoDB server",
-                "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
-                "mongodb/mongodb": "Allow sending log messages to a MongoDB server via PHP Driver",
-                "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
-                "php-console/php-console": "Allow sending log messages to Google Chrome",
-                "rollbar/rollbar": "Allow sending log messages to Rollbar",
-                "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
-                "sentry/sentry": "Allow sending log messages to a Sentry server"
+                "codeclimate/php-test-reporter": "~0.3.2",
+                "phpunit/phpunit": "~4.8"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
-                    "Monolog\\": "src/Monolog"
+                    "Moriony\\Silex\\Provider\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -374,19 +346,18 @@
             ],
             "authors": [
                 {
-                    "name": "Jordi Boggiano",
-                    "email": "j.boggiano@seld.be",
-                    "homepage": "http://seld.be"
+                    "name": "Vitaliy Chesnokov",
+                    "email": "demateus@gmail.com"
                 }
             ],
-            "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
-            "homepage": "http://github.com/Seldaek/monolog",
+            "description": "Sentry service provider for the Silex framwork.",
+            "homepage": "https://github.com/moriony/silex-sentry-provider",
             "keywords": [
-                "log",
-                "logging",
-                "psr-3"
+                "raven-php",
+                "sentry",
+                "silex"
             ],
-            "time": "2017-03-13T07:08:03+00:00"
+            "time": "2016-08-20 08:47:40"
         },
         {
             "name": "nesbot/carbon",
@@ -439,7 +410,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2017-01-16T07:55:07+00:00"
+            "time": "2017-01-16 07:55:07"
         },
         {
             "name": "paragonie/random_compat",
@@ -487,7 +458,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-03-13T16:27:32+00:00"
+            "time": "2017-03-13 16:27:32"
         },
         {
             "name": "pimple/pimple",
@@ -533,7 +504,7 @@
                 "container",
                 "dependency injection"
             ],
-            "time": "2015-09-11T15:10:35+00:00"
+            "time": "2015-09-11 15:10:35"
         },
         {
             "name": "psr/log",
@@ -580,25 +551,24 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10T12:19:37+00:00"
+            "time": "2016-10-10 12:19:37"
         },
         {
             "name": "ridibooks/cms-sdk",
-            "version": "dev-master",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ridibooks/cms-sdk.git",
-                "reference": "4cb9e47ad53f17061ca31a2866ad4996a647044c"
+                "reference": "43686d5450eff01d298e50b823a2f937a51e1057"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ridibooks/cms-sdk/zipball/4cb9e47ad53f17061ca31a2866ad4996a647044c",
-                "reference": "4cb9e47ad53f17061ca31a2866ad4996a647044c",
+                "url": "https://api.github.com/repos/ridibooks/cms-sdk/zipball/43686d5450eff01d298e50b823a2f937a51e1057",
+                "reference": "43686d5450eff01d298e50b823a2f937a51e1057",
                 "shasum": ""
             },
             "require": {
-                "apache/thrift": "^0.10.0",
-                "ridibooks/core": "dev-master"
+                "apache/thrift": "^0.10.0"
             },
             "suggest": {
                 "silex/silex": "^2.0",
@@ -634,45 +604,7 @@
                 }
             ],
             "description": "Ridibooks CMS SDK",
-            "time": "2017-04-11 05:29:04"
-        },
-        {
-            "name": "ridibooks/core",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "git@gitlab.ridi.io:common/php-core.git",
-                "reference": "bfddbd87cc306f3d7afe791da0d69c223f4a31f9"
-            },
-            "require": {
-                "monolog/monolog": "^1.18.0",
-                "php": "^7.0",
-                "swiftmailer/swiftmailer": "^5.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.0",
-                "symfony/http-foundation": "^2.8.0"
-            },
-            "suggest": {
-                "doctrine/cache": "Needed to use ApcuKeyValueStorage",
-                "mailgun/mailgun-php": "^2.1.2",
-                "mandrill/mandrill": "^1.0.0",
-                "sentry/sentry": "Needed to use SentryHelper",
-                "symfony/yaml": "Needed to use \\Ridibooks\\Library\\DB\\Monitoring\\Replication\\SlaveServerListConverter"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Ridibooks\\Library\\": "Library"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Ridibooks\\Tests\\Library\\": "tests/Library"
-                }
-            },
-            "description": "Ridibooks core PHP library",
-            "time": "2017-04-17 08:48:19"
+            "time": "2017-04-25 07:54:39"
         },
         {
             "name": "ridibooks/platform-common",
@@ -770,7 +702,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2017-02-03T07:32:53+00:00"
+            "time": "2017-02-03 07:32:53"
         },
         {
             "name": "silex/silex",
@@ -855,61 +787,7 @@
             "keywords": [
                 "microframework"
             ],
-            "time": "2016-11-06T18:09:06+00:00"
-        },
-        {
-            "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "81fdccfaf8bdc5d5d7a1ef6bb3a61bbb1a6c4a3e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/81fdccfaf8bdc5d5d7a1ef6bb3a61bbb1a6c4a3e",
-                "reference": "81fdccfaf8bdc5d5d7a1ef6bb3a61bbb1a6c4a3e",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9.1",
-                "symfony/phpunit-bridge": "~3.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.4-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "lib/swift_required.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Chris Corbyn"
-                },
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                }
-            ],
-            "description": "Swiftmailer, free feature-rich PHP mailer",
-            "homepage": "http://swiftmailer.org",
-            "keywords": [
-                "email",
-                "mail",
-                "mailer"
-            ],
-            "time": "2017-02-13T07:52:53+00:00"
+            "time": "2016-11-06 18:09:06"
         },
         {
             "name": "symfony/debug",
@@ -966,7 +844,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2017-03-28T21:38:24+00:00"
+            "time": "2017-03-28 21:38:24"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -1026,7 +904,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2017-04-04T07:26:27+00:00"
+            "time": "2017-04-04 07:26:27"
         },
         {
             "name": "symfony/http-foundation",
@@ -1079,7 +957,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-04-04T15:30:56+00:00"
+            "time": "2017-04-04 15:30:56"
         },
         {
             "name": "symfony/http-kernel",
@@ -1161,7 +1039,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
-            "time": "2017-04-05T12:52:03+00:00"
+            "time": "2017-04-05 12:52:03"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1220,7 +1098,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14T01:06:16+00:00"
+            "time": "2016-11-14 01:06:16"
         },
         {
             "name": "symfony/routing",
@@ -1295,7 +1173,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-03-02T15:58:09+00:00"
+            "time": "2017-03-02 15:58:09"
         },
         {
             "name": "symfony/translation",
@@ -1359,20 +1237,20 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-03-21T21:44:32+00:00"
+            "time": "2017-03-21 21:44:32"
         },
         {
             "name": "twig/twig",
-            "version": "v2.3.0",
+            "version": "v2.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "9718186a5df85a4f7917e78d3ffcabc204c75d25"
+                "reference": "85e8372c451510165c04bf781295f9d922fa524b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9718186a5df85a4f7917e78d3ffcabc204c75d25",
-                "reference": "9718186a5df85a4f7917e78d3ffcabc204c75d25",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/85e8372c451510165c04bf781295f9d922fa524b",
+                "reference": "85e8372c451510165c04bf781295f9d922fa524b",
                 "shasum": ""
             },
             "require": {
@@ -1422,15 +1300,13 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-03-22T15:41:51+00:00"
+            "time": "2017-04-21 00:13:02"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "ridibooks/cms-sdk": 20,
-        "ridibooks/core": 20,
         "ridibooks/platform-common": 20
     },
     "prefer-stable": false,
