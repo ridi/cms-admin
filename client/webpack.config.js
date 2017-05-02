@@ -6,6 +6,7 @@ module.exports = {
   entry: {
     tags: './js/tags',
     menus: './js/menus',
+    users: './js/users',
     user_edit: './js/user_edit'
   },
   output: {

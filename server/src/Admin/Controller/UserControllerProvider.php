@@ -3,8 +3,6 @@ namespace Ridibooks\Platform\Cms\Admin\Controller;
 
 use Ridibooks\Platform\Cms\Admin\UserService as AdminUserService;
 use Ridibooks\Platform\Cms\CmsApplication;
-use Ridibooks\Platform\Cms\PaginationHelper;
-use Ridibooks\Platform\Common\PagingUtil;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
@@ -30,22 +28,19 @@ class UserControllerProvider implements ControllerProviderInterface
 
     public function users(CmsApplication $app, Request $request)
     {
-        $page = $request->get('page');
-        $search_text = $request->get("search_text");
+        if (in_array('application/json', $request->getAcceptableContentTypes())) {
+            $page_index = $request->get('page', 1);
+            $per_page = $request->get('per_page', 25);
+            $search_text = $request->get("search_text");
 
-        $pagingDto = new PagingUtil(AdminUserService::getAdminUserCount($search_text), $page, null, 50);
+            $start = $per_page*($page_index-1);
+            return $app->json([
+                'users' => AdminUserService::getAdminUserList($search_text, $start, $per_page),
+                'count' => AdminUserService::getAdminUserCount($search_text),
+            ]);
+        }
 
-        $admin_user_list = AdminUserService::getAdminUserList($search_text, $pagingDto->start, $pagingDto->limit);
-        $paging = PaginationHelper::getArgs($request, $pagingDto->total, $pagingDto->cpage, $pagingDto->line_per_page);
-
-        return $app->render('super/users.twig',
-            [
-                'admin_user_list' => $admin_user_list,
-                'paging' => $paging,
-                'page' => $page,
-                'search_text' => $search_text
-            ]
-        );
+        return $app->render('super/users.twig');
     }
 
     public function user(CmsApplication $app, $user_id)

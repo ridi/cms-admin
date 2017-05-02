@@ -6,20 +6,14 @@
   "config": {
     "vendor-dir": "server/vendor"
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@gitlab.ridi.io:common/php-core.git"
-    }
-  ],
   "require": {
-    "ridibooks/cms-sdk": "dev-master",
-    "ridibooks/core": "dev-master",
+    "ridibooks/cms-sdk": "^1.0.0",
     "ridibooks/platform-common": "dev-master",
     "silex/silex": "^2.0",
     "twig/twig": "^2.0.0",
     "illuminate/database": "^5.4",
-    "sentry/sentry": "^1.6"
+    "sentry/sentry": "^1.6",
+    "moriony/silex-sentry-provider": "^2.0"
   },
   "require-dev": {
   },

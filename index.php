@@ -1,4 +1,5 @@
 <?php
+use Moriony\Silex\Provider\SentryServiceProvider;
 use Ridibooks\Cms\Thrift\ThriftService;
 use Ridibooks\Platform\Cms\Admin\Controller\MenuControllerProvider as AdminMenuController;
 use Ridibooks\Platform\Cms\Admin\Controller\TagControllerProvider as AdminTagController;
@@ -13,13 +14,13 @@ $autoloader = require __DIR__ . "/server/vendor/autoload.php";
 
 // set sentry service
 $sentry_dsn = \Config::$SENTRY_KEY;
-if (isset($sentry_dsn)) {
+if (isset($sentry_dsn) && $sentry_dsn) {
     $client = new Raven_Client($sentry_dsn);
     $client->install();
 }
 
 // set thrift end point
-if (isset(\Config::$CMS_RPC_URL)) {
+if (isset(\Config::$CMS_RPC_URL) && \Config::$CMS_RPC_URL) {
     ThriftService::setEndPoint(\Config::$CMS_RPC_URL);
 }
 
@@ -34,6 +35,15 @@ $app = new CmsApplication();
 $app['twig.path'] = [
     __DIR__ . '/server/views'
 ];
+
+// set sentry service provider
+if (isset($sentry_dsn) && $sentry_dsn !== '') {
+    $app->register(new SentryServiceProvider(), [
+        SentryServiceProvider::SENTRY_OPTIONS => [
+            SentryServiceProvider::OPT_DSN => $sentry_dsn,
+        ]
+    ]);
+}
 
 // try MiniRouter first
 $app->before(function (Request $request) {
