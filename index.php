@@ -14,13 +14,13 @@ $autoloader = require __DIR__ . "/server/vendor/autoload.php";
 
 // set sentry service
 $sentry_dsn = \Config::$SENTRY_KEY;
-if (isset($sentry_dsn) && $sentry_dsn) {
+if (!empty($sentry_dsn)) {
     $client = new Raven_Client($sentry_dsn);
     $client->install();
 }
 
 // set thrift end point
-if (isset(\Config::$CMS_RPC_URL) && \Config::$CMS_RPC_URL) {
+if (!empty(\Config::$CMS_RPC_URL)) {
     ThriftService::setEndPoint(\Config::$CMS_RPC_URL);
 }
 
@@ -37,7 +37,7 @@ $app['twig.path'] = [
 ];
 
 // set sentry service provider
-if (isset($sentry_dsn) && $sentry_dsn !== '') {
+if (!empty($sentry_dsn)) {
     $app->register(new SentryServiceProvider(), [
         SentryServiceProvider::SENTRY_OPTIONS => [
             SentryServiceProvider::OPT_DSN => $sentry_dsn,
