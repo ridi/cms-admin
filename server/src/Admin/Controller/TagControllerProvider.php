@@ -9,6 +9,7 @@ use Silex\Application;
 use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class TagControllerProvider implements ControllerProviderInterface
 {
@@ -31,20 +32,17 @@ class TagControllerProvider implements ControllerProviderInterface
 
     /**
      * @param CmsApplication $app
-     * @param \Exception $e
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @param HttpException $e
+     * @return mixed
      */
-    private function sendJsonErrorResponse(CmsApplication $app, \Exception $e)
+    private function sendErrorResponse(CmsApplication $app, HttpException $e)
     {
         $sentry_client = $app[SentryServiceProvider::SENTRY];
         if ($sentry_client) {
             $sentry_client->captureException($e);
         }
 
-        return $app->json([
-            'success' => false,
-            'msg' => ['오류가 발생하였습니다. 다시 시도하여 주세요. 문제가 다시 발생할 경우 개발그룹에 문의하여주세요.'],
-        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        return $e->getStatusCode();
     }
 
     public function tags(CmsApplication $app, Request $request)
@@ -81,30 +79,36 @@ class TagControllerProvider implements ControllerProviderInterface
 
         try {
             AdminTagService::updateTag($tag_id, $name, $is_use);
-
         } catch (\Exception $e) {
-            return $this->sendJsonErrorResponse($app, $e);
+            if (!is_a($e, 'HttpException')) {
+                $e = new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, $e->getMessage());
+            }
+
+            return $this->sendErrorResponse($app, $e);
         }
 
         return $app->json([
             'success' => true,
             'msg' => ['성공적으로 수정하였습니다'],
-        ], Response::HTTP_OK);
+        ]);
     }
 
     public function deleteTag($tag_id, CmsApplication $app)
     {
         try {
             AdminTagService::deleteTag($tag_id);
-
         } catch (\Exception $e) {
-            return $this->sendJsonErrorResponse($app, $e);
+            if (!is_a($e, 'HttpException')) {
+                $e = new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, $e->getMessage());
+            }
+
+            return $this->sendErrorResponse($app, $e);
         }
 
         return $app->json([
             'success' => true,
             'msg' => ['성공적으로 수정하였습니다'],
-        ], Response::HTTP_OK);
+        ]);
     }
 
     public function tagUsers($tag_id, Application $app)
@@ -112,40 +116,42 @@ class TagControllerProvider implements ControllerProviderInterface
         return $app->json([
             'success' => true,
             'data' => AdminTagService::getMappedAdmins($tag_id),
-        ], Response::HTTP_OK);
+        ]);
     }
 
     public function tagMenus(Application $app, $tag_id)
     {
         return $app->json([
             'success' => true,
-            'data' =>[
+            'data' => [
                 'menus' => AdminTagService::getMappedAdminMenuListForSelectBox($tag_id),
                 'admins' => AdminTagService::getMappedAdmins($tag_id)
             ],
-        ], Response::HTTP_OK);
+        ]);
     }
 
     public function addTagMenu(CmsApplication $app, $tag_id, $menu_id)
     {
         try {
             AdminTagService::insertTagMenu($tag_id, $menu_id);
-
         } catch (\Exception $e) {
-            return $this->sendJsonErrorResponse($app, $e);
+            if (!is_a($e, 'HttpException')) {
+                $e = new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, $e->getMessage());
+            }
+
+            return $this->sendErrorResponse($app, $e);
         }
 
         return $app->json([
             'success' => true,
             'msg' => ['성공적으로 수정하였습니다'],
-        ], Response::HTTP_OK);
+        ]);
     }
 
     public function deleteTagMenu(Application $app, $tag_id, $menu_id)
     {
         try {
             AdminTagService::deleteTagMenu($tag_id, $menu_id);
-
         } catch (\Exception $e) {
             return $app->abort(Response::HTTP_INTERNAL_SERVER_ERROR);
         }

@@ -29,22 +29,22 @@ class UserTable extends React.Component {
   }
 
   setUserPage(pageIndex, searchText = '') {
-    this.setState(Object.assign({}, this.state, {
-      isLoading: true,
-    }));
+    this.setState({ isLoading: true, });
 
     axios.get(`/super/users?page=${pageIndex}&per_page=${ROW_PER_PAGE}&search_text=${searchText}`, {
-      headers: { 'Accept': 'application/json' }
+      headers: {
+        'Accept': 'application/json',
+      }
     })
     .then((res) => {
       const users = res.data.users;
       const pageEnd = Math.ceil(res.data.count/ROW_PER_PAGE);
-      this.setState(Object.assign({}, this.state, {
+      this.setState({
         users,
         pageEnd,
         activePage: pageIndex,
         isLoading: false,
-      }));
+      });
     })
     .catch((e) => {
       alert(e);
@@ -61,9 +61,7 @@ class UserTable extends React.Component {
   }
 
   handleChangeSearchText(e) {
-    this.setState(Object.assign({}, this.state, {
-      searchText: e.target.value,
-    }));
+    this.setState({ searchText: e.target.value, });
   }
 
   handleAddUser() {
