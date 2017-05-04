@@ -29,7 +29,12 @@ class TagControllerProvider implements ControllerProviderInterface
         return $controllers;
     }
 
-    private function responseError(CmsApplication $app, \Exception $e)
+    /**
+     * @param CmsApplication $app
+     * @param \Exception $e
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    private function sendJsonErrorResponse(CmsApplication $app, \Exception $e)
     {
         $sentry_client = $app[SentryServiceProvider::SENTRY];
         if ($sentry_client) {
@@ -39,7 +44,7 @@ class TagControllerProvider implements ControllerProviderInterface
         return $app->json([
             'success' => false,
             'msg' => ['오류가 발생하였습니다. 다시 시도하여 주세요. 문제가 다시 발생할 경우 개발그룹에 문의하여주세요.'],
-        ]);
+        ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     public function tags(CmsApplication $app, Request $request)
@@ -78,13 +83,13 @@ class TagControllerProvider implements ControllerProviderInterface
             AdminTagService::updateTag($tag_id, $name, $is_use);
 
         } catch (\Exception $e) {
-            return $this->responseError($app, $e);
+            return $this->sendJsonErrorResponse($app, $e);
         }
 
         return $app->json([
             'success' => true,
             'msg' => ['성공적으로 수정하였습니다'],
-        ]);
+        ], Response::HTTP_OK);
     }
 
     public function deleteTag($tag_id, CmsApplication $app)
@@ -93,13 +98,13 @@ class TagControllerProvider implements ControllerProviderInterface
             AdminTagService::deleteTag($tag_id);
 
         } catch (\Exception $e) {
-            return $this->responseError($app, $e);
+            return $this->sendJsonErrorResponse($app, $e);
         }
 
         return $app->json([
             'success' => true,
             'msg' => ['성공적으로 수정하였습니다'],
-        ]);
+        ], Response::HTTP_OK);
     }
 
     public function tagUsers($tag_id, Application $app)
@@ -107,7 +112,7 @@ class TagControllerProvider implements ControllerProviderInterface
         return $app->json([
             'success' => true,
             'data' => AdminTagService::getMappedAdmins($tag_id),
-        ]);
+        ], Response::HTTP_OK);
     }
 
     public function tagMenus(Application $app, $tag_id)
@@ -118,7 +123,7 @@ class TagControllerProvider implements ControllerProviderInterface
                 'menus' => AdminTagService::getMappedAdminMenuListForSelectBox($tag_id),
                 'admins' => AdminTagService::getMappedAdmins($tag_id)
             ],
-        ]);
+        ], Response::HTTP_OK);
     }
 
     public function addTagMenu(CmsApplication $app, $tag_id, $menu_id)
@@ -127,13 +132,13 @@ class TagControllerProvider implements ControllerProviderInterface
             AdminTagService::insertTagMenu($tag_id, $menu_id);
 
         } catch (\Exception $e) {
-            return $this->responseError($app, $e);
+            return $this->sendJsonErrorResponse($app, $e);
         }
 
         return $app->json([
             'success' => true,
             'msg' => ['성공적으로 수정하였습니다'],
-        ]);
+        ], Response::HTTP_OK);
     }
 
     public function deleteTagMenu(Application $app, $tag_id, $menu_id)
