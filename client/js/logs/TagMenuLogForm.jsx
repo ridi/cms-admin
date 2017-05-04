@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Table, Button, Pagination } from 'react-bootstrap';
 
 class TagMenuLogForm extends React.Component {
@@ -93,5 +94,16 @@ class TagMenuLogForm extends React.Component {
     );
   }
 }
+
+TagMenuLogForm.propTypes = {
+  datas: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  onShowMenuChange: PropTypes.func.isRequired,
+  onShowTagChange: PropTypes.func.isRequired,
+  pageLength: PropTypes.number.isRequired,
+  nowPage: PropTypes.number.isRequired,
+  pageEnd: PropTypes.number.isRequired,
+  onSelectPage: PropTypes.func.isRequired,
+};
 
 export default TagMenuLogForm;
