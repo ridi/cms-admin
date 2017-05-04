@@ -9,6 +9,7 @@ use Silex\Application;
 use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class MenuControllerProvider implements ControllerProviderInterface
 {
@@ -33,26 +34,23 @@ class MenuControllerProvider implements ControllerProviderInterface
 
     /**
      * @param CmsApplication $app
-     * @param \Exception $e
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @param HttpException $e
+     * @return int|string
      */
-    private function sendJsonErrorResponse(CmsApplication $app, \Exception $e)
+    private function sendErrorResponse(CmsApplication $app, HttpException $e)
     {
         $sentry_client = $app[SentryServiceProvider::SENTRY];
         if ($sentry_client) {
             $sentry_client->captureException($e);
         }
 
-        return $app->json([
-            'success' => false,
-            'msg' => ['오류가 발생하였습니다. 다시 시도하여 주세요. 문제가 다시 발생할 경우 개발그룹에 문의하여주세요.'],
-        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        return $e->getStatusCode();
     }
 
     public function menus(CmsApplication $app, Request $request)
     {
         if (in_array('application/json', $request->getAcceptableContentTypes())) {
-            return $app->json(AdminMenuService::getMenuList(1), Response::HTTP_OK);
+            return $app->json(AdminMenuService::getMenuList(1));
         }
 
         return $app->render('super/menus.twig', [
@@ -98,15 +96,18 @@ class MenuControllerProvider implements ControllerProviderInterface
 
         try {
             AdminMenuService::updateMenu($menu);
-
         } catch (\Exception $e) {
-            return $this->sendJsonErrorResponse($app, $e);
+            if (!is_a($e, 'HttpException')) {
+                $e = new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, $e->getMessage());
+            }
+
+            return $this->sendErrorResponse($app, $e);
         }
 
         return $app->json([
             'success' => true,
             'msg' => ['성공적으로 수정하였습니다'],
-        ], Response::HTTP_OK);
+        ]);
     }
 
     public function submenus(CmsApplication $app, $menu_id)
@@ -114,7 +115,7 @@ class MenuControllerProvider implements ControllerProviderInterface
         return $app->json([
             'success' => true,
             'data' => AdminMenuService::getMenuAjaxList($menu_id),
-        ], Response::HTTP_OK);
+        ]);
     }
 
     public function createSubmenu(CmsApplication $app, Request $request, $menu_id)
@@ -158,6 +159,6 @@ class MenuControllerProvider implements ControllerProviderInterface
     {
         $users = AdminMenuService::getUsersByMenuId($menu_id);
 
-        return $app->json($users, Response::HTTP_OK);
+        return $app->json($users);
     }
 }
