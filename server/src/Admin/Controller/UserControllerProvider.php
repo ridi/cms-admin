@@ -154,7 +154,6 @@ class UserControllerProvider implements ControllerProviderInterface
 
             AdminLogService::updateUserPermissions($user_id, $tag_ids, $menu_ids);
             $app->addFlashInfo('성공적으로 수정하였습니다.');
-
         } catch (\Exception $e) {
             $app->addFlashError($e->getMessage());
         }

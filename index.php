@@ -1,10 +1,10 @@
 <?php
 use Moriony\Silex\Provider\SentryServiceProvider;
 use Ridibooks\Cms\Thrift\ThriftService;
+use Ridibooks\Platform\Cms\Admin\Controller\LogController as AdminLogController;
 use Ridibooks\Platform\Cms\Admin\Controller\MenuControllerProvider as AdminMenuController;
 use Ridibooks\Platform\Cms\Admin\Controller\TagControllerProvider as AdminTagController;
 use Ridibooks\Platform\Cms\Admin\Controller\UserControllerProvider as AdminUserController;
-use Ridibooks\Platform\Cms\Admin\Controller\LogController as AdminLogController;
 use Ridibooks\Platform\Cms\Auth\LoginService;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Cms\MiniRouter;
@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 require_once 'config.local.php';
 $autoloader = require __DIR__ . "/server/vendor/autoload.php";
+
+require_once 'bootstrap.php';
 
 // set sentry service
 $sentry_dsn = \Config::$SENTRY_KEY;
