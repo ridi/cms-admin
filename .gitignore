@@ -4,3 +4,4 @@ client/node_modules
 docs/deploy/servers/*
 server/vendor
 config.local.php
+phinx.yml

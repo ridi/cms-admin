@@ -1,10 +1,8 @@
 <?php
 namespace Ridibooks\Platform\Cms\Admin;
 
-use Illuminate\Database\Capsule\Manager as DB;
 use Ridibooks\Platform\Cms\Admin\Model\AdminUser;
 use Ridibooks\Platform\Cms\Auth\PasswordService;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class UserService
 {
@@ -98,20 +96,6 @@ class UserService
     public static function deleteUser($user_id)
     {
         AdminUser::destroy($user_id);
-    }
-
-    public static function updateUserPermissions($user_id, $tag_ids, $menu_ids)
-    {
-        /** @var AdminUser $user */
-        $user = AdminUser::find($user_id);
-        if (!$user) {
-            throw new ResourceNotFoundException();
-        }
-
-        DB::connection()->transaction(function () use ($user, $tag_ids, $menu_ids) {
-            $user->tags()->sync($tag_ids);
-            $user->menus()->sync($menu_ids);
-        });
     }
 
     /**Admin 계정 insert validator

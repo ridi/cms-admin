@@ -15,13 +15,11 @@
     "moriony/silex-sentry-provider": "^2.0"
   },
   "require-dev": {
+    "robmorgan/phinx": "^0.8.0"
   },
   "autoload": {
     "psr-4": {
       "Ridibooks\\Platform\\Cms\\Admin\\": "server/src/Admin"
-    },
-    "files": [
-      "bootstrap.php"
-    ]
+    }
   }
 }

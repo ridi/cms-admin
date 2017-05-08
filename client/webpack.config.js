@@ -7,7 +7,8 @@ module.exports = {
     tags: './js/tags',
     menus: './js/menus',
     users: './js/users',
-    user_edit: './js/user_edit'
+    user_edit: './js/user_edit',
+    logs: './js/logs',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
