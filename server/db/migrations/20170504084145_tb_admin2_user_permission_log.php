@@ -15,7 +15,7 @@ class TbAdmin2UserPermissionLog extends AbstractMigration
                 'comment' => '태그 id의 문자열 목록'])
             ->addColumn('edited_by', 'string', ['limit' => 32, 'null' => false,
                 'comment' => '수정한 사람의 ID'])
-            ->addColumn('created_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP',
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP',
                 'comment' => '등록일'])
             ->addForeignKey('user_id', 'tb_admin2_user', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
             ->create();
