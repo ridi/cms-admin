@@ -23,16 +23,8 @@ module.exports = {
     rules: [
       {
         test: /\.jsx$/,
-        loader: 'babel-loader?' + JSON.stringify({
-          presets: ['es2015', 'react'],
-          plugins: ['transform-class-properties'],
-        }),
-        exclude: [/elm-stuff/, /node_modules/],
-      },
-      {
-        test: /\.elm$/,
-        loader: 'elm-webpack',
-        exclude: [/elm-stuff/, /node_modules/],
+        use: ['babel-loader'],
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
@@ -46,7 +38,6 @@ module.exports = {
         loader: 'url-loader',
       }
     ],
-    noParse: /\.elm$/,
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({

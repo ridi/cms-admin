@@ -1,5 +1,6 @@
+import 'babel-polyfill';
 import React from 'react';
-import { Grid, Row, Col, Table, Pagination, FormGroup, FormControl, InputGroup, Button, Glyphicon } from 'react-bootstrap';
+import { Button, Col, FormControl, FormGroup, Glyphicon, Grid, InputGroup, Pagination, Row, Table } from 'react-bootstrap';
 import axios from 'axios';
 
 const ROW_PER_PAGE = 15;
@@ -28,27 +29,28 @@ class UserTable extends React.Component {
     this.setUserPage(1);
   }
 
-  setUserPage(pageIndex, searchText = '') {
+  async setUserPage(pageIndex, searchText = '') {
     this.setState({ isLoading: true, });
 
-    axios.get(`/super/users?page=${pageIndex}&per_page=${ROW_PER_PAGE}&search_text=${searchText}`, {
-      headers: {
-        'Accept': 'application/json',
-      }
-    })
-    .then((res) => {
-      const users = res.data.users;
-      const pageEnd = Math.ceil(res.data.count/ROW_PER_PAGE);
+    try {
+      const { data: data }= await axios.get(`/super/users?page=${pageIndex}&per_page=${ROW_PER_PAGE}&search_text=${searchText}`, {
+        headers: {
+          'Accept': 'application/json',
+        }
+      });
+
+      const users = data.users;
+      const pageEnd = Math.ceil(data.count/ROW_PER_PAGE);
       this.setState({
         users,
         pageEnd,
         activePage: pageIndex,
         isLoading: false,
       });
-    })
-    .catch((e) => {
+
+    } catch(e) {
       alert(e);
-    });
+    }
   }
 
   handleSelect(page) {
