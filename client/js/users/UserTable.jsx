@@ -11,7 +11,7 @@ class UserTable extends React.Component {
     super();
 
     this.handleSelect = this.handleSelect.bind(this);
-    this.handleSearch= this.handleSearch.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
     this.handleChangeSearchText = this.handleChangeSearchText.bind(this);
     this.handleAddUser = this.handleAddUser.bind(this);
 
@@ -33,14 +33,14 @@ class UserTable extends React.Component {
     this.setState({ isLoading: true, });
 
     try {
-      const { data: data }= await axios.get(`/super/users?page=${pageIndex}&per_page=${ROW_PER_PAGE}&search_text=${searchText}`, {
+      const { data: data } = await axios.get(`/super/users?page=${pageIndex}&per_page=${ROW_PER_PAGE}&search_text=${searchText}`, {
         headers: {
           'Accept': 'application/json',
         }
       });
 
       const users = data.users;
-      const pageEnd = Math.ceil(data.count/ROW_PER_PAGE);
+      const pageEnd = Math.ceil(data.count / ROW_PER_PAGE);
       this.setState({
         users,
         pageEnd,
@@ -48,7 +48,7 @@ class UserTable extends React.Component {
         isLoading: false,
       });
 
-    } catch(e) {
+    } catch (e) {
       alert(e);
     }
   }
@@ -58,7 +58,7 @@ class UserTable extends React.Component {
   }
 
   handleSearch() {
-    this.isSearched = (this.state.searchText!=='');
+    this.isSearched = (this.state.searchText !== '');
     this.setUserPage(1, this.state.searchText);
   }
 
@@ -84,16 +84,18 @@ class UserTable extends React.Component {
     if (!users || users.length === 0) {
       const noDataText = this.isSearched ? '검색 결과가 없습니다.' : '등록된 어드민 계정이 없습니다.';
       return (
-        <tr><td colSpan={4} className="center">{noDataText}</td></tr>
+        <tr>
+          <td colSpan={4} className="center">{noDataText}</td>
+        </tr>
       );
     }
 
     return users.map(user =>
-      <tr key={user.id} className={user.is_use !== '1'? 'danger' : undefined}>
+      <tr key={user.id} className={user.is_use !== '1' ? 'danger' : undefined}>
         <td>{user.id}</td>
         <td><a href={`/super/users/${user.id}`}>{user.name}</a></td>
         <td>{user.team}</td>
-        <td>{user.is_use === '1'? 'Y' : 'N'}</td>
+        <td>{user.is_use === '1' ? 'Y' : 'N'}</td>
       </tr>
     );
   }
