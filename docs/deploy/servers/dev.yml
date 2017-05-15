@@ -1,9 +1,0 @@
-localhost:
-  stage: dev
-  repository: git@github.com:ridibooks/cms-admin.git
-  branch: deploy
-  local: true
-  deploy_path: ~/deploy/cms-admin
-  shared_files:
-    - config.local.php
-  keep_releases: 5
