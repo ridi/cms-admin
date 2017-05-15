@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 $autoloader = require __DIR__ . "/server/vendor/autoload.php";
 
 $dotenv = new Dotenv\Dotenv(__DIR__, '.env');
-$dotenv->load();
+$dotenv->overload();
 
 require_once __DIR__ . "/bootstrap.php";
 
@@ -32,7 +32,7 @@ if (!empty($cms_rpc_url)) {
 
 // start session
 $couchbase_host = $_ENV['COUCHBASE_HOST'];
-if (isset($couchbase_host) && $couchbase_host !== '') {
+if (!empty($couchbase_host)) {
     LoginService::startCouchbaseSession(explode(',', $couchbase_host));
 } else {
     LoginService::startSession();
