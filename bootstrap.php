@@ -2,7 +2,7 @@
 
 $capsule = new Illuminate\Database\Capsule\Manager();
 $capsule->addConnection([
-'driver' => 'mysql',
+    'driver' => 'mysql',
     'host' => $_ENV['MYSQL_HOST'],
     'database' => $_ENV['MYSQL_DATABASE'],
     'username' => $_ENV['MYSQL_USER'],

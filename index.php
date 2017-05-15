@@ -12,8 +12,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 $autoloader = require __DIR__ . "/server/vendor/autoload.php";
 
-$dotenv = new Dotenv\Dotenv(__DIR__, '.env');
-$dotenv->overload();
+if (is_readable('.env')) {
+    $dotenv = new Dotenv\Dotenv(__DIR__, '.env');
+    $dotenv->load();
+}
 
 require_once __DIR__ . "/bootstrap.php";
 
