@@ -1,8 +1,8 @@
+import 'babel-polyfill';
 import React from 'react';
 import { Modal } from 'react-bootstrap/lib';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-
 
 function UserRow(props) {
   return (
@@ -24,17 +24,26 @@ class MenuUsersTable extends React.Component {
     super(props);
 
     this.state = {
+      loading: true,
       users: [],
     };
   }
 
   componentDidMount() {
-    axios.get(`/super/menus/${this.props.menuId}/users`)
-      .then((res) => {
-        this.setState({ users: res.data });
-      }).catch((err) => {
-        console.log(err);
+    this.getMenuUsers();
+  }
+
+  async getMenuUsers() {
+    try {
+      const {data: data} = await axios.get(`/super/menus/${this.props.menuId}/users`);
+      this.setState({
+        users: data,
+        loading: false,
       });
+
+    } catch(e) {
+      console.log(e);
+    }
   }
 
   render() {
@@ -44,7 +53,7 @@ class MenuUsersTable extends React.Component {
 
     return (
       <div>
-        {userRows}
+        { this.state.loading ? 'loading...' : userRows }
       </div>
     );
   }

@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
@@ -26,42 +27,44 @@ class UserCpForm extends React.Component {
   }
 
   componentDidMount() {
-    Promise.all([
+    this.setCpState();
+  }
+
+  async setCpState() {
+    const [ productionCpList, partnerCpList, operatorCpList, allCpList ] = await Promise.all([
       this.getManagingCpList(PRODUCTION_CP_TYPE),
       this.getManagingCpList(PARTNER_CP_TYPE),
       this.getManagingCpList(OPERATOR_CP_TYPE),
       this.getCpList(),
-    ]).then((res) => {
-      const allCpList = [];
-      const data = res[3].data.data;
-      if (data.length !== 0) {
-        data.map((cp) => {
-          allCpList.push({ id: cp.id, text: `${cp.name} (${cp.id})` });
-          return null;
-        });
-      }
+    ]);
 
-      this.setState({
-        cpFetching: false,
-        productionCpList: res[0].data.slice(),
-        partnerCpList: res[1].data.slice(),
-        operatorCpList: res[2].data.slice(),
-        allCpList,
-      });
+    this.setState({
+      cpFetching: false,
+      productionCpList,
+      partnerCpList,
+      operatorCpList,
+      allCpList,
     });
   }
 
-  getManagingCpList(type) {
-    return axios('/admin/publisher/managers.ajax', {
+  async getManagingCpList(type) {
+    const { data: data } = await axios('/admin/publisher/managers.ajax', {
       params: {
         id: this.props.id,
         type,
       },
     });
+
+    return data;
   }
 
-  getCpList() {
-    return axios('/admin/comm/cp_list.ajax');
+  async getCpList() {
+    const { data: res } = await axios('/admin/comm/cp_list.ajax');
+    if (res.data) {
+      return res.data.map((cp) => ({id: cp.id, text: `${cp.name} (${cp.id})`}));
+    }
+
+    return [];
   }
 
   handleCpAdd(id, cpType) {

@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React from 'react';
 import axios from 'axios';
 import TagMenuLogForm from './TagMenuLogForm';
@@ -32,9 +33,6 @@ class LogApp extends React.Component {
       },
     };
 
-    this.getLogPage = this.getLogPage.bind(this);
-    this.getMenus = this.getMenus.bind(this);
-    this.getTags = this.getTags.bind(this);
     this.handleShowMenuChange = this.handleShowMenuChange.bind(this);
     this.handleCloseMenuChange = this.handleCloseMenuChange.bind(this);
     this.handleShowTagChange = this.handleShowTagChange.bind(this);
@@ -43,51 +41,51 @@ class LogApp extends React.Component {
   }
 
   componentDidMount() {
-    this.getLogPage(this.state.userLog.nowPage);
+    this.handleSelectPage(this.state.userLog.nowPage);
   }
 
-  getLogPage(pageIndex) {
-    axios.get(`/super/logs/user?page=${pageIndex}&per_page=${ROW_PER_PAGE}`, {
-      headers: { Accept: 'application/json' },
-    }).then((res) => {
-      const data = res.data.rows;
-      const pageEnd = Math.ceil(res.data.count / ROW_PER_PAGE);
-      this.setState({
-        userLog: {
-          datas: data,
-          nowPage: pageIndex,
-          pageEnd,
-          loading: false,
-        },
+  async getLogPage(pageIndex) {
+    try {
+      const { data: data } = await axios.get(`/super/logs/user?page=${pageIndex}&per_page=${ROW_PER_PAGE}`, {
+        headers: { Accept: 'application/json' },
       });
-    }).catch((e) => {
+
+      return { rows: data.rows, pageEnd:Math.ceil(data.count / ROW_PER_PAGE) };
+
+    } catch (e) {
       alert(e);
-    });
-  }
-
-  getMenus() {
-    if (this.menuSaved) {
-      return Promise.resolve(this.menuSaved);
     }
 
-    return axios('/super/menus').then((res) => {
-      this.menuSaved = res.data;
-      return Promise.resolve(this.menuSaved);
-    });
+    return null;
   }
 
-  getTags() {
-    if (this.tagSaved) {
-      return Promise.resolve(this.tagSaved);
+  async getMenus() {
+    if (!this.menuSaved) {
+      try {
+        const { data: data } = await axios('/super/menus');
+        this.menuSaved = data;
+      } catch (e) {
+        alert(e);
+      }
     }
 
-    return axios('/super/tags').then((res) => {
-      this.tagSaved = res.data;
-      return Promise.resolve(this.tagSaved);
-    });
+    return this.menuSaved;
   }
 
-  handleShowMenuChange(srcMenu) {
+  async getTags() {
+    if (!this.tagSaved) {
+      try {
+        const { data: data } = await axios('/super/tags');
+        this.tagSaved = data;
+      } catch (e) {
+        alert(e);
+      }
+    }
+
+    return this.tagSaved;
+  }
+
+  async handleShowMenuChange(srcMenu) {
     if (!srcMenu) {
       this.setState({
         menuLogDlg: Object.assign({}, this.state.menuLogDlg, {
@@ -105,18 +103,18 @@ class LogApp extends React.Component {
       }),
     });
 
+
     const menuIds = srcMenu.menu_ids ? srcMenu.menu_ids.split(',') : [];
-    this.getMenus()
-    .then((menus) => {
-      const results = menus
+    const menus = await this.getMenus();
+    const results = menus
                     .filter(menu => menuIds.indexOf(menu.id.toString()) !== -1)
-                    .map(menu => menu.menu_title);
-      this.setState({
-        menuLogDlg: Object.assign({}, this.state.menuLogDlg, {
-          datas: results,
-          loading: false,
-        }),
-      });
+                    .map(menu => menu.menu_title)
+                    .filter((menuTitle, i, menus) => menus.indexOf(menuTitle) === i);
+    this.setState({
+      menuLogDlg: Object.assign({}, this.state.menuLogDlg, {
+        datas: results,
+        loading: false,
+      }),
     });
   }
 
@@ -128,7 +126,7 @@ class LogApp extends React.Component {
     });
   }
 
-  handleShowTagChange(srcTag) {
+  async handleShowTagChange(srcTag) {
     if (!srcTag) {
       this.setState({
         tagLogDlg: Object.assign({}, this.state.tagLogDlg, {
@@ -147,17 +145,15 @@ class LogApp extends React.Component {
     });
 
     const tagIds = srcTag.tag_ids ? srcTag.tag_ids.split(',') : [];
-    this.getTags()
-    .then((tags) => {
-      const results = tags
-                      .filter(tag => tagIds.indexOf(tag.id.toString()) !== -1)
-                      .map(tag => tag.name);
-      this.setState({
-        tagLogDlg: Object.assign({}, this.state.tagLogDlg, {
-          datas: results,
-          loading: false,
-        }),
-      });
+    const tags = await this.getTags();
+    const results = tags
+                    .filter(tag => tagIds.indexOf(tag.id.toString()) !== -1)
+                    .map(tag => tag.name);
+    this.setState({
+      tagLogDlg: Object.assign({}, this.state.tagLogDlg, {
+        datas: results,
+        loading: false,
+      }),
     });
   }
 
@@ -169,13 +165,33 @@ class LogApp extends React.Component {
     });
   }
 
-  handleSelectPage(pageIndex) {
-    this.setState({
-      userLog: Object.assign({}, this.state.userLog, {
-        loading: true,
-      }),
-    });
-    this.getLogPage(pageIndex);
+  async handleSelectPage(pageIndex) {
+    if (!this.state.userLog.loading) {
+      this.setState({
+        userLog: Object.assign({}, this.state.userLog, {
+          loading: true,
+        }),
+      });
+    }
+
+    const pageData = await this.getLogPage(pageIndex);
+    if (pageData) {
+      this.setState({
+        userLog: {
+          datas: pageData.rows,
+          nowPage: pageIndex,
+          pageEnd: pageData.pageEnd,
+          loading: false,
+        },
+      });
+
+    } else {
+      this.setState({
+        userLog: {
+          loading: false,
+        },
+      });
+    }
   }
 
   render() {
