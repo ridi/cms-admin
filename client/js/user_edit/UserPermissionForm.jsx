@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
@@ -24,36 +25,57 @@ class UserPermissionForm extends React.Component {
     };
   }
 
-  componentDidMount() {
-    axios('/super/tags')
-    .then((res) => {
-      let data = res.data;
-      this.setState(Object.assign({}, this.state, {
-        tagList: data.map((tag) => {
-          return { id: tag.id, text: tag.name };
-        }),
-        tagFetching: false
-      }));
-    })
-    .catch((e) => {
-      alert(e);
-    });
+  async componentDidMount() {
+    await Promise.all([
+      this.updateTags(),
+      this.updateMenus(),
+    ]);
+  }
 
-    axios('/super/menus')
-    .then((res) => {
-      let data = res.data;
+  async getTags() {
+    const { data: data } = await axios('/super/tags');
+    return data;
+  }
+
+  async getMenus() {
+    const { data: data } = await axios('/super/menus');
+    return data;
+  }
+
+  async updateTags() {
+    let tags = await this.getTags();
+    if (tags) {
       this.setState(Object.assign({}, this.state, {
-        menuList: data.map((menu) => {
+        tagList: tags.map((tag) => {
+          return {id: tag.id, text: tag.name};
+        }),
+        tagFetching: false,
+      }));
+
+    } else {
+      this.setState(Object.assign({}, this.state, {
+        tagFetching: false,
+      }));
+    }
+  }
+
+  async updateMenus() {
+    const menus = await this.getMenus();
+    if (menus) {
+      this.setState(Object.assign({}, this.state, {
+        menuList: menus.map((menu) => {
           const menuUrlArray = menu.menu_url.split('#');
           const text = menu.menu_title + (menuUrlArray[1] ? '#' + menuUrlArray[1] : '');
-          return { id: menu.id, text: text };
+          return {id: menu.id, text: text};
         }),
-        menuFetching: false
+        menuFetching: false,
       }));
-    })
-    .catch((e) => {
-      alert(e);
-    });
+
+    } else {
+      this.setState(Object.assign({}, this.state, {
+        menuFetching: false,
+      }));
+    }
   }
 
   handleMenuAdd(id) {
