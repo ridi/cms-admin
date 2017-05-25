@@ -29,21 +29,21 @@ class MenuUsersTable extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.getMenuUsers();
+  async componentDidMount() {
+    this.updateMenuUsers();
   }
 
   async getMenuUsers() {
-    try {
-      const {data: data} = await axios.get(`/super/menus/${this.props.menuId}/users`);
-      this.setState({
-        users: data,
-        loading: false,
-      });
+    const {data: data} = await axios.get(`/super/menus/${this.props.menuId}/users`);
+    return data;
+  }
 
-    } catch(e) {
-      console.log(e);
-    }
+  async updateMenuUsers() {
+    const users = await this.getMenuUsers();
+    this.setState({
+      users,
+      loading: false,
+    });
   }
 
   render() {

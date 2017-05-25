@@ -26,25 +26,8 @@ class UserCpForm extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.setCpState();
-  }
-
-  async setCpState() {
-    const [ productionCpList, partnerCpList, operatorCpList, allCpList ] = await Promise.all([
-      this.getManagingCpList(PRODUCTION_CP_TYPE),
-      this.getManagingCpList(PARTNER_CP_TYPE),
-      this.getManagingCpList(OPERATOR_CP_TYPE),
-      this.getCpList(),
-    ]);
-
-    this.setState({
-      cpFetching: false,
-      productionCpList,
-      partnerCpList,
-      operatorCpList,
-      allCpList,
-    });
+  async componentDidMount() {
+    await this.updateCp();
   }
 
   async getManagingCpList(type) {
@@ -65,6 +48,23 @@ class UserCpForm extends React.Component {
     }
 
     return [];
+  }
+
+  async updateCp() {
+    const [ productionCpList, partnerCpList, operatorCpList, allCpList ] = await Promise.all([
+      this.getManagingCpList(PRODUCTION_CP_TYPE),
+      this.getManagingCpList(PARTNER_CP_TYPE),
+      this.getManagingCpList(OPERATOR_CP_TYPE),
+      this.getCpList(),
+    ]);
+
+    this.setState({
+      cpFetching: false,
+      productionCpList,
+      partnerCpList,
+      operatorCpList,
+      allCpList,
+    });
   }
 
   handleCpAdd(id, cpType) {

@@ -45,28 +45,20 @@ class LogApp extends React.Component {
   }
 
   async getLogPage(pageIndex) {
-    try {
-      const { data: data } = await axios.get(`/super/logs/user?page=${pageIndex}&per_page=${ROW_PER_PAGE}`, {
-        headers: { Accept: 'application/json' },
-      });
+    const { data: data } = await axios.get(`/super/logs/user?page=${pageIndex}&per_page=${ROW_PER_PAGE}`, {
+      headers: { Accept: 'application/json' },
+    });
 
-      return { rows: data.rows, pageEnd:Math.ceil(data.count / ROW_PER_PAGE) };
-
-    } catch (e) {
-      alert(e);
-    }
-
-    return null;
+    return {
+      rows: data.rows,
+      pageEnd: Math.ceil(data.count / ROW_PER_PAGE)
+    };
   }
 
   async getMenus() {
     if (!this.menuSaved) {
-      try {
-        const { data: data } = await axios('/super/menus');
-        this.menuSaved = data;
-      } catch (e) {
-        alert(e);
-      }
+      const { data: data } = await axios('/super/menus');
+      this.menuSaved = data;
     }
 
     return this.menuSaved;
@@ -74,12 +66,8 @@ class LogApp extends React.Component {
 
   async getTags() {
     if (!this.tagSaved) {
-      try {
-        const { data: data } = await axios('/super/tags');
-        this.tagSaved = data;
-      } catch (e) {
-        alert(e);
-      }
+      const { data: data } = await axios('/super/tags');
+      this.tagSaved = data;
     }
 
     return this.tagSaved;
@@ -109,7 +97,7 @@ class LogApp extends React.Component {
     const results = menus
                     .filter(menu => menuIds.indexOf(menu.id.toString()) !== -1)
                     .map(menu => menu.menu_title)
-                    .filter((menuTitle, i, menus) => menus.indexOf(menuTitle) === i);
+                    .filter((menuTitle, i, menuTitles) => menuTitles.indexOf(menuTitle) === i);
     this.setState({
       menuLogDlg: Object.assign({}, this.state.menuLogDlg, {
         datas: results,
@@ -175,23 +163,14 @@ class LogApp extends React.Component {
     }
 
     const pageData = await this.getLogPage(pageIndex);
-    if (pageData) {
-      this.setState({
-        userLog: {
-          datas: pageData.rows,
-          nowPage: pageIndex,
-          pageEnd: pageData.pageEnd,
-          loading: false,
-        },
-      });
-
-    } else {
-      this.setState({
-        userLog: {
-          loading: false,
-        },
-      });
-    }
+    this.setState({
+      userLog: {
+        datas: pageData.rows,
+        nowPage: pageIndex,
+        pageEnd: pageData.pageEnd,
+        loading: false,
+      },
+    });
   }
 
   render() {

@@ -25,23 +25,24 @@ class UserPermissionForm extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.setTagsState();
-    this.setMenusState();
+  async componentDidMount() {
+    await Promise.all([
+      this.updateTags(),
+      this.updateMenus(),
+    ]);
   }
 
   async getTags() {
-    try {
-      const { data: data } = await axios('/super/tags');
-      return data;
-    } catch(e)  {
-      alert(e);
-    }
-
-    return null;
+    const { data: data } = await axios('/super/tags');
+    return data;
   }
 
-  async setTagsState() {
+  async getMenus() {
+    const { data: data } = await axios('/super/menus');
+    return data;
+  }
+
+  async updateTags() {
     let tags = await this.getTags();
     if (tags) {
       this.setState(Object.assign({}, this.state, {
@@ -58,18 +59,7 @@ class UserPermissionForm extends React.Component {
     }
   }
 
-  async getMenus() {
-    try {
-      const { data: data } = await axios('/super/menus');
-      return data;
-    } catch(e)  {
-      alert(e);
-    }
-
-    return null;
-  }
-
-  async setMenusState() {
+  async updateMenus() {
     const menus = await this.getMenus();
     if (menus) {
       this.setState(Object.assign({}, this.state, {
