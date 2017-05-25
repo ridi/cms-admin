@@ -96,8 +96,7 @@ class LogApp extends React.Component {
     const menus = await this.getMenus();
     const results = menus
                     .filter(menu => menuIds.indexOf(menu.id.toString()) !== -1)
-                    .map(menu => menu.menu_title)
-                    .filter((menuTitle, i, menuTitles) => menuTitles.indexOf(menuTitle) === i);
+                    .map(menu => ({ id: menu.id, title: `${menu.menu_title} [ ${menu.menu_url} ]` }));
     this.setState({
       menuLogDlg: Object.assign({}, this.state.menuLogDlg, {
         datas: results,
@@ -136,7 +135,7 @@ class LogApp extends React.Component {
     const tags = await this.getTags();
     const results = tags
                     .filter(tag => tagIds.indexOf(tag.id.toString()) !== -1)
-                    .map(tag => tag.name);
+                    .map(tag => ({ id: tag.id, title: tag.name }));
     this.setState({
       tagLogDlg: Object.assign({}, this.state.tagLogDlg, {
         datas: results,

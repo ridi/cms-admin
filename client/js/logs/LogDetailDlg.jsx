@@ -8,7 +8,7 @@ const LogDetailDlg = (props) => {
     contents = 'Loading...';
   } else {
     contents = (!props.datas || props.datas.length === 0) ? '전부 삭제되었습니다.' :
-      props.datas.map(data => <h4 key={data}><Label>{data}</Label>&nbsp;</h4>);
+      props.datas.map(data => <h4 key={data.id}><Label>{data.title}</Label>&nbsp;</h4>);
   }
   return (
     <Modal show={props.show}>
@@ -29,7 +29,10 @@ LogDetailDlg.propTypes = {
   show: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
-  datas: PropTypes.arrayOf(PropTypes.string).isRequired,
+  datas: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+  })).isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
