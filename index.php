@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 $autoloader = require __DIR__ . "/server/vendor/autoload.php";
 
-if (is_readable('.env')) {
+if (is_readable(__DIR__ . '.env')) {
     $dotenv = new Dotenv\Dotenv(__DIR__, '.env');
     $dotenv->load();
 }
