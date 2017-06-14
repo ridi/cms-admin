@@ -16,7 +16,8 @@ class AdminTag extends Model
 
     protected $casts = [
         'is_use' => 'boolean',
-        'users_count' => 'integer',
+        'active_users_count' => 'integer',
+        'inactive_users_count' => 'integer',
         'menus_count' => 'integer'
     ];
 

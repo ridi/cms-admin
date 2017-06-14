@@ -61,7 +61,7 @@ export default class TagList extends React.Component {
   }
 
   render() {
-    const { tags, onMenusCountClick, onUsersCountClick } = this.props;
+    const { tags, onMenusCountClick, onActiveUsersCountClick, onInactiveUsersCountClick } = this.props;
 
     return (
       <form id="updateForm" className="form-horizontal form-inline">
@@ -73,10 +73,11 @@ export default class TagList extends React.Component {
             <col width="" />
             <col width="80" />
             <col width="80" />
-            <col width="80" />
-            <col width="80" />
-            <col width="80" />
-            <col width="80" />
+            <col width="140" />
+            <col width="140" />
+            <col width="90" />
+            <col width="90" />
+            <col width="90" />
           </colgroup>
           <thead>
             <tr>
@@ -88,7 +89,8 @@ export default class TagList extends React.Component {
               <th>최초 생성일</th>
               <th>최근 수정일</th>
               <th>포함된 메뉴</th>
-              <th>사용 유저 수</th>
+              <th>사용 중인<br/>활성화 계정</th>
+              <th>사용 중인<br/>비활성화 계정</th>
             </tr>
           </thead>
           <tbody>
@@ -103,9 +105,11 @@ export default class TagList extends React.Component {
                   createdAt={tag.created_at}
                   updatedAt={tag.updated_at}
                   menusCount={tag.menus_count}
-                  usersCount={tag.users_count}
+                  activeUsersCount={tag.active_users_count}
+                  inactiveUsersCount={tag.inactive_users_count}
                   onMenusCountClick={() => onMenusCountClick(tag.id)}
-                  onUsersCountClick={() => onUsersCountClick(tag.id)}
+                  onActiveUsersCountClick={() => onActiveUsersCountClick(tag.id)}
+                  onInactiveUsersCountClick={() => onInactiveUsersCountClick(tag.id)}
                 />)
             }
           </tbody>
@@ -129,6 +133,7 @@ TagList.propTypes = {
     creator: PropTypes.string,
   })).isRequired,
   onMenusCountClick: PropTypes.func.isRequired,
-  onUsersCountClick: PropTypes.func.isRequired,
+  onActiveUsersCountClick: PropTypes.func.isRequired,
+  onInactiveUsersCountClick: PropTypes.func.isRequired,
 };
 
