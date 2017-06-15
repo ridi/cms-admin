@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const StatsWriterPlugin = require("webpack-stats-plugin").StatsWriterPlugin;
 
 module.exports = {
   entry: {
@@ -12,7 +13,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
+    filename: '[name].[chunkhash].js',
   },
   resolve: {
     modules: ['node_modules'],
@@ -42,7 +43,7 @@ module.exports = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons',
-      chunks: ['users', 'tags'],
+      chunks: [ 'tags', 'menus', 'users', 'user_edit', 'logs' ],
       minChunks: 2,
     }),
     new webpack.ProvidePlugin({
@@ -51,6 +52,9 @@ module.exports = {
     }),
     new ExtractTextPlugin({
       filename: 'styles.css',
+    }),
+    new StatsWriterPlugin({
+      filename: "stats.json",
     })
   ],
 };

@@ -3,6 +3,7 @@ namespace Ridibooks\Platform\Cms\Admin\Controller;
 
 use Moriony\Silex\Provider\SentryServiceProvider;
 use Ridibooks\Platform\Cms\Admin\TagService as AdminTagService;
+use Ridibooks\Platform\Cms\Admin\Util\Util;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
@@ -53,7 +54,8 @@ class TagControllerProvider implements ControllerProviderInterface
 
         return $app->render('super/tags.twig', [
             'title' => '태그 관리',
-            'tags' => AdminTagService::getTagListWithUseCount()
+            'tags' => AdminTagService::getTagListWithUseCount(),
+            'asset_name' => Util::getAssetName('tags'),
         ]);
     }
 

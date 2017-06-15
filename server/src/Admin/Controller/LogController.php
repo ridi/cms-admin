@@ -1,8 +1,10 @@
 <?php
+
 namespace Ridibooks\Platform\Cms\Admin\Controller;
 
 use Ridibooks\Platform\Cms\Admin\LogService;
 use Ridibooks\Platform\Cms\Admin\Model\AdminUserPermissionLog;
+use Ridibooks\Platform\Cms\Admin\Util\Util;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
@@ -26,7 +28,9 @@ class LogController implements ControllerProviderInterface
 
     public function index(CmsApplication $app, Request $request)
     {
-        return $app->render('super/logs.twig');
+        return $app->render('super/logs.twig', [
+            'asset_name' => Util::getAssetName('logs'),
+        ]);
     }
 
     public function getUserLog(CmsApplication $app, Request $request)

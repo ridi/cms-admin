@@ -3,6 +3,7 @@ namespace Ridibooks\Platform\Cms\Admin\Controller;
 
 use Moriony\Silex\Provider\SentryServiceProvider;
 use Ridibooks\Platform\Cms\Admin\MenuService as AdminMenuService;
+use Ridibooks\Platform\Cms\Admin\Util\Util;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
@@ -55,7 +56,8 @@ class MenuControllerProvider implements ControllerProviderInterface
 
         return $app->render('super/menus.twig', [
             'title' => '메뉴 관리',
-            'menu_list' => AdminMenuService::getMenuList()
+            'menu_list' => AdminMenuService::getMenuList(),
+            'asset_name' => Util::getAssetName('menus'),
         ]);
     }
 
