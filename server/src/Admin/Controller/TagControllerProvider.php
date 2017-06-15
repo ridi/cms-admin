@@ -111,11 +111,12 @@ class TagControllerProvider implements ControllerProviderInterface
         ]);
     }
 
-    public function tagUsers($tag_id, Application $app)
+    public function tagUsers(Application $app, Request $request, $tag_id)
     {
+        $is_use = $request->get('is_use');
         return $app->json([
             'success' => true,
-            'data' => AdminTagService::getMappedAdmins($tag_id),
+            'data' => AdminTagService::getMappedAdmins($tag_id, $is_use),
         ]);
     }
 

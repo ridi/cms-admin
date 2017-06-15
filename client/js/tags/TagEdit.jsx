@@ -43,7 +43,8 @@ export default class TagEdit extends React.Component {
     this.handleDeleteMenu = this.handleDeleteMenu.bind(this);
     this.handleMenusCountClick = this.handleMenusCountClick.bind(this);
     this.handleMenusDlgClose = this.handleMenusDlgClose.bind(this);
-    this.handleUsersCountClick = this.handleUsersCountClick.bind(this);
+    this.handleActiveUsersCountClick = this.handleActiveUsersCountClick.bind(this);
+    this.handleInactiveUsersCountClick = this.handleInactiveUsersCountClick.bind(this);
     this.handleUsersDlgClose = this.handleUsersDlgClose.bind(this);
 
     this.state = {
@@ -142,8 +143,21 @@ export default class TagEdit extends React.Component {
     });
   }
 
-  loadUsers(tagId) {
-    $.get(`/super/tags/${tagId}/users`, (result) => {
+  loadActiveUsers(tagId) {
+    $.get(`/super/tags/${tagId}/users?is_use=1`, (result) => {
+      if (!result.success) {
+        return;
+      }
+
+      this.setState(Object.assign({}, this.state, {
+        users: result.data,
+        usersLoading: false,
+      }));
+    });
+  }
+
+  loadInactiveUsers(tagId) {
+    $.get(`/super/tags/${tagId}/users?is_use=0`, (result) => {
       if (!result.success) {
         return;
       }
@@ -170,8 +184,15 @@ export default class TagEdit extends React.Component {
     }));
   }
 
-  handleUsersCountClick(id) {
-    this.loadUsers(id);
+  handleActiveUsersCountClick(id) {
+    this.loadActiveUsers(id);
+    this.setState(Object.assign({}, this.state, {
+      showUsersDlg: true,
+    }));
+  }
+
+  handleInactiveUsersCountClick(id) {
+    this.loadInactiveUsers(id);
     this.setState(Object.assign({}, this.state, {
       showUsersDlg: true,
     }));
@@ -202,7 +223,8 @@ export default class TagEdit extends React.Component {
         <TagList
           tags={tags}
           onMenusCountClick={this.handleMenusCountClick}
-          onUsersCountClick={this.handleUsersCountClick}
+          onActiveUsersCountClick={this.handleActiveUsersCountClick}
+          onInactiveUsersCountClick={this.handleInactiveUsersCountClick}
         />
 
         <MenusDialog

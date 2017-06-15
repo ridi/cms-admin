@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 
 const TagRow = (props) => {
-  const { id, isUse, name, creator, createdAt, updatedAt, menusCount, usersCount,
-    onMenusCountClick, onUsersCountClick } = props;
+  const { id, isUse, name, creator, createdAt, updatedAt, menusCount,
+    activeUsersCount, inactiveUsersCount, onMenusCountClick, onActiveUsersCountClick, onInactiveUsersCountClick } = props;
 
   return (
     <tr id={id} className={!isUse ? 'danger' : ''}>
@@ -24,7 +24,10 @@ const TagRow = (props) => {
         <Button onClick={onMenusCountClick}>{menusCount}</Button>
       </td>
       <td>
-        <Button onClick={onUsersCountClick}>{usersCount}</Button>
+        <Button onClick={onActiveUsersCountClick}>{activeUsersCount}</Button>
+      </td>
+      <td>
+        <Button onClick={onInactiveUsersCountClick}>{inactiveUsersCount}</Button>
       </td>
     </tr>
   );
@@ -38,9 +41,11 @@ TagRow.propTypes = {
   createdAt: PropTypes.string.isRequired,
   updatedAt: PropTypes.string.isRequired,
   menusCount: PropTypes.number.isRequired,
-  usersCount: PropTypes.number.isRequired,
+  activeUsersCount: PropTypes.number.isRequired,
+  inactiveUsersCount: PropTypes.number.isRequired,
   onMenusCountClick: PropTypes.func.isRequired,
-  onUsersCountClick: PropTypes.func.isRequired,
+  onActiveUsersCountClick: PropTypes.func.isRequired,
+  onInactiveUsersCountClick: PropTypes.func.isRequired,
 };
 
 export default TagRow;

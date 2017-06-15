@@ -26,9 +26,12 @@ class TagService
         }, $menus);
     }
 
-    public static function getMappedAdmins($tag_id)
+    public static function getMappedAdmins($tag_id, $is_use = null)
     {
-        return AdminTag::find($tag_id)->users->toArray();
+        if ($is_use === null) {
+            return AdminTag::find($tag_id)->users->toArray();
+        }
+        return AdminTag::find($tag_id)->users()->where('is_use', $is_use)->get();
     }
 
     public static function getAdminTagMenus($tag_id)
@@ -102,6 +105,14 @@ class TagService
 
     public static function getTagListWithUseCount()
     {
-        return AdminTag::withCount('users', 'menus')->get()->toArray();
+        return AdminTag::withCount([
+            'users AS active_users' => function ($query) {
+                $query->where('is_use', '=', 1);
+            },
+            'users AS inactive_users' => function ($query) {
+                $query->where('is_use', '=', 0);
+            },
+            'menus'
+        ])->get()->toArray();
     }
 }
