@@ -3,7 +3,6 @@ namespace Ridibooks\Platform\Cms\Admin\Controller;
 
 use Ridibooks\Platform\Cms\Admin\LogService as AdminLogService;
 use Ridibooks\Platform\Cms\Admin\UserService as AdminUserService;
-use Ridibooks\Platform\Cms\Admin\Util\Util;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
@@ -45,7 +44,7 @@ class UserControllerProvider implements ControllerProviderInterface
         }
 
         return $app->render('super/users.twig', [
-            'asset_url' => Util::getVersionedAssetUrl('users'),
+            'asset_url' => $app['assets.default_package']->getUrl('users'),
         ]);
     }
 
@@ -70,7 +69,7 @@ class UserControllerProvider implements ControllerProviderInterface
                 'userDetail' => $user,
                 'userTag' => implode(',', $tags),
                 'userMenu' => implode(',', $menus),
-                'asset_url' => Util::getVersionedAssetUrl('user_edit'),
+                'asset_url' => $app['assets.default_package']->getUrl('user_edit'),
             ]
         );
     }

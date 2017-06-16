@@ -4,7 +4,6 @@ namespace Ridibooks\Platform\Cms\Admin\Controller;
 
 use Ridibooks\Platform\Cms\Admin\LogService;
 use Ridibooks\Platform\Cms\Admin\Model\AdminUserPermissionLog;
-use Ridibooks\Platform\Cms\Admin\Util\Util;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
@@ -13,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class LogController implements ControllerProviderInterface
+class LogControllerProvider implements ControllerProviderInterface
 {
     public function connect(Application $app)
     {
@@ -29,7 +28,7 @@ class LogController implements ControllerProviderInterface
     public function index(CmsApplication $app, Request $request)
     {
         return $app->render('super/logs.twig', [
-            'asset_url' => Util::getVersionedAssetUrl('logs'),
+            'asset_url' => $app['assets.default_package']->getUrl('logs')
         ]);
     }
 

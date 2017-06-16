@@ -1,13 +1,15 @@
 <?php
 use Moriony\Silex\Provider\SentryServiceProvider;
 use Ridibooks\Cms\Thrift\ThriftService;
-use Ridibooks\Platform\Cms\Admin\Controller\LogController as AdminLogController;
+use Ridibooks\Platform\Cms\Admin\Controller\LogControllerProvider as AdminLogController;
 use Ridibooks\Platform\Cms\Admin\Controller\MenuControllerProvider as AdminMenuController;
 use Ridibooks\Platform\Cms\Admin\Controller\TagControllerProvider as AdminTagController;
 use Ridibooks\Platform\Cms\Admin\Controller\UserControllerProvider as AdminUserController;
+use Ridibooks\Platform\Cms\Admin\WebpackStatsVersionStrategy;
 use Ridibooks\Platform\Cms\Auth\LoginService;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Cms\MiniRouter;
+use Symfony\Component\Asset\PathPackage;
 use Symfony\Component\HttpFoundation\Request;
 
 $autoloader = require __DIR__ . "/server/vendor/autoload.php";
@@ -53,6 +55,11 @@ if (!empty($sentry_dsn)) {
         ]
     ]);
 }
+
+$version_strategy = new WebpackStatsVersionStrategy(__DIR__ . '/client/dist/stats.json');
+$app->register(new Silex\Provider\AssetServiceProvider(), [
+    'assets.default_package' => new PathPackage('/super/client/dist/', $version_strategy),
+]);
 
 // try MiniRouter first
 $app->before(function (Request $request) {
