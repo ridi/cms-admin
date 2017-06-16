@@ -45,7 +45,7 @@ class UserControllerProvider implements ControllerProviderInterface
         }
 
         return $app->render('super/users.twig', [
-            'asset_name' => Util::getAssetName('users'),
+            'asset_url' => Util::getVersionedAssetUrl('users'),
         ]);
     }
 
@@ -70,7 +70,7 @@ class UserControllerProvider implements ControllerProviderInterface
                 'userDetail' => $user,
                 'userTag' => implode(',', $tags),
                 'userMenu' => implode(',', $menus),
-                'asset_name' => Util::getAssetName('user_edit'),
+                'asset_url' => Util::getVersionedAssetUrl('user_edit'),
             ]
         );
     }

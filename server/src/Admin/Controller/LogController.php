@@ -29,7 +29,7 @@ class LogController implements ControllerProviderInterface
     public function index(CmsApplication $app, Request $request)
     {
         return $app->render('super/logs.twig', [
-            'asset_name' => Util::getAssetName('logs'),
+            'asset_url' => Util::getVersionedAssetUrl('logs'),
         ]);
     }
 

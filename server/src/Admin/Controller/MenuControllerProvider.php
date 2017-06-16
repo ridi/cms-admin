@@ -57,7 +57,7 @@ class MenuControllerProvider implements ControllerProviderInterface
         return $app->render('super/menus.twig', [
             'title' => '메뉴 관리',
             'menu_list' => AdminMenuService::getMenuList(),
-            'asset_name' => Util::getAssetName('menus'),
+            'asset_url' => Util::getVersionedAssetUrl('menus'),
         ]);
     }
 

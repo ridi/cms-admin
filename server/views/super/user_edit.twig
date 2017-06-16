@@ -10,5 +10,5 @@
     window.userTag = {{ userTag|json_encode|raw }};
     window.userMenu = {{ userMenu|json_encode|raw }};
   </script>
-  <script src="/super/client/dist/{{ asset_name }}"></script>
+  <script src="{{ asset_url }}"></script>
 {% endblock %}
