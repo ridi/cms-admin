@@ -4,6 +4,10 @@ import '../base';
 import UserTable from './UserTable';
 
 ReactDOM.render(
-  <UserTable />,
+  <UserTable
+    page={window.page}
+    perPage={window.perPage}
+    searchText={window.searchText}
+  />,
   document.getElementById('content'),
 );

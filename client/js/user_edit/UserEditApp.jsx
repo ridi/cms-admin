@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import SearchForm from '../common/searchForm';
 import UserDetailForm from './UserDetailForm';
 import UserPermissionForm from './UserPermissionForm';
 import UserCpForm from './UserCpForm';
@@ -8,7 +9,14 @@ import UserCpForm from './UserCpForm';
 class UserEditApp extends React.Component {
   constructor() {
     super();
+
+    this.state = {
+      searchText: '',
+    };
+
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleChangeSearchText = this.handleChangeSearchText.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   handleDelete(id) {
@@ -28,6 +36,14 @@ class UserEditApp extends React.Component {
         },
       }
     );
+  }
+
+  handleChangeSearchText(e) {
+    this.setState({ searchText: e.target.value, });
+  }
+
+  handleSearch() {
+    window.location = `/super/users?search_text=${this.state.searchText}`;
   }
 
   renderDetailForm() {
@@ -77,6 +93,12 @@ class UserEditApp extends React.Component {
   render() {
     return (
       <div>
+        <SearchForm
+          placeholder="다른 사용자 검색"
+          onChangeText={this.handleChangeSearchText}
+          onSearch={this.handleSearch}
+        />
+
         <div className="col-xs-12 col-md-6">
           {this.renderDetailForm()}
         </div>
