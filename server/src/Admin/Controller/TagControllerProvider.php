@@ -54,7 +54,6 @@ class TagControllerProvider implements ControllerProviderInterface
         return $app->render('super/tags.twig', [
             'title' => '태그 관리',
             'tags' => AdminTagService::getTagListWithUseCount(),
-            'asset_url' => $app['assets.default_package']->getUrl('tags'),
         ]);
     }
 

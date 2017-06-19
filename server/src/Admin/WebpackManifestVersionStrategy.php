@@ -5,21 +5,21 @@ namespace Ridibooks\Platform\Cms\Admin;
 
 use Symfony\Component\Asset\VersionStrategy\VersionStrategyInterface;
 
-class WebpackStatsVersionStrategy implements VersionStrategyInterface
+class WebpackManifestVersionStrategy implements VersionStrategyInterface
 {
-    private $stats_path;
+    private $manifest_path;
     private $hashes;
 
-    public function __construct(string $stats_path)
+    public function __construct(string $manifest_path)
     {
-        $this->stats_path = $stats_path;
+        $this->manifest_path = $manifest_path;
     }
 
     public function getVersion($path): string
     {
         if (!is_array($this->hashes)) {
-            $stats_json = json_decode(file_get_contents($this->stats_path), true);
-            $this->hashes = $stats_json['assetsByChunkName'];
+            $manifest_json = json_decode(file_get_contents($this->manifest_path), true);
+            $this->hashes = $manifest_json;
         }
 
         return isset($this->hashes[$path]) ? $this->hashes[$path] : $path;

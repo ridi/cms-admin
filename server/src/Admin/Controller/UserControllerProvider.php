@@ -43,9 +43,7 @@ class UserControllerProvider implements ControllerProviderInterface
             ]);
         }
 
-        return $app->render('super/users.twig', [
-            'asset_url' => $app['assets.default_package']->getUrl('users'),
-        ]);
+        return $app->render('super/users.twig');
     }
 
     public function user(CmsApplication $app, $user_id)
@@ -69,7 +67,6 @@ class UserControllerProvider implements ControllerProviderInterface
                 'userDetail' => $user,
                 'userTag' => implode(',', $tags),
                 'userMenu' => implode(',', $menus),
-                'asset_url' => $app['assets.default_package']->getUrl('user_edit'),
             ]
         );
     }

@@ -5,7 +5,7 @@ use Ridibooks\Platform\Cms\Admin\Controller\LogControllerProvider as AdminLogCon
 use Ridibooks\Platform\Cms\Admin\Controller\MenuControllerProvider as AdminMenuController;
 use Ridibooks\Platform\Cms\Admin\Controller\TagControllerProvider as AdminTagController;
 use Ridibooks\Platform\Cms\Admin\Controller\UserControllerProvider as AdminUserController;
-use Ridibooks\Platform\Cms\Admin\WebpackStatsVersionStrategy;
+use Ridibooks\Platform\Cms\Admin\WebpackManifestVersionStrategy;
 use Ridibooks\Platform\Cms\Auth\LoginService;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Cms\MiniRouter;
@@ -56,10 +56,13 @@ if (!empty($sentry_dsn)) {
     ]);
 }
 
-$version_strategy = new WebpackStatsVersionStrategy(__DIR__ . '/client/dist/stats.json');
-$app->register(new Silex\Provider\AssetServiceProvider(), [
-    'assets.default_package' => new PathPackage('/super/client/dist/', $version_strategy),
-]);
+// use twig asset package
+$version_strategy = new WebpackManifestVersionStrategy(__DIR__ . '/client/dist/manifest.json');
+$asset_package = new PathPackage('/super/client/dist/', $version_strategy);
+$twig = $app['twig'];
+$twig->addFunction(new Twig_Function('asset', function ($asset_name) use ($asset_package) {
+    return $asset_package->getUrl($asset_name);
+}));
 
 // try MiniRouter first
 $app->before(function (Request $request) {

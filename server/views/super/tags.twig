@@ -8,5 +8,5 @@
   <script>
     window.tags = {{ tags|json_encode|raw }};
   </script>
-  <script src="{{ asset_url }}"></script>
+  <script src="{{ asset('tags.js') }}"></script>
 {% endblock %}

@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const StatsWriterPlugin = require("webpack-stats-plugin").StatsWriterPlugin;
+var ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = {
   entry: {
@@ -24,8 +24,11 @@ module.exports = {
     rules: [
       {
         test: /\.jsx$/,
-        use: ['babel-loader'],
-        exclude: /node_modules/,
+        loader: 'babel-loader',
+        options: {
+          presets: [[ 'es2015', { modules: false } ], 'react'],
+        },
+        exclude: ['/node_modules/'],
       },
       {
         test: /\.css$/,
@@ -53,8 +56,9 @@ module.exports = {
     new ExtractTextPlugin({
       filename: 'styles.css',
     }),
-    new StatsWriterPlugin({
-      filename: "stats.json",
-    })
+    new ManifestPlugin({
+      fileName: 'manifest.json',
+      publicPath: '/super/client/dist/'
+    }),
   ],
 };

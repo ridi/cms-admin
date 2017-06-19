@@ -27,9 +27,7 @@ class LogControllerProvider implements ControllerProviderInterface
 
     public function index(CmsApplication $app, Request $request)
     {
-        return $app->render('super/logs.twig', [
-            'asset_url' => $app['assets.default_package']->getUrl('logs')
-        ]);
+        return $app->render('super/logs.twig');
     }
 
     public function getUserLog(CmsApplication $app, Request $request)
