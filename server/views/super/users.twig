@@ -5,5 +5,10 @@
 {% endblock %}
 
 {% block script %}
+  <script>
+    window.page = {{ page }};
+    window.perPage = {{ per_page }};
+    window.searchText = '{{ search_text }}';
+  </script>
   <script src="/super/client/dist/users.js"></script>
 {% endblock %}
