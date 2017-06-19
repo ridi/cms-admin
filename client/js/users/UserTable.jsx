@@ -1,13 +1,14 @@
 import 'babel-polyfill';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, Col, FormControl, FormGroup, Glyphicon, Grid, InputGroup, Pagination, Row, Table } from 'react-bootstrap';
 import axios from 'axios';
+import SearchForm from '../common/searchForm';
 
-const ROW_PER_PAGE = 15;
 const MAX_PAGE_BUTTON = 5;
 
 class UserTable extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
 
     this.handleSelect = this.handleSelect.bind(this);
@@ -21,26 +22,27 @@ class UserTable extends React.Component {
       isLoading: true,
       activePage: 0,
       users: [],
-      searchText: '',
+      searchText: props.searchText,
     };
   }
 
   componentDidMount() {
-    this.setUserPage(1);
+    const { page, perPage } = this.props;
+    this.setUserPage(page, perPage, this.state.searchText);
   }
 
-  async setUserPage(pageIndex, searchText = '') {
+  async setUserPage(pageIndex, perPage, searchText) {
     this.setState({ isLoading: true, });
 
     try {
-      const { data: data } = await axios.get(`/super/users?page=${pageIndex}&per_page=${ROW_PER_PAGE}&search_text=${searchText}`, {
+      const { data: data } = await axios.get(`/super/users?page=${pageIndex}&per_page=${perPage}&search_text=${searchText}`, {
         headers: {
           'Accept': 'application/json',
         }
       });
 
       const users = data.users;
-      const pageEnd = Math.ceil(data.count / ROW_PER_PAGE);
+      const pageEnd = Math.ceil(data.count / perPage);
       this.setState({
         users,
         pageEnd,
@@ -54,12 +56,13 @@ class UserTable extends React.Component {
   }
 
   handleSelect(page) {
-    this.setUserPage(page);
+    const { perPage } = this.props;
+    this.setUserPage(page, perPage, this.state.searchText);
   }
 
   handleSearch() {
     this.isSearched = (this.state.searchText !== '');
-    this.setUserPage(1, this.state.searchText);
+    this.setUserPage(1, this.props.perPage, this.state.searchText);
   }
 
   handleChangeSearchText(e) {
@@ -105,16 +108,11 @@ class UserTable extends React.Component {
       <Grid>
         <Row>
           <Col sm={3} xsOffset={8}>
-            <FormGroup>
-              <InputGroup>
-                <FormControl type="text" placeholder="ID / 이름" onChange={this.handleChangeSearchText} />
-                <InputGroup.Button>
-                  <Button onClick={this.handleSearch}>
-                    <Glyphicon glyph="search" />
-                  </Button>
-                </InputGroup.Button>
-              </InputGroup>
-            </FormGroup>
+            <SearchForm
+              placeholder="ID / 이름"
+              onChangeText={this.handleChangeSearchText}
+              onSearch={this.handleSearch}
+            />
           </Col>
           <Col sm={1}>
             <Button bsStyle="primary" bsSize="small" onClick={this.handleAddUser}>
@@ -161,5 +159,11 @@ class UserTable extends React.Component {
     );
   }
 }
+
+UserTable.propTypes = {
+  page: PropTypes.number.isRequired,
+  perPage: PropTypes.number.isRequired,
+  searchText: PropTypes.string.isRequired,
+};
 
 export default UserTable;
