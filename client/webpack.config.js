@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = {
   entry: {
@@ -12,7 +13,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
+    filename: '[name].[chunkhash].js',
   },
   resolve: {
     modules: ['node_modules'],
@@ -23,8 +24,11 @@ module.exports = {
     rules: [
       {
         test: /\.jsx$/,
-        use: ['babel-loader'],
-        exclude: /node_modules/,
+        loader: 'babel-loader',
+        options: {
+          presets: [[ 'es2015', { modules: false } ], 'react'],
+        },
+        exclude: ['/node_modules/'],
       },
       {
         test: /\.css$/,
@@ -42,7 +46,7 @@ module.exports = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons',
-      chunks: ['users', 'tags'],
+      chunks: [ 'tags', 'menus', 'users', 'user_edit', 'logs' ],
       minChunks: 2,
     }),
     new webpack.ProvidePlugin({
@@ -51,6 +55,10 @@ module.exports = {
     }),
     new ExtractTextPlugin({
       filename: 'styles.css',
-    })
+    }),
+    new ManifestPlugin({
+      fileName: 'manifest.json',
+      publicPath: '/super/client/dist/'
+    }),
   ],
 };

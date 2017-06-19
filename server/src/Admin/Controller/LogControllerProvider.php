@@ -1,4 +1,5 @@
 <?php
+
 namespace Ridibooks\Platform\Cms\Admin\Controller;
 
 use Ridibooks\Platform\Cms\Admin\LogService;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class LogController implements ControllerProviderInterface
+class LogControllerProvider implements ControllerProviderInterface
 {
     public function connect(Application $app)
     {

@@ -55,7 +55,7 @@ class MenuControllerProvider implements ControllerProviderInterface
 
         return $app->render('super/menus.twig', [
             'title' => '메뉴 관리',
-            'menu_list' => AdminMenuService::getMenuList()
+            'menu_list' => AdminMenuService::getMenuList(),
         ]);
     }
 
