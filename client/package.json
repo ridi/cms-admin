@@ -33,7 +33,7 @@
     "webpack-manifest-plugin": "^1.1.0"
   },
   "scripts": {
-    "lint": "eslint js/**",
+    "lint": "eslint --ext .js,.jsx js/**",
     "debug": "webpack -d --progress --watch",
     "build": "webpack -p --define process.env.NODE_ENV=\"'production'\"",
     "test": "echo \"Error: no test specified\" && exit 1"
