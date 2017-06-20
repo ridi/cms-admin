@@ -44,14 +44,14 @@ class UserCpForm extends React.Component {
   async getCpList() {
     const { data: res } = await axios('/admin/comm/cp_list.ajax');
     if (res.data) {
-      return res.data.map((cp) => ({id: cp.id, text: `${cp.name} (${cp.id})`}));
+      return res.data.map((cp) => ({ id: cp.id, text: `${cp.name} (${cp.id})` }));
     }
 
     return [];
   }
 
   async updateCp() {
-    const [ productionCpList, partnerCpList, operatorCpList, allCpList ] = await Promise.all([
+    const [productionCpList, partnerCpList, operatorCpList, allCpList] = await Promise.all([
       this.getManagingCpList(PRODUCTION_CP_TYPE),
       this.getManagingCpList(PARTNER_CP_TYPE),
       this.getManagingCpList(OPERATOR_CP_TYPE),
@@ -221,21 +221,21 @@ class UserCpForm extends React.Component {
             <div className="form-group form-group-sm">
               <label className="col-xs-2 control-label" htmlFor="partner_cp_ids">제휴담당 CP</label>
               <div className="col-xs-10">
-                { cpFetching ? this.renderLoading() : this.renderInput("partner_cp_ids", PARTNER_CP_TYPE) }
+                { cpFetching ? this.renderLoading() : this.renderInput('partner_cp_ids', PARTNER_CP_TYPE) }
               </div>
             </div>
 
             <div className="form-group form-group-sm">
               <label className="col-xs-2 control-label" htmlFor="operator_cp_ids">운영담당 CP</label>
               <div className="col-xs-10">
-                { cpFetching ? this.renderLoading() : this.renderInput("operator_cp_ids", OPERATOR_CP_TYPE) }
+                { cpFetching ? this.renderLoading() : this.renderInput('operator_cp_ids', OPERATOR_CP_TYPE) }
               </div>
             </div>
 
             <div className="form-group form-group-sm">
               <label className="col-xs-2 control-label" htmlFor="production_cp_ids">제작 CP</label>
               <div className="col-xs-10">
-                { cpFetching ? this.renderLoading() : this.renderInput("production_cp_ids", PRODUCTION_CP_TYPE) }
+                { cpFetching ? this.renderLoading() : this.renderInput('production_cp_ids', PRODUCTION_CP_TYPE) }
               </div>
             </div>
 

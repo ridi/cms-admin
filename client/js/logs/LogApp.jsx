@@ -51,7 +51,7 @@ class LogApp extends React.Component {
 
     return {
       rows: data.rows,
-      pageEnd: Math.ceil(data.count / ROW_PER_PAGE)
+      pageEnd: Math.ceil(data.count / ROW_PER_PAGE),
     };
   }
 

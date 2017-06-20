@@ -47,7 +47,8 @@ class UserDetailForm extends React.Component {
                 <input
                   id="id"
                   name="id"
-                  type="text" className="form-control"
+                  type="text"
+                  className="form-control"
                   value={id}
                   disabled={this.isNewUser}
                   onChange={(e) => {
@@ -66,7 +67,8 @@ class UserDetailForm extends React.Component {
                 <input
                   id="passwd"
                   name="passwd"
-                  type="password" className="form-control"
+                  type="password"
+                  className="form-control"
                   value={password}
                   onChange={(e) => {
                     this.setState(Object.assign({}, this.state, {
@@ -83,7 +85,8 @@ class UserDetailForm extends React.Component {
                 <input
                   id="name"
                   name="name"
-                  type="text" className="form-control"
+                  type="text"
+                  className="form-control"
                   value={name}
                   onChange={(e) => {
                     this.setState(Object.assign({}, this.state, {
@@ -101,7 +104,8 @@ class UserDetailForm extends React.Component {
                 <input
                   id="team"
                   name="team"
-                  type="text" className="form-control"
+                  type="text"
+                  className="form-control"
                   value={team}
                   onChange={(e) => {
                     this.setState(Object.assign({}, this.state, {
@@ -117,7 +121,9 @@ class UserDetailForm extends React.Component {
               <label className="col-xs-2 control-label" htmlFor="is_use">사용여부</label>
               <div className="col-xs-10">
                 <select
-                  id="is_use" name="is_use" className="form-control"
+                  id="is_use"
+                  name="is_use"
+                  className="form-control"
                   value={isUse}
                   onChange={(e) => {
                     this.setState(Object.assign({}, this.state, {
@@ -133,13 +139,16 @@ class UserDetailForm extends React.Component {
 
             <div className="btn-group btn-group-sm pull-right">
               <button
-                type="submit" className="btn btn-default" id="btn_info_save"
+                id="btn_info_save"
+                type="submit"
+                className="btn btn-default"
                 onClick={this.handleSave}
               >
                 <i className="glyphicon glyphicon-file" /> 저장
               </button>
               <button
-                type="reset" className="btn btn-default"
+                type="reset"
+                className="btn btn-default"
                 onClick={this.handleReset}
               >
                 <i className="glyphicon glyphicon-repeat" /> 취소

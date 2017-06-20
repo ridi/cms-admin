@@ -25,6 +25,7 @@
     "css-loader": "^0.24.0",
     "eslint": "^3.19.0",
     "eslint-config-ridibooks": "*",
+    "eslint-loader": "^1.8.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.9.0",
     "style-loader": "^0.13.1",

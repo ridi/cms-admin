@@ -43,7 +43,8 @@ const MenuRow = ({ id, menuTitle, menuUrl, menuDeep, menuOrder, isUse, isShow, i
     </td>
     <td>
       <button
-        type="button" className="btn btn-default btn-sm js_show_ajax_menus"
+        type="button"
+        className="btn btn-default btn-sm js_show_ajax_menus"
         onClick={() => onShowAjaxMenus(id, menuTitle)}
       >
         보기
@@ -51,7 +52,8 @@ const MenuRow = ({ id, menuTitle, menuUrl, menuDeep, menuOrder, isUse, isShow, i
     </td>
     <td>
       <button
-        type="button" className="btn btn-default btn-sm js_show_ajax_menus"
+        type="button"
+        className="btn btn-default btn-sm js_show_ajax_menus"
         onClick={() => onShowMenuUsers()}
       >
         보기
@@ -217,21 +219,23 @@ export default class MenuList extends React.Component {
               }}
               id="js_menu_list"
             >
-              {this.props.menus.map(menu =>
-                <MenuRow
-                  key={menu.id}
-                  id={menu.id}
-                  menuTitle={menu.menu_title}
-                  menuUrl={menu.menu_url}
-                  menuDeep={menu.menu_deep}
-                  menuOrder={menu.menu_order}
-                  isUse={menu.is_use}
-                  isNewtab={menu.is_newtab}
-                  isShow={menu.is_show}
-                  onShowAjaxMenus={this.showAjaxMenus}
-                  onShowMenuUsers={() => this.showMenuUsers(menu.id)}
-                />,
-              )}
+              {
+                this.props.menus.map(menu => (
+                  <MenuRow
+                    key={menu.id}
+                    id={menu.id}
+                    menuTitle={menu.menu_title}
+                    menuUrl={menu.menu_url}
+                    menuDeep={menu.menu_deep}
+                    menuOrder={menu.menu_order}
+                    isUse={menu.is_use}
+                    isNewtab={menu.is_newtab}
+                    isShow={menu.is_show}
+                    onShowAjaxMenus={this.showAjaxMenus}
+                    onShowMenuUsers={() => this.showMenuUsers(menu.id)}
+                  />
+                ))
+              }
             </Sortable>
           </table>
 
@@ -244,7 +248,8 @@ export default class MenuList extends React.Component {
 
         <Submenus ref={(e) => { this.modal = e; }} />
         <MenuUsers
-          showModal={this.state.menuUsers.show} menuId={this.state.menuUsers.menuId}
+          showModal={this.state.menuUsers.show}
+          menuId={this.state.menuUsers.menuId}
           closeModal={this.hideMenuUsers}
         />
       </div>

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import '../base';
 import MenuList from './MenuList';
 
-const MenuCreate = () =>
+const MenuCreate = () => (
   <form className="form-group" method="POST">
     <h4>메뉴 등록</h4>
     <input type="hidden" id="command" name="command" />
@@ -58,7 +58,8 @@ const MenuCreate = () =>
     <div className="btn-group pull-right">
       <button type="submit" className="btn btn-default">저장</button>
     </div>
-  </form>;
+  </form>
+);
 
 
 ReactDOM.render(

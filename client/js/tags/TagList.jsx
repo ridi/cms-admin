@@ -89,13 +89,13 @@ export default class TagList extends React.Component {
               <th>최초 생성일</th>
               <th>최근 수정일</th>
               <th>포함된 메뉴</th>
-              <th>사용 중인<br/>활성화 계정</th>
-              <th>사용 중인<br/>비활성화 계정</th>
+              <th>사용 중인<br />활성화 계정</th>
+              <th>사용 중인<br />비활성화 계정</th>
             </tr>
           </thead>
           <tbody>
             {
-              tags.map(tag =>
+              tags.map(tag => (
                 <TagRow
                   key={tag.id}
                   id={tag.id}
@@ -110,7 +110,7 @@ export default class TagList extends React.Component {
                   onMenusCountClick={() => onMenusCountClick(tag.id)}
                   onActiveUsersCountClick={() => onActiveUsersCountClick(tag.id)}
                   onInactiveUsersCountClick={() => onInactiveUsersCountClick(tag.id)}
-                />)
+                />))
             }
           </tbody>
         </table>

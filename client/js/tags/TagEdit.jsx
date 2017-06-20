@@ -4,7 +4,7 @@ import TagList from './TagList';
 import UsersDialog from './UsersDialog';
 import MenusDialog from './MenusDialog';
 
-const TagCreate = () =>
+const TagCreate = () => (
   <form className="clearfix" method="POST">
     <h4>태그 등록</h4>
     <table className="table table-bordered">
@@ -33,7 +33,8 @@ const TagCreate = () =>
     <div className="pull-right">
       <button type="submit" className="btn btn-primary">저장</button>
     </div>
-  </form>;
+  </form>
+);
 
 export default class TagEdit extends React.Component {
   constructor(props) {
@@ -209,8 +210,8 @@ export default class TagEdit extends React.Component {
     const { tags, menus, menusTag, menusLoading, showMenusDlg, users, usersLoading, showUsersDlg } = this.state;
 
     users.sort((a, b) => {
-      if( a.name > b.name ) return 1;
-      if( b.name > a.name ) return -1;
+      if (a.name > b.name) return 1;
+      if (b.name > a.name) return -1;
       return 0;
     });
 
@@ -223,8 +224,8 @@ export default class TagEdit extends React.Component {
       return { id: menu.id, text };
     });
     menuDatas.sort((a, b) => {
-      if( a.text > b.text ) return 1;
-      if( b.text > a.text ) return -1;
+      if (a.text > b.text) return 1;
+      if (b.text > a.text) return -1;
       return 0;
     });
 

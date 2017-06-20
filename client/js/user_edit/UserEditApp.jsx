@@ -63,10 +63,10 @@ class UserEditApp extends React.Component {
       return null;
     }
 
-    const userTag = this.props.userTag? this.props.userTag.split(',') : [];
-    const userMenu = this.props.userMenu? this.props.userMenu.split(',') : [];
+    const userTag = this.props.userTag ? this.props.userTag.split(',') : [];
+    const userMenu = this.props.userMenu ? this.props.userMenu.split(',') : [];
     return (
-      <UserPermissionForm id={this.props.userDetail.id} userTag={userTag} userMenu={userMenu}/>
+      <UserPermissionForm id={this.props.userDetail.id} userTag={userTag} userMenu={userMenu} />
     );
   }
 
