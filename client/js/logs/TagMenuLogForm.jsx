@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, Button, Pagination } from 'react-bootstrap';
+import { Button, Pagination, Table } from 'react-bootstrap';
 
 class TagMenuLogForm extends React.Component {
   renderHead() {
@@ -63,7 +63,12 @@ class TagMenuLogForm extends React.Component {
         <tr>
           <td colSpan="5">
             <Pagination
-              prev next first last ellipsis boundaryLinks
+              prev
+              next
+              first
+              last
+              ellipsis
+              boundaryLinks
               items={pageEnd}
               maxButtons={pageLength}
               activePage={nowPage}

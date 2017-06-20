@@ -209,8 +209,8 @@ export default class TagEdit extends React.Component {
     const { tags, menus, menusTag, menusLoading, showMenusDlg, users, usersLoading, showUsersDlg } = this.state;
 
     users.sort((a, b) => {
-      if( a.name > b.name ) return 1;
-      if( b.name > a.name ) return -1;
+      if (a.name > b.name) return 1;
+      if (b.name > a.name) return -1;
       return 0;
     });
 
@@ -223,8 +223,8 @@ export default class TagEdit extends React.Component {
       return { id: menu.id, text };
     });
     menuDatas.sort((a, b) => {
-      if( a.text > b.text ) return 1;
-      if( b.text > a.text ) return -1;
+      if (a.text > b.text) return 1;
+      if (b.text > a.text) return -1;
       return 0;
     });
 

@@ -21,7 +21,7 @@ class UserPermissionForm extends React.Component {
       tagList: [],
       menuFetching: true,
       menues: props.userMenu,
-      menuList: []
+      menuList: [],
     };
   }
 
@@ -43,15 +43,14 @@ class UserPermissionForm extends React.Component {
   }
 
   async updateTags() {
-    let tags = await this.getTags();
+    const tags = await this.getTags();
     if (tags) {
       this.setState(Object.assign({}, this.state, {
         tagList: tags.map((tag) => {
-          return {id: tag.id, text: tag.name};
+          return { id: tag.id, text: tag.name };
         }),
         tagFetching: false,
       }));
-
     } else {
       this.setState(Object.assign({}, this.state, {
         tagFetching: false,
@@ -66,7 +65,7 @@ class UserPermissionForm extends React.Component {
         menuList: menus.map((menu) => {
           const menuUrlArray = menu.menu_url.split('#');
           const text = menu.menu_title + (menuUrlArray[1] ? '#' + menuUrlArray[1] : '');
-          return {id: menu.id, text: text};
+          return { id: menu.id, text: text };
         }),
         menuFetching: false,
       }));
@@ -80,36 +79,36 @@ class UserPermissionForm extends React.Component {
 
   handleMenuAdd(id) {
     this.setState(Object.assign({}, this.state, {
-      menues: this.state.menues.concat(id)
+      menues: this.state.menues.concat(id),
     }));
-  };
+  }
 
   handleMenuRemove(id) {
-    let targetIndex = this.state.menues.indexOf(id);
+    const targetIndex = this.state.menues.indexOf(id);
     if (targetIndex !== -1) {
       this.setState(Object.assign({}, this.state, {
-        menues: this.state.menues.filter((_, i) => i!==targetIndex)
+        menues: this.state.menues.filter((_, i) => i !== targetIndex),
       }));
     }
-  };
+  }
 
   handleTagAdd(id) {
     this.setState(Object.assign({}, this.state, {
-      tags: this.state.tags.concat(id)
+      tags: this.state.tags.concat(id),
     }));
-  };
+  }
 
   handleTagRemove(id) {
-    let targetIndex = this.state.tags.indexOf(id);
+    const targetIndex = this.state.tags.indexOf(id);
     if (targetIndex !== -1) {
       this.setState(Object.assign({}, this.state, {
-        tags: this.state.tags.filter((_, i) => i!==targetIndex)
+        tags: this.state.tags.filter((_, i) => i !== targetIndex),
       }));
     }
-  };
+  }
 
   handleSave() {
-    let data = {
+    const data = {
       tag_ids: this.state.tags.join(','),
       menu_ids: this.state.menues.join(','),
     };
@@ -126,14 +125,14 @@ class UserPermissionForm extends React.Component {
         alert(xhr.responseText);
       },
     });
-  };
+  }
 
   renderLoading() {
     return (
       <div className="progress">
-        <div className="progress-bar progress-bar-striped active" style={{'width': '100%'}}>로딩중...</div>
+        <div className="progress-bar progress-bar-striped active" style={{ width: '100%' }}>로딩중...</div>
       </div>
-    )
+    );
   }
 
   renderTagInput(inputId) {
@@ -186,13 +185,13 @@ class UserPermissionForm extends React.Component {
             <div className="form-group form-group-sm">
               <label className="col-xs-2 control-label" htmlFor="tag_ids">태그</label>
               <div className="col-xs-10">
-                {tagFetching ? this.renderLoading() : this.renderTagInput("tag_ids")}
+                {tagFetching ? this.renderLoading() : this.renderTagInput('tag_ids')}
               </div>
             </div>
             <div className="form-group form-group-sm">
               <label className="col-xs-2 control-label" htmlFor="menu_ids">메뉴</label>
               <div className="col-xs-10">
-                {menuFetching ? this.renderLoading() : this.renderMenuInput("menu_ids")}
+                {menuFetching ? this.renderLoading() : this.renderMenuInput('menu_ids')}
               </div>
             </div>
             <div className="btn-group btn-group-sm pull-right">

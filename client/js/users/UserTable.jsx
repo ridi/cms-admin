@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Col, FormControl, FormGroup, Glyphicon, Grid, InputGroup, Pagination, Row, Table } from 'react-bootstrap';
+import { Button, Col, Glyphicon, Grid, Pagination, Row, Table } from 'react-bootstrap';
 import axios from 'axios';
 import SearchForm from '../common/searchForm';
 
@@ -32,13 +32,13 @@ class UserTable extends React.Component {
   }
 
   async setUserPage(pageIndex, perPage, searchText) {
-    this.setState({ isLoading: true, });
+    this.setState({ isLoading: true });
 
     try {
       const { data: data } = await axios.get(`/super/users?page=${pageIndex}&per_page=${perPage}&search_text=${searchText}`, {
         headers: {
           'Accept': 'application/json',
-        }
+        },
       });
 
       const users = data.users;
