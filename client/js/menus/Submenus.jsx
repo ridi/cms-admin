@@ -101,8 +101,12 @@ export default class Submenus extends React.Component {
   render() {
     return (
       <div
-        id="ajaxMenuModal" className="modal fade" tabIndex="-1" role="dialog"
-        aria-labelledby="ajaxMenuModalLabel" aria-hidden="true"
+        id="ajaxMenuModal"
+        className="modal fade"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="ajaxMenuModalLabel"
+        aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">

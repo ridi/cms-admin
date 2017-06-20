@@ -37,7 +37,7 @@ class UserTable extends React.Component {
     try {
       const { data: data } = await axios.get(`/super/users?page=${pageIndex}&per_page=${perPage}&search_text=${searchText}`, {
         headers: {
-          'Accept': 'application/json',
+          Accept: 'application/json',
         },
       });
 
@@ -49,7 +49,6 @@ class UserTable extends React.Component {
         activePage: pageIndex,
         isLoading: false,
       });
-
     } catch (e) {
       alert(e);
     }
@@ -66,7 +65,7 @@ class UserTable extends React.Component {
   }
 
   handleChangeSearchText(e) {
-    this.setState({ searchText: e.target.value, });
+    this.setState({ searchText: e.target.value });
   }
 
   handleAddUser() {
@@ -93,14 +92,14 @@ class UserTable extends React.Component {
       );
     }
 
-    return users.map(user =>
+    return users.map(user => (
       <tr key={user.id} className={user.is_use !== '1' ? 'danger' : undefined}>
         <td>{user.id}</td>
         <td><a href={`/super/users/${user.id}`}>{user.name}</a></td>
         <td>{user.team}</td>
         <td>{user.is_use === '1' ? 'Y' : 'N'}</td>
       </tr>
-    );
+    ));
   }
 
   render() {
@@ -123,10 +122,10 @@ class UserTable extends React.Component {
         <Row>
           <Table bordered condensed hover>
             <colgroup>
-              <col width="150"/>
-              <col width=""/>
-              <col width="200"/>
-              <col width="80"/>
+              <col width="150" />
+              <col width="" />
+              <col width="200" />
+              <col width="80" />
             </colgroup>
             <thead>
               <tr>
