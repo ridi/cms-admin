@@ -11,7 +11,7 @@ class LogService
 {
     public static function getUserPermissions($page_index, $row_per_page)
     {
-        return AdminUserPermissionLog::skip(($page_index - 1) * $row_per_page)->take($row_per_page)->get();
+        return AdminUserPermissionLog::orderBy('created_at', 'DESC')->skip(($page_index - 1) * $row_per_page)->take($row_per_page)->get();
     }
 
     public static function updateUserPermissions($user_id, $tag_ids, $menu_ids)
