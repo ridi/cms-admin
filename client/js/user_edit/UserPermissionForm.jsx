@@ -33,12 +33,12 @@ class UserPermissionForm extends React.Component {
   }
 
   async getTags() {
-    const { data: data } = await axios('/super/tags');
+    const { data: data } = await axios('/super/tags.ajax');
     return data;
   }
 
   async getMenus() {
-    const { data: data } = await axios('/super/menus');
+    const { data: data } = await axios('/super/menus.ajax');
     return data;
   }
 
