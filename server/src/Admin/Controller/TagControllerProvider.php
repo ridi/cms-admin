@@ -19,6 +19,7 @@ class TagControllerProvider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         $controllers->get('tags', [$this, 'tags']);
+        $controllers->get('tags.ajax', [$this, 'tagsWithAjax']);
         $controllers->post('tags', [$this, 'createTag']);
         $controllers->put('tags/{tag_id}', [$this, 'updateTag']);
         $controllers->delete('tags/{tag_id}', [$this, 'deleteTag']);
@@ -47,14 +48,15 @@ class TagControllerProvider implements ControllerProviderInterface
 
     public function tags(CmsApplication $app, Request $request)
     {
-        if (in_array('application/json', $request->getAcceptableContentTypes())) {
-            return $app->json(AdminTagService::getAllTags());
-        }
-
         return $app->render('super/tags.twig', [
             'title' => '태그 관리',
             'tags' => AdminTagService::getTagListWithUseCount(),
         ]);
+    }
+
+    public function tagsWithAjax(CmsApplication $app, Request $request)
+    {
+        return $app->json(AdminTagService::getAllTags());
     }
 
     public function createTag(CmsApplication $app, Request $request)

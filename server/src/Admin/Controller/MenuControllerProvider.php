@@ -19,6 +19,7 @@ class MenuControllerProvider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         $controllers->get('menus', [$this, 'menus']);
+        $controllers->get('menus.ajax', [$this, 'menusWithAjax']);
         $controllers->post('menus', [$this, 'createMenu']);
         $controllers->put('menus/{menu_id}', [$this, 'updateMenu']);
 
@@ -49,14 +50,15 @@ class MenuControllerProvider implements ControllerProviderInterface
 
     public function menus(CmsApplication $app, Request $request)
     {
-        if (in_array('application/json', $request->getAcceptableContentTypes())) {
-            return $app->json(AdminMenuService::getMenuList(1));
-        }
-
         return $app->render('super/menus.twig', [
             'title' => '메뉴 관리',
             'menu_list' => AdminMenuService::getMenuList(),
         ]);
+    }
+
+    public function menusWithAjax(CmsApplication $app, Request $request)
+    {
+        return $app->json(AdminMenuService::getMenuList(1));
     }
 
     public function createMenu(CmsApplication $app, Request $request)

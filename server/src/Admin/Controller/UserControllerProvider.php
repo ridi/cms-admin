@@ -18,6 +18,7 @@ class UserControllerProvider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         $controllers->get('users', [$this, 'users']);
+        $controllers->get('users.ajax', [$this, 'usersWithAjax']);
         $controllers->get('users/{user_id}', [$this, 'user']);
         $controllers->post('users/new', [$this, 'createUser']);
         $controllers->post('users/{user_id}', [$this, 'updateUser']);
@@ -34,6 +35,19 @@ class UserControllerProvider implements ControllerProviderInterface
         $per_page = $request->get('per_page', 25);
         $search_text = $request->get('search_text', '');
 
+        return $app->render('super/users.twig', [
+            'page' => $page_index,
+            'per_page' => $per_page,
+            'search_text' => $search_text,
+        ]);
+    }
+
+    public function usersWithAjax(CmsApplication $app, Request $request)
+    {
+        $page_index = $request->get('page', 1);
+        $per_page = $request->get('per_page', 25);
+        $search_text = $request->get('search_text', '');
+
         if (in_array('application/json', $request->getAcceptableContentTypes())) {
             $start = $per_page * ($page_index - 1);
             return $app->json([
@@ -41,12 +55,6 @@ class UserControllerProvider implements ControllerProviderInterface
                 'count' => AdminUserService::getAdminUserCount($search_text),
             ]);
         }
-
-        return $app->render('super/users.twig', [
-            'page' => $page_index,
-            'per_page' => $per_page,
-            'search_text' => $search_text,
-        ]);
     }
 
     public function user(CmsApplication $app, $user_id)

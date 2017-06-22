@@ -21,6 +21,7 @@ class LogControllerProvider implements ControllerProviderInterface
 
         $controllers->get('logs', [$this, 'index']);
         $controllers->get('logs/user', [$this, 'getUserLog']);
+        $controllers->get('logs.ajax/user', [$this, 'getUserLogWithAjax']);
 
         return $controllers;
     }
@@ -30,7 +31,7 @@ class LogControllerProvider implements ControllerProviderInterface
         return $app->render('super/logs.twig');
     }
 
-    public function getUserLog(CmsApplication $app, Request $request)
+    public function getUserLogWithAjax(CmsApplication $app, Request $request)
     {
         if (in_array('application/json', $request->getAcceptableContentTypes())) {
             $page_index = $request->get('page', 1);
