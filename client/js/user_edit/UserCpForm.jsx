@@ -31,7 +31,7 @@ class UserCpForm extends React.Component {
   }
 
   async getManagingCpList(type) {
-    const { data: data } = await axios('/admin/publisher/managers.ajax', {
+    const { data } = await axios('/admin/publisher/managers.ajax', {
       params: {
         id: this.props.id,
         type,
@@ -44,7 +44,7 @@ class UserCpForm extends React.Component {
   async getCpList() {
     const { data: res } = await axios('/admin/comm/cp_list.ajax');
     if (res.data) {
-      return res.data.map((cp) => ({ id: cp.id, text: `${cp.name} (${cp.id})` }));
+      return res.data.map(cp => ({ id: cp.id, text: `${cp.name} (${cp.id})` }));
     }
 
     return [];

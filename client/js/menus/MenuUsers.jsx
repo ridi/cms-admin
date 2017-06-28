@@ -34,7 +34,7 @@ class MenuUsersTable extends React.Component {
   }
 
   async getMenuUsers() {
-    const { data: data } = await axios.get(`/super/menus/${this.props.menuId}/users`);
+    const { data } = await axios.get(`/super/menus/${this.props.menuId}/users`);
     return data;
   }
 

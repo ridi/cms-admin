@@ -25,19 +25,19 @@ const MenuRow = ({ id, menuTitle, menuUrl, menuDeep, menuOrder, isUse, isShow, i
     <td><input type="text" className="form-control" name="menu_order" defaultValue={menuOrder} /></td>
     <td>
       <select className="form-control" name="is_newtab" defaultValue={isNewtab}>
-        <option value={true}>Y</option>
+        <option value>Y</option>
         <option value={false}>N</option>
       </select>
     </td>
     <td>
       <select className="form-control" name="is_use" defaultValue={isUse}>
-        <option value={true}>Y</option>
+        <option value>Y</option>
         <option value={false}>N</option>
       </select>
     </td>
     <td>
       <select className="form-control" name="is_show" defaultValue={isShow}>
-        <option value={true}>Y</option>
+        <option value>Y</option>
         <option value={false}>N</option>
       </select>
     </td>

@@ -70,23 +70,7 @@ export default class Submenus extends React.Component {
   show(menuId, menuTitle) {
     $.get(`/super/menus/${menuId}/submenus`, (returnData) => {
       if (returnData.success) {
-        const menuList = returnData.data;
-        let html = '';
-        if (menuList.length !== 0) {
-          for (const i in menuList) {
-            if (Object.prototype.hasOwnProperty.call(menuList, i)) {
-              html += '<tr>';
-              html += `<td>${menuList[i].id}</td>`;
-              html += `<td><input type="checkbox" value="${menuList[i].id}"/></td>`;
-              html += `<td><input type="text" class="form-control" name="ajax_url" value="${menuList[i].ajax_url}"/></td>`;
-              html += '</tr>';
-            }
-          }
-        } else {
-          html += '<tr><td colspan="3">등록된 Ajax 메뉴가 없습니다.</td></tr>';
-        }
-
-        $('#ajaxMenuBody').html(html);
+        $('#ajaxMenuBody').html(this.buildInnerHtml(returnData.data));
         $('#ajaxMenuModalLabel').html(`${menuTitle} Ajax 등록 및 수정`);
         $('#ajax_menu_id').val(menuId);
         $('#ajax_menu_title').val(menuTitle);
@@ -96,6 +80,20 @@ export default class Submenus extends React.Component {
         alert(returnData.msg);
       }
     }, 'json');
+  }
+
+  buildInnerHtml(menuList) {
+    if (menuList.length === 0) {
+      return '<tr><td colspan="3">등록된 Ajax 메뉴가 없습니다.</td></tr>';
+    }
+
+    return menuList.map(menu => (
+      '<tr>'
+      + `<td>${menu.id}</td>`
+      + `<td><input type="checkbox" value="${menu.id}"/></td>`
+      + `<td><input type="text" class="form-control" name="ajax_url" value="${menu.ajax_url}"/></td>`
+      + '</tr>'
+    )).join('\n');
   }
 
   render() {

@@ -34,12 +34,12 @@ class UserEditApp extends React.Component {
         error: (xhr, status, e) => {
           alert(e);
         },
-      }
+      },
     );
   }
 
   handleChangeSearchText(e) {
-    this.setState({ searchText: e.target.value, });
+    this.setState({ searchText: e.target.value });
   }
 
   handleSearch() {

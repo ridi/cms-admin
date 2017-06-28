@@ -45,7 +45,7 @@ class LogApp extends React.Component {
   }
 
   async getLogPage(pageIndex) {
-    const { data: data } = await axios.get(`/super/logs/user?page=${pageIndex}&per_page=${ROW_PER_PAGE}`, {
+    const { data } = await axios.get(`/super/logs/user?page=${pageIndex}&per_page=${ROW_PER_PAGE}`, {
       headers: { Accept: 'application/json' },
     });
 
@@ -57,7 +57,7 @@ class LogApp extends React.Component {
 
   async getMenus() {
     if (!this.menuSaved) {
-      const { data: data } = await axios('/super/menus');
+      const { data } = await axios('/super/menus');
       this.menuSaved = data;
     }
 
@@ -66,7 +66,7 @@ class LogApp extends React.Component {
 
   async getTags() {
     if (!this.tagSaved) {
-      const { data: data } = await axios('/super/tags');
+      const { data } = await axios('/super/tags');
       this.tagSaved = data;
     }
 

@@ -35,7 +35,7 @@ class UserTable extends React.Component {
     this.setState({ isLoading: true });
 
     try {
-      const { data: data } = await axios.get(`/super/users?page=${pageIndex}&per_page=${perPage}&search_text=${searchText}`, {
+      const { data } = await axios.get(`/super/users?page=${pageIndex}&per_page=${perPage}&search_text=${searchText}`, {
         headers: {
           Accept: 'application/json',
         },

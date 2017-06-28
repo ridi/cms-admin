@@ -33,12 +33,12 @@ class UserPermissionForm extends React.Component {
   }
 
   async getTags() {
-    const { data: data } = await axios('/super/tags');
+    const { data } = await axios('/super/tags');
     return data;
   }
 
   async getMenus() {
-    const { data: data } = await axios('/super/menus');
+    const { data } = await axios('/super/menus');
     return data;
   }
 
@@ -46,7 +46,7 @@ class UserPermissionForm extends React.Component {
     const tags = await this.getTags();
     if (tags) {
       this.setState(Object.assign({}, this.state, {
-        tagList: tags.map((tag) => ({ id: tag.id, text: tag.name })),
+        tagList: tags.map(tag => ({ id: tag.id, text: tag.name })),
         tagFetching: false,
       }));
     } else {
@@ -62,7 +62,7 @@ class UserPermissionForm extends React.Component {
       this.setState(Object.assign({}, this.state, {
         menuList: menus.map((menu) => {
           const menuUrlArray = menu.menu_url.split('#');
-          const text = menu.menu_title + (menuUrlArray[1] ? '#' + menuUrlArray[1] : '');
+          const text = menu.menu_title + (menuUrlArray[1] ? `#${menuUrlArray[1]}` : '');
           return { id: menu.id, text };
         }),
         menuFetching: false,

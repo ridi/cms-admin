@@ -101,7 +101,12 @@ class TagMenuLogForm extends React.Component {
 }
 
 TagMenuLogForm.propTypes = {
-  datas: PropTypes.array.isRequired,
+  datas: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    user_id: PropTypes.string,
+    edited_by: PropTypes.string,
+    created_at: PropTypes.string,
+  })).isRequired,
   loading: PropTypes.bool.isRequired,
   onShowMenuChange: PropTypes.func.isRequired,
   onShowTagChange: PropTypes.func.isRequired,
