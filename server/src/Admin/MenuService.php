@@ -1,9 +1,9 @@
 <?php
-namespace Ridibooks\Platform\Cms\Admin;
+namespace Ridibooks\Cms\Admin;
 
 use Illuminate\Database\Capsule\Manager as DB;
-use Ridibooks\Platform\Cms\Admin\Model\AdminMenu;
-use Ridibooks\Platform\Cms\Admin\Model\AdminMenuAjax;
+use Ridibooks\Cms\Admin\Model\AdminMenu;
+use Ridibooks\Cms\Admin\Model\AdminMenuAjax;
 
 class MenuService
 {
