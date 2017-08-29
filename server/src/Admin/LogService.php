@@ -1,9 +1,9 @@
 <?php
-namespace Ridibooks\Platform\Cms\Admin;
+namespace Ridibooks\Cms\Admin;
 
 use Illuminate\Database\Capsule\Manager as DB;
-use Ridibooks\Platform\Cms\Admin\Model\AdminUser;
-use Ridibooks\Platform\Cms\Admin\Model\AdminUserPermissionLog;
+use Ridibooks\Cms\Admin\Model\AdminUser;
+use Ridibooks\Cms\Admin\Model\AdminUserPermissionLog;
 use Ridibooks\Platform\Cms\Auth\LoginService;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 

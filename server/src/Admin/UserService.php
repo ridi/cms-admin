@@ -1,7 +1,7 @@
 <?php
-namespace Ridibooks\Platform\Cms\Admin;
+namespace Ridibooks\Cms\Admin;
 
-use Ridibooks\Platform\Cms\Admin\Model\AdminUser;
+use Ridibooks\Cms\Admin\Model\AdminUser;
 use Ridibooks\Platform\Cms\Auth\PasswordService;
 
 class UserService

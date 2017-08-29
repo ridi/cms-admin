@@ -1,9 +1,9 @@
 <?php
 
-namespace Ridibooks\Platform\Cms\Admin\Controller;
+namespace Ridibooks\Cms\Admin\Controller;
 
-use Ridibooks\Platform\Cms\Admin\LogService;
-use Ridibooks\Platform\Cms\Admin\Model\AdminUserPermissionLog;
+use Ridibooks\Cms\Admin\LogService;
+use Ridibooks\Cms\Admin\Model\AdminUserPermissionLog;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;

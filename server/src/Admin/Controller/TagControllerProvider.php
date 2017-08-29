@@ -1,8 +1,8 @@
 <?php
-namespace Ridibooks\Platform\Cms\Admin\Controller;
+namespace Ridibooks\Cms\Admin\Controller;
 
 use Moriony\Silex\Provider\SentryServiceProvider;
-use Ridibooks\Platform\Cms\Admin\TagService as AdminTagService;
+use Ridibooks\Cms\Admin\TagService as AdminTagService;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
