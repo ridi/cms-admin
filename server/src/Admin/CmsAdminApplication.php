@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Ridibooks\Platform\Cms\Admin;
+namespace Ridibooks\Cms\Admin;
 
 use Moriony\Silex\Provider\SentryServiceProvider;
-use Ridibooks\Platform\Cms\Admin\Controller\LogControllerProvider as AdminLogController;
-use Ridibooks\Platform\Cms\Admin\Controller\MenuControllerProvider as AdminMenuController;
-use Ridibooks\Platform\Cms\Admin\Controller\TagControllerProvider as AdminTagController;
-use Ridibooks\Platform\Cms\Admin\Controller\UserControllerProvider as AdminUserController;
+use Ridibooks\Cms\Admin\Controller\LogControllerProvider as AdminLogController;
+use Ridibooks\Cms\Admin\Controller\MenuControllerProvider as AdminMenuController;
+use Ridibooks\Cms\Admin\Controller\TagControllerProvider as AdminTagController;
+use Ridibooks\Cms\Admin\Controller\UserControllerProvider as AdminUserController;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Ridibooks\Platform\Cms\MiniRouter;
 use Symfony\Component\Asset\PathPackage;

@@ -1,5 +1,5 @@
 <?php
-use Ridibooks\Platform\Cms\Admin\CmsAdminApplication;
+use Ridibooks\Cms\Admin\CmsAdminApplication;
 use Ridibooks\Cms\Thrift\ThriftService;
 use Ridibooks\Platform\Cms\Auth\LoginService;
 

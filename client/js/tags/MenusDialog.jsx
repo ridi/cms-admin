@@ -5,7 +5,7 @@ import Select2Input from '../Select2Input';
 
 export default class MenusDialog extends React.Component {
   renderBody() {
-    const { tagId, loading, selected, data, onAdd, onDelete } = this.props;
+    const { tagId, loading, selected, data, disabled, onAdd, onDelete } = this.props;
 
     if (loading) {
       return <p>불러오는 중입니다...</p>;
@@ -16,6 +16,7 @@ export default class MenusDialog extends React.Component {
         id="menuSelect"
         value={loading ? [] : selected}
         data={data}
+        disabled={disabled}
         multiple
         placeholder="권한 추가하기"
         onAdd={id => onAdd(tagId, id)}
@@ -43,11 +44,16 @@ export default class MenusDialog extends React.Component {
   }
 }
 
+MenusDialog.defaultProps = {
+  disabled: false,
+};
+
 MenusDialog.propTypes = {
   tagId: PropTypes.number.isRequired,
   show: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   selected: PropTypes.arrayOf(PropTypes.number).isRequired,
+  disabled: PropTypes.bool,
   data: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.oneOfType([
       PropTypes.string,

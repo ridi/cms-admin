@@ -1,8 +1,8 @@
 <?php
-namespace Ridibooks\Platform\Cms\Admin\Controller;
+namespace Ridibooks\Cms\Admin\Controller;
 
-use Ridibooks\Platform\Cms\Admin\LogService as AdminLogService;
-use Ridibooks\Platform\Cms\Admin\UserService as AdminUserService;
+use Ridibooks\Cms\Admin\LogService as AdminLogService;
+use Ridibooks\Cms\Admin\UserService as AdminUserService;
 use Ridibooks\Platform\Cms\CmsApplication;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
