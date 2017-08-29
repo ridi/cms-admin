@@ -53,6 +53,7 @@ export default class TagEdit extends React.Component {
       menus: [],
       menusTag: 0,
       menusLoading: true,
+      menusDisabled: true,
       showMenusDlg: false,
       users: [],
       usersLoading: true,
@@ -70,11 +71,14 @@ export default class TagEdit extends React.Component {
       this.setState(Object.assign({}, this.state, {
         menus: returnData.data.menus,
         menusLoading: false,
+        menusDisabled: false,
       }));
     }, 'json');
   }
 
   handleAddMenu(tagId, menuId) {
+    this.setState({ menusDisabled: true });
+
     $.ajax({
       url: `/super/tags/${tagId}/menus/${menuId}`,
       type: 'PUT',
@@ -85,7 +89,7 @@ export default class TagEdit extends React.Component {
 
         const newTags = this.state.tags.map((tag) => {
           let result = tag;
-          if (tag.id === tagId) {
+          if (tag.id === parseInt(tagId, 10)) {
             result = Object.assign({}, tag, {
               menus_count: tag.menus_count + 1,
             });
@@ -95,7 +99,7 @@ export default class TagEdit extends React.Component {
 
         const newMenu = this.state.menus.map((menu) => {
           let result = menu;
-          if (menu.id === menuId) {
+          if (menu.id === parseInt(menuId, 10)) {
             result = Object.assign({}, menu, {
               selected: 'selected',
             });
@@ -103,22 +107,24 @@ export default class TagEdit extends React.Component {
           return result;
         });
 
-        this.setState(Object.assign({}, this.state, {
+        this.setState({
+          menusDisabled: false,
           tags: newTags,
           menus: newMenu,
-        }));
+        });
       },
     });
   }
 
   handleDeleteMenu(tagId, menuId) {
+    this.setState({ menusDisabled: true });
     $.ajax({
       url: `/super/tags/${tagId}/menus/${menuId}`,
       type: 'DELETE',
       success: () => {
         const newTags = this.state.tags.map((tag) => {
           let result = tag;
-          if (tag.id === tagId) {
+          if (tag.id === parseInt(tagId, 10)) {
             result = Object.assign({}, tag, {
               menus_count: tag.menus_count - 1,
             });
@@ -128,7 +134,7 @@ export default class TagEdit extends React.Component {
 
         const newMenu = this.state.menus.map((menu) => {
           let result = menu;
-          if (menu.id === menuId) {
+          if (menu.id === parseInt(menuId, 10)) {
             result = Object.assign({}, menu, {
               selected: null,
             });
@@ -137,6 +143,7 @@ export default class TagEdit extends React.Component {
         });
 
         this.setState(Object.assign({}, this.state, {
+          menusDisabled: false,
           tags: newTags,
           menus: newMenu,
         }));
@@ -207,7 +214,7 @@ export default class TagEdit extends React.Component {
   }
 
   render() {
-    const { tags, menus, menusTag, menusLoading, showMenusDlg, users, usersLoading, showUsersDlg } = this.state;
+    const { tags, menus, menusTag, menusLoading, menusDisabled, showMenusDlg, users, usersLoading, showUsersDlg } = this.state;
 
     users.sort((a, b) => {
       if (a.name > b.name) return 1;
@@ -245,6 +252,7 @@ export default class TagEdit extends React.Component {
           loading={menusLoading}
           data={menuDatas}
           selected={menuSelected}
+          disabled={menusDisabled}
           onAdd={this.handleAddMenu}
           onDelete={this.handleDeleteMenu}
           onClose={this.handleMenusDlgClose}
