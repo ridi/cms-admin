@@ -4,6 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+    "hash": "be9630d6a6ee9564c0dd042b6e929122",
     "content-hash": "1747d4bf29e848d82f6d0910406415cb",
     "packages": [
         {
@@ -39,7 +40,7 @@
             ],
             "description": "Apache Thrift RPC system",
             "homepage": "http://thrift.apache.org/",
-            "time": "2016-04-04T18:25:03+00:00"
+            "time": "2016-04-04 18:25:03"
         },
         {
             "name": "doctrine/inflector",
@@ -106,7 +107,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2015-11-06T14:35:42+00:00"
+            "time": "2015-11-06 14:35:42"
         },
         {
             "name": "illuminate/container",
@@ -149,7 +150,7 @@
             ],
             "description": "The Illuminate Container package.",
             "homepage": "https://laravel.com",
-            "time": "2017-05-24T14:15:53+00:00"
+            "time": "2017-05-24 14:15:53"
         },
         {
             "name": "illuminate/contracts",
@@ -191,7 +192,7 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
-            "time": "2017-04-19T20:17:43+00:00"
+            "time": "2017-04-19 20:17:43"
         },
         {
             "name": "illuminate/database",
@@ -251,7 +252,7 @@
                 "orm",
                 "sql"
             ],
-            "time": "2017-06-15T19:07:41+00:00"
+            "time": "2017-06-15 19:07:41"
         },
         {
             "name": "illuminate/support",
@@ -308,7 +309,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2017-06-15T12:35:32+00:00"
+            "time": "2017-06-15 12:35:32"
         },
         {
             "name": "moriony/silex-sentry-provider",
@@ -356,7 +357,7 @@
                 "sentry",
                 "silex"
             ],
-            "time": "2016-08-20T08:47:40+00:00"
+            "time": "2016-08-20 08:47:40"
         },
         {
             "name": "nesbot/carbon",
@@ -409,7 +410,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2017-01-16T07:55:07+00:00"
+            "time": "2017-01-16 07:55:07"
         },
         {
             "name": "paragonie/random_compat",
@@ -457,7 +458,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-03-13T16:27:32+00:00"
+            "time": "2017-03-13 16:27:32"
         },
         {
             "name": "pimple/pimple",
@@ -503,7 +504,7 @@
                 "container",
                 "dependency injection"
             ],
-            "time": "2015-09-11T15:10:35+00:00"
+            "time": "2015-09-11 15:10:35"
         },
         {
             "name": "psr/log",
@@ -550,20 +551,20 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10T12:19:37+00:00"
+            "time": "2016-10-10 12:19:37"
         },
         {
             "name": "ridibooks/cms-sdk",
-            "version": "v1.0.5",
+            "version": "v1.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ridibooks/cms-sdk.git",
-                "reference": "6a0541fca605d69f11607aead43d8150135f2534"
+                "reference": "7bfa86e6e2336cc77f94160ffbd0b133187d7cff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ridibooks/cms-sdk/zipball/6a0541fca605d69f11607aead43d8150135f2534",
-                "reference": "6a0541fca605d69f11607aead43d8150135f2534",
+                "url": "https://api.github.com/repos/ridibooks/cms-sdk/zipball/7bfa86e6e2336cc77f94160ffbd0b133187d7cff",
+                "reference": "7bfa86e6e2336cc77f94160ffbd0b133187d7cff",
                 "shasum": ""
             },
             "require": {
@@ -603,7 +604,7 @@
                 }
             ],
             "description": "Ridibooks CMS SDK",
-            "time": "2017-05-25T05:43:21+00:00"
+            "time": "2017-09-26 06:53:42"
         },
         {
             "name": "sentry/sentry",
@@ -668,7 +669,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2017-06-07T18:13:17+00:00"
+            "time": "2017-06-07 18:13:17"
         },
         {
             "name": "silex/silex",
@@ -754,7 +755,7 @@
             "keywords": [
                 "microframework"
             ],
-            "time": "2017-05-03T15:21:42+00:00"
+            "time": "2017-05-03 15:21:42"
         },
         {
             "name": "symfony/asset",
@@ -810,7 +811,7 @@
             ],
             "description": "Symfony Asset Component",
             "homepage": "https://symfony.com",
-            "time": "2017-05-01T15:01:29+00:00"
+            "time": "2017-05-01 15:01:29"
         },
         {
             "name": "symfony/debug",
@@ -866,7 +867,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-01T21:01:25+00:00"
+            "time": "2017-06-01 21:01:25"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -929,7 +930,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-04T18:15:29+00:00"
+            "time": "2017-06-04 18:15:29"
         },
         {
             "name": "symfony/http-foundation",
@@ -982,7 +983,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-05T13:06:51+00:00"
+            "time": "2017-06-05 13:06:51"
         },
         {
             "name": "symfony/http-kernel",
@@ -1068,7 +1069,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-06T03:59:58+00:00"
+            "time": "2017-06-06 03:59:58"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1127,7 +1128,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-06-09T14:24:12+00:00"
+            "time": "2017-06-09 14:24:12"
         },
         {
             "name": "symfony/routing",
@@ -1205,7 +1206,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-06-02T09:51:43+00:00"
+            "time": "2017-06-02 09:51:43"
         },
         {
             "name": "symfony/translation",
@@ -1270,7 +1271,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-05-22T07:42:36+00:00"
+            "time": "2017-05-22 07:42:36"
         },
         {
             "name": "twig/twig",
@@ -1336,7 +1337,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-06-07T18:47:58+00:00"
+            "time": "2017-06-07 18:47:58"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -1386,7 +1387,7 @@
                 "env",
                 "environment"
             ],
-            "time": "2016-09-01T10:05:43+00:00"
+            "time": "2016-09-01 10:05:43"
         }
     ],
     "packages-dev": [
@@ -1454,7 +1455,7 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2017-06-05T13:30:19+00:00"
+            "time": "2017-06-05 13:30:19"
         },
         {
             "name": "symfony/config",
@@ -1514,7 +1515,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-02T18:07:20+00:00"
+            "time": "2017-06-02 18:07:20"
         },
         {
             "name": "symfony/console",
@@ -1583,7 +1584,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-02T19:24:58+00:00"
+            "time": "2017-06-02 19:24:58"
         },
         {
             "name": "symfony/filesystem",
@@ -1632,7 +1633,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2017-05-28T14:08:56+00:00"
+            "time": "2017-05-28 14:08:56"
         },
         {
             "name": "symfony/yaml",
@@ -1687,7 +1688,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-02T22:05:06+00:00"
+            "time": "2017-06-02 22:05:06"
         }
     ],
     "aliases": [],
