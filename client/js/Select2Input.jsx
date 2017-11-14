@@ -36,7 +36,9 @@ class Select2Input extends React.Component {
   }
 
   render() {
-    const { value, id, placeholder, multiple, disabled } = this.props;
+    const {
+      value, id, placeholder, multiple, disabled,
+    } = this.props;
 
     return (
       <div>

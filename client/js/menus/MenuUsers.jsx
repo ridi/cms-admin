@@ -48,8 +48,7 @@ class MenuUsersTable extends React.Component {
 
   render() {
     const userRows = this.state.users.map(user =>
-      <UserRow key={user.id} id={user.id} name={user.name} />,
-    );
+      <UserRow key={user.id} id={user.id} name={user.name} />);
 
     return (
       <div>

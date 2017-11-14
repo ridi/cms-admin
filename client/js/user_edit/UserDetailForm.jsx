@@ -32,7 +32,9 @@ class UserDetailForm extends React.Component {
   }
 
   render() {
-    const { id, password, name, team, isUse } = this.state;
+    const {
+      id, password, name, team, isUse,
+    } = this.state;
 
     return (
       <form className="form-horizontal" method="POST">

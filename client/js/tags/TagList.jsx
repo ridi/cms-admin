@@ -61,7 +61,9 @@ export default class TagList extends React.Component {
   }
 
   render() {
-    const { tags, onMenusCountClick, onActiveUsersCountClick, onInactiveUsersCountClick } = this.props;
+    const {
+      tags, onMenusCountClick, onActiveUsersCountClick, onInactiveUsersCountClick,
+    } = this.props;
 
     return (
       <form id="updateForm" className="form-horizontal form-inline">

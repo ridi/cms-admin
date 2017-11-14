@@ -95,8 +95,8 @@ class LogApp extends React.Component {
     const menuIds = srcMenu.menu_ids ? srcMenu.menu_ids.split(',') : [];
     const menus = await this.getMenus();
     const results = menus
-                    .filter(menu => menuIds.indexOf(menu.id.toString()) !== -1)
-                    .map(menu => ({ id: menu.id, title: `${menu.menu_title} [ ${menu.menu_url} ]` }));
+      .filter(menu => menuIds.indexOf(menu.id.toString()) !== -1)
+      .map(menu => ({ id: menu.id, title: `${menu.menu_title} [ ${menu.menu_url} ]` }));
     this.setState({
       menuLogDlg: Object.assign({}, this.state.menuLogDlg, {
         datas: results,
@@ -134,8 +134,8 @@ class LogApp extends React.Component {
     const tagIds = srcTag.tag_ids ? srcTag.tag_ids.split(',') : [];
     const tags = await this.getTags();
     const results = tags
-                    .filter(tag => tagIds.indexOf(tag.id.toString()) !== -1)
-                    .map(tag => ({ id: tag.id, title: tag.name }));
+      .filter(tag => tagIds.indexOf(tag.id.toString()) !== -1)
+      .map(tag => ({ id: tag.id, title: tag.name }));
     this.setState({
       tagLogDlg: Object.assign({}, this.state.tagLogDlg, {
         datas: results,
@@ -173,7 +173,9 @@ class LogApp extends React.Component {
   }
 
   render() {
-    const { nowPage, pageEnd, datas, loading } = this.state.userLog;
+    const {
+      nowPage, pageEnd, datas, loading,
+    } = this.state.userLog;
     return (
       <div>
         <div className="col-xs-12 col-md-12">

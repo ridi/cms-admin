@@ -24,7 +24,8 @@ class UserEditApp extends React.Component {
       return;
     }
 
-    $.ajax(`/super/users/${id}`,
+    $.ajax(
+      `/super/users/${id}`,
       {
         type: 'delete',
         success: () => {
