@@ -1,7 +1,4 @@
-.idea
 .env
 client/dist
 client/node_modules
-docs/deploy/servers/*
 vendor
-phinx.yml
