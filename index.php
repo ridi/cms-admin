@@ -8,7 +8,7 @@ require __DIR__ . "/vendor/autoload.php";
 
 if (is_readable(__DIR__ . '/.env')) {
     $dotenv = new Dotenv\Dotenv(__DIR__, '.env');
-    $dotenv->load();
+    $dotenv->overload();
 }
 
 require_once __DIR__ . "/bootstrap.php";
