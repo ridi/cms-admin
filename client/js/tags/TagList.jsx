@@ -18,7 +18,7 @@ export default class TagList extends React.Component {
   }
 
   handleDelete() {
-    if (!confirm('선택한 항목들을 삭제하시겠습니까?')) {
+    if (!window.confirm('선택한 항목들을 삭제하시겠습니까?')) {
       return;
     }
 

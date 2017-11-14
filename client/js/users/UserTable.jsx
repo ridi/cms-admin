@@ -41,7 +41,7 @@ class UserTable extends React.Component {
         },
       });
 
-      const users = data.users;
+      const { users } = data;
       const pageEnd = Math.ceil(data.count / perPage);
       this.setState({
         users,
@@ -104,55 +104,59 @@ class UserTable extends React.Component {
 
   render() {
     return (
-      <Grid>
+      <Grid bsClass="">
         <Row>
-          <Col sm={3} xsOffset={8}>
+          <Col lg={1}>
+            <Button bsStyle="primary" bsSize="small" onClick={this.handleAddUser}>
+              <Glyphicon glyph="download-alt" />&nbsp;신규 등록
+            </Button>
+          </Col>
+          <Col lg={3} lgOffset={8}>
             <SearchForm
               placeholder="ID / 이름"
               onChangeText={this.handleChangeSearchText}
               onSearch={this.handleSearch}
             />
           </Col>
-          <Col sm={1}>
-            <Button bsStyle="primary" bsSize="small" onClick={this.handleAddUser}>
-              <Glyphicon glyph="download-alt" />&nbsp;등록
-            </Button>
+        </Row>
+        <Row>
+          <Col lg={12}>
+            <Table bordered condensed hover>
+              <colgroup>
+                <col width="150" />
+                <col width="" />
+                <col width="200" />
+                <col width="80" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>계정 ID</th>
+                  <th>이름</th>
+                  <th>팀</th>
+                  <th>사용여부</th>
+                </tr>
+              </thead>
+              <tbody>
+                { this.renderRows() }
+              </tbody>
+            </Table>
           </Col>
         </Row>
         <Row>
-          <Table bordered condensed hover>
-            <colgroup>
-              <col width="150" />
-              <col width="" />
-              <col width="200" />
-              <col width="80" />
-            </colgroup>
-            <thead>
-              <tr>
-                <th>계정 ID</th>
-                <th>이름</th>
-                <th>팀</th>
-                <th>사용여부</th>
-              </tr>
-            </thead>
-            <tbody>
-              { this.renderRows() }
-            </tbody>
-          </Table>
-        </Row>
-        <Row>
-          <Pagination
-            prev
-            next
-            first
-            last
-            ellipsis
-            boundaryLinks
-            items={this.state.pageEnd}
-            maxButtons={MAX_PAGE_BUTTON}
-            activePage={this.state.activePage}
-            onSelect={this.handleSelect}
-          />
+          <Col lg={12} className="text-center">
+            <Pagination
+              prev
+              next
+              first
+              last
+              ellipsis
+              boundaryLinks
+              items={this.state.pageEnd}
+              maxButtons={MAX_PAGE_BUTTON}
+              activePage={this.state.activePage}
+              onSelect={this.handleSelect}
+            />
+          </Col>
         </Row>
       </Grid>
     );
