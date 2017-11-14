@@ -3,5 +3,5 @@
 client/dist
 client/node_modules
 docs/deploy/servers/*
-server/vendor
+vendor
 phinx.yml

@@ -3,9 +3,6 @@
   "description": "Ridibooks CMS admin service",
   "type": "project",
   "license": "MIT",
-  "config": {
-    "vendor-dir": "server/vendor"
-  },
   "require": {
     "illuminate/database": "^5.4",
     "moriony/silex-sentry-provider": "^2.0",
@@ -21,7 +18,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Ridibooks\\Cms\\Admin\\": "server/src/Admin"
+      "Ridibooks\\Cms\\Admin\\": "src/Admin"
     }
   }
 }
