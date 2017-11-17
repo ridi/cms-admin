@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 
 const TagRow = (props) => {
-  const { id, isUse, name, creator, createdAt, updatedAt, menusCount,
-    activeUsersCount, inactiveUsersCount, onMenusCountClick, onActiveUsersCountClick, onInactiveUsersCountClick } = props;
+  const {
+    id, isUse, name, creator, createdAt, updatedAt, menusCount,
+    activeUsersCount, inactiveUsersCount, onMenusCountClick, onActiveUsersCountClick, onInactiveUsersCountClick,
+  } = props;
 
   return (
     <tr id={id} className={!isUse ? 'danger' : ''}>

@@ -5,7 +5,9 @@ import Select2Input from '../Select2Input';
 
 export default class MenusDialog extends React.Component {
   renderBody() {
-    const { tagId, loading, selected, data, disabled, onAdd, onDelete } = this.props;
+    const {
+      tagId, loading, selected, data, disabled, onAdd, onDelete,
+    } = this.props;
 
     if (loading) {
       return <p>불러오는 중입니다...</p>;

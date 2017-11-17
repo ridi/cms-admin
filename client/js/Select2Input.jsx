@@ -7,14 +7,14 @@ class Select2Input extends React.Component {
 
     $(this.selectInput).select2();
     $(this.selectInput).on('select2:select', (e) => {
-      const data = e.params.data;
+      const { data } = e.params;
       if (onAdd) {
         onAdd(data.id);
       }
     });
 
     $(this.selectInput).on('select2:unselect', (e) => {
-      const data = e.params.data;
+      const { data } = e.params;
       if (onRemove) {
         onRemove(data.id);
       }
@@ -36,7 +36,9 @@ class Select2Input extends React.Component {
   }
 
   render() {
-    const { value, id, placeholder, multiple, disabled } = this.props;
+    const {
+      value, id, placeholder, multiple, disabled,
+    } = this.props;
 
     return (
       <div>

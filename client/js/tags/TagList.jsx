@@ -18,7 +18,7 @@ export default class TagList extends React.Component {
   }
 
   handleDelete() {
-    if (!confirm('선택한 항목들을 삭제하시겠습니까?')) {
+    if (!window.confirm('선택한 항목들을 삭제하시겠습니까?')) {
       return;
     }
 
@@ -61,7 +61,9 @@ export default class TagList extends React.Component {
   }
 
   render() {
-    const { tags, onMenusCountClick, onActiveUsersCountClick, onInactiveUsersCountClick } = this.props;
+    const {
+      tags, onMenusCountClick, onActiveUsersCountClick, onInactiveUsersCountClick,
+    } = this.props;
 
     return (
       <form id="updateForm" className="form-horizontal form-inline">

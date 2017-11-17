@@ -20,16 +20,17 @@ class UserEditApp extends React.Component {
   }
 
   handleDelete(id) {
-    if (!confirm('삭제하시겠습니까?')) {
+    if (!window.confirm('삭제하시겠습니까?')) {
       return;
     }
 
-    $.ajax(`/super/users/${id}`,
+    $.ajax(
+      `/super/users/${id}`,
       {
         type: 'delete',
         success: () => {
           alert('성공적으로 삭제되었습니다.');
-          location.href = '/super/users';
+          window.location.href = '/super/users';
         },
         error: (xhr, status, e) => {
           alert(e);

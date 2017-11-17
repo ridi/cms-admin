@@ -1,13 +1,14 @@
 <?php
+
 use Ridibooks\Cms\Admin\CmsAdminApplication;
 use Ridibooks\Cms\Thrift\ThriftService;
 use Ridibooks\Platform\Cms\Auth\LoginService;
 
-$autoloader = require __DIR__ . "/server/vendor/autoload.php";
+require __DIR__ . "/vendor/autoload.php";
 
 if (is_readable(__DIR__ . '/.env')) {
     $dotenv = new Dotenv\Dotenv(__DIR__, '.env');
-    $dotenv->load();
+    $dotenv->overload();
 }
 
 require_once __DIR__ . "/bootstrap.php";
@@ -34,7 +35,7 @@ $app = new CmsAdminApplication([
 ]);
 
 $app['twig.path'] = [
-    __DIR__ . '/server/views'
+    __DIR__ . '/templates'
 ];
 
 $app->run();

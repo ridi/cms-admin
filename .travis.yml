@@ -1,0 +1,27 @@
+os: linux
+sudo: false
+dist: trusty
+language: php
+php:
+- '7.1'
+
+cache:
+  directories:
+  - "${HOME}/.cache/composer/files"
+  - "${HOME}/.composer/cache/files"
+
+stages:
+- name: push
+  if: branch = master AND type = push
+- name: deploy
+  if: branch = master AND type = push
+
+jobs:
+  include:
+  - stage: push
+    services:
+      - docker
+    script: bin/docker_push.sh
+
+  - stage: deploy
+    script: bin/deploy.sh

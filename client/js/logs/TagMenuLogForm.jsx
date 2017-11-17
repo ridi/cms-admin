@@ -18,7 +18,9 @@ class TagMenuLogForm extends React.Component {
   }
 
   renderBody() {
-    const { datas, loading, onShowMenuChange, onShowTagChange } = this.props;
+    const {
+      datas, loading, onShowMenuChange, onShowTagChange,
+    } = this.props;
 
     if (loading) {
       return (
@@ -51,12 +53,15 @@ class TagMenuLogForm extends React.Component {
             <td><Button bsSize="xsmall" onClick={() => onShowTagChange(data)}>보기</Button></td>
           </tr>
         ))
-      }</tbody>
+      }
+      </tbody>
     );
   }
 
   renderFoot() {
-    const { pageLength, nowPage, pageEnd, onSelectPage } = this.props;
+    const {
+      pageLength, nowPage, pageEnd, onSelectPage,
+    } = this.props;
 
     return (
       <tfoot>

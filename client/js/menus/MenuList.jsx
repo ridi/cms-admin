@@ -12,7 +12,9 @@ function getMenuTypeString(isUse, isShow, menuDeep) {
   return '';
 }
 
-const MenuRow = ({ id, menuTitle, menuUrl, menuDeep, menuOrder, isUse, isShow, isNewtab, onShowAjaxMenus, onShowMenuUsers }) => (
+const MenuRow = ({
+  id, menuTitle, menuUrl, menuDeep, menuOrder, isUse, isShow, isNewtab, onShowAjaxMenus, onShowMenuUsers,
+}) => (
   <tr className={getMenuTypeString(isUse, isShow, menuDeep)}>
     <td>
       <input type="checkbox" />
@@ -135,9 +137,9 @@ export default class MenuList extends React.Component {
     });
 
     $.when(...args)
-    .done(() => {
-      window.location.reload();
-    });
+      .done(() => {
+        window.location.reload();
+      });
   }
 
   onSortEnd(evt) {

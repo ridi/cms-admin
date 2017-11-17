@@ -47,7 +47,7 @@ export default class Submenus extends React.Component {
   }
 
   handleDelete() {
-    if (!confirm('선택한 항목들을 삭제하시겠습니까?')) {
+    if (!window.confirm('선택한 항목들을 삭제하시겠습니까?')) {
       return;
     }
 
@@ -91,7 +91,7 @@ export default class Submenus extends React.Component {
       '<tr>'
       + `<td>${menu.id}</td>`
       + `<td><input type="checkbox" value="${menu.id}"/></td>`
-      + `<td><input type="text" class="form-control" name="ajax_url" value="${menu.ajax_url}"/></td>`
+      + `<td><input class="form-control" name="ajax_url" value="${menu.ajax_url}"/></td>`
       + '</tr>'
     )).join('\n');
   }
@@ -104,12 +104,10 @@ export default class Submenus extends React.Component {
         tabIndex="-1"
         role="dialog"
         aria-labelledby="ajaxMenuModalLabel"
-        aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <a type="button" className="close" data-dismiss="modal" aria-hidden="true">×</a>
               <h4 id="ajaxMenuModalLabel">메뉴 Ajax 목록 및 수정</h4>
             </div>
             <div className="modal-body">
@@ -146,7 +144,7 @@ export default class Submenus extends React.Component {
               </div>
               <div className="btn-group pull-right">
                 <button className="btn btn-primary btn-sm" onClick={this.handleUpdate}>저장</button>
-                <button className="btn btn-default btn-sm" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button className="btn btn-default btn-sm" data-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
