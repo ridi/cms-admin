@@ -24,19 +24,13 @@ class UserEditApp extends React.Component {
       return;
     }
 
-    $.ajax(
-      `/super/users/${id}`,
-      {
-        type: 'delete',
-        success: () => {
-          alert('성공적으로 삭제되었습니다.');
-          window.location.href = '/super/users';
-        },
-        error: (xhr, status, e) => {
-          alert(e);
-        },
-      },
-    );
+    fetch(`/super/users/${id}`, {
+      method: 'DELETE',
+      credentials: 'include',
+    }).then(() => {
+      alert('성공적으로 삭제되었습니다.');
+      window.location.href = '/super/users';
+    }).catch(e => alert(e));
   }
 
   handleChangeSearchText(e) {
