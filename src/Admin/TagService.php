@@ -2,7 +2,7 @@
 namespace Ridibooks\Cms\Admin;
 
 use Ridibooks\Cms\Admin\Model\AdminTag;
-use Ridibooks\Platform\Cms\Auth\LoginService;
+use Ridibooks\Cms\Auth\LoginService;
 
 class TagService
 {

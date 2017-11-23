@@ -6,11 +6,9 @@
   "require": {
     "illuminate/database": "^5.4",
     "moriony/silex-sentry-provider": "^2.0",
-    "ridibooks/cms-sdk": "^1.0.0",
+    "ridibooks/cms-sdk": "2.x-dev",
     "sentry/sentry": "^1.6",
-    "silex/silex": "^2.0",
     "symfony/asset": "^3.3",
-    "twig/twig": "^2.0.0",
     "vlucas/phpdotenv": "^2.4"
   },
   "require-dev": {

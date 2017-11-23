@@ -3,7 +3,7 @@ namespace Ridibooks\Cms\Admin\Controller;
 
 use Ridibooks\Cms\Admin\LogService as AdminLogService;
 use Ridibooks\Cms\Admin\UserService as AdminUserService;
-use Ridibooks\Platform\Cms\CmsApplication;
+use Ridibooks\Cms\CmsApplication;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;

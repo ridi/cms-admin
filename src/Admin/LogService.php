@@ -4,7 +4,7 @@ namespace Ridibooks\Cms\Admin;
 use Illuminate\Database\Capsule\Manager as DB;
 use Ridibooks\Cms\Admin\Model\AdminUser;
 use Ridibooks\Cms\Admin\Model\AdminUserPermissionLog;
-use Ridibooks\Platform\Cms\Auth\LoginService;
+use Ridibooks\Cms\Auth\LoginService;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class LogService
