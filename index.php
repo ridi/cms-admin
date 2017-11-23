@@ -1,8 +1,8 @@
 <?php
 
 use Ridibooks\Cms\Admin\CmsAdminApplication;
+use Ridibooks\Cms\Auth\LoginService;
 use Ridibooks\Cms\Thrift\ThriftService;
-use Ridibooks\Platform\Cms\Auth\LoginService;
 
 require __DIR__ . "/vendor/autoload.php";
 

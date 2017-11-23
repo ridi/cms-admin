@@ -4,7 +4,7 @@ namespace Ridibooks\Cms\Admin\Controller;
 
 use Ridibooks\Cms\Admin\LogService;
 use Ridibooks\Cms\Admin\Model\AdminUserPermissionLog;
-use Ridibooks\Platform\Cms\CmsApplication;
+use Ridibooks\Cms\CmsApplication;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;

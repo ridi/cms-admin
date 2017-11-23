@@ -2,7 +2,7 @@
 namespace Ridibooks\Cms\Admin;
 
 use Ridibooks\Cms\Admin\Model\AdminUser;
-use Ridibooks\Platform\Cms\Auth\PasswordService;
+use Ridibooks\Cms\Auth\PasswordService;
 
 class UserService
 {

@@ -20,7 +20,7 @@ class UserPermissionForm extends React.Component {
       tags: props.userTag,
       tagList: [],
       menuFetching: true,
-      menues: props.userMenu,
+      menus: props.userMenu,
       menuList: [],
     };
   }
@@ -76,15 +76,15 @@ class UserPermissionForm extends React.Component {
 
   handleMenuAdd(id) {
     this.setState(Object.assign({}, this.state, {
-      menues: this.state.menues.concat(id),
+      menus: this.state.menus.concat(id),
     }));
   }
 
   handleMenuRemove(id) {
-    const targetIndex = this.state.menues.indexOf(id);
+    const targetIndex = this.state.menus.indexOf(id);
     if (targetIndex !== -1) {
       this.setState(Object.assign({}, this.state, {
-        menues: this.state.menues.filter((_, i) => i !== targetIndex),
+        menus: this.state.menus.filter((_, i) => i !== targetIndex),
       }));
     }
   }
@@ -105,23 +105,17 @@ class UserPermissionForm extends React.Component {
   }
 
   handleSave() {
-    const data = {
-      tag_ids: this.state.tags.join(','),
-      menu_ids: this.state.menues.join(','),
-    };
+    const form = new FormData();
+    form.append('tag_ids', this.state.tags.join(','));
+    form.append('menu_ids', this.state.menus.join(','));
 
-    $.ajax({
-      type: 'POST',
-      url: `/super/users/${this.props.id}/permissions`,
-      data,
-      cache: false,
-      success: () => {
-        alert('성공적으로 업데이트 되었습니다.');
-      },
-      error: (xhr) => {
-        alert(xhr.responseText);
-      },
-    });
+    fetch(`/super/users/${this.props.id}/permissions`, {
+      method: 'POST',
+      credentials: 'include',
+      body: form,
+    }).then(() => {
+      alert('성공적으로 업데이트 되었습니다.');
+    }).catch(err => alert(err));
   }
 
   renderLoading() {
@@ -152,12 +146,12 @@ class UserPermissionForm extends React.Component {
 
   renderMenuInput(inputId) {
     const { id } = this.props;
-    const { menues, menuList } = this.state;
+    const { menus, menuList } = this.state;
 
     return (
       <Select2Input
         id={inputId}
-        value={menues}
+        value={menus}
         data={menuList}
         multiple
         placeholder="메뉴를 지정하세요"
