@@ -1,13 +1,12 @@
 # CMS-Admin
 Ridibooks CMS 관리자 서비스입니다.
 
-[![Build Status](https://travis-ci.org/ridibooks/cms-admin.svg?branch=master)](https://travis-ci.org/ridibooks/cms-admin?branch=master)
-[![](https://images.microbadger.com/badges/version/ridibooks/cms-admin.svg)](https://microbadger.com/images/ridibooks/auth "Get your own version badge on microbadger.com")
-[![](https://images.microbadger.com/badges/image/ridibooks/cms-admin.svg)](https://microbadger.com/images/ridibooks/auth "Get your own image badge on microbadger.com")
-[![Packagist](https://img.shields.io/packagist/v/ridibooks/cms-admin.svg)](https://packagist.org/packages/ridibooks/cms-admin)
+[![Build Status](https://travis-ci.org/ridi/cms-admin.svg?branch=master)](https://travis-ci.org/ridi/cms-admin?branch=master)
+[![](https://images.microbadger.com/badges/version/ridibooks/cms-admin.svg)](https://microbadger.com/images/ridibooks/cms-admin "Get your own version badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/ridibooks/cms-admin.svg)](https://microbadger.com/images/ridibooks/cms-admin "Get your own image badge on microbadger.com")
 
 ## Requirements
-- [Ridibooks CMS](https://github.com/ridibooks/cms)  
+- [Ridibooks CMS](https://github.com/ridi/cms)  
 사용자 인증을 하려면 CMS 인증 서버와 RPC연결을 해야 합니다. 전반적인 연동 방법을 보려면 [CMS-Bootstrap](https://github.com/ridibooks/cms-bootstrap) 프로젝트를 참고합니다.
 
 ## Getting started
