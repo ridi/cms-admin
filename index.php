@@ -19,14 +19,6 @@ if (!empty($cms_rpc_url)) {
     ThriftService::setEndPoint($cms_rpc_url);
 }
 
-// start session
-$couchbase_host = $_ENV['COUCHBASE_HOST'];
-if (!empty($couchbase_host)) {
-    LoginService::startCouchbaseSession(explode(',', $couchbase_host));
-} else {
-    LoginService::startSession();
-}
-
 $app = new CmsAdminApplication([
     'debug' => $_ENV['DEBUG'],
     'sentry_key' => $_ENV['SENTRY_KEY'],
