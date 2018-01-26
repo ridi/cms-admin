@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 DOCKER_TAG=${TRAVIS_TAG:-latest}
 COMMIT=${TRAVIS_COMMIT::8}
