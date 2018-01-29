@@ -13,8 +13,7 @@ function getMenuTypeString(isUse, isShow, menuDeep) {
 }
 
 const MenuRow = ({
-  id, menuTitle, menuUrl, menuDeep, menuOrder, isUse, isShow,
-  isNewtab, onShowAjaxMenus, onShowMenuUsers,
+  id, menuTitle, menuUrl, menuDeep, menuOrder, isUse, isShow, isNewtab, onShowAjaxMenus, onShowMenuUsers,
 }) => (
   <tr className={getMenuTypeString(isUse, isShow, menuDeep)}>
     <td>
@@ -22,18 +21,10 @@ const MenuRow = ({
       <input type="hidden" name="id" defaultValue={id} />
     </td>
     <td className="js_sortable_handle">{id}</td>
-    <td>
-      <input type="text" className="form-control" name="menu_title" defaultValue={menuTitle} />
-    </td>
-    <td>
-      <input type="text" className="form-control" name="menu_url" defaultValue={menuUrl} />
-    </td>
-    <td>
-      <input type="text" className="form-control" name="menu_deep" defaultValue={menuDeep} />
-    </td>
-    <td>
-      <input type="text" className="form-control" name="menu_order" defaultValue={menuOrder} />
-    </td>
+    <td><input type="text" className="form-control" name="menu_title" defaultValue={menuTitle} /></td>
+    <td><input type="text" className="form-control" name="menu_url" defaultValue={menuUrl} /></td>
+    <td><input type="text" className="form-control" name="menu_deep" defaultValue={menuDeep} /></td>
+    <td><input type="text" className="form-control" name="menu_order" defaultValue={menuOrder} /></td>
     <td>
       <select className="form-control" name="is_newtab" defaultValue={isNewtab}>
         <option value>Y</option>
@@ -92,48 +83,6 @@ function checkChangedRow($tr) {
 }
 
 export default class MenuList extends React.Component {
-  static onSortEnd(evt) {
-    if (evt.oldIndex === evt.newIndex) {
-      return;
-    }
-
-    const $tbody = $(evt.target);
-
-    const targetIndex = (evt.newIndex > evt.oldIndex) ? evt.newIndex - 1 : evt.newIndex + 1;
-    const newOrder = $tbody.find(`tr:nth-child(${targetIndex + 1}) input[name="menu_order"]`).attr('value');
-
-    const changedRow = $tbody.find(`tr:nth-child(${evt.newIndex + 1})`);
-    changedRow.find('input[name="menu_order"]').val(newOrder);
-    checkChangedRow(changedRow);
-  }
-
-  static onUpdate() {
-    const args = $('#modifyForm').find('input:checked').map((i, e) => {
-      const $tr = $(e).parents('tr');
-      const menuId = $tr.find('input[name=id]').val();
-      const data = {
-        menu_title: $tr.find('input[name=menu_title]').val(),
-        menu_url: $tr.find('input[name=menu_url]').val(),
-        menu_deep: $tr.find('input[name=menu_deep]').val(),
-        menu_order: $tr.find('input[name=menu_order]').val(),
-        is_newtab: $tr.find('select[name=is_newtab]').val() === 'true' ? '1' : '0',
-        is_use: $tr.find('select[name=is_use]').val() === 'true' ? '1' : '0',
-        is_show: $tr.find('select[name=is_show]').val() === 'true' ? '1' : '0',
-      };
-
-      return $.ajax({
-        url: `/super/menus/${menuId}`,
-        type: 'PUT',
-        data,
-      });
-    });
-
-    $.when(...args)
-      .done(() => {
-        window.location.reload();
-      });
-  }
-
   constructor() {
     super();
     this.showAjaxMenus = this.showAjaxMenus.bind(this);
@@ -164,6 +113,48 @@ export default class MenuList extends React.Component {
         $('#insertAjaxUrlBtn').click();
       }
     });
+  }
+
+  onUpdate() {
+    const args = $('#modifyForm').find('input:checked').map((i, e) => {
+      const $tr = $(e).parents('tr');
+      const menuId = $tr.find('input[name=id]').val();
+      const data = {
+        menu_title: $tr.find('input[name=menu_title]').val(),
+        menu_url: $tr.find('input[name=menu_url]').val(),
+        menu_deep: $tr.find('input[name=menu_deep]').val(),
+        menu_order: $tr.find('input[name=menu_order]').val(),
+        is_newtab: $tr.find('select[name=is_newtab]').val() === 'true' ? '1' : '0',
+        is_use: $tr.find('select[name=is_use]').val() === 'true' ? '1' : '0',
+        is_show: $tr.find('select[name=is_show]').val() === 'true' ? '1' : '0',
+      };
+
+      return $.ajax({
+        url: `/super/menus/${menuId}`,
+        type: 'PUT',
+        data,
+      });
+    });
+
+    $.when(...args)
+      .done(() => {
+        window.location.reload();
+      });
+  }
+
+  onSortEnd(evt) {
+    if (evt.oldIndex === evt.newIndex) {
+      return;
+    }
+
+    const $tbody = $(evt.target);
+
+    const targetIndex = (evt.newIndex > evt.oldIndex) ? evt.newIndex - 1 : evt.newIndex + 1;
+    const newOrder = $tbody.find(`tr:nth-child(${targetIndex + 1}) input[name="menu_order"]`).attr('value');
+
+    const changedRow = $tbody.find(`tr:nth-child(${evt.newIndex + 1})`);
+    changedRow.find('input[name="menu_order"]').val(newOrder);
+    checkChangedRow(changedRow);
   }
 
   showAjaxMenus(menuId, menuTitle) {

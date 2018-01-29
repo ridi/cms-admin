@@ -8,10 +8,6 @@ import SearchForm from '../common/searchForm';
 const MAX_PAGE_BUTTON = 5;
 
 class UserTable extends React.Component {
-  static handleAddUser() {
-    window.location = '/super/users/new';
-  }
-
   constructor(props) {
     super();
 
@@ -70,6 +66,10 @@ class UserTable extends React.Component {
 
   handleChangeSearchText(e) {
     this.setState({ searchText: e.target.value });
+  }
+
+  handleAddUser() {
+    window.location = '/super/users/new';
   }
 
   renderRows() {

@@ -7,7 +7,19 @@ import UserPermissionForm from './UserPermissionForm';
 import UserCpForm from './UserCpForm';
 
 class UserEditApp extends React.Component {
-  static handleDelete(id) {
+  constructor() {
+    super();
+
+    this.state = {
+      searchText: '',
+    };
+
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleChangeSearchText = this.handleChangeSearchText.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+  }
+
+  handleDelete(id) {
     if (!window.confirm('삭제하시겠습니까?')) {
       return;
     }
@@ -19,18 +31,6 @@ class UserEditApp extends React.Component {
       alert('성공적으로 삭제되었습니다.');
       window.location.href = '/super/users';
     }).catch(e => alert(e));
-  }
-
-  constructor() {
-    super();
-
-    this.state = {
-      searchText: '',
-    };
-
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleChangeSearchText = this.handleChangeSearchText.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
   }
 
   handleChangeSearchText(e) {
@@ -81,12 +81,7 @@ class UserEditApp extends React.Component {
     }
 
     return (
-      <Button
-        className="btn btn-default btn-danger pull-right"
-        onClick={() => { this.handleDelete(this.props.userDetail.id); }}
-      >
-        삭제
-      </Button>
+      <Button className="btn btn-default btn-danger pull-right" onClick={() => { this.handleDelete(this.props.userDetail.id); }}>삭제</Button>
     );
   }
 

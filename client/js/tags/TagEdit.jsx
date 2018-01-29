@@ -215,8 +215,7 @@ export default class TagEdit extends React.Component {
 
   render() {
     const {
-      tags, menus, menusTag, menusLoading, menusDisabled, showMenusDlg,
-      users, usersLoading, showUsersDlg,
+      tags, menus, menusTag, menusLoading, menusDisabled, showMenusDlg, users, usersLoading, showUsersDlg,
     } = this.state;
 
     users.sort((a, b) => {

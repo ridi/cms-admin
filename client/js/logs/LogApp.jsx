@@ -8,17 +8,6 @@ const ROW_PER_PAGE = 25;
 const MAX_PAGE = 10;
 
 class LogApp extends React.Component {
-  static async getLogPage(pageIndex) {
-    const { data } = await axios.get(`/super/logs/user?page=${pageIndex}&per_page=${ROW_PER_PAGE}`, {
-      headers: { Accept: 'application/json' },
-    });
-
-    return {
-      rows: data.rows,
-      pageEnd: Math.ceil(data.count / ROW_PER_PAGE),
-    };
-  }
-
   constructor() {
     super();
 
@@ -53,6 +42,17 @@ class LogApp extends React.Component {
 
   componentDidMount() {
     this.handleSelectPage(this.state.userLog.nowPage);
+  }
+
+  async getLogPage(pageIndex) {
+    const { data } = await axios.get(`/super/logs/user?page=${pageIndex}&per_page=${ROW_PER_PAGE}`, {
+      headers: { Accept: 'application/json' },
+    });
+
+    return {
+      rows: data.rows,
+      pageEnd: Math.ceil(data.count / ROW_PER_PAGE),
+    };
   }
 
   async getMenus() {

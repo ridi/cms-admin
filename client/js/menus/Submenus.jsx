@@ -1,41 +1,6 @@
 import React from 'react';
 
 export default class Submenus extends React.Component {
-  static handleDelete() {
-    if (!window.confirm('선택한 항목들을 삭제하시겠습니까?')) {
-      return;
-    }
-
-    const menuId = $('#ajax_menu_id').val();
-    $('#ajaxMenuUpdateForm').find('input:checked').map((i, e) => {
-      const $tr = $(e).parents('tr');
-      const submenuId = $tr.find('input[type=checkbox]').val();
-
-      $.ajax({
-        url: `/super/menus/${menuId}/submenus/${submenuId}`,
-        type: 'DELETE',
-      }).done(() => {
-        $tr.detach();
-      });
-
-      return null;
-    });
-  }
-
-  static buildInnerHtml(menuList) {
-    if (menuList.length === 0) {
-      return '<tr><td colspan="3">등록된 Ajax 메뉴가 없습니다.</td></tr>';
-    }
-
-    return menuList.map(menu => (
-      '<tr>'
-      + `<td>${menu.id}</td>`
-      + `<td><input type="checkbox" value="${menu.id}"/></td>`
-      + `<td><input class="form-control" name="ajax_url" value="${menu.ajax_url}"/></td>`
-      + '</tr>'
-    )).join('\n');
-  }
-
   constructor() {
     super();
     this.handleUpdate = this.handleUpdate.bind(this);
@@ -81,6 +46,27 @@ export default class Submenus extends React.Component {
     });
   }
 
+  handleDelete() {
+    if (!window.confirm('선택한 항목들을 삭제하시겠습니까?')) {
+      return;
+    }
+
+    const menuId = $('#ajax_menu_id').val();
+    $('#ajaxMenuUpdateForm').find('input:checked').map((i, e) => {
+      const $tr = $(e).parents('tr');
+      const submenuId = $tr.find('input[type=checkbox]').val();
+
+      $.ajax({
+        url: `/super/menus/${menuId}/submenus/${submenuId}`,
+        type: 'DELETE',
+      }).done(() => {
+        $tr.detach();
+      });
+
+      return null;
+    });
+  }
+
   show(menuId, menuTitle) {
     $.get(`/super/menus/${menuId}/submenus`, (returnData) => {
       if (returnData.success) {
@@ -94,6 +80,20 @@ export default class Submenus extends React.Component {
         alert(returnData.msg);
       }
     }, 'json');
+  }
+
+  buildInnerHtml(menuList) {
+    if (menuList.length === 0) {
+      return '<tr><td colspan="3">등록된 Ajax 메뉴가 없습니다.</td></tr>';
+    }
+
+    return menuList.map(menu => (
+      '<tr>'
+      + `<td>${menu.id}</td>`
+      + `<td><input type="checkbox" value="${menu.id}"/></td>`
+      + `<td><input class="form-control" name="ajax_url" value="${menu.ajax_url}"/></td>`
+      + '</tr>'
+    )).join('\n');
   }
 
   render() {
@@ -115,16 +115,8 @@ export default class Submenus extends React.Component {
                 <input type="hidden" id="ajax_menu_title" />
 
                 <div className="form-group">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="ajax_url"
-                    name="ajax_url"
-                    placeholder="Ajax 메뉴 Url 입력"
-                  />
-                  <button type="button" className="btn btn-success" onClick={this.handleCreate}>
-                    추가
-                  </button>
+                  <input type="text" className="form-control" id="ajax_url" name="ajax_url" placeholder="Ajax 메뉴 Url 입력" />
+                  <button type="button" className="btn btn-success" onClick={this.handleCreate}>추가</button>
                 </div>
               </form>
               <form id="ajaxMenuUpdateForm" className="form-group">

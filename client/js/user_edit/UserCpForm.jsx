@@ -10,23 +10,6 @@ const PARTNER_CP_TYPE = 2;
 const OPERATOR_CP_TYPE = 3;
 
 class UserCpForm extends React.Component {
-  static async getCpList() {
-    const { data: res } = await axios('/admin/comm/cp_list.ajax');
-    if (res.data) {
-      return res.data.map(cp => ({ id: cp.id, text: `${cp.name} (${cp.id})` }));
-    }
-
-    return [];
-  }
-
-  static renderLoading() {
-    return (
-      <div className="progress">
-        <div className="progress-bar progress-bar-striped active" style={{ width: '100%' }}>로딩중...</div>
-      </div>
-    );
-  }
-
   constructor() {
     super();
 
@@ -56,6 +39,15 @@ class UserCpForm extends React.Component {
     });
 
     return data;
+  }
+
+  async getCpList() {
+    const { data: res } = await axios('/admin/comm/cp_list.ajax');
+    if (res.data) {
+      return res.data.map(cp => ({ id: cp.id, text: `${cp.name} (${cp.id})` }));
+    }
+
+    return [];
   }
 
   async updateCp() {
@@ -172,6 +164,14 @@ class UserCpForm extends React.Component {
         alert(xhr.responseText);
       },
     });
+  }
+
+  renderLoading() {
+    return (
+      <div className="progress">
+        <div className="progress-bar progress-bar-striped active" style={{ width: '100%' }}>로딩중...</div>
+      </div>
+    );
   }
 
   renderInput(id, cpType) {

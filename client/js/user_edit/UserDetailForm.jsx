@@ -2,13 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class UserDetailForm extends React.Component {
-  static handleSave() {
-    const $form = $('form');
-    if ($form[0].checkValidity()) {
-      $form.submit();
-    }
-  }
-
   constructor(props) {
     super(props);
 
@@ -25,6 +18,13 @@ class UserDetailForm extends React.Component {
 
     this.initialState = this.state;
     this.isNewUser = !!props.id;
+  }
+
+  handleSave() {
+    const $form = $('form');
+    if ($form[0].checkValidity()) {
+      $form.submit();
+    }
   }
 
   handleReset() {

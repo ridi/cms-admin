@@ -2,14 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Select2Input extends React.Component {
-  static renderOption(data) {
-    return (
-      <option key={data.id} value={data.id}>
-        {data.text}
-      </option>
-    );
-  }
-
   componentDidMount() {
     const { onAdd, onRemove } = this.props;
 
@@ -33,6 +25,14 @@ class Select2Input extends React.Component {
     if (JSON.stringify(this.props.value) !== JSON.stringify(nextProps.value)) {
       $(this.selectInput).val(nextProps.value).trigger('change');
     }
+  }
+
+  renderOption(data) {
+    return (
+      <option key={data.id} value={data.id}>
+        {data.text}
+      </option>
+    );
   }
 
   render() {
