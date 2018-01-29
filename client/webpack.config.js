@@ -24,11 +24,6 @@ module.exports = {
     rules: [
       {
         test: /\.jsx$/,
-        enforce: "pre",
-        loader: 'eslint-loader',
-      },
-      {
-        test: /\.jsx$/,
         loader: 'babel-loader',
         options: {
           presets: [[ 'es2015', { modules: false } ], 'react'],
