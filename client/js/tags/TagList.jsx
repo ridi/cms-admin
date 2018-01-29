@@ -3,21 +3,7 @@ import PropTypes from 'prop-types';
 import TagRow from './TagRow';
 
 export default class TagList extends React.Component {
-  constructor() {
-    super();
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
-  }
-
-  componentDidMount() {
-    // 태그 목록 컬럼 변동 시 check
-    $('#updateForm input[name=name], #updateForm input[name=is_use]').change(function onChange() {
-      const $tr = $(this).parents('tr');
-      $tr.find('input[name=changed]').prop('checked', true);
-    });
-  }
-
-  handleDelete() {
+  static handleDelete() {
     if (!window.confirm('선택한 항목들을 삭제하시겠습니까?')) {
       return;
     }
@@ -39,7 +25,7 @@ export default class TagList extends React.Component {
     });
   }
 
-  handleUpdate() {
+  static handleUpdate() {
     const args = $('#updateForm input[name=changed]:checked').map((i, e) => {
       const $tr = $(e).parents('tr');
       const tagId = $tr.find('input[name=id]').val();
@@ -58,6 +44,20 @@ export default class TagList extends React.Component {
     $.when(...args).done(() => {
       window.location.reload();
     });
+  }
+  constructor() {
+    super();
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+  }
+
+  componentDidMount() {
+    // 태그 목록 컬럼 변동 시 check
+    $('#updateForm input[name=name], #updateForm input[name=is_use]')
+      .change(function onChange() {
+        const $tr = $(this).parents('tr');
+        $tr.find('input[name=changed]').prop('checked', true);
+      });
   }
 
   render() {
@@ -118,8 +118,22 @@ export default class TagList extends React.Component {
         </table>
         <div>
           <div className="pull-right">
-            <button type="button" className="btn btn-danger" id="js_delete" onClick={this.handleDelete}>삭제</button>
-            <button type="button" className="btn btn-primary" id="updateBtn" onClick={this.handleUpdate}>저장</button>
+            <button
+              type="button"
+              className="btn btn-danger"
+              id="js_delete"
+              onClick={this.handleDelete}
+            >
+              삭제
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              id="updateBtn"
+              onClick={this.handleUpdate}
+            >
+              저장
+            </button>
           </div>
         </div>
       </form>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Pagination, Table } from 'react-bootstrap';
 
 class TagMenuLogForm extends React.Component {
-  renderHead() {
+  static renderHead() {
     return (
       <thead>
         <tr>

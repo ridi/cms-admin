@@ -6,6 +6,24 @@ import axios from 'axios';
 import Select2Input from '../Select2Input';
 
 class UserPermissionForm extends React.Component {
+  static renderLoading() {
+    return (
+      <div className="progress">
+        <div className="progress-bar progress-bar-striped active" style={{ width: '100%' }}>로딩중...</div>
+      </div>
+    );
+  }
+
+  static async getTags() {
+    const { data } = await axios('/super/tags');
+    return data;
+  }
+
+  static async getMenus() {
+    const { data } = await axios('/super/menus');
+    return data;
+  }
+
   constructor(props) {
     super(props);
 
@@ -30,16 +48,6 @@ class UserPermissionForm extends React.Component {
       this.updateTags(),
       this.updateMenus(),
     ]);
-  }
-
-  async getTags() {
-    const { data } = await axios('/super/tags');
-    return data;
-  }
-
-  async getMenus() {
-    const { data } = await axios('/super/menus');
-    return data;
   }
 
   async updateTags() {
@@ -116,14 +124,6 @@ class UserPermissionForm extends React.Component {
     }).then(() => {
       alert('성공적으로 업데이트 되었습니다.');
     }).catch(err => alert(err));
-  }
-
-  renderLoading() {
-    return (
-      <div className="progress">
-        <div className="progress-bar progress-bar-striped active" style={{ width: '100%' }}>로딩중...</div>
-      </div>
-    );
   }
 
   renderTagInput(inputId) {

@@ -5,7 +5,8 @@ import { Button } from 'react-bootstrap';
 const TagRow = (props) => {
   const {
     id, isUse, name, creator, createdAt, updatedAt, menusCount,
-    activeUsersCount, inactiveUsersCount, onMenusCountClick, onActiveUsersCountClick, onInactiveUsersCountClick,
+    activeUsersCount, inactiveUsersCount, onMenusCountClick,
+    onActiveUsersCountClick, onInactiveUsersCountClick,
   } = props;
 
   return (
