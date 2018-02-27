@@ -4,15 +4,13 @@ declare(strict_types=1);
 namespace Ridibooks\Cms\Admin;
 
 use Moriony\Silex\Provider\SentryServiceProvider;
+use Ridibooks\Cms\Admin\Controller\AdminLoginControllerProvider as AdminLoginController;
 use Ridibooks\Cms\Admin\Controller\LogControllerProvider as AdminLogController;
 use Ridibooks\Cms\Admin\Controller\MenuControllerProvider as AdminMenuController;
 use Ridibooks\Cms\Admin\Controller\TagControllerProvider as AdminTagController;
 use Ridibooks\Cms\Admin\Controller\UserControllerProvider as AdminUserController;
 use Ridibooks\Cms\CmsApplication;
-use Ridibooks\Cms\MiniRouter;
 use Symfony\Component\Asset\PathPackage;
-use Symfony\Component\HttpFoundation\Request;
-
 
 class CmsAdminApplication extends CmsApplication
 {
@@ -23,14 +21,13 @@ class CmsAdminApplication extends CmsApplication
         $this->registerSentryServiceProvider();
         $this->extendTwigServiceProvider();
 
-        $this->before(function (Request $request) {
-            return MiniRouter::shouldRedirectForLogin($request);
-        });
+        $this->before(AdminRouter::authorize());
 
         $this->mount('/', new AdminUserController());
         $this->mount('/', new AdminTagController());
         $this->mount('/', new AdminMenuController());
         $this->mount('/', new AdminLogController());
+        $this->mount('/', new AdminLoginController());
     }
 
     private function extendTwigServiceProvider()
