@@ -46,7 +46,7 @@ class AdminLoginControllerProvider implements ControllerProviderInterface
                 throw new \Exception('사용이 금지된 계정입니다. 관리자에게 문의하세요.');
             }
 
-            $_SESSION['admin-id'] = $user_id['id'];
+            $_SESSION['admin-id'] = $user['id'];
 
             $response = RedirectResponse::create($return_url);
         } catch (\Exception $e) {

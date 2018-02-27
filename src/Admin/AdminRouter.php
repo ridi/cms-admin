@@ -26,10 +26,6 @@ class AdminRouter
                 return $app->redirect($login_url);
             }
 
-            LoginService::setLoginContext([
-                'user_id' => $_SESSION['admin-id'],
-            ]);
-
             return null;
         };
     }
