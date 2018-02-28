@@ -2,7 +2,6 @@
 namespace Ridibooks\Cms\Admin;
 
 use Ridibooks\Cms\Admin\Model\AdminTag;
-use Ridibooks\Cms\Auth\LoginService;
 
 class TagService
 {
@@ -52,7 +51,7 @@ class TagService
         $tag = new AdminTag();
         $tag->name = $name;
         $tag->is_use = $is_use;
-        $tag->creator = LoginService::GetAdminID();
+        $tag->creator = $_SESSION['admin-id'];
         $tag->save();
     }
 

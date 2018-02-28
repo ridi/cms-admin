@@ -4,7 +4,6 @@ namespace Ridibooks\Cms\Admin;
 use Illuminate\Database\Capsule\Manager as DB;
 use Ridibooks\Cms\Admin\Model\AdminUser;
 use Ridibooks\Cms\Admin\Model\AdminUserPermissionLog;
-use Ridibooks\Cms\Auth\LoginService;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class LogService
@@ -27,7 +26,7 @@ class LogService
             'user_id' => $user_id,
             'tag_ids' => implode(",", array_map('strval', $tag_ids)),
             'menu_ids' => implode(",", array_map('strval', $menu_ids)),
-            'edited_by' => LoginService::GetAdminID(),
+            'edited_by' => $_SESSION['admin-id'],
         ]);
 
         DB::connection()->transaction(function () use ($user, $tag_ids, $menu_ids, $new_log) {
