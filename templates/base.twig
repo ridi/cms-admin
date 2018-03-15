@@ -58,29 +58,7 @@
 
   <div class="row">
     <div class="col-xs-12 col-lg-2">
-      <div class="panel panel-default hidden-xs hidden-sm hidden-md" style="padding: 10px;">{#데스크탑 사이즈#}
-        <h4>Ridibooks CMS</h4>
-        <select class="form-control menu_select">
-          <option value="/super/users">유저관리</option>
-          <option value="/super/tags">태그관리</option>
-          <option value="/super/menus">메뉴관리</option>
-          <option value="/super/logs">변경이력</option>
-        </select>
-
-        <h5 style="margin: 10px 15px;"><a data-toggle="collapse" data-target="#drilldown-123">CMS 관리 - 퍼포먼스팀</a></h5>
-        <ul class="nav nav-pills nav-stacked">
-          <ul id="drilldown-123" class="nav nav-pills nav-stacked collapse in" style="padding-left: 15px;">
-            <li><a href="/super/users">유저관리</a></li>
-            <li><a href="/super/tags">태그관리</a></li>
-            <li><a href="/super/menus">메뉴관리</a></li>
-            <li><a href="/super/logs">변경이력</a></li>
-          </ul>
-        </ul>
-        <hr style="margin: 0;"/>
-        <ul class="nav nav-pills nav-stacked" style="padding-left: 15px;">
-          <li><a href="/super/logout">Logout</a></li>
-        </ul>
-      </div>
+      {% include '/comm/left_menu_new.twig' %}
     </div>
     <div class="col-xs-12 col-lg-10">
       <ul>
