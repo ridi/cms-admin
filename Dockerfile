@@ -3,7 +3,6 @@ MAINTAINER Kang Ki Tae <kt.kang@ridi.com>
 
 ENV DEBUG=0
 ENV SENTRY_KEY=""
-ENV SESSION_DOMAIN=localhost
 ENV CMS_RPC_URL=localhost
 ENV MYSQL_HOST=localhost
 ENV MYSQL_USER=root
