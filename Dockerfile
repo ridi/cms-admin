@@ -9,7 +9,6 @@ ENV MYSQL_HOST=localhost
 ENV MYSQL_USER=root
 ENV MYSQL_PASSWORD=""
 ENV MYSQL_DATABASE=cms
-ENV COUCHBASE_HOST=localhost
 
 RUN sed -i "/DocumentRoot \/var\/www\/html/a Alias \/super \/var\/www\/html/" /etc/apache2/sites-available/000-default.conf
 
