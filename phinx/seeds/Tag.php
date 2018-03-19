@@ -3,23 +3,20 @@ declare(strict_types=1);
 
 use Phinx\Seed\AbstractSeed;
 
-class User extends AbstractSeed
+class Tag extends AbstractSeed
 {
     public function run()
     {
         $data = [
             [
-                'id' => 'admin',
-                'name' => '관리자',
-                'passwd' => '',
-                'team' => '관리자',
+                'name' => '권한 관리',
                 'is_use' => 1,
+                'creator' => 'admin',
                 'reg_date' => date('Y-m-d H:i:s'),
-                'azure_id' => 'admin',
             ],
         ];
 
-        $posts = $this->table('tb_admin2_user');
+        $posts = $this->table('tb_admin2_tag');
         $posts->insert($data)->save();
     }
 }
