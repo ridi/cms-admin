@@ -32,7 +32,7 @@ jobs:
       - bin/test.sh
 
   - stage: push
-    if: branch IN (develop, master)
+    if: branch = master
     services:
       - docker
     script:
@@ -40,7 +40,7 @@ jobs:
 
   - stage: deploy
     name: deploy-dev
-    if: branch = develop
+    if: branch = master
     env:
       - CI_TRIGGER_ENV=dev CI_TRIGGER_TARGET=cms-admin-restart
     script:
