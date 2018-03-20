@@ -2,12 +2,15 @@
 set -e
 
 DOCKER_TAG=${TRAVIS_TAG:-latest}
-COMMIT=${TRAVIS_COMMIT::8}
+DEFAULT_TAG=$(git rev-parse --short HEAD) # commit hash
 
 docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
-docker build -t ridibooks/cms-admin:${COMMIT} .
+
+echo "Bulilding ridibooks/cms-admin..."
+docker build -t ridibooks/cms-admin:${DEFAULT_TAG} .
+echo "Builded ridibooks/cms-admin"
 
 echo "Pushing ridibooks/cms-admin"
-docker tag ridibooks/cms-admin:${COMMIT} ridibooks/cms-admin:${DOCKER_TAG}
+docker tag ridibooks/cms-admin:${DEFAULT_TAG} ridibooks/cms-admin:${DOCKER_TAG}
 docker push ridibooks/cms-admin
 echo "Pushed ridibooks/cms-admin"
