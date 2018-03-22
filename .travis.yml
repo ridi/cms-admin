@@ -47,6 +47,17 @@ jobs:
     script:
       - bin/docker_push.sh
 
+  # deploy (dev)
+  - stage: deploy
+    if: type = push AND branch = master
+    env:
+      - CI_TRIGGER_ENV=dev
+      - CI_TRIGGER_TARGET=cms-admin-restart
+      - CI_TRIGGER_TAG=latest
+    script:
+      - bin/deploy.sh
+
+  # deploy (prod)
   - stage: deploy
     if: tag =~ ^v\d+\.\d+(\.\d+)?$ # ex) tag = v1.0.0
     env:
