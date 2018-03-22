@@ -32,12 +32,9 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.jsx$/,
+        test: /\.(js|jsx)$/,
         loader: 'babel-loader',
-        options: {
-          presets: [['es2015', { modules: false }], 'react'],
-        },
-        exclude: ['/node_modules/'],
+        include: SRC_PATH,
       },
       {
         test: /\.css$/,
