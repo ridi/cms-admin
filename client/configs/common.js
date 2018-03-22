@@ -1,13 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
 
 const resolvePath = (...relativePaths) => path.resolve(__dirname, '..', ...relativePaths);
 
 const PUBLIC_PATH = '/super/client/dist/';
 const OUTPUT_PATH = resolvePath('dist');
 const SRC_PATH = resolvePath('js');
+const MANIFEST_FILENAME = 'manifest.json';
 
 const defaultEntry = [];
 
@@ -29,26 +28,6 @@ const config = {
     extensions: ['.js', '.jsx', '.elm'],
     enforceExtension: false,
   },
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
-        include: SRC_PATH,
-      },
-      {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader',
-        }),
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf|svg)$/,
-        loader: 'url-loader',
-      },
-    ],
-  },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons',
@@ -58,13 +37,6 @@ const config = {
       $: 'jquery',
       jQuery: 'jquery',
     }),
-    new ExtractTextPlugin({
-      filename: 'styles.[contenthash].css',
-    }),
-    new ManifestPlugin({
-      fileName: 'manifest.json',
-      publicPath: PUBLIC_PATH,
-    }),
   ],
 };
 
@@ -72,6 +44,7 @@ module.exports = {
   PUBLIC_PATH,
   OUTPUT_PATH,
   SRC_PATH,
+  MANIFEST_FILENAME,
   resolvePath,
   config,
 };
