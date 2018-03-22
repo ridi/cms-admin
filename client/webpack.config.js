@@ -2,18 +2,25 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const WriteFilePlugin = require('write-file-webpack-plugin');
+
+const defaultEntry = [
+  'webpack-dev-server/client?http://localhost:3000',
+  'webpack/hot/only-dev-server',
+];
 
 module.exports = {
   entry: {
-    tags: './js/tags',
-    menus: './js/menus',
-    users: './js/users',
-    user_edit: './js/user_edit',
-    logs: './js/logs',
+    tags: [...defaultEntry, './js/tags'],
+    menus: [...defaultEntry, './js/menus'],
+    users: [...defaultEntry, './js/users'],
+    user_edit: [...defaultEntry, './js/user_edit'],
+    logs: [...defaultEntry, './js/logs'],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].[chunkhash].js',
+    filename: '[name].[hash].js',
+    publicPath: '/super/client/dist/',
   },
   resolve: {
     modules: ['node_modules'],
@@ -26,7 +33,7 @@ module.exports = {
         test: /\.jsx$/,
         loader: 'babel-loader',
         options: {
-          presets: [[ 'es2015', { modules: false } ], 'react'],
+          presets: [['es2015', { modules: false }], 'react'],
         },
         exclude: ['/node_modules/'],
       },
@@ -40,13 +47,12 @@ module.exports = {
       {
         test: /\.(woff|woff2|eot|ttf|svg)$/,
         loader: 'url-loader',
-      }
+      },
     ],
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons',
-      chunks: [ 'tags', 'menus', 'users', 'user_edit', 'logs' ],
       minChunks: 2,
     }),
     new webpack.ProvidePlugin({
@@ -54,11 +60,24 @@ module.exports = {
       jQuery: 'jquery',
     }),
     new ExtractTextPlugin({
-      filename: 'styles.css',
+      filename: 'styles.[contenthash].css',
     }),
     new ManifestPlugin({
       fileName: 'manifest.json',
-      publicPath: '/super/client/dist/'
+      publicPath: '/super/client/dist/',
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new WriteFilePlugin({
+      test: /manifest\.json$/,
     }),
   ],
+  devServer: {
+    publicPath: '/super/client/dist/',
+    port: 3000,
+    proxy: {
+      '*': 'http://localhost:8012',
+    },
+    inline: true,
+    hot: true,
+  },
 };
