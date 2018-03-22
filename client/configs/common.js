@@ -3,19 +3,26 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
+const resolvePath = (...relativePaths) => path.resolve(__dirname, '..', ...relativePaths);
+
+const PUBLIC_PATH = '/super/client/dist/';
+const OUTPUT_PATH = resolvePath('dist');
+const SRC_PATH = resolvePath('js');
+
 const defaultEntry = [];
 
-module.exports = {
+const config = {
   entry: {
-    tags: [...defaultEntry, './js/tags'],
-    menus: [...defaultEntry, './js/menus'],
-    users: [...defaultEntry, './js/users'],
-    user_edit: [...defaultEntry, './js/user_edit'],
-    logs: [...defaultEntry, './js/logs'],
+    tags: [...defaultEntry, path.resolve(SRC_PATH, 'tags')],
+    menus: [...defaultEntry, path.resolve(SRC_PATH, 'menus')],
+    users: [...defaultEntry, path.resolve(SRC_PATH, 'users')],
+    user_edit: [...defaultEntry, path.resolve(SRC_PATH, 'user_edit')],
+    logs: [...defaultEntry, path.resolve(SRC_PATH, 'logs')],
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: OUTPUT_PATH,
     filename: '[name].[chunkhash].js',
+    publicPath: PUBLIC_PATH,
   },
   resolve: {
     modules: ['node_modules'],
@@ -59,7 +66,15 @@ module.exports = {
     }),
     new ManifestPlugin({
       fileName: 'manifest.json',
-      publicPath: '/super/client/dist/',
+      publicPath: PUBLIC_PATH,
     }),
   ],
+};
+
+module.exports = {
+  PUBLIC_PATH,
+  OUTPUT_PATH,
+  SRC_PATH,
+  resolvePath,
+  config,
 };

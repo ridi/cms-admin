@@ -12,6 +12,7 @@
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^3.3.7",
     "jquery": "^3.2.1",
+    "lodash": "^4.17.5",
     "prop-types": "^15.6.0",
     "react": "^15.6.2",
     "react-bootstrap": "^0.30.10",
@@ -41,8 +42,8 @@
   },
   "scripts": {
     "lint": "eslint --ext .js,.jsx js/** --fix",
-    "start": "webpack-dev-server --config webpack.config.dev.js",
-    "build": "webpack --config webpack.config.prod.js -p --define process.env.NODE_ENV=\"'production'\"",
+    "start": "webpack-dev-server --config configs/webpack.config.dev.js",
+    "build": "webpack --config configs/webpack.config.prod.js -p --define process.env.NODE_ENV=\"'production'\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
