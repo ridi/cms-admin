@@ -2,12 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const WriteFilePlugin = require('write-file-webpack-plugin');
 
-const defaultEntry = [
-  'webpack-dev-server/client?http://localhost:3000',
-  'webpack/hot/only-dev-server',
-];
+const defaultEntry = [];
 
 module.exports = {
   entry: {
@@ -19,8 +15,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].[hash].js',
-    publicPath: '/super/client/dist/',
+    filename: '[name].[chunkhash].js',
   },
   resolve: {
     modules: ['node_modules'],
@@ -66,18 +61,5 @@ module.exports = {
       fileName: 'manifest.json',
       publicPath: '/super/client/dist/',
     }),
-    new webpack.HotModuleReplacementPlugin(),
-    new WriteFilePlugin({
-      test: /manifest\.json$/,
-    }),
   ],
-  devServer: {
-    publicPath: '/super/client/dist/',
-    port: 3000,
-    proxy: {
-      '*': 'http://localhost:8012',
-    },
-    inline: true,
-    hot: true,
-  },
 };
