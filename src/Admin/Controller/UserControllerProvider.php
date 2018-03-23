@@ -17,13 +17,13 @@ class UserControllerProvider implements ControllerProviderInterface
         /** @var ControllerCollection $controllers */
         $controllers = $app['controllers_factory'];
 
-        $controllers->get('users', [$this, 'users']);
-        $controllers->get('users/{user_id}', [$this, 'user']);
-        $controllers->post('users/new', [$this, 'createUser']);
-        $controllers->post('users/{user_id}', [$this, 'updateUser']);
-        $controllers->delete('users/{user_id}', [$this, 'deleteUser']);
-        $controllers->post('users/{user_id}/permissions', [$this, 'updateUserPermissions']);
-        $controllers->get('users/{user_id}/logs/permissions', [$this, 'permissionLogs']);
+        $controllers->get('/', [$this, 'users']);
+        $controllers->get('/{user_id}', [$this, 'user']);
+        $controllers->post('/new', [$this, 'createUser']);
+        $controllers->post('/{user_id}', [$this, 'updateUser']);
+        $controllers->delete('/{user_id}', [$this, 'deleteUser']);
+        $controllers->post('/{user_id}/permissions', [$this, 'updateUserPermissions']);
+        $controllers->get('/{user_id}/logs/permissions', [$this, 'permissionLogs']);
 
         return $controllers;
     }

@@ -27,8 +27,8 @@ class WebpackManifestVersionStrategy implements VersionStrategyInterface
 
     public function applyVersion($path): string
     {
-        if ($path[0]==='/') {
-            $path = '/'.$path;
+        if ($path[0] === '/') {
+            $path = '/' . $path;
         }
 
         return $this->getVersion($path);
