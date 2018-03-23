@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "292e332d68f1acc1ef3ed11ad32d9b18",
+    "hash": "5b9cba96d3cd06aa2b16dfea600b4c05",
+    "content-hash": "af682c45f8d4cb66c5b8cdc1259b92d5",
     "packages": [
         {
             "name": "apache/thrift",
@@ -39,7 +40,7 @@
             ],
             "description": "Apache Thrift RPC system",
             "homepage": "http://thrift.apache.org/",
-            "time": "2016-04-04T18:25:03+00:00"
+            "time": "2016-04-04 18:25:03"
         },
         {
             "name": "doctrine/inflector",
@@ -106,7 +107,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2018-01-09T20:05:19+00:00"
+            "time": "2018-01-09 20:05:19"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -171,7 +172,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2017-06-22T18:50:49+00:00"
+            "time": "2017-06-22 18:50:49"
         },
         {
             "name": "guzzlehttp/promises",
@@ -222,7 +223,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2016-12-20T10:07:11+00:00"
+            "time": "2016-12-20 10:07:11"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -287,7 +288,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-03-20T17:10:46+00:00"
+            "time": "2017-03-20 17:10:46"
         },
         {
             "name": "illuminate/container",
@@ -331,7 +332,7 @@
             ],
             "description": "The Illuminate Container package.",
             "homepage": "https://laravel.com",
-            "time": "2017-08-14T18:00:01+00:00"
+            "time": "2017-08-14 18:00:01"
         },
         {
             "name": "illuminate/contracts",
@@ -375,7 +376,7 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
-            "time": "2017-11-22T19:01:14+00:00"
+            "time": "2017-11-22 19:01:14"
         },
         {
             "name": "illuminate/database",
@@ -434,7 +435,52 @@
                 "orm",
                 "sql"
             ],
-            "time": "2017-12-19T14:02:10+00:00"
+            "time": "2017-12-19 14:02:10"
+        },
+        {
+            "name": "illuminate/events",
+            "version": "v5.5.39",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/events.git",
+                "reference": "1b558bfa1013f25b35e593c83fce7990d20c4d97"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/events/zipball/1b558bfa1013f25b35e593c83fce7990d20c4d97",
+                "reference": "1b558bfa1013f25b35e593c83fce7990d20c4d97",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/container": "5.5.*",
+                "illuminate/contracts": "5.5.*",
+                "illuminate/support": "5.5.*",
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Events\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Illuminate Events package.",
+            "homepage": "https://laravel.com",
+            "time": "2017-12-14 13:29:55"
         },
         {
             "name": "illuminate/support",
@@ -491,7 +537,57 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2017-12-24T20:02:59+00:00"
+            "time": "2017-12-24 20:02:59"
+        },
+        {
+            "name": "jguyomard/silex-capsule-eloquent",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jguyomard/silex-capsule-eloquent.git",
+                "reference": "45b648ffe2e53d7b63505a68876461b556b4f907"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jguyomard/silex-capsule-eloquent/zipball/45b648ffe2e53d7b63505a68876461b556b4f907",
+                "reference": "45b648ffe2e53d7b63505a68876461b556b4f907",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^5.2",
+                "illuminate/events": "^5.2",
+                "php": ">=5.5.9",
+                "silex/silex": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JG\\Silex\\Provider\\": "src/Silex/Provider"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Julien Guyomard"
+                }
+            ],
+            "description": "Capsule/Eloquent Service Provider for Silex 2",
+            "keywords": [
+                "capsule",
+                "eloquent",
+                "laravel",
+                "query",
+                "sql"
+            ],
+            "time": "2016-10-21 07:34:11"
         },
         {
             "name": "moriony/silex-sentry-provider",
@@ -539,7 +635,7 @@
                 "sentry",
                 "silex"
             ],
-            "time": "2016-08-20T08:47:40+00:00"
+            "time": "2016-08-20 08:47:40"
         },
         {
             "name": "nesbot/carbon",
@@ -592,7 +688,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2017-01-16T07:55:07+00:00"
+            "time": "2017-01-16 07:55:07"
         },
         {
             "name": "paragonie/random_compat",
@@ -640,7 +736,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-09-27T21:40:39+00:00"
+            "time": "2017-09-27 21:40:39"
         },
         {
             "name": "pimple/pimple",
@@ -690,7 +786,7 @@
                 "container",
                 "dependency injection"
             ],
-            "time": "2018-01-21T07:42:36+00:00"
+            "time": "2018-01-21 07:42:36"
         },
         {
             "name": "psr/container",
@@ -739,7 +835,7 @@
                 "container-interop",
                 "psr"
             ],
-            "time": "2017-02-14T16:28:37+00:00"
+            "time": "2017-02-14 16:28:37"
         },
         {
             "name": "psr/http-message",
@@ -789,7 +885,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06T14:39:51+00:00"
+            "time": "2016-08-06 14:39:51"
         },
         {
             "name": "psr/log",
@@ -836,7 +932,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10T12:19:37+00:00"
+            "time": "2016-10-10 12:19:37"
         },
         {
             "name": "psr/simple-cache",
@@ -884,20 +980,20 @@
                 "psr-16",
                 "simple-cache"
             ],
-            "time": "2017-01-02T13:31:39+00:00"
+            "time": "2017-01-02 13:31:39"
         },
         {
             "name": "ridibooks/cms-sdk",
-            "version": "v2.0.2",
+            "version": "v2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ridi/cms-sdk.git",
-                "reference": "1443ef94f9c88a29e331ee0e1beb8b00abef290a"
+                "reference": "3115d238473578b446562ab61083552739999940"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ridi/cms-sdk/zipball/1443ef94f9c88a29e331ee0e1beb8b00abef290a",
-                "reference": "1443ef94f9c88a29e331ee0e1beb8b00abef290a",
+                "url": "https://api.github.com/repos/ridi/cms-sdk/zipball/3115d238473578b446562ab61083552739999940",
+                "reference": "3115d238473578b446562ab61083552739999940",
                 "shasum": ""
             },
             "require": {
@@ -905,6 +1001,9 @@
                 "guzzlehttp/guzzle": "^6.3",
                 "silex/silex": "^2.0",
                 "twig/twig": "^2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
             },
             "type": "library",
             "autoload": {
@@ -917,7 +1016,7 @@
                 "MIT"
             ],
             "description": "Ridibooks CMS SDK",
-            "time": "2018-01-29T11:08:31+00:00"
+            "time": "2018-03-12 09:33:51"
         },
         {
             "name": "sentry/sentry",
@@ -981,7 +1080,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2017-12-21T16:05:46+00:00"
+            "time": "2017-12-21 16:05:46"
         },
         {
             "name": "silex/silex",
@@ -1070,7 +1169,7 @@
             "keywords": [
                 "microframework"
             ],
-            "time": "2018-01-12T07:16:03+00:00"
+            "time": "2018-01-12 07:16:03"
         },
         {
             "name": "symfony/asset",
@@ -1126,7 +1225,7 @@
             ],
             "description": "Symfony Asset Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-03T07:37:34+00:00"
+            "time": "2018-01-03 07:37:34"
         },
         {
             "name": "symfony/debug",
@@ -1182,7 +1281,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-03T17:15:19+00:00"
+            "time": "2018-01-03 17:15:19"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -1245,7 +1344,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-03T07:37:34+00:00"
+            "time": "2018-01-03 07:37:34"
         },
         {
             "name": "symfony/http-foundation",
@@ -1299,7 +1398,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-03T17:14:19+00:00"
+            "time": "2018-01-03 17:14:19"
         },
         {
             "name": "symfony/http-kernel",
@@ -1387,7 +1486,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-05T08:33:00+00:00"
+            "time": "2018-01-05 08:33:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1446,7 +1545,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-10-11T12:05:26+00:00"
+            "time": "2017-10-11 12:05:26"
         },
         {
             "name": "symfony/polyfill-php70",
@@ -1505,7 +1604,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-10-11T12:05:26+00:00"
+            "time": "2017-10-11 12:05:26"
         },
         {
             "name": "symfony/routing",
@@ -1583,7 +1682,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2018-01-04T15:09:34+00:00"
+            "time": "2018-01-04 15:09:34"
         },
         {
             "name": "symfony/translation",
@@ -1651,7 +1750,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-03T07:37:34+00:00"
+            "time": "2018-01-03 07:37:34"
         },
         {
             "name": "twig/twig",
@@ -1717,7 +1816,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-09-27T18:10:31+00:00"
+            "time": "2017-09-27 18:10:31"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -1767,7 +1866,7 @@
                 "env",
                 "environment"
             ],
-            "time": "2016-09-01T10:05:43+00:00"
+            "time": "2016-09-01 10:05:43"
         }
     ],
     "packages-dev": [
@@ -1835,7 +1934,7 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2017-06-05T13:30:19+00:00"
+            "time": "2017-06-05 13:30:19"
         },
         {
             "name": "symfony/config",
@@ -1897,7 +1996,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-03T07:37:34+00:00"
+            "time": "2018-01-03 07:37:34"
         },
         {
             "name": "symfony/console",
@@ -1966,7 +2065,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-03T07:37:34+00:00"
+            "time": "2018-01-03 07:37:34"
         },
         {
             "name": "symfony/filesystem",
@@ -2015,7 +2114,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-03T07:38:00+00:00"
+            "time": "2018-01-03 07:38:00"
         },
         {
             "name": "symfony/yaml",
@@ -2073,7 +2172,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-03T07:37:34+00:00"
+            "time": "2018-01-03 07:37:34"
         }
     ],
     "aliases": [],

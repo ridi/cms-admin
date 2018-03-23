@@ -12,7 +12,7 @@ module.exports = {
     logs: './js/logs',
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '../web/static/dist'),
     filename: '[name].[chunkhash].js',
   },
   resolve: {
@@ -58,7 +58,7 @@ module.exports = {
     }),
     new ManifestPlugin({
       fileName: 'manifest.json',
-      publicPath: '/super/client/dist/'
+      publicPath: '/super/static/dist/'
     }),
   ],
 };
