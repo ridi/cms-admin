@@ -1,0 +1,7 @@
+{
+  "ASSET_MANIFEST_PATH": "/web/static/dist/manifest.json",
+  "ASSET_PUBLIC_PATH": "/super/static/dist",
+  "CMS_STATIC_URL": "/static",
+  "CMS_BOWER_PATH": "/static/bower_components"
+}
+

@@ -18,9 +18,12 @@ $app->register(new SentryServiceProvider(), [
 
 // use twig asset package
 $app->extend('twig', function (\Twig_Environment $twig) use ($app) {
-    $version_strategy = new WebpackManifestVersionStrategy($app['asset_manifest_path']);
-    $asset_package = new PathPackage($app['asset_public_path'], $version_strategy);
-    $twig->addFunction(new \Twig_Function('asset', function ($asset_name) use ($asset_package) {
+    $twig->addFunction(new \Twig_Function('asset', function ($asset_name) use ($app) {
+        $project_root = __DIR__ . '/..';
+        $asset_manifest_path = $project_root . $app['asset_manifest_path'];
+        $version_strategy = new WebpackManifestVersionStrategy($asset_manifest_path);
+
+        $asset_package = new PathPackage($app['asset_public_path'], $version_strategy);
         return $asset_package->getUrl($asset_name);
     }));
 

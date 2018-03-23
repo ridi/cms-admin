@@ -2,6 +2,8 @@
 
 use Moriony\Silex\Provider\SentryServiceProvider;
 
+$const = json_decode(file_get_contents(__DIR__ . '/const.json'), true);
+
 $config = [
     'debug' => $_ENV['DEBUG'],
     'capsule.connections' => [
@@ -23,11 +25,11 @@ $config = [
     SentryServiceProvider::SENTRY_OPTIONS => [
         SentryServiceProvider::OPT_DSN => $_ENV['SENTRY_KEY'] ?? ''
     ],
-    'asset_manifest_path' => __DIR__ . '/../web/static/dist/manifest.json',
-    'asset_public_path' => '/super/static/dist',
+    'asset_manifest_path' => $const['ASSET_MANIFEST_PATH'],
+    'asset_public_path' => $const['ASSET_PUBLIC_PATH'],
     'twig.globals' => [
-        'STATIC_URL' => '/static',
-        'BOWER_PATH' => '/static/bower_components',
+        'STATIC_URL' => $const['CMS_STATIC_URL'],
+        'BOWER_PATH' => $const['CMS_BOWER_PATH'],
     ],
     'twig.path' => [
         __DIR__ . '/../views'
