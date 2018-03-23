@@ -7,7 +7,8 @@ Ridibooks CMS 관리자 서비스입니다.
 
 ## Requirements
 - [Ridibooks CMS](https://github.com/ridi/cms)  
-사용자 인증을 하려면 CMS 인증 서버와 RPC연결을 해야 합니다. 전반적인 연동 방법을 보려면 [cms-bootstrap-php](https://github.com/ridibooks/cms-bootstrap-php) 프로젝트를 참고합니다.
+사용자 인증을 하려면 CMS 인증 서버와 RPC연결을 해야 합니다.  
+전반적인 연동 방법을 보려면 [cms-bootstrap-php](https://github.com/ridibooks/cms-bootstrap-php) 프로젝트를 참고합니다.
 
 ## Getting started
 1. `.env`를 작성합니다:
@@ -25,10 +26,17 @@ MYSQL_HOST=
 MYSQL_USER=
 MYSQL_PASSWORD=
 MYSQL_DATABASE=
+
+# Docker 실행 시 XDEBUG 설정이 필요한 경우
+XDEBUG_ENABLE=${0 or 1}
+XDEBUG_HOST=${remove host} # ex) docker.for.mac.localhost 
 ```
 
-2. Apache에서 CMS 인증 서버 프로젝트를 Document root로 설정합니다.  
-그리고 다음 Alias 설정을 추가합니다.
-```
-Alias /super /path/to/cms-admin/
+2. Docker로 이미지를 실행합니다.
+```bash
+# 시작 (docker run)
+make docker-start
+
+# 종료 (docker stop && docker rm)
+make docker-end
 ```
