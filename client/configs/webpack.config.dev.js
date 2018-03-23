@@ -85,5 +85,6 @@ module.exports = {
     disableHostCheck: true,
     inline: true,
     hot: true,
+    stats: 'minimal',
   },
 };
