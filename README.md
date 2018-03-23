@@ -35,8 +35,8 @@ XDEBUG_HOST=${remove host} # ex) docker.for.mac.localhost
 2. Docker로 이미지를 실행합니다.
 ```bash
 # 시작 (docker run)
-make docker-start
+make docker-up
 
 # 종료 (docker stop && docker rm)
-make docker-end
+make docker-down
 ```

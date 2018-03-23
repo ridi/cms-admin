@@ -12,7 +12,7 @@ clean:
 	rm -rf vendor
 	rm -rf web/static
 
-docker-start:
+docker-up:
 	docker run -itd \
 		--name cms-admin \
 		--env-file .env \
@@ -20,5 +20,5 @@ docker-start:
 		-v $(shell pwd):/var/www/html \
 		ridibooks/cms-admin:latest
 
-docker-end:
+docker-down:
 	docker stop cms-admin && docker rm cms-admin
