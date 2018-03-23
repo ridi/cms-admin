@@ -8,7 +8,7 @@ Ridibooks CMS 관리자 서비스입니다.
 ## Requirements
 - [Ridibooks CMS](https://github.com/ridi/cms)  
 사용자 인증을 하려면 CMS 인증 서버와 RPC연결을 해야 합니다.  
-전반적인 연동 방법을 보려면 [cms-bootstrap-php](https://github.com/ridibooks/cms-bootstrap-php) 프로젝트를 참고합니다.
+전반적인 연동 방법을 보려면 [cms-bootstrap-php](https://github.com/ridi/cms-bootstrap-php) 프로젝트를 참고합니다.
 
 ## Getting started
 1. `.env`를 작성합니다:
