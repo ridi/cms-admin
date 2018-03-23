@@ -1,12 +1,16 @@
 const _ = require('lodash');
-const path = require('path');
 const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
 const { PUBLIC_PATH, SRC_PATH, MANIFEST_FILENAME, config } = require('./common');
 
+const DEV_SERVER_HOST = 'localhost';
+const DEV_SERVER_PORT = '3000';
+const DEV_SERVER_URL = `http://${DEV_SERVER_HOST}:${DEV_SERVER_PORT}`;
+const PUBLIC_URL = `${DEV_SERVER_URL}/${_.trim(PUBLIC_PATH, '/')}`;
+
 const defaultEntry = [
-  'webpack-dev-server/client?http://localhost:3000',
+  `webpack-dev-server/client?${DEV_SERVER_URL}`,
   'webpack/hot/only-dev-server',
 ];
 
@@ -14,7 +18,7 @@ const createManifestPlugin = (options) => {
   const filename = 'style.css';
   const manifestPlugin = new ManifestPlugin({
     seed: {
-      'commons.css': path.resolve(PUBLIC_PATH, filename),
+      'commons.css': `${PUBLIC_URL}/${filename}`,
     },
     ...options,
   });
@@ -64,7 +68,7 @@ module.exports = {
     ...config.plugins,
     createManifestPlugin({
       fileName: MANIFEST_FILENAME,
-      publicPath: PUBLIC_PATH,
+      publicPath: `${PUBLIC_URL}/`,
     }),
     new webpack.HotModuleReplacementPlugin(),
     new WriteFilePlugin({
@@ -73,7 +77,7 @@ module.exports = {
   ],
   devServer: {
     publicPath: PUBLIC_PATH,
-    port: 3000,
+    port: DEV_SERVER_PORT,
     proxy: {
       '*': 'http://localhost',
     },

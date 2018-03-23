@@ -9,7 +9,7 @@ const {
 
 const resolveApp = (...relativePaths) => path.resolve(__dirname, '..', ...relativePaths);
 
-const PUBLIC_PATH = ASSET_PUBLIC_PATH;
+const PUBLIC_PATH = `${_.trimEnd(ASSET_PUBLIC_PATH, '/')}/`;
 const OUTPUT_PATH = resolveApp('..', _.trim(WEBPACK_OUTPUT_DIR, '/'));
 const SRC_PATH = resolveApp('js');
 const MANIFEST_FILENAME = ASSET_MANIFEST_FILENAME;
