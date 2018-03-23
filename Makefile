@@ -1,4 +1,4 @@
-.PHONY: all server client
+.PHONY: all server client clean docker-run
 
 all: server client
 
@@ -6,4 +6,19 @@ server:
 	composer install --no-dev --optimize-autoloader
 
 client:
-	@cd client && npm install && npm run build
+	make -C client
+
+clean:
+	rm -rf vendor
+	rm -rf web/static
+
+docker-start:
+	docker run -itd \
+		--name cms-admin \
+		--env-file .env \
+		-p 80:80 \
+		-v $(shell pwd):/var/www/html \
+		ridibooks/cms-admin:latest
+
+docker-end:
+	docker stop cms-admin && docker rm cms-admin
