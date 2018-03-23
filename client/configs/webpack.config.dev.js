@@ -7,7 +7,7 @@ const { PUBLIC_PATH, SRC_PATH, MANIFEST_FILENAME, config } = require('./common')
 const DEV_SERVER_HOST = 'localhost';
 const DEV_SERVER_PORT = '3000';
 const DEV_SERVER_URL = `http://${DEV_SERVER_HOST}:${DEV_SERVER_PORT}`;
-const PUBLIC_URL = `${DEV_SERVER_URL}/${_.trim(PUBLIC_PATH, '/')}`;
+const PUBLIC_URL = `${DEV_SERVER_URL}/${_.trim(PUBLIC_PATH, '/')}/`;
 
 const defaultEntry = [
   `webpack-dev-server/client?${DEV_SERVER_URL}`,
@@ -18,7 +18,7 @@ const createManifestPlugin = (options) => {
   const filename = 'style.css';
   const manifestPlugin = new ManifestPlugin({
     seed: {
-      'commons.css': `${PUBLIC_URL}/${filename}`,
+      'commons.css': `${PUBLIC_URL}${filename}`,
     },
     ...options,
   });
@@ -46,6 +46,7 @@ module.exports = {
   output: {
     ...config.output,
     filename: '[name].js',
+    publicPath: PUBLIC_URL,
   },
   module: {
     rules: [
@@ -68,7 +69,7 @@ module.exports = {
     ...config.plugins,
     createManifestPlugin({
       fileName: MANIFEST_FILENAME,
-      publicPath: `${PUBLIC_URL}/`,
+      publicPath: PUBLIC_URL,
     }),
     new webpack.HotModuleReplacementPlugin(),
     new WriteFilePlugin({
@@ -76,10 +77,10 @@ module.exports = {
     }),
   ],
   devServer: {
-    publicPath: PUBLIC_PATH,
+    host: DEV_SERVER_HOST,
     port: DEV_SERVER_PORT,
-    proxy: {
-      '*': 'http://localhost',
+    headers: {
+      'Access-Control-Allow-Origin': '*',
     },
     disableHostCheck: true,
     inline: true,
