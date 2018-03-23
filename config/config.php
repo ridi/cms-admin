@@ -25,7 +25,7 @@ $config = [
     SentryServiceProvider::SENTRY_OPTIONS => [
         SentryServiceProvider::OPT_DSN => $_ENV['SENTRY_KEY'] ?? ''
     ],
-    'asset_manifest_path' => $const['ASSET_MANIFEST_PATH'],
+    'asset_manifest_path' => $const['WEBPACK_OUTPUT_DIR'] . '/' . $const['ASSET_MANIFEST_FILENAME'],
     'asset_public_path' => $const['ASSET_PUBLIC_PATH'],
     'twig.globals' => [
         'STATIC_URL' => $const['CMS_STATIC_URL'],
