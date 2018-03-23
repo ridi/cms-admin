@@ -1,12 +1,18 @@
+const _ = require('lodash');
 const path = require('path');
 const webpack = require('webpack');
+const {
+  WEBPACK_OUTPUT_DIR,
+  ASSET_PUBLIC_PATH,
+  ASSET_MANIFEST_FILENAME,
+} = require('../../config/const.json');
 
-const resolvePath = (...relativePaths) => path.resolve(__dirname, '..', ...relativePaths);
+const resolveApp = (...relativePaths) => path.resolve(__dirname, '..', ...relativePaths);
 
-const PUBLIC_PATH = '/super/client/dist/';
-const OUTPUT_PATH = resolvePath('dist');
-const SRC_PATH = resolvePath('js');
-const MANIFEST_FILENAME = 'manifest.json';
+const PUBLIC_PATH = ASSET_PUBLIC_PATH;
+const OUTPUT_PATH = resolveApp('..', _.trim(WEBPACK_OUTPUT_DIR, '/'));
+const SRC_PATH = resolveApp('js');
+const MANIFEST_FILENAME = ASSET_MANIFEST_FILENAME;
 
 const defaultEntry = [];
 
@@ -45,6 +51,5 @@ module.exports = {
   OUTPUT_PATH,
   SRC_PATH,
   MANIFEST_FILENAME,
-  resolvePath,
   config,
 };

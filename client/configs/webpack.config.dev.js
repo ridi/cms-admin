@@ -68,15 +68,16 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new WriteFilePlugin({
-      test: /manifest\.json$/,
+      test: new RegExp(`${_.escapeRegExp(MANIFEST_FILENAME)}$`),
     }),
   ],
   devServer: {
     publicPath: PUBLIC_PATH,
     port: 3000,
     proxy: {
-      '*': 'http://localhost:8012',
+      '*': 'http://localhost',
     },
+    disableHostCheck: true,
     inline: true,
     hot: true,
   },
