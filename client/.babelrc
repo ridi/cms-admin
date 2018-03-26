@@ -1,4 +1,5 @@
 {
-  "presets": ["env", "react"],
-  "plugins": ["transform-async-to-generator"]
+  "presets": [
+    "babel-preset-react-app"
+  ]
 }
