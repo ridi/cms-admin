@@ -12,10 +12,10 @@ module.exports = {
         include: SRC_PATH,
       },
       {
-        test: /\.css$/,
+        test: /\.(css|less)$/,
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: 'css-loader',
+          use: ['css-loader', 'less-loader'],
         }),
       },
       {

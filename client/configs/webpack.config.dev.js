@@ -71,8 +71,8 @@ module.exports = {
         include: SRC_PATH,
       },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        test: /\.(css|less)$/,
+        use: ['style-loader', 'css-loader', 'less-loader'],
       },
       {
         test: /\.(woff|woff2|eot|ttf|svg)$/,
