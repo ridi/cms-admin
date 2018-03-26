@@ -39,6 +39,7 @@ const createManifestPlugin = (options) => {
 
 module.exports = {
   ...config,
+  devtool: 'cheap-module-source-map',
   entry: _.mapValues(config.entry, value => _.flattenDeep([
     defaultEntry,
     value,
