@@ -14,24 +14,38 @@ const defaultEntry = [
   'webpack/hot/only-dev-server',
 ];
 
+// ExtractTextPlugin cannot be used with webpack-dev-server
+// and the common CSS file is not generated also not written in manifest file.
+// So we need to tell webpack to generate the common CSS file and add it into manifest file
+// so that make it possible to link the common CSS file from html.
 const createManifestPlugin = (options) => {
-  const filename = 'style.css';
+  const cssFilename = 'style.css';
+
+  // Add the common CSS file path to manifest file
   const manifestPlugin = new ManifestPlugin({
     seed: {
-      'commons.css': `${PUBLIC_URL}${filename}`,
+      'commons.css': `${PUBLIC_URL}${cssFilename}`,
     },
     ...options,
   });
 
   return {
     ...manifestPlugin,
+
+    // Override ManifestPlugin's behavior
     apply: (compiler) => {
+
+      // Add empty common CSS file to output.
+      // It's just OK to serve empty file
+      // because the actual CSS is injected into <style> tag by style-loader
       compiler.plugin('compilation', (compilation) => {
-        compilation.assets[filename] = {
+        compilation.assets[cssFilename] = {
           source: () => '',
           size: () => 0,
         };
       });
+
+      // Apply original ManifestPlugin
       manifestPlugin.apply(compiler);
     },
   };
