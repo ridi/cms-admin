@@ -1,12 +1,19 @@
-.PHONY: all server client clean docker-run
+.PHONY: all dev server client clean docker-run
 
 all: server client
+
+dev:
+	composer install
+	make -C client
 
 server:
 	composer install --no-dev --optimize-autoloader
 
 client:
 	make -C client
+
+init-db:
+	bin/setup.sh
 
 clean:
 	rm -rf vendor
