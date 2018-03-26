@@ -75,3 +75,7 @@ ReactDOM.render(
   </div>,
   document.getElementById('content'),
 );
+
+if (module.hot) {
+  module.hot.accept();
+}

@@ -12,3 +12,7 @@ ReactDOM.render(
   />,
   document.getElementById('content'),
 );
+
+if (module.hot) {
+  module.hot.accept();
+}
