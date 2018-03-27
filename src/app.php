@@ -6,6 +6,7 @@ use Moriony\Silex\Provider\SentryServiceProvider;
 use Ridibooks\Cms\Admin\WebpackManifestVersionStrategy;
 use Ridibooks\Cms\CmsApplication;
 use Symfony\Component\Asset\PathPackage;
+use Symfony\Component\HttpFoundation\Request;
 
 $app = new CmsApplication($config);
 $app->register(new CapsuleServiceProvider(), [
@@ -28,6 +29,14 @@ $app->extend('twig', function (\Twig_Environment $twig) use ($app) {
     }));
 
     return $twig;
+});
+
+// decode json content to array
+$app->before(function (Request $request) {
+    if ($request->getContentType() === 'json') {
+        $data = json_decode($request->getContent(), true);
+        $request->request->replace(is_array($data) ? $data : []);
+    }
 });
 
 return $app;

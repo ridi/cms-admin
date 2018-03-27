@@ -1,6 +1,7 @@
 import React from 'react';
 import Sortable from 'react-sortablejs';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import Submenus from './Submenus';
 import MenuUsers from './MenuUsers';
 
@@ -21,7 +22,8 @@ const MenuRow = ({
       <input type="hidden" name="id" defaultValue={id} />
     </td>
     <td className="js_sortable_handle">{id}</td>
-    <td><input type="text" className="form-control" name="menu_title" defaultValue={menuTitle} /></td>
+    <td><input type="text" className="form-control" name="menu_title" defaultValue={menuTitle} />
+    </td>
     <td><input type="text" className="form-control" name="menu_url" defaultValue={menuUrl} /></td>
     <td><input type="text" className="form-control" name="menu_deep" defaultValue={menuDeep} /></td>
     <td>
@@ -120,10 +122,10 @@ export default class MenuList extends React.Component {
   }
 
   onUpdate() {
-    const args = $('#modifyForm').find('input:checked').map((i, e) => {
+    const data = $.map($('#modifyForm').find('input:checked'), (e) => {
       const $tr = $(e).parents('tr');
-      const menuId = $tr.find('input[name=id]').val();
-      const data = {
+      return {
+        id: $tr.find('input[name=id]').val(),
         menu_title: $tr.find('input[name=menu_title]').val(),
         menu_url: $tr.find('input[name=menu_url]').val(),
         menu_deep: $tr.find('input[name=menu_deep]').val(),
@@ -132,18 +134,11 @@ export default class MenuList extends React.Component {
         is_use: $tr.find('select[name=is_use]').val() === 'true' ? '1' : '0',
         is_show: $tr.find('select[name=is_show]').val() === 'true' ? '1' : '0',
       };
-
-      return $.ajax({
-        url: `/super/menus/${menuId}`,
-        type: 'PUT',
-        data,
-      });
     });
 
-    $.when(...args)
-      .done(() => {
-        window.location.reload();
-      });
+    axios.put('/super/menus/', data).then(() => {
+      window.location.reload();
+    });
   }
 
   onSortEnd(evt) {

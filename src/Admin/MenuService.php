@@ -76,6 +76,15 @@ class MenuService
         });
     }
 
+    public static function updateMenus(array $menus)
+    {
+        DB::connection()->transaction(function () use ($menus) {
+            foreach ($menus as $menu) {
+                self::updateMenu($menu);
+            }
+        });
+    }
+
     public static function getMenuAjaxList($menu_id)
     {
         return AdminMenu::find($menu_id)->ajaxMenus->toArray();
