@@ -24,7 +24,9 @@ const MenuRow = ({
     <td><input type="text" className="form-control" name="menu_title" defaultValue={menuTitle} /></td>
     <td><input type="text" className="form-control" name="menu_url" defaultValue={menuUrl} /></td>
     <td><input type="text" className="form-control" name="menu_deep" defaultValue={menuDeep} /></td>
-    <td><input type="text" className="form-control" name="menu_order" defaultValue={menuOrder} /></td>
+    <td>
+      <input type="text" className="form-control" name="menu_order" defaultValue={menuOrder} disabled />
+    </td>
     <td>
       <select className="form-control" name="is_newtab" defaultValue={isNewtab}>
         <option value>Y</option>
