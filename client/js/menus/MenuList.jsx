@@ -85,9 +85,11 @@ function checkChangedRow($tr) {
 export default class MenuList extends React.Component {
   constructor() {
     super();
+
     this.showAjaxMenus = this.showAjaxMenus.bind(this);
     this.showMenuUsers = this.showMenuUsers.bind(this);
     this.hideMenuUsers = this.hideMenuUsers.bind(this);
+    this.onSortEnd = this.onSortEnd.bind(this);
 
     this.state = {
       menuUsers: {
@@ -147,14 +149,15 @@ export default class MenuList extends React.Component {
       return;
     }
 
+    const { menus } = this.props;
     const $tbody = $(evt.target);
+    const startIndexToUpdate = Math.min(evt.oldIndex, evt.newIndex);
 
-    const targetIndex = (evt.newIndex > evt.oldIndex) ? evt.newIndex - 1 : evt.newIndex + 1;
-    const newOrder = $tbody.find(`tr:nth-child(${targetIndex + 1}) input[name="menu_order"]`).attr('value');
-
-    const changedRow = $tbody.find(`tr:nth-child(${evt.newIndex + 1})`);
-    changedRow.find('input[name="menu_order"]').val(newOrder);
-    checkChangedRow(changedRow);
+    for (let index = startIndexToUpdate; index < menus.length; index++) {
+      const rowToUpdate = $tbody.find(`tr:nth-child(${index + 1})`);
+      rowToUpdate.find('input[name="menu_order"]').val(index);
+      checkChangedRow(rowToUpdate);
+    }
   }
 
   showAjaxMenus(menuId, menuTitle) {
