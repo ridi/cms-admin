@@ -1,9 +1,9 @@
 import $ from 'jquery';
 import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import 'select2/dist/js/select2.full';
-import 'select2/dist/css/select2.css';
+import 'select2/dist/css/select2.min.css';
 
 $(() => {
   const $menuSelect = $('.menu_select');

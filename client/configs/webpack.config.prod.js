@@ -4,7 +4,6 @@ const { PUBLIC_PATH, SRC_PATH, MANIFEST_FILENAME, config } = require('./common')
 
 module.exports = {
   ...config,
-  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -13,19 +12,10 @@ module.exports = {
         include: SRC_PATH,
       },
       {
-        test: /\.(css|less)$/,
+        test: /\.css$/,
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: { sourceMap: true },
-            },
-            {
-              loader: 'less-loader',
-              options: { sourceMap: true },
-            },
-          ],
+          use: 'css-loader',
         }),
       },
       {
