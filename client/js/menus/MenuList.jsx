@@ -146,13 +146,18 @@ export default class MenuList extends React.Component {
       return;
     }
 
+    const { menus } = this.props;
     const $tbody = $(evt.target);
-    const startIndexToUpdate = Math.min(evt.newIndex, evt.oldIndex);
-    const endIndexToUpdate = Math.max(evt.newIndex, evt.oldIndex) + 1;
 
-    for (let index = startIndexToUpdate; index < endIndexToUpdate; index++) {
+    for (let index = 0; index < menus.length; index++) {
       const rowToUpdate = $tbody.find(`tr:nth-child(${index + 1})`);
-      rowToUpdate.find('input[name="menu_order"]').val(index);
+      const orderInput = rowToUpdate.find('input[name="menu_order"]');
+
+      if (parseInt(orderInput.val(), 10) === index) {
+        continue;
+      }
+
+      orderInput.val(index);
       checkChangedRow(rowToUpdate);
     }
   }
