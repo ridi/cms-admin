@@ -93,11 +93,11 @@ class UserTable extends React.Component {
     }
 
     return users.map(user => (
-      <tr key={user.id} className={user.is_use !== '1' ? 'danger' : undefined}>
+      <tr key={user.id} className={user.is_use !== 1 ? 'danger' : undefined}>
         <td>{user.id}</td>
         <td><a href={`/super/users/${user.id}`}>{user.name}</a></td>
         <td>{user.team}</td>
-        <td>{user.is_use === '1' ? 'Y' : 'N'}</td>
+        <td>{user.is_use === 1 ? 'Y' : 'N'}</td>
       </tr>
     ));
   }
