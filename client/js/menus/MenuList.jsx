@@ -153,7 +153,7 @@ export default class MenuList extends React.Component {
 
     const $tbody = $(evt.target);
     const startIndexToUpdate = Math.min(evt.newIndex, evt.oldIndex);
-    const endIndexToUpdate = evt.newIndex > evt.oldIndex ? evt.newIndex + 1 : evt.oldIndex;
+    const endIndexToUpdate = Math.max(evt.newIndex, evt.oldIndex) + 1;
 
     for (let index = startIndexToUpdate; index < endIndexToUpdate; index++) {
       const rowToUpdate = $tbody.find(`tr:nth-child(${index + 1})`);
