@@ -118,7 +118,7 @@ export default class MenuList extends React.Component {
     });
   }
 
-  onUpdate() {
+  async onUpdate() {
     const data = $.map($('#modifyForm').find('input:checked'), (e) => {
       const $tr = $(e).parents('tr');
       return {
@@ -133,9 +133,8 @@ export default class MenuList extends React.Component {
       };
     });
 
-    axios.put('/super/menus/', data).then(() => {
-      window.location.reload();
-    });
+    await axios.put('/super/menus/', data);
+    window.location.reload();
   }
 
   onSortEnd(evt) {
