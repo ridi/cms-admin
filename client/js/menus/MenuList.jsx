@@ -1,6 +1,7 @@
 import React from 'react';
 import Sortable from 'react-sortablejs';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import Submenus from './Submenus';
 import MenuUsers from './MenuUsers';
 
@@ -24,7 +25,7 @@ const MenuRow = ({
     <td><input type="text" className="form-control" name="menu_title" defaultValue={menuTitle} /></td>
     <td><input type="text" className="form-control" name="menu_url" defaultValue={menuUrl} /></td>
     <td><input type="text" className="form-control" name="menu_deep" defaultValue={menuDeep} /></td>
-    <td><input type="text" className="form-control" name="menu_order" defaultValue={menuOrder} /></td>
+    <td><input type="text" className="form-control" name="menu_order" defaultValue={menuOrder} disabled /></td>
     <td>
       <select className="form-control" name="is_newtab" defaultValue={isNewtab}>
         <option value>Y</option>
@@ -85,9 +86,11 @@ function checkChangedRow($tr) {
 export default class MenuList extends React.Component {
   constructor() {
     super();
+
     this.showAjaxMenus = this.showAjaxMenus.bind(this);
     this.showMenuUsers = this.showMenuUsers.bind(this);
     this.hideMenuUsers = this.hideMenuUsers.bind(this);
+    this.onSortEnd = this.onSortEnd.bind(this);
 
     this.state = {
       menuUsers: {
@@ -115,11 +118,11 @@ export default class MenuList extends React.Component {
     });
   }
 
-  onUpdate() {
-    const args = $('#modifyForm').find('input:checked').map((i, e) => {
+  async onUpdate() {
+    const data = $.map($('#modifyForm').find('input:checked'), (e) => {
       const $tr = $(e).parents('tr');
-      const menuId = $tr.find('input[name=id]').val();
-      const data = {
+      return {
+        id: $tr.find('input[name=id]').val(),
         menu_title: $tr.find('input[name=menu_title]').val(),
         menu_url: $tr.find('input[name=menu_url]').val(),
         menu_deep: $tr.find('input[name=menu_deep]').val(),
@@ -128,18 +131,10 @@ export default class MenuList extends React.Component {
         is_use: $tr.find('select[name=is_use]').val() === 'true' ? '1' : '0',
         is_show: $tr.find('select[name=is_show]').val() === 'true' ? '1' : '0',
       };
-
-      return $.ajax({
-        url: `/super/menus/${menuId}`,
-        type: 'PUT',
-        data,
-      });
     });
 
-    $.when(...args)
-      .done(() => {
-        window.location.reload();
-      });
+    await axios.put('/super/menus/', data);
+    window.location.reload();
   }
 
   onSortEnd(evt) {
@@ -147,14 +142,20 @@ export default class MenuList extends React.Component {
       return;
     }
 
+    const { menus } = this.props;
     const $tbody = $(evt.target);
 
-    const targetIndex = (evt.newIndex > evt.oldIndex) ? evt.newIndex - 1 : evt.newIndex + 1;
-    const newOrder = $tbody.find(`tr:nth-child(${targetIndex + 1}) input[name="menu_order"]`).attr('value');
+    for (let index = 0; index < menus.length; index++) {
+      const rowToUpdate = $tbody.find(`tr:nth-child(${index + 1})`);
+      const orderInput = rowToUpdate.find('input[name="menu_order"]');
 
-    const changedRow = $tbody.find(`tr:nth-child(${evt.newIndex + 1})`);
-    changedRow.find('input[name="menu_order"]').val(newOrder);
-    checkChangedRow(changedRow);
+      if (parseInt(orderInput.val(), 10) === index) {
+        continue;
+      }
+
+      orderInput.val(index);
+      checkChangedRow(rowToUpdate);
+    }
   }
 
   showAjaxMenus(menuId, menuTitle) {

@@ -20,7 +20,7 @@ class MenuControllerProvider implements ControllerProviderInterface
 
         $controllers->get('/', [$this, 'menus']);
         $controllers->post('/', [$this, 'createMenu']);
-        $controllers->put('/{menu_id}', [$this, 'updateMenu']);
+        $controllers->put('/', [$this, 'updateMenus']);
 
         $controllers->get('/{menu_id}/submenus', [$this, 'submenus']);
         $controllers->post('/{menu_id}/submenus', [$this, 'createSubmenu']);
@@ -81,21 +81,12 @@ class MenuControllerProvider implements ControllerProviderInterface
         return $app->redirect('/super/menus');
     }
 
-    public function updateMenu(CmsApplication $app, Request $request, $menu_id)
+    public function updateMenus(CmsApplication $app, Request $request)
     {
-        $menu = [
-            'id' => $menu_id,
-            'menu_title' => $request->get('menu_title'),
-            'menu_url' => $request->get('menu_url'),
-            'menu_order' => $request->get('menu_order'),
-            'menu_deep' => $request->get('menu_deep', 0),
-            'is_newtab' => $request->get('is_newtab', 0),
-            'is_use' => $request->get('is_use', 0),
-            'is_show' => $request->get('is_show', 0),
-        ];
+        $menus = $request->request->all();
 
         try {
-            AdminMenuService::updateMenu($menu);
+            AdminMenuService::updateMenus($menus);
         } catch (\Exception $e) {
             if (!is_a($e, 'HttpException')) {
                 $e = new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, $e->getMessage());
