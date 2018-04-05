@@ -18,16 +18,16 @@ class MenuControllerProvider implements ControllerProviderInterface
         /** @var ControllerCollection $controllers */
         $controllers = $app['controllers_factory'];
 
-        $controllers->get('/', [$this, 'menus']);
-        $controllers->post('/', [$this, 'createMenu']);
-        $controllers->put('/', [$this, 'updateMenus']);
+        $controllers->get('/menus', [$this, 'menus']);
+        $controllers->post('/menus', [$this, 'createMenu']);
+        $controllers->put('/menus', [$this, 'updateMenus']);
 
-        $controllers->get('/{menu_id}/submenus', [$this, 'submenus']);
-        $controllers->post('/{menu_id}/submenus', [$this, 'createSubmenu']);
-        $controllers->put('/{menu_id}/submenus/{submenu_id}', [$this, 'updateSubmenu']);
-        $controllers->delete('/{menu_id}/submenus/{submenu_id}', [$this, 'deleteSubmenu']);
+        $controllers->get('/menus/{menu_id}/submenus', [$this, 'submenus']);
+        $controllers->post('/menus/{menu_id}/submenus', [$this, 'createSubmenu']);
+        $controllers->put('/menus/{menu_id}/submenus/{submenu_id}', [$this, 'updateSubmenu']);
+        $controllers->delete('/menus/{menu_id}/submenus/{submenu_id}', [$this, 'deleteSubmenu']);
 
-        $controllers->get('/{menu_id}/users', [$this, 'users']);
+        $controllers->get('/menus/{menu_id}/users', [$this, 'users']);
 
         return $controllers;
     }

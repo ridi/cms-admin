@@ -19,8 +19,8 @@ class LogControllerProvider implements ControllerProviderInterface
         /** @var ControllerCollection $controllers */
         $controllers = $app['controllers_factory'];
 
-        $controllers->get('/', [$this, 'index']);
-        $controllers->get('/user', [$this, 'getUserLog']);
+        $controllers->get('/logs', [$this, 'index']);
+        $controllers->get('/logs/user', [$this, 'getUserLog']);
 
         return $controllers;
     }

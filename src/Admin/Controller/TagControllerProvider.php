@@ -18,14 +18,14 @@ class TagControllerProvider implements ControllerProviderInterface
         /** @var ControllerCollection $controllers */
         $controllers = $app['controllers_factory'];
 
-        $controllers->get('/', [$this, 'tags']);
-        $controllers->post('/', [$this, 'createTag']);
-        $controllers->put('/{tag_id}', [$this, 'updateTag']);
-        $controllers->delete('/{tag_id}', [$this, 'deleteTag']);
-        $controllers->get('/{tag_id}/users', [$this, 'tagUsers']);
-        $controllers->get('/{tag_id}/menus', [$this, 'tagMenus']);
-        $controllers->put('/{tag_id}/menus/{menu_id}', [$this, 'addTagMenu']);
-        $controllers->delete('/{tag_id}/menus/{menu_id}', [$this, 'deleteTagMenu']);
+        $controllers->get('/tags', [$this, 'tags']);
+        $controllers->post('/tags', [$this, 'createTag']);
+        $controllers->put('/tags/{tag_id}', [$this, 'updateTag']);
+        $controllers->delete('/tags/{tag_id}', [$this, 'deleteTag']);
+        $controllers->get('/tags/{tag_id}/users', [$this, 'tagUsers']);
+        $controllers->get('/tags/{tag_id}/menus', [$this, 'tagMenus']);
+        $controllers->put('/tags/{tag_id}/menus/{menu_id}', [$this, 'addTagMenu']);
+        $controllers->delete('/tags/{tag_id}/menus/{menu_id}', [$this, 'deleteTagMenu']);
 
         return $controllers;
     }
