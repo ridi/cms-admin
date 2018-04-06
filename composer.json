@@ -3,10 +3,16 @@
   "description": "Ridibooks CMS admin service",
   "type": "project",
   "license": "MIT",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/apache/thrift.git"
+    }
+  ],
   "require": {
     "illuminate/database": "^5.4",
     "moriony/silex-sentry-provider": "^2.0",
-    "ridibooks/cms-sdk": "^2.0",
+    "ridibooks/cms-sdk": "^2.2.5",
     "sentry/sentry": "^1.6",
     "symfony/asset": "^3.3",
     "vlucas/phpdotenv": "^2.4",
