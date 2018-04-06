@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4257d0840e5ce3b5779b2d34bc3fbf38",
+    "content-hash": "ff2b2ef4bb66a8b6de0208c558410699",
     "packages": [
         {
             "name": "apache/thrift",
@@ -14,26 +14,19 @@
                 "url": "https://github.com/apache/thrift.git",
                 "reference": "b2a4d4ae21c789b689dd162deb819665567f481c"
             },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/apache/thrift/zipball/b2a4d4ae21c789b689dd162deb819665567f481c",
-                "reference": "b2a4d4ae21c789b689dd162deb819665567f481c",
-                "shasum": ""
-            },
             "require": {
                 "php": ">=5.3.0"
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "0.10.0"
-                }
+                "branch-alias": []
             },
             "autoload": {
                 "psr-0": {
                     "Thrift": "lib/php/lib/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -46,12 +39,7 @@
             ],
             "description": "Apache Thrift RPC system",
             "homepage": "http://thrift.apache.org/",
-            "support": {
-                "email": "dev@thrift.apache.org",
-                "issues": "https://issues.apache.org/jira/browse/THRIFT",
-                "source": "https://github.com/apache/thrift/tree/0.10.0"
-            },
-            "time": "2016-12-21T20:36:22+00:00"
+            "time": "2016-04-04T18:25:03+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -995,16 +983,16 @@
         },
         {
             "name": "ridibooks/cms-sdk",
-            "version": "v2.2.5",
+            "version": "v2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ridi/cms-sdk.git",
-                "reference": "70c8aaace6f40ae1733742185c9cd4db21926714"
+                "reference": "171cb5e600e903d7120b49eed0cedd60b17af4ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ridi/cms-sdk/zipball/70c8aaace6f40ae1733742185c9cd4db21926714",
-                "reference": "70c8aaace6f40ae1733742185c9cd4db21926714",
+                "url": "https://api.github.com/repos/ridi/cms-sdk/zipball/171cb5e600e903d7120b49eed0cedd60b17af4ee",
+                "reference": "171cb5e600e903d7120b49eed0cedd60b17af4ee",
                 "shasum": ""
             },
             "require": {
@@ -1027,7 +1015,7 @@
                 "MIT"
             ],
             "description": "Ridibooks CMS SDK",
-            "time": "2018-04-03T05:44:34+00:00"
+            "time": "2018-04-02T05:02:42+00:00"
         },
         {
             "name": "sentry/sentry",
