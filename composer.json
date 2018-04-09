@@ -12,11 +12,11 @@
   "require": {
     "illuminate/database": "^5.4",
     "moriony/silex-sentry-provider": "^2.0",
-    "ridibooks/cms-sdk": "2.2.4",
     "sentry/sentry": "^1.6",
     "symfony/asset": "^3.3",
     "vlucas/phpdotenv": "^2.4",
-    "jguyomard/silex-capsule-eloquent": "^2.0"
+    "jguyomard/silex-capsule-eloquent": "^2.0",
+    "ridibooks/cms-sdk": "^2.2"
   },
   "require-dev": {
     "robmorgan/phinx": "^0.8.0"
