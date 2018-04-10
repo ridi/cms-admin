@@ -4,7 +4,7 @@
   어드민유저 상세
 {% endblock %}
 
-{% block script %}
+{% block bottom_script %}
   <script>
     window.userDetail = {{ userDetail|json_encode|raw }};
     window.userTag = {{ userTag|json_encode|raw }};

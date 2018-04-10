@@ -4,7 +4,7 @@
   태그 관리
 {% endblock %}
 
-{% block script %}
+{% block bottom_script %}
   <script>
     window.tags = {{ tags|json_encode|raw }};
   </script>
