@@ -16,11 +16,13 @@
     "symfony/asset": "^3.3",
     "vlucas/phpdotenv": "^2.4",
     "jguyomard/silex-capsule-eloquent": "^2.0",
-    "ridibooks/cms-sdk": "^2.2"
+    "ridibooks/cms-sdk": "^2.3"
   },
   "require-dev": {
     "robmorgan/phinx": "^0.8.0"
   },
+  "minimum-stability": "RC",
+  "prefer-stable" : true,
   "autoload": {
     "psr-4": {
       "Ridibooks\\Cms\\Admin\\": "src/Admin"
