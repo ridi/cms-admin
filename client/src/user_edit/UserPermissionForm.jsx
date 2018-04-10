@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import Select2Input from '../Select2Input';
+import Select2Input from '../components/Select2Input';
 
 class UserPermissionForm extends React.Component {
   constructor(props) {
