@@ -16,7 +16,7 @@ const OUTPUT_PATH = resolveApp('..', _.trim(WEBPACK_OUTPUT_DIR, '/'));
 const SRC_PATH = resolveApp('src');
 const MANIFEST_FILENAME = ASSET_MANIFEST_FILENAME;
 
-const defaultEntry = [];
+const defaultEntry = ['babel-polyfill'];
 
 const config = {
   entry: {

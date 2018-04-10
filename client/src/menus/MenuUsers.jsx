@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import React from 'react';
 import { Modal } from 'react-bootstrap/lib';
 import PropTypes from 'prop-types';
