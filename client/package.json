@@ -6,7 +6,6 @@
     "type": "git",
     "url": "git+https://github.com/ridibooks/cms-admin.git"
   },
-  "main": "webpack.config.js",
   "dependencies": {
     "axios": "^0.16.2",
     "babel-polyfill": "^6.26.0",
@@ -40,8 +39,8 @@
   },
   "scripts": {
     "lint": "eslint --ext .js,.jsx js/** --fix",
-    "watch": "webpack-dev-server --config configs/webpack.config.dev.js",
-    "build": "webpack --config configs/webpack.config.prod.js -p --define process.env.NODE_ENV=\"'production'\"",
+    "watch": "webpack-dev-server --config config/webpack.dev.js",
+    "build": "webpack --config config/webpack.prod.js -p --define process.env.NODE_ENV=\"'production'\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
