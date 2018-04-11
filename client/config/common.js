@@ -7,8 +7,6 @@ const {
   ASSET_MANIFEST_FILENAME,
 } = require('../../config/const.json');
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-
 const resolveApp = (...relativePaths) => path.resolve(__dirname, '..', ...relativePaths);
 
 const PUBLIC_PATH = `${_.trimEnd(ASSET_PUBLIC_PATH, '/')}/`;
@@ -36,11 +34,18 @@ const config = {
     extensions: ['.js', '.jsx', '.elm'],
     enforceExtension: false,
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          name: 'commons',
+          chunks: 'initial',
+          minChunks: 2,
+        },
+      },
+    },
+  },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'commons',
-      minChunks: 2,
-    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
