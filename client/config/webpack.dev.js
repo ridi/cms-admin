@@ -40,7 +40,7 @@ const createManifestPlugin = (options) => {
       // Add empty common CSS file to output.
       // It's just OK to serve empty file
       // because the actual CSS is injected into <style> tag by style-loader
-      compiler.plugin('compilation', (compilation) => {
+      compiler.hooks.compilation.tap('DummyCssPlugin', (compilation) => {
         compilation.assets[cssFilename] = {
           source: () => '',
           size: () => 0,

@@ -7,6 +7,9 @@ const {
   ASSET_MANIFEST_FILENAME,
 } = require('../../config/const.json');
 
+process.traceDeprecation = true;
+process.noDeprecation = true;
+
 const resolveApp = (...relativePaths) => path.resolve(__dirname, '..', ...relativePaths);
 
 const PUBLIC_PATH = `${_.trimEnd(ASSET_PUBLIC_PATH, '/')}/`;
