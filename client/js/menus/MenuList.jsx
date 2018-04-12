@@ -133,7 +133,7 @@ export default class MenuList extends React.Component {
       };
     });
 
-    await axios.put('/super/menus/', data);
+    await axios.put('/super/menus', data);
     window.location.reload();
   }
 
