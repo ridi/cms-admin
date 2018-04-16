@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import Select2Input from '../Select2Input';
+import Select2Input from '../components/Select2Input';
 
 export default class MenusDialog extends React.Component {
   renderBody() {

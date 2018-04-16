@@ -4,6 +4,8 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
 const { PUBLIC_PATH, SRC_PATH, MANIFEST_FILENAME, config } = require('./common');
 
+process.env.NODE_ENV = 'development';
+
 const DEV_SERVER_HOST = 'localhost';
 const DEV_SERVER_PORT = '3000';
 const DEV_SERVER_URL = `http://${DEV_SERVER_HOST}:${DEV_SERVER_PORT}`;
@@ -19,7 +21,7 @@ const defaultEntry = [
 // So we need to tell webpack to generate the common CSS file and add it into manifest file
 // so that make it possible to link the common CSS file from html.
 const createManifestPlugin = (options) => {
-  const cssFilename = 'style.css';
+  const cssFilename = 'commons.css';
 
   // Add the common CSS file path to manifest file
   const manifestPlugin = new ManifestPlugin({
@@ -38,7 +40,7 @@ const createManifestPlugin = (options) => {
       // Add empty common CSS file to output.
       // It's just OK to serve empty file
       // because the actual CSS is injected into <style> tag by style-loader
-      compiler.plugin('compilation', (compilation) => {
+      compiler.hooks.compilation.tap('DummyCssPlugin', (compilation) => {
         compilation.assets[cssFilename] = {
           source: () => '',
           size: () => 0,
@@ -53,6 +55,7 @@ const createManifestPlugin = (options) => {
 
 module.exports = {
   ...config,
+  mode: process.env.NODE_ENV,
   devtool: 'cheap-module-source-map',
   entry: _.mapValues(config.entry, value => _.flattenDeep([
     defaultEntry,

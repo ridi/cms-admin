@@ -1,9 +1,13 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const ManifestPlugin = require('webpack-manifest-plugin');
 const { PUBLIC_PATH, SRC_PATH, MANIFEST_FILENAME, config } = require('./common');
 
+process.env.NODE_ENV = 'production';
+
 module.exports = {
   ...config,
+  mode: process.env.NODE_ENV,
   module: {
     rules: [
       {
@@ -13,10 +17,10 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader',
-        }),
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader'
+        ],
       },
       {
         test: /\.(woff|woff2|eot|ttf|svg)$/,
@@ -24,10 +28,17 @@ module.exports = {
       },
     ],
   },
+  optimization: {
+    ...config.optimization,
+    minimizer: [
+      ...(config.optimization.minimizer || []),
+      new OptimizeCSSAssetsPlugin({}),
+    ],
+  },
   plugins: [
     ...config.plugins,
-    new ExtractTextPlugin({
-      filename: 'styles.[contenthash].css',
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
     }),
     new ManifestPlugin({
       fileName: MANIFEST_FILENAME,

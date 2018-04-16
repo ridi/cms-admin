@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import SearchForm from '../common/searchForm';
+import SearchForm from '../components/SearchForm';
 import UserDetailForm from './UserDetailForm';
 import UserPermissionForm from './UserPermissionForm';
 import UserCpForm from './UserCpForm';

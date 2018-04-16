@@ -11,17 +11,15 @@ export default class UsersDialog extends React.Component {
     }
 
     return (
-      <ul id="tag_admins">
+      <div id="tag_admins">
         {data.map(admin => (
-          <li key={admin.id}>
-            <h4>
-              <a className="label label-default" href={`/super/users/${admin.id}`} target="_blank" rel="noopener noreferrer">
-                {admin.name}
-              </a>
-            </h4>
-          </li>
+          <h4 key={admin.id}>
+            <a className="label label-default" href={`/super/users/${admin.id}`} target="_blank" rel="noopener noreferrer">
+              {admin.name}
+            </a>
+          </h4>
         ))}
-      </ul>
+      </div>
     );
   }
 

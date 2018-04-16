@@ -4,7 +4,7 @@
   메뉴 관리
 {% endblock %}
 
-{% block script %}
+{% block bottom_script %}
   <script>
     window.menus = {{ menu_list|json_encode|raw }};
   </script>

@@ -1,9 +1,8 @@
-import 'babel-polyfill';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Col, Glyphicon, Grid, Pagination, Row, Table } from 'react-bootstrap';
 import axios from 'axios';
-import SearchForm from '../common/searchForm';
+import SearchForm from '../components/SearchForm';
 
 const MAX_PAGE_BUTTON = 5;
 

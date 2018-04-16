@@ -1,9 +1,8 @@
-import 'babel-polyfill';
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import Select2Input from '../Select2Input';
+import Select2Input from '../components/Select2Input';
 
 const PRODUCTION_CP_TYPE = 1;
 const PARTNER_CP_TYPE = 2;

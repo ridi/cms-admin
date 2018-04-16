@@ -7,16 +7,17 @@ const {
   ASSET_MANIFEST_FILENAME,
 } = require('../../config/const.json');
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+process.traceDeprecation = true;
+process.noDeprecation = true;
 
 const resolveApp = (...relativePaths) => path.resolve(__dirname, '..', ...relativePaths);
 
 const PUBLIC_PATH = `${_.trimEnd(ASSET_PUBLIC_PATH, '/')}/`;
 const OUTPUT_PATH = resolveApp('..', _.trim(WEBPACK_OUTPUT_DIR, '/'));
-const SRC_PATH = resolveApp('js');
+const SRC_PATH = resolveApp('src');
 const MANIFEST_FILENAME = ASSET_MANIFEST_FILENAME;
 
-const defaultEntry = [];
+const defaultEntry = ['babel-polyfill'];
 
 const config = {
   entry: {
@@ -36,11 +37,18 @@ const config = {
     extensions: ['.js', '.jsx', '.elm'],
     enforceExtension: false,
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          name: 'commons',
+          chunks: 'initial',
+          minChunks: 2,
+        },
+      },
+    },
+  },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'commons',
-      minChunks: 2,
-    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
