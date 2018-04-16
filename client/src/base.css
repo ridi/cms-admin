@@ -1,3 +1,18 @@
-body {
-  padding: 1rem 0;
+html {
+  font-size: 16px;
+}
+
+#main_container {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: .5rem;
+}
+
+#menu_container {
+  margin: .5rem;
+}
+
+#content_container {
+  flex: 1;
+  margin: .5rem;
 }
