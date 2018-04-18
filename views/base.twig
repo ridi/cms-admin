@@ -14,31 +14,28 @@
   {% endblock %}
 
   {% block script %}
+    <script>
+      window.menuItems = {{ menus|json_encode|raw }};
+    </script>
     <script src="{{ asset('commons.js') }}"></script>
   {% endblock %}
 </head>
-<body>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-xs-12 col-lg-2">
-        {% include '/comm/left_menu_new.twig' %}
-      </div>
+<body id="main_container">
+  <div id="menu_container"></div>
 
-      <div class="col-xs-12 col-lg-10">
-        <h3>{{ block('title') }}</h3>
-        <hr>
+  <div id="content_container">
+    <h3>{{ block('title') }}</h3>
+    <hr>
 
-        {% for type, messages in app.flashes %}
-          {% for message in messages %}
-            <div class="alert alert-{{ type }} alert-dismissible" role="alert">
-              {{ message }}
-            </div>
-          {% endfor %}
-        {% endfor %}
+    {% for type, messages in app.flashes %}
+      {% for message in messages %}
+        <div class="alert alert-{{ type }} alert-dismissible" role="alert">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endfor %}
 
-        <div id="content"></div>
-      </div>
-    </div>
+    <div id="content"></div>
   </div>
 
   {% block bottom_script %}
