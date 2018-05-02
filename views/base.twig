@@ -20,23 +20,21 @@
     <script src="{{ asset('commons.js') }}"></script>
   {% endblock %}
 </head>
-<body id="main_container">
+<body>
   <div id="menu_container"></div>
 
-  <div id="content_container">
-    <h3>{{ block('title') }}</h3>
-    <hr>
+  <h3>{{ block('title') }}</h3>
+  <hr>
 
-    {% for type, messages in app.flashes %}
-      {% for message in messages %}
-        <div class="alert alert-{{ type }} alert-dismissible" role="alert">
-          {{ message }}
-        </div>
-      {% endfor %}
+  {% for type, messages in app.flashes %}
+    {% for message in messages %}
+      <div class="alert alert-{{ type }} alert-dismissible" role="alert">
+        {{ message }}
+      </div>
     {% endfor %}
+  {% endfor %}
 
-    <div id="content"></div>
-  </div>
+  <div id="content"></div>
 
   {% block bottom_script %}
   {% endblock %}

@@ -2,17 +2,10 @@ html {
   font-size: 16px;
 }
 
-#main_container {
-  display: flex;
-  flex-flow: row nowrap;
-  padding: .5rem;
+body {
+  padding: 1rem;
 }
 
-#menu_container {
-  margin: .5rem;
-}
-
-#content_container {
-  flex: 1;
-  margin: .5rem;
+#menu {
+  z-index: 9999;
 }
