@@ -10,6 +10,7 @@ class AdminTag extends Model
     protected $fillable = [
         'id',
         'name',
+        'display_name',
         'is_use',
         'creator'
     ];

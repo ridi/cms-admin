@@ -43,24 +43,34 @@ class TagService
         return AdminTag::find($tag_id)->menus->pluck('id')->all();
     }
 
-    public static function insertTag($name, $is_use)
+    public static function insertTag($name, $display_name, $is_use)
     {
         if (!isset($name) || $name === '') {
             throw new \Exception('태그 이름을 입력하여 주십시오.');
         }
 
+        if (!isset($display_name) || $display_name === '') {
+            throw new \Exception('표시 이름을 입력하여 주십시오.');
+        }
+
         $tag = new AdminTag();
         $tag->name = $name;
+        $tag->display_name = $display_name;
         $tag->is_use = $is_use;
         $tag->creator = LoginService::GetAdminID();
         $tag->save();
     }
 
-    public static function updateTag($tag_id, $name, $is_use)
+    public static function updateTag($tag_id, $name, $display_name, $is_use)
     {
         if (!isset($name) || $name === '') {
             throw new \Exception('태그 이름을 입력하여 주십시오.');
         }
+
+        if (!isset($display_name) || $display_name === '') {
+            throw new \Exception('표시 이름을 입력하여 주십시오.');
+        }
+
 
         if (!$is_use) {
             $user_count = AdminTag::find($tag_id)->users()->count();
@@ -72,6 +82,7 @@ class TagService
         /** @var AdminTag $tag */
         $tag = AdminTag::find($tag_id);
         $tag->name = $name;
+        $tag->display_name = $display_name;
         $tag->is_use = $is_use;
         $tag->save();
     }
