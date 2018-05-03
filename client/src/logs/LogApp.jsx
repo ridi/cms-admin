@@ -44,8 +44,8 @@ class LogApp extends React.Component {
   }
 
   async getLogPage(pageIndex) {
-    const { data } = await axios.get(`/super/logs/user?page=${pageIndex}&per_page=${ROW_PER_PAGE}`, {
-      headers: { Accept: 'application/json' },
+    const { data } = await axios(`/super/logs/user?page=${pageIndex}&per_page=${ROW_PER_PAGE}`, {
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
     });
 
     return {
@@ -56,7 +56,9 @@ class LogApp extends React.Component {
 
   async getMenus() {
     if (!this.menuSaved) {
-      const { data } = await axios('/super/menus');
+      const { data } = await axios('/super/menus', {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      });
       this.menuSaved = data;
     }
 
@@ -65,7 +67,9 @@ class LogApp extends React.Component {
 
   async getTags() {
     if (!this.tagSaved) {
-      const { data } = await axios('/super/tags');
+      const { data } = await axios('/super/tags', {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      });
       this.tagSaved = data;
     }
 
