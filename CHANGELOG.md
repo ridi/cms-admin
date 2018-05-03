@@ -1,5 +1,9 @@
 # Ridibooks CMS-Admin
 
+## [Unreleased]
+## Added
+- Add `display_name` column in tags (#40)
+
 ## [2.1.8] - 2018-05-02
 ### Changed
 - Update [CMS UI](https://github.com/ridi/cms-ui) for responsive menu
