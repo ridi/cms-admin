@@ -45,7 +45,7 @@ class UserPermissionForm extends React.Component {
     const tags = await this.getTags();
     if (tags) {
       this.setState(Object.assign({}, this.state, {
-        tagList: tags.map(tag => ({ id: tag.id, text: tag.name })),
+        tagList: tags.map(tag => ({ id: tag.id, text: tag.display_name })),
         tagFetching: false,
       }));
     } else {

@@ -8,7 +8,7 @@ class TagService
 {
     public static function getAllTags()
     {
-        return AdminTag::where('is_use', 1)->get(['id', 'name']);
+        return AdminTag::where('is_use', 1)->get(['id', 'name', 'display_name']);
     }
 
     public static function getMappedAdminMenuListForSelectBox($tag_id)
