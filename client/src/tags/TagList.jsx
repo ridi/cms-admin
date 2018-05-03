@@ -11,7 +11,7 @@ export default class TagList extends React.Component {
 
   componentDidMount() {
     // 태그 목록 컬럼 변동 시 check
-    $('#updateForm input[name=name], #updateForm input[name=is_use]').change(function onChange() {
+    $('#updateForm input[name!=changed]').change(function onChange() {
       const $tr = $(this).parents('tr');
       $tr.find('input[name=changed]').prop('checked', true);
     });
@@ -45,6 +45,7 @@ export default class TagList extends React.Component {
       const tagId = $tr.find('input[name=id]').val();
       const data = {
         name: $tr.find('input[name=name]').val(),
+        display_name: $tr.find('input[name=display_name]').val(),
         is_use: $tr.find('input[name=is_use]').prop('checked'),
       };
 
@@ -73,6 +74,7 @@ export default class TagList extends React.Component {
             <col width="20" />
             <col width="20" />
             <col width="" />
+            <col width="" />
             <col width="80" />
             <col width="80" />
             <col width="140" />
@@ -86,6 +88,7 @@ export default class TagList extends React.Component {
               <th />
               <th>ID</th>
               <th>태그 이름</th>
+              <th>표시 이름</th>
               <th>생성자</th>
               <th>사용 여부</th>
               <th>최초 생성일</th>
@@ -103,6 +106,7 @@ export default class TagList extends React.Component {
                   id={tag.id}
                   isUse={tag.is_use}
                   name={tag.name}
+                  displayName={tag.display_name}
                   creator={tag.creator ? tag.creator : ''}
                   createdAt={tag.created_at}
                   updatedAt={tag.updated_at}

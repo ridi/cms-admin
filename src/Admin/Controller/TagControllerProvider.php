@@ -60,10 +60,11 @@ class TagControllerProvider implements ControllerProviderInterface
     public function createTag(CmsApplication $app, Request $request)
     {
         $name = $request->get('name');
+        $display_name = $request->get('display_name');
         $is_use = $request->get('is_use');
 
         try {
-            AdminTagService::insertTag($name, $is_use);
+            AdminTagService::insertTag($name, $display_name, $is_use);
             $app->addFlashInfo('성공적으로 등록하였습니다.');
         } catch (\Exception $e) {
             $app->addFlashError($e->getMessage());
@@ -75,10 +76,11 @@ class TagControllerProvider implements ControllerProviderInterface
     public function updateTag(CmsApplication $app, Request $request, $tag_id)
     {
         $name = $request->get('name');
+        $display_name = $request->get('display_name');
         $is_use = $request->request->getBoolean('is_use');
 
         try {
-            AdminTagService::updateTag($tag_id, $name, $is_use);
+            AdminTagService::updateTag($tag_id, $name, $display_name, $is_use);
         } catch (\Exception $e) {
             if (!is_a($e, 'HttpException')) {
                 $e = new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, $e->getMessage());

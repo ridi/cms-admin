@@ -10,6 +10,7 @@ class Tag extends AbstractSeed
         $data = [
             [
                 'name' => '권한 관리',
+                'display_name' => '권한 관리',
                 'is_use' => 1,
                 'creator' => 'admin',
                 'reg_date' => date('Y-m-d H:i:s'),

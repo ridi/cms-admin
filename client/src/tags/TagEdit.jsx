@@ -15,12 +15,14 @@ const TagCreate = () => (
       <thead>
         <tr>
           <th>태그 이름</th>
+          <th>표시 이름</th>
           <th>사용 여부</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><input type="text" className="input-block-level" name="name" /></td>
+          <td><input type="text" className="input-block-level" name="display_name" /></td>
           <td>
             <select className="input-block-level" name="is_use">
               <option value="1">Y</option>
@@ -275,6 +277,7 @@ TagEdit.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
+    display_name: PropTypes.string,
     is_use: PropTypes.bool,
     creator: PropTypes.string,
   })).isRequired,

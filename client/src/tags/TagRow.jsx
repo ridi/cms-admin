@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 
 const TagRow = (props) => {
   const {
-    id, isUse, name, creator, createdAt, updatedAt, menusCount,
+    id, isUse, name, displayName, creator, createdAt, updatedAt, menusCount,
     activeUsersCount, inactiveUsersCount, onMenusCountClick, onActiveUsersCountClick, onInactiveUsersCountClick,
   } = props;
 
@@ -16,6 +16,7 @@ const TagRow = (props) => {
       </td>
       <td>{id}</td>
       <td><input type="text" className="input-block-level" name="name" defaultValue={name} /></td>
+      <td><input type="text" className="input-block-level" name="display_name" defaultValue={displayName} /></td>
       <td>{creator}</td>
       <td>
         <input type="checkbox" className="input-block-level" name="is_use" defaultChecked={isUse} />
@@ -38,6 +39,7 @@ const TagRow = (props) => {
 TagRow.propTypes = {
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
+  displayName: PropTypes.string.isRequired,
   creator: PropTypes.string.isRequired,
   isUse: PropTypes.bool.isRequired,
   createdAt: PropTypes.string.isRequired,
