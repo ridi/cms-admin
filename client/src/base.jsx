@@ -11,6 +11,6 @@ import { Menu } from '@ridi/cms-ui';
 import './base.css';
 
 ReactDOM.render(
-  <Menu id="menu" items={window.menuItems} />,
+  <Menu items={window.menuItems} />,
   document.getElementById('menu_container'),
 );

@@ -5,7 +5,3 @@ html {
 body {
   padding: 1rem;
 }
-
-#menu {
-  z-index: 9999;
-}
