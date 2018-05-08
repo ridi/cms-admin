@@ -19,7 +19,8 @@
     "ridibooks/cms-sdk": "^2.3.3"
   },
   "require-dev": {
-    "robmorgan/phinx": "^0.8.0"
+    "robmorgan/phinx": "^0.8.0",
+    "phpunit/phpunit": "^7.1"
   },
   "minimum-stability": "RC",
   "prefer-stable" : true,
@@ -27,5 +28,9 @@
     "psr-4": {
       "Ridibooks\\Cms\\Admin\\": "src/Admin"
     }
+  },
+  "scripts": {
+    "test": "phpunit",
+    "clear": "rm -rf vendor"
   }
 }
