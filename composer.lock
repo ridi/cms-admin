@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "01d988fa9cfbed20e94d31a596c4085f",
+    "content-hash": "c748c4a31e99c66d4716bd3dc59f296c",
     "packages": [
         {
             "name": "apache/thrift",
@@ -764,16 +764,16 @@
         },
         {
             "name": "ridibooks/cms-sdk",
-            "version": "v2.3.0-rc.1",
+            "version": "v2.3.3-rc.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ridi/cms-sdk.git",
-                "reference": "e7128a103c65f917cbebd7163ba2cf803eea7dc1"
+                "reference": "2f9b8f9f0a8564c60bda832569f32422d12d7327"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ridi/cms-sdk/zipball/e7128a103c65f917cbebd7163ba2cf803eea7dc1",
-                "reference": "e7128a103c65f917cbebd7163ba2cf803eea7dc1",
+                "url": "https://api.github.com/repos/ridi/cms-sdk/zipball/2f9b8f9f0a8564c60bda832569f32422d12d7327",
+                "reference": "2f9b8f9f0a8564c60bda832569f32422d12d7327",
                 "shasum": ""
             },
             "require": {
@@ -795,7 +795,7 @@
                 "MIT"
             ],
             "description": "Ridibooks CMS SDK",
-            "time": "2018-04-10T03:26:29+00:00"
+            "time": "2018-05-18T03:31:10+00:00"
         },
         {
             "name": "sentry/sentry",
