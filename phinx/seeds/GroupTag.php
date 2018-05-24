@@ -3,19 +3,18 @@ declare(strict_types=1);
  
 use Phinx\Seed\AbstractSeed; 
  
-class UserGroup extends AbstractSeed 
+class GroupTag extends AbstractSeed 
 { 
     public function run() 
     { 
         $data = [ 
             [ 
-                'name' => 'my_team', 
-                'is_use' => 1, 
-                'creator' => 'admin', 
+                'group_id' => 1, 
+                'tag_id' => 1, 
             ], 
         ]; 
  
-        $posts = $this->table('tb_admin2_user_group'); 
+        $posts = $this->table('tb_admin2_group_tag'); 
         $posts->insert($data)->save(); 
     } 
 } 

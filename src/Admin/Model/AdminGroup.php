@@ -3,9 +3,9 @@ namespace Ridibooks\Cms\Admin\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AdminUserGroup extends Model
+class AdminGroup extends Model
 {
-    protected $table = 'tb_admin2_user_group';
+    protected $table = 'tb_admin2_group';
 
     public $timestamps = false;
 
@@ -20,7 +20,7 @@ class AdminUserGroup extends Model
     {
         return $this->belongsToMany(
             AdminUser::class,
-            'tb_admin2_user_group_users',
+            'tb_admin2_group_user',
             'group_id',
             'user_id'
         );

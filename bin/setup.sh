@@ -14,4 +14,4 @@ else
 fi
 
 vendor/bin/phinx migrate -e phinx_env
-vendor/bin/phinx seed:run
+vendor/bin/phinx seed:run -s User -s Menu -s Tag -s TagMenu -s UserTag -s Group -s GroupUser -s GroupTag -e phinx_env 
