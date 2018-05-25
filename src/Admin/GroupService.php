@@ -17,6 +17,11 @@ class GroupService
         }
     }
 
+    public function getGroup(int $group_id): array
+    {
+        return AdminGroup::find($group_id)->toArray();
+    }
+
     public function insertGroup(array $group)
     {
         if (empty($group['name'])) {
@@ -32,7 +37,8 @@ class GroupService
         }
 
         $new_group = new AdminGroup($group);
-        $new_group->save();
+
+        return $new_group->save();
     }
 
     public function updateGroup(int $id, string $name, bool $is_use)

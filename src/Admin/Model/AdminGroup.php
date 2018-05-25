@@ -9,8 +9,6 @@ class AdminGroup extends Model
 {
     protected $table = 'tb_admin2_group';
 
-    public $timestamps = false;
-
     protected $fillable = [
         'id',
         'name',
