@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Ridibooks\Cms\Admin\Model;
 
 use Illuminate\Database\Eloquent\Model;

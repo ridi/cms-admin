@@ -46,6 +46,17 @@ class UserService
         return $user->tags->pluck('id')->all();
     }
 
+    public static function getAllTags($user_id)
+    {
+        /** @var AdminUser $user */
+        $user = AdminUser::find($user_id);
+        if (!$user) {
+            return [];
+        }
+
+        return $user->tags_via_group->pluck('id')->all();
+    }
+
     public static function getAdminUserMenu($user_id)
     {
         /** @var AdminUser $user */
