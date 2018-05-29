@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [2.1.10] - 2018-05-29
+### Updated
+- Update cms-sdk v2.3.3-rc.1 | cc98b2f
+### Fixed
+- Fix cms-ui menu scrolling bug (#41)
+
 ## [2.1.9] - 2018-05-04
 ### Added
 - Add `display_name` column in tags (#40)
