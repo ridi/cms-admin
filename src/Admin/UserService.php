@@ -54,7 +54,7 @@ class UserService
             return [];
         }
 
-        return $user->tags_via_group->pluck('id')->all();
+        return $user->tags_group_joined->pluck('id')->all();
     }
 
     public static function getAdminUserMenu($user_id)

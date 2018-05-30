@@ -35,10 +35,10 @@ class GroupModelTest extends TestCase
         $this->assertEquals(['my_team'], $groups);
     }
 
-    public function testGetTagViaGroup()
+    public function testGetTagGroupJoined()
     {
         $direct_tags = AdminUser::find('admin')->tags->pluck('name')->all();
-        $tags = AdminUser::find('admin')->tags_via_group->pluck('name')->all();
+        $tags = AdminUser::find('admin')->tags_group_joined->pluck('name')->all();
 
         $this->assertEquals(['권한 관리'], $direct_tags);
         $this->assertEquals(['권한 관리', '테스트'], $tags);

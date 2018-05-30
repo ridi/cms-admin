@@ -32,11 +32,11 @@ class AdminUser extends Model
         );
     }
 
-    public function tags_via_group()
+    public function tags_group_joined()
     {
         return $this->belongsToMany(
             AdminTag::class,
-            'vw_admin2_user_tag_via_group',
+            'vw_admin2_user_tag_group_joined',
             'user_id',
             'tag_id'
         );
