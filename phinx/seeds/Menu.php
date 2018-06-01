@@ -58,6 +58,26 @@ class Menu extends AbstractSeed
                 'is_newtab' => 0,
                 'reg_date' => date('Y-m-d H:i:s'),
             ],
+            [
+                'menu_title' => 'Hash 테스트',
+                'menu_url' => '/super/users#EDIT',
+                'menu_order' => 5,
+                'menu_deep' => 0,
+                'is_use' => 1,
+                'is_show' => 0,
+                'is_newtab' => 0,
+                'reg_date' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'menu_title' => 'Group 테스트',
+                'menu_url' => '/super/users#GROUP',
+                'menu_order' => 6,
+                'menu_deep' => 0,
+                'is_use' => 1,
+                'is_show' => 0,
+                'is_newtab' => 0,
+                'reg_date' => date('Y-m-d H:i:s'),
+            ],
         ];
 
         $posts = $this->table('tb_admin2_menu');
