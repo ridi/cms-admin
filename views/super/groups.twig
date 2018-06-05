@@ -1,0 +1,12 @@
+{% extends 'base.twig' %}
+
+{% block title %}
+  그룹 관리
+{% endblock %}
+
+{% block bottom_script %}
+  <script>
+    window.groups = {{ groups|json_encode|raw }};
+  </script>
+  <script src="{{ asset('groups.js') }}"></script>
+{% endblock %}

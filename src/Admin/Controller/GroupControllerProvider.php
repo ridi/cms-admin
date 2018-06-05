@@ -5,6 +5,7 @@ namespace Ridibooks\Cms\Admin\Controller;
 
 use Ridibooks\Cms\Admin\GroupService;
 use Ridibooks\Cms\CmsApplication;
+use Silex\Application;
 use Silex\Api\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -42,13 +43,20 @@ class GroupControllerProvider implements ControllerProviderInterface
     }
 
     public function getGroups(CmsApplication $app, Request $request) {
-        return $app->json($this->group_service->getGroups());
+        if (in_array('application/json', $request->getAcceptableContentTypes())) {
+            return $app->json($this->group_service->getGroups());
+        }
+
+        return $app->render('super/groups.twig', [
+            'title' => '그룹 관리',
+            'groups' => $this->group_service->getGroups(),
+        ]);
     }
 
     public function insertGroup(CmsApplication $app, Request $request) {
         $group = [
             'name' => $request->get('name'),
-            'is_use' => $request->get('is_use', true),
+            'is_use' => $request->request->getBoolean('is_use', true),
         ];
 
         try {
@@ -71,12 +79,14 @@ class GroupControllerProvider implements ControllerProviderInterface
         return $app->json($group);
     }
 
-    public function updateGroup(CmsApplication $app, Request $request) {
-        try {
-            $group_id = $request->get('group_id');
-            $name = $request->get('name');
-            $is_use = $request->get('is_use', true);
+    public function updateGroup(CmsApplication $app, Request $request, int $group_id) {
+        $name = $request->get('name');
+        $is_use = $request->request->getBoolean('is_use');
+        if (empty($name) || !isset($is_use)) {
+            return $app->json('Invalid parameters', 400);
+        }
 
+        try {
             $this->group_service->updateGroup($group_id, $name, $is_use);
         } catch (\Exception $e) {
             return $app->json($e->getMessage(), 400);
@@ -85,8 +95,7 @@ class GroupControllerProvider implements ControllerProviderInterface
         return $app->json();
     }
 
-    public function deleteGroup(CmsApplication $app, Request $request) {
-        $group_id = $request->get('group_id');
+    public function deleteGroup(CmsApplication $app, Request $request, int $group_id) {
         if (empty($group_id)) {
             return $app->json('`group_id` parameter is missing.', 400);
         }
@@ -100,8 +109,7 @@ class GroupControllerProvider implements ControllerProviderInterface
         return $app->json();
     }
 
-    public function getGroupUsers(CmsApplication $app, Request $request) {
-        $group_id = $request->get('group_id');
+    public function getGroupUsers(CmsApplication $app, Request $request, int $group_id) {
         if (empty($group_id)) {
             return $app->json('`group_id` parameter is missing.', 400);
         }
@@ -115,8 +123,7 @@ class GroupControllerProvider implements ControllerProviderInterface
         return $app->json($users);
     }
 
-    public function insertGroupUser(CmsApplication $app, Request $request) {
-        $group_id = $request->get('group_id');
+    public function insertGroupUser(CmsApplication $app, Request $request, int $group_id) {
         $user_id = $request->get('user_id');
         if (empty($group_id) || empty($user_id)) {
             return $app->json('Invalid parameters.', 400);
@@ -131,8 +138,7 @@ class GroupControllerProvider implements ControllerProviderInterface
         return $app->json();
     }
 
-    public function deleteGroupUser(CmsApplication $app, Request $request) {
-        $group_id = $request->get('group_id');
+    public function deleteGroupUser(CmsApplication $app, Request $request, int $group_id) {
         $user_id = $request->get('user_id');
         if (empty($group_id) || empty($user_id)) {
             return $app->json('Invalid parameters.', 400);
@@ -147,8 +153,7 @@ class GroupControllerProvider implements ControllerProviderInterface
         return $app->json();
     }
 
-    public function getGroupTags(CmsApplication $app, Request $request) {
-        $group_id = $request->get('group_id');
+    public function getGroupTags(CmsApplication $app, Request $request, int $group_id) {
         if (empty($group_id)) {
             return $app->json('`group_id` parameter is missing.', 400);
         }
@@ -162,15 +167,14 @@ class GroupControllerProvider implements ControllerProviderInterface
         return $app->json($tags);
     }
 
-    public function insertGroupTag(CmsApplication $app, Request $request) {
-        $group_id = $request->get('group_id');
+    public function insertGroupTag(CmsApplication $app, Request $request, int $group_id) {
         $tag_id = $request->get('tag_id');
         if (empty($group_id) || empty($tag_id)) {
             return $app->json('Invalid parameters.', 400);
         }
 
         try {
-            $this->group_service->insertUser($group_id, $tag_id);
+            $this->group_service->insertTags($group_id, $tag_id);
         } catch (\Exception $e) {
             return $app->json($e->getMessage(), 400);
         }
@@ -178,8 +182,7 @@ class GroupControllerProvider implements ControllerProviderInterface
         return $app->json();
     }
 
-    public function deleteGroupTag(CmsApplication $app, Request $request) {
-        $group_id = $request->get('group_id');
+    public function deleteGroupTag(CmsApplication $app, Request $request, int $group_id) {
         $tag_id = $request->get('tag_id');
         if (empty($group_id) || empty($tag_id)) {
             return $app->json('Invalid parameters.', 400);

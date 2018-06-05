@@ -48,13 +48,14 @@ export default class MenusDialog extends React.Component {
 
 MenusDialog.defaultProps = {
   disabled: false,
+  selected: null,
 };
 
 MenusDialog.propTypes = {
   tagId: PropTypes.number.isRequired,
   show: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
-  selected: PropTypes.arrayOf(PropTypes.number).isRequired,
+  selected: PropTypes.arrayOf(PropTypes.number),
   disabled: PropTypes.bool,
   data: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.oneOfType([

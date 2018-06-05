@@ -26,6 +26,7 @@ const config = {
     users: [...defaultEntry, path.resolve(SRC_PATH, 'users')],
     user_edit: [...defaultEntry, path.resolve(SRC_PATH, 'user_edit')],
     logs: [...defaultEntry, path.resolve(SRC_PATH, 'logs')],
+    groups: [...defaultEntry, path.resolve(SRC_PATH, 'groups')],
   },
   output: {
     path: OUTPUT_PATH,

@@ -25,4 +25,14 @@ class AdminGroup extends Model
             'user_id'
         );
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(
+            AdminTag::class,
+            'tb_admin2_group_tag',
+            'group_id',
+            'tag_id'
+        );
+    }
 }
