@@ -68,6 +68,17 @@ class UserService
         return $user->menus->pluck('id')->all();
     }
 
+    public static function getAdminGroups($user_id)
+    {
+        /** @var AdminUser $user */
+        $user = AdminUser::find($user_id);
+        if (!$user) {
+            return [];
+        }
+
+        return $user->groups->pluck('id')->all();
+    }
+
     public static function insertAdminUser(array $adminUser)
     {
         self::_validateAdminUserInsert($adminUser);

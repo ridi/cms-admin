@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import SearchForm from '../components/SearchForm';
 import UserDetailForm from './UserDetailForm';
+import UserGroupForm from './UserGroupForm';
 import UserPermissionForm from './UserPermissionForm';
 import UserCpForm from './UserCpForm';
 
@@ -53,6 +54,17 @@ class UserEditApp extends React.Component {
     );
   }
 
+  renderGroupFrom() {
+    if (!this.props.userDetail || !this.props.userDetail.id) {
+      return null;
+    }
+
+    const userGroup = this.props.userGroup ? this.props.userGroup.split(',') : [];
+    return (
+      <UserGroupForm id={this.props.userDetail.id} userGroup={userGroup} />
+    );
+  }
+
   renderPermissionForm() {
     if (!this.props.userDetail || !this.props.userDetail.id) {
       return null;
@@ -96,6 +108,7 @@ class UserEditApp extends React.Component {
 
         <div className="col-xs-12 col-md-6">
           {this.renderDetailForm()}
+          {this.renderGroupFrom()}
         </div>
 
         <div className="col-xs-12 col-md-6">
@@ -120,6 +133,7 @@ UserEditApp.propTypes = {
   }),
   userTag: PropTypes.string.isRequired,
   userMenu: PropTypes.string.isRequired,
+  userGroup: PropTypes.string.isRequired,
 };
 
 UserEditApp.defaultProps = {

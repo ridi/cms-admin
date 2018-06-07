@@ -9,6 +9,7 @@
     window.userDetail = {{ userDetail|json_encode|raw }};
     window.userTag = {{ userTag|json_encode|raw }};
     window.userMenu = {{ userMenu|json_encode|raw }};
+    window.userGroup = {{ userGroup|json_encode|raw }};
   </script>
   <script src="{{ asset('user_edit.js') }}"></script>
 {% endblock %}

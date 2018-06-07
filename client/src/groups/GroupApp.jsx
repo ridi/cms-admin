@@ -46,6 +46,7 @@ export default class GroupApp extends React.Component {
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify(data),
     }).then(() => {
       window.location.reload();

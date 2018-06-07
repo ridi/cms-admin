@@ -63,6 +63,7 @@ class UserControllerProvider implements ControllerProviderInterface
             }
             $tags = AdminUserService::getAdminUserTag($user_id);
             $menus = AdminUserService::getAdminUserMenu($user_id);
+            $groups = AdminUserService::getAdminGroups($user_id);
         }
 
         return $app->render('super/user_edit.twig',
@@ -70,6 +71,7 @@ class UserControllerProvider implements ControllerProviderInterface
                 'userDetail' => $user,
                 'userTag' => implode(',', $tags),
                 'userMenu' => implode(',', $menus),
+                'userGroup' => implode(',', $groups),
             ]
         );
     }
