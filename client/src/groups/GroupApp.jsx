@@ -14,8 +14,8 @@ export default class GroupApp extends React.Component {
       showUsersDlg: false,
       tags: [],
       users: [],
-      assignedTags: null,
-      assignedUsers: null,
+      tagsAssigned: null,
+      usersAssigned: null,
       selectedGroupId: 0,
     };
 
@@ -34,7 +34,7 @@ export default class GroupApp extends React.Component {
     this.fetchAllUsers = this.fetchAllUsers.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.fetchAllTags();
     this.fetchAllUsers();
   }
@@ -83,7 +83,7 @@ export default class GroupApp extends React.Component {
   handleCloseUsersDlg() {
     this.setState({
       showUsersDlg: false,
-      assignedUsers: null,
+      usersAssigned: null,
     });
   }
 
@@ -161,7 +161,7 @@ export default class GroupApp extends React.Component {
       .then(res => res.json())
       .then((res) => {
         this.setState(Object.assign({}, this.state, {
-          assignedUsers: res,
+          usersAssigned: res,
           selectedGroupId: groupId,
         }));
       });
@@ -202,9 +202,9 @@ export default class GroupApp extends React.Component {
           show={this.state.showUsersDlg}
           onClose={this.handleCloseUsersDlg}
           subjectId={this.state.selectedGroupId}
-          loading={this.state.assignedUsers == null}
+          loading={this.state.usersAssigned == null}
           data={userDlgData}
-          selectedItems={this.state.assignedUsers}
+          selectedItems={this.state.usersAssigned}
           onAdd={this.handleAddUser}
           onDelete={this.handleDeleteUser}
         />
@@ -217,7 +217,7 @@ GroupApp.propTypes = {
   groups: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
-    is_use: PropTypes.bool,
+    is_use: PropTypes.number,
     creator: PropTypes.string,
     created_at: PropTypes.string,
     updated_at: PropTypes.string,

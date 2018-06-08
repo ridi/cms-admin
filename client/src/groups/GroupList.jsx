@@ -134,12 +134,11 @@ GroupList.propTypes = {
   groups: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
-    is_use: PropTypes.bool,
+    is_use: PropTypes.number,
     creator: PropTypes.string,
     created_at: PropTypes.string,
     updated_at: PropTypes.string,
   })).isRequired,
-  onShowTagsClick: PropTypes.string.isRequired,
-  onShowUsersClick: PropTypes.string.isRequired,
+  onShowTagsClick: PropTypes.func.isRequired,
+  onShowUsersClick: PropTypes.func.isRequired,
 };
-

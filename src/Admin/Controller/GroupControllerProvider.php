@@ -68,13 +68,8 @@ class GroupControllerProvider implements ControllerProviderInterface
         return $app->json();
     }
 
-    public function getGroup(CmsApplication $app, Request $request) {
-        $group_id = $request->get('group_id');
-        if (empty($group_id)) {
-            return $app->json('`group_id` parameter is missing.', 400);
-        }
-
-        $group = $this->group_service->getGroup();
+    public function getGroup(CmsApplication $app, Request $request, int $group_id) {
+        $group = $this->group_service->getGroup($group_id);
 
         return $app->json($group);
     }

@@ -2,6 +2,7 @@
 namespace Ridibooks\Cms\Admin;
 
 use Ridibooks\Cms\Admin\Model\AdminUser;
+use Ridibooks\Cms\Admin\GroupService;
 use Ridibooks\Cms\Auth\PasswordService;
 
 class UserService
@@ -55,6 +56,21 @@ class UserService
         }
 
         return $user->tags_group_joined->pluck('id')->all();
+    }
+
+    public static function getTagsInheritedFromGroups($user_id)
+    {
+        $groups = self::getAdminGroups($user_id);
+
+        $groupService = new GroupService();
+        $tags = array_map(function($group) use ($groupService) {
+            return $groupService->getTags($group);
+        }, $groups);
+        $tags = array_reduce($tags, function($acc, $tag) {
+            return array_merge($acc ,$tag);
+        }, []);
+
+        return $tags;
     }
 
     public static function getAdminUserMenu($user_id)

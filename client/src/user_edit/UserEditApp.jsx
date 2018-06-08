@@ -59,9 +59,8 @@ class UserEditApp extends React.Component {
       return null;
     }
 
-    const userGroup = this.props.userGroup ? this.props.userGroup.split(',') : [];
     return (
-      <UserGroupForm id={this.props.userDetail.id} userGroup={userGroup} />
+      <UserGroupForm id={this.props.userDetail.id} />
     );
   }
 
@@ -133,7 +132,6 @@ UserEditApp.propTypes = {
   }),
   userTag: PropTypes.string.isRequired,
   userMenu: PropTypes.string.isRequired,
-  userGroup: PropTypes.string.isRequired,
 };
 
 UserEditApp.defaultProps = {

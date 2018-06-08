@@ -30,7 +30,6 @@ class GroupService
 
         if (empty($group['creator'])) {
             $group['creator'] = LoginService::GetAdminID();
-            error_log(var_export($group['creator'], true));
         }
 
         if (empty($group['is_use'])) {

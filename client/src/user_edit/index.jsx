@@ -9,7 +9,6 @@ ReactDOM.render(
     userDetail={window.userDetail}
     userTag={window.userTag}
     userMenu={window.userMenu}
-    userGroup={window.userGroup}
   />,
   document.getElementById('content'),
 );

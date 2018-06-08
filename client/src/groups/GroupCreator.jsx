@@ -70,5 +70,5 @@ export default class GroupCreator extends React.Component {
 }
 
 GroupCreator.propTypes = {
-  onCreateGroup: PropTypes.string.isRequired,
+  onCreateGroup: PropTypes.func.isRequired,
 };
