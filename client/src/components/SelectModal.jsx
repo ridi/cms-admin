@@ -1,12 +1,12 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import Select2Input from '../components/Select2Input';
+import Select2Input from './Select2Input';
 
-export default class MenusDialog extends React.Component {
+export default class SelectModal extends React.Component {
   renderBody() {
     const {
-      tagId, loading, selected, data, disabled, onAdd, onDelete,
+      title, subjectId, loading, selectedItems, data, disabled, onAdd, onDelete,
     } = this.props;
 
     if (loading) {
@@ -16,24 +16,24 @@ export default class MenusDialog extends React.Component {
     return (
       <Select2Input
         id="menuSelect"
-        value={loading ? [] : selected}
+        value={loading ? [] : selectedItems}
         data={data}
         disabled={disabled}
         multiple
-        placeholder="권한 추가하기"
-        onAdd={id => onAdd(tagId, id)}
-        onRemove={id => onDelete(tagId, id)}
+        placeholder="추가하기"
+        onAdd={id => onAdd(subjectId, id)}
+        onRemove={id => onDelete(subjectId, id)}
       />
     );
   }
 
   render() {
-    const { show, onClose } = this.props;
+    const { show, onClose, title } = this.props;
 
     return (
       <Modal show={show} onHide={onClose}>
         <Modal.Header closeButton>
-          <Modal.Title>태그 메뉴 관리</Modal.Title>
+          <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           { this.renderBody() }
@@ -46,16 +46,17 @@ export default class MenusDialog extends React.Component {
   }
 }
 
-MenusDialog.defaultProps = {
+SelectModal.defaultProps = {
   disabled: false,
-  selected: null,
+  selectedItems: null,
 };
 
-MenusDialog.propTypes = {
-  tagId: PropTypes.number.isRequired,
+SelectModal.propTypes = {
+  title: PropTypes.string.isRequired,
+  subjectId: PropTypes.number.isRequired,
   show: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
-  selected: PropTypes.arrayOf(PropTypes.number),
+  selectedItems: PropTypes.arrayOf(PropTypes.number),
   disabled: PropTypes.bool,
   data: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.oneOfType([

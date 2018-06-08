@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TagList from './TagList';
 import UsersDialog from './UsersDialog';
-import MenusDialog from './MenusDialog';
+import SelectModal from '../components/SelectModal';
 
 const TagCreate = () => (
   <form className="clearfix" method="POST">
@@ -250,12 +250,13 @@ export default class TagEdit extends React.Component {
           onInactiveUsersCountClick={this.handleInactiveUsersCountClick}
         />
 
-        <MenusDialog
-          tagId={menusTag}
+        <SelectModal
+          title="메뉴 추가하기"
+          subjectId={menusTag}
           show={showMenusDlg}
           loading={menusLoading}
           data={menuDatas}
-          selected={menuSelected}
+          selectedItems={menuSelected}
           disabled={menusDisabled}
           onAdd={this.handleAddMenu}
           onDelete={this.handleDeleteMenu}

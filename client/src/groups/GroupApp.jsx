@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import GroupCreator from './GroupCreator';
 import GroupList from './GroupList';
-import MenusDialog from '../tags/MenusDialog';
-import UsersDialog from '../tags/UsersDialog';
+import SelectModal from '../components/SelectModal';
 
 export default class GroupApp extends React.Component {
   constructor(props) {
@@ -14,6 +13,7 @@ export default class GroupApp extends React.Component {
       showTagsDlg: false,
       showUsersDlg: false,
       tags: [],
+      users: [],
       assignedTags: null,
       assignedUsers: null,
       selectedGroupId: 0,
@@ -26,13 +26,17 @@ export default class GroupApp extends React.Component {
     this.handleCreateGroup = this.handleCreateGroup.bind(this);
     this.handleAddTag = this.handleAddTag.bind(this);
     this.handleDeleteTag = this.handleDeleteTag.bind(this);
+    this.handleAddUser = this.handleAddUser.bind(this);
+    this.handleDeleteUser = this.handleDeleteUser.bind(this);
     this.fetchTagsForGroup = this.fetchTagsForGroup.bind(this);
-    this.fetchAllTags = this.fetchAllTags.bind(this);
     this.fetchUsersForGroup = this.fetchUsersForGroup.bind(this);
+    this.fetchAllTags = this.fetchAllTags.bind(this);
+    this.fetchAllUsers = this.fetchAllUsers.bind(this);
   }
 
   componentDidMount() {
     this.fetchAllTags();
+    this.fetchAllUsers();
   }
 
   handleCreateGroup(name, isUse) {
@@ -99,6 +103,22 @@ export default class GroupApp extends React.Component {
       });
   }
 
+  handleAddUser(groupId, userId) {
+    fetch(`/super/groups/${groupId}/users?user_id=${userId}`, { method: 'POST' })
+      .then(res => res.json())
+      .then(() => {
+        this.fetchUsersForGroup(groupId);
+      });
+  }
+
+  handleDeleteUser(groupId, userId) {
+    fetch(`/super/groups/${groupId}/users/${userId}`, { method: 'DELETE' })
+      .then(res => res.json())
+      .then(() => {
+        this.fetchUsersForGroup(groupId);
+      });
+  }
+
   fetchAllTags() {
     fetch('/super/tags', {
       headers: {
@@ -108,6 +128,19 @@ export default class GroupApp extends React.Component {
       .then((res) => {
         this.setState(Object.assign({}, this.state, {
           tags: res,
+        }));
+      });
+  }
+
+  fetchAllUsers() {
+    fetch('/super/users', {
+      headers: {
+        Accept: 'application/json',
+      },
+    }).then(res => res.json())
+      .then((res) => {
+        this.setState(Object.assign({}, this.state, {
+          users: res.users,
         }));
       });
   }
@@ -129,6 +162,7 @@ export default class GroupApp extends React.Component {
       .then((res) => {
         this.setState(Object.assign({}, this.state, {
           assignedUsers: res,
+          selectedGroupId: groupId,
         }));
       });
   }
@@ -139,10 +173,10 @@ export default class GroupApp extends React.Component {
       text: tag.name,
     }));
 
-    const userDlgData = this.state.assignedUsers ? this.state.assignedUsers.map(user => ({
-      id: user,
-      name: user,
-    })) : [];
+    const userDlgData = this.state.users.map(user => ({
+      id: user.id,
+      text: user.name,
+    }));
 
     return (
       <div>
@@ -152,22 +186,27 @@ export default class GroupApp extends React.Component {
           onShowTagsClick={this.handleShowTagsDlg}
           onShowUsersClick={this.handleShowUsersDlg}
         />
-        <MenusDialog
+        <SelectModal
+          title="태그 추가하기"
           show={this.state.showTagsDlg}
           onClose={this.handleCloseTagsDlg}
-          tagId={this.state.selectedGroupId}
+          subjectId={this.state.selectedGroupId}
           loading={this.state.assignedTags == null}
           data={tagDlgData}
-          selected={this.state.assignedTags}
-          disabled={false}
+          selectedItems={this.state.assignedTags}
           onAdd={this.handleAddTag}
           onDelete={this.handleDeleteTag}
         />
-        <UsersDialog
+        <SelectModal
+          title="사용자 추가하기"
           show={this.state.showUsersDlg}
+          onClose={this.handleCloseUsersDlg}
+          subjectId={this.state.selectedGroupId}
           loading={this.state.assignedUsers == null}
           data={userDlgData}
-          onClose={this.handleCloseUsersDlg}
+          selectedItems={this.state.assignedUsers}
+          onAdd={this.handleAddUser}
+          onDelete={this.handleDeleteUser}
         />
       </div>
     );
