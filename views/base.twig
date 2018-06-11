@@ -14,14 +14,25 @@
   {% endblock %}
 
   {% block script %}
-    <script>
-      window.menuItems = {{ menus|json_encode|raw }};
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@ridi/cms-ui@^0.3/dist/cms-ui.var.js"></script>
     <script src="{{ asset('commons.js') }}"></script>
   {% endblock %}
 </head>
 <body>
   <div id="menu_container"></div>
+
+  <script>
+    (function renderMenu() {
+      var menuComponent = CmsUi.Menu;
+      var menuProps = {
+        items: {{ menus|json_encode|raw }}
+      };
+      var menuElement = CmsUi.createElement(menuComponent, menuProps);
+      var menuContainer = document.getElementById('menu_container');
+
+      CmsUi.render(menuElement, menuContainer);
+    })();
+  </script>
 
   <h3>{{ block('title') }}</h3>
   <hr>
