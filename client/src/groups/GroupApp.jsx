@@ -86,16 +86,21 @@ export default class GroupApp extends React.Component {
   }
 
   handleAddTag(groupId, tagId) {
-    axios.post(`/super/groups/${groupId}/tags`, { tag_id: tagId })
-      .then(() => {
-        this.fetchTagsForGroup(groupId);
-      });
+    axios.post(`/super/groups/${groupId}/tags`, {
+      tag_id: tagId,
+    }).then(() => {
+      this.fetchTagsForGroup(groupId);
+    }).catch((err) => {
+      alert(err);
+    });
   }
 
   handleDeleteTag(groupId, tagId) {
     axios.delete(`/super/groups/${groupId}/tags/${tagId}`)
       .then(() => {
         this.fetchTagsForGroup(groupId);
+      }).catch((err) => {
+        alert(err);
       });
   }
 
@@ -103,6 +108,8 @@ export default class GroupApp extends React.Component {
     axios.post(`/super/groups/${groupId}/users`, { user_id: userId })
       .then(() => {
         this.fetchUsersForGroup(groupId);
+      }).catch((err) => {
+        alert(err);
       });
   }
 
@@ -110,6 +117,8 @@ export default class GroupApp extends React.Component {
     axios.delete(`/super/groups/${groupId}/users/${userId}`)
       .then(() => {
         this.fetchUsersForGroup(groupId);
+      }).catch((err) => {
+        alert(err);
       });
   }
 
@@ -122,6 +131,8 @@ export default class GroupApp extends React.Component {
       this.setState(Object.assign({}, this.state, {
         tags: res.data,
       }));
+    }).catch((err) => {
+      alert(err);
     });
   }
 
@@ -134,6 +145,8 @@ export default class GroupApp extends React.Component {
       this.setState(Object.assign({}, this.state, {
         users: res.data.users,
       }));
+    }).catch((err) => {
+      alert(err);
     });
   }
 
@@ -144,6 +157,8 @@ export default class GroupApp extends React.Component {
           assignedTags: res.data,
           selectedGroupId: groupId,
         }));
+      }).catch((err) => {
+        alert(err);
       });
   }
 
@@ -154,6 +169,8 @@ export default class GroupApp extends React.Component {
           usersAssigned: res.data,
           selectedGroupId: groupId,
         }));
+      }).catch((err) => {
+        alert(err);
       });
   }
 

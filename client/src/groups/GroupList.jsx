@@ -25,6 +25,8 @@ export default class GroupList extends React.Component {
         headers: {
           'Content-Type': 'application/json',
         },
+      }).catch((err) => {
+        alert(err);
       });
     });
 
@@ -42,7 +44,7 @@ export default class GroupList extends React.Component {
       const $tr = $(e).parents('tr');
       const groupId = $tr.find('input[name=id]').val();
 
-      return axios.delete(`/super/groups/${groupId}`);
+      return axios.delete(`/super/groups/${groupId}`).catch(err => alert(err));
     });
 
     Promise.all(args).then(() => {
