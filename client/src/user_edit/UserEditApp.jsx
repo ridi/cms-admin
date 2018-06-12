@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import { Button } from 'react-bootstrap';
 import SearchForm from '../components/SearchForm';
 import UserDetailForm from './UserDetailForm';
 import UserGroupForm from './UserGroupForm';
@@ -25,10 +26,7 @@ class UserEditApp extends React.Component {
       return;
     }
 
-    fetch(`/super/users/${id}`, {
-      method: 'DELETE',
-      credentials: 'include',
-    }).then(() => {
+    axios.delete(`/super/users/${id}`).then(() => {
       alert('성공적으로 삭제되었습니다.');
       window.location.href = '/super/users';
     }).catch(e => alert(e));

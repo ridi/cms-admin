@@ -56,7 +56,10 @@ SelectModal.propTypes = {
   subjectId: PropTypes.number.isRequired,
   show: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
-  selectedItems: PropTypes.arrayOf(PropTypes.number),
+  selectedItems: PropTypes.arrayOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ])),
   disabled: PropTypes.bool,
   data: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.oneOfType([

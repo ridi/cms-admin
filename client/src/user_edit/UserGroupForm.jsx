@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import Select2Input from '../components/Select2Input';
 
 class UserGroupForm extends React.Component {
@@ -26,14 +27,14 @@ class UserGroupForm extends React.Component {
   }
 
   async fetchAllGroups() {
-    const res = await fetch('/super/groups', {
+    const { data } = await axios.get('/super/groups', {
       headers: {
         Accept: 'application/json',
       },
     });
-    const groups = await res.json();
+
     this.setState({
-      groups: groups.map(group => ({ id: group.id, text: group.name })),
+      groups: data.map(group => ({ id: group.id, text: group.name })),
     });
   }
 
@@ -41,39 +42,39 @@ class UserGroupForm extends React.Component {
     this.setState({
       groupsFetching: true,
     });
-    const res = await fetch(`/super/users/${this.props.id}/groups`, {
+
+    const { data } = await axios.get(`/super/users/${this.props.id}/groups`, {
       headers: {
         Accept: 'application/json',
       },
     });
-    const groups = await res.json();
     this.setState({
-      groupsAssigned: groups || [],
+      groupsAssigned: data || [],
       groupsFetching: false,
     });
   }
 
   async fetchAllTags() {
-    const res = await fetch('/super/tags', {
+    const { data } = await axios.get('/super/tags', {
       headers: {
         Accept: 'application/json',
       },
     });
-    const tags = await res.json();
+
     this.setState({
-      tags: tags.map(tag => ({ id: tag.id, text: tag.name })),
+      tags: data.map(tag => ({ id: tag.id, text: tag.name })),
     });
   }
 
   async fetchTagsInheritedFromGroups() {
-    const res = await fetch(`/super/users/${this.props.id}/tags/inherited`, {
+    const { data } = await axios.get(`/super/users/${this.props.id}/tags/inherited`, {
       headers: {
         Accept: 'application/json',
       },
     });
-    const tags = await res.json();
+
     this.setState({
-      tagsInherited: tags,
+      tagsInherited: data,
     });
   }
 
@@ -83,9 +84,7 @@ class UserGroupForm extends React.Component {
       groupsFetching: true,
     });
 
-    await fetch(`/super/groups/${id}/users?user_id=${this.props.id}`, {
-      method: 'POST',
-    });
+    await axios.post(`/super/groups/${id}/users`, { user_id: this.props.id });
     this.fetchTagsInheritedFromGroups();
     this.fetchGroupsAssigned();
   }
@@ -96,9 +95,7 @@ class UserGroupForm extends React.Component {
       groupsFetching: true,
     });
 
-    await fetch(`/super/groups/${id}/users/${this.props.id}`, {
-      method: 'DELETE',
-    });
+    await axios.delete(`/super/groups/${id}/users/${this.props.id}`);
     this.fetchTagsInheritedFromGroups();
     this.fetchGroupsAssigned();
   }

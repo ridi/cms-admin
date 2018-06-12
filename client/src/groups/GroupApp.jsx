@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import GroupCreator from './GroupCreator';
 import GroupList from './GroupList';
 import SelectModal from '../components/SelectModal';
@@ -45,13 +46,10 @@ export default class GroupApp extends React.Component {
       is_use: isUse,
     };
 
-    fetch('/super/groups', {
-      method: 'POST',
+    axios.post('/super/groups', data, {
       headers: {
-        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
-      credentials: 'include',
-      body: JSON.stringify(data),
     }).then(() => {
       window.location.reload();
     });
@@ -88,80 +86,72 @@ export default class GroupApp extends React.Component {
   }
 
   handleAddTag(groupId, tagId) {
-    fetch(`/super/groups/${groupId}/tags?tag_id=${tagId}`, { method: 'POST' })
-      .then(res => res.json())
+    axios.post(`/super/groups/${groupId}/tags`, { tag_id: tagId })
       .then(() => {
         this.fetchTagsForGroup(groupId);
       });
   }
 
   handleDeleteTag(groupId, tagId) {
-    fetch(`/super/groups/${groupId}/tags/${tagId}`, { method: 'DELETE' })
-      .then(res => res.json())
+    axios.delete(`/super/groups/${groupId}/tags/${tagId}`)
       .then(() => {
         this.fetchTagsForGroup(groupId);
       });
   }
 
   handleAddUser(groupId, userId) {
-    fetch(`/super/groups/${groupId}/users?user_id=${userId}`, { method: 'POST' })
-      .then(res => res.json())
+    axios.post(`/super/groups/${groupId}/users`, { user_id: userId })
       .then(() => {
         this.fetchUsersForGroup(groupId);
       });
   }
 
   handleDeleteUser(groupId, userId) {
-    fetch(`/super/groups/${groupId}/users/${userId}`, { method: 'DELETE' })
-      .then(res => res.json())
+    axios.delete(`/super/groups/${groupId}/users/${userId}`)
       .then(() => {
         this.fetchUsersForGroup(groupId);
       });
   }
 
   fetchAllTags() {
-    fetch('/super/tags', {
+    axios.get('/super/tags', {
       headers: {
         Accept: 'application/json',
       },
-    }).then(res => res.json())
-      .then((res) => {
-        this.setState(Object.assign({}, this.state, {
-          tags: res,
-        }));
-      });
+    }).then((res) => {
+      this.setState(Object.assign({}, this.state, {
+        tags: res.data,
+      }));
+    });
   }
 
   fetchAllUsers() {
-    fetch('/super/users', {
+    axios.get('/super/users', {
       headers: {
         Accept: 'application/json',
       },
-    }).then(res => res.json())
-      .then((res) => {
-        this.setState(Object.assign({}, this.state, {
-          users: res.users,
-        }));
-      });
+    }).then((res) => {
+      this.setState(Object.assign({}, this.state, {
+        users: res.data.users,
+      }));
+    });
   }
 
   fetchTagsForGroup(groupId) {
-    fetch(`/super/groups/${groupId}/tags?is_use=1`)
-      .then(res => res.json())
+    axios.get(`/super/groups/${groupId}/tags?is_use=1`)
       .then((res) => {
         this.setState(Object.assign({}, this.state, {
-          assignedTags: res,
+          assignedTags: res.data,
           selectedGroupId: groupId,
         }));
       });
   }
 
   fetchUsersForGroup(groupId) {
-    fetch(`/super/groups/${groupId}/users?is_use=1`)
-      .then(res => res.json())
+    axios.get(`/super/groups/${groupId}/users?is_use=1`)
       .then((res) => {
         this.setState(Object.assign({}, this.state, {
-          usersAssigned: res,
+          usersAssigned: res.data,
           selectedGroupId: groupId,
         }));
       });

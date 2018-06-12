@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { Button, Table } from 'react-bootstrap';
 
 export default class GroupList extends React.Component {
@@ -20,12 +21,10 @@ export default class GroupList extends React.Component {
         is_use: $tr.find('input[name=is_use]').prop('checked'),
       };
 
-      return fetch(`/super/groups/${groupId}`, {
-        method: 'PUT',
+      return axios.put(`/super/groups/${groupId}`, data, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
       });
     });
 
@@ -43,9 +42,7 @@ export default class GroupList extends React.Component {
       const $tr = $(e).parents('tr');
       const groupId = $tr.find('input[name=id]').val();
 
-      return fetch(`/super/groups/${groupId}`, {
-        method: 'DELETE',
-      });
+      return axios.delete(`/super/groups/${groupId}`);
     });
 
     Promise.all(args).then(() => {
