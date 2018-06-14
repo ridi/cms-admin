@@ -14,19 +14,19 @@ export default class GroupCreator extends React.Component {
 
   handleSave = () => {
     this.props.onCreateGroup(this.state.name, this.state.isUse);
-  }
+  };
 
   handleNameChange = (event) => {
     this.setState({
       name: event.target.value,
     });
-  }
+  };
 
   handleIsUseChange = (event) => {
     this.setState({
       isUse: event.target.value,
     });
-  }
+  };
 
   render() {
     return (
@@ -49,7 +49,7 @@ export default class GroupCreator extends React.Component {
                 <input type="text" className="input-block-level" name="name" value={this.state.name} onChange={this.handleNameChange} />
               </td>
               <td>
-                <select className="input-block-level" name="is_use" value={this.state.isUse} onChange={this.handleIsUseChange} >
+                <select className="input-block-level" name="is_use" value={this.state.isUse} onChange={this.handleIsUseChange}>
                   <option value="1">Y</option>
                   <option value="0">N</option>
                 </select>

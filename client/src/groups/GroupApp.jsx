@@ -38,7 +38,7 @@ export default class GroupApp extends React.Component {
       },
     });
     window.location.reload();
-  }
+  };
 
   handleShowTagsDlg = (groupId) => {
     this.fetchTagsForGroup(groupId);
@@ -46,7 +46,7 @@ export default class GroupApp extends React.Component {
       showTagsDlg: true,
       selectedGroupId: groupId,
     });
-  }
+  };
 
   handleCloseTagsDlg = () => {
     this.setState({
@@ -54,21 +54,21 @@ export default class GroupApp extends React.Component {
       tagsAssigned: null,
       selectedGroupId: 0,
     });
-  }
+  };
 
   handleShowUsersDlg = (groupId) => {
     this.fetchUsersForGroup(groupId);
     this.setState({
       showUsersDlg: true,
     });
-  }
+  };
 
   handleCloseUsersDlg = () => {
     this.setState({
       showUsersDlg: false,
       usersAssigned: null,
     });
-  }
+  };
 
   handleAddTag = async (groupId, tagId) => {
     await axios.post(`/super/groups/${groupId}/tags`, {
@@ -76,25 +76,25 @@ export default class GroupApp extends React.Component {
     });
 
     this.fetchTagsForGroup(groupId);
-  }
+  };
 
   handleDeleteTag = async (groupId, tagId) => {
     await axios.delete(`/super/groups/${groupId}/tags/${tagId}`);
 
     this.fetchTagsForGroup(groupId);
-  }
+  };
 
   handleAddUser = async (groupId, userId) => {
-    await axios.post(`/super/groups/${groupId}/users`, { user_id: userId })
+    await axios.post(`/super/groups/${groupId}/users`, { user_id: userId });
 
     this.fetchUsersForGroup(groupId);
-  }
+  };
 
   handleDeleteUser = async (groupId, userId) => {
-    await axios.delete(`/super/groups/${groupId}/users/${userId}`)
+    await axios.delete(`/super/groups/${groupId}/users/${userId}`);
 
     this.fetchUsersForGroup(groupId);
-  }
+  };
 
   fetchAllTags = async () => {
     const res = await axios.get('/super/tags', {
@@ -106,7 +106,7 @@ export default class GroupApp extends React.Component {
     this.setState({
       tags: res.data,
     });
-  }
+  };
 
   fetchAllUsers = async () => {
     const res = await axios.get('/super/users', {
@@ -121,7 +121,7 @@ export default class GroupApp extends React.Component {
     this.setState({
       users: res.data.users,
     });
-  }
+  };
 
   fetchTagsForGroup = async (groupId) => {
     const res = await axios.get(`/super/groups/${groupId}/tags?is_use=1`);
@@ -130,7 +130,7 @@ export default class GroupApp extends React.Component {
       tagsAssigned: res.data,
       selectedGroupId: groupId,
     });
-  }
+  };
 
   fetchUsersForGroup = async (groupId) => {
     const res = await axios.get(`/super/groups/${groupId}/users?is_use=1`);
@@ -139,7 +139,7 @@ export default class GroupApp extends React.Component {
       usersAssigned: res.data,
       selectedGroupId: groupId,
     });
-  }
+  };
 
   render() {
     const tagDlgData = this.state.tags.map(tag => ({
