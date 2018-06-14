@@ -26,19 +26,18 @@ export default class GroupApp extends React.Component {
     this.fetchAllUsers();
   }
 
-  handleCreateGroup = (name, isUse) => {
+  handleCreateGroup = async (name, isUse) => {
     const data = {
       name,
       is_use: isUse,
     };
 
-    axios.post('/super/groups', data, {
+    await axios.post('/super/groups', data, {
       headers: {
         Accept: 'application/json',
       },
-    }).then(() => {
-      window.location.reload();
     });
+    window.location.reload();
   }
 
   handleShowTagsDlg = (groupId) => {
@@ -71,96 +70,75 @@ export default class GroupApp extends React.Component {
     });
   }
 
-  handleAddTag = (groupId, tagId) => {
-    axios.post(`/super/groups/${groupId}/tags`, {
+  handleAddTag = async (groupId, tagId) => {
+    await axios.post(`/super/groups/${groupId}/tags`, {
       tag_id: tagId,
-    }).then(() => {
-      this.fetchTagsForGroup(groupId);
-    }).catch((err) => {
-      alert(err);
     });
+
+    this.fetchTagsForGroup(groupId);
   }
 
-  handleDeleteTag = (groupId, tagId) => {
-    axios.delete(`/super/groups/${groupId}/tags/${tagId}`)
-      .then(() => {
-        this.fetchTagsForGroup(groupId);
-      }).catch((err) => {
-        alert(err);
-      });
+  handleDeleteTag = async (groupId, tagId) => {
+    await axios.delete(`/super/groups/${groupId}/tags/${tagId}`);
+
+    this.fetchTagsForGroup(groupId);
   }
 
-  handleAddUser = (groupId, userId) => {
-    axios.post(`/super/groups/${groupId}/users`, { user_id: userId })
-      .then(() => {
-        this.fetchUsersForGroup(groupId);
-      }).catch((err) => {
-        alert(err);
-      });
+  handleAddUser = async (groupId, userId) => {
+    await axios.post(`/super/groups/${groupId}/users`, { user_id: userId })
+
+    this.fetchUsersForGroup(groupId);
   }
 
-  handleDeleteUser = (groupId, userId) => {
-    axios.delete(`/super/groups/${groupId}/users/${userId}`)
-      .then(() => {
-        this.fetchUsersForGroup(groupId);
-      }).catch((err) => {
-        alert(err);
-      });
+  handleDeleteUser = async (groupId, userId) => {
+    await axios.delete(`/super/groups/${groupId}/users/${userId}`)
+
+    this.fetchUsersForGroup(groupId);
   }
 
-  fetchAllTags = () => {
-    axios.get('/super/tags', {
+  fetchAllTags = async () => {
+    const res = await axios.get('/super/tags', {
       headers: {
         Accept: 'application/json',
       },
-    }).then((res) => {
-      this.setState({
-        tags: res.data,
-      });
-    }).catch((err) => {
-      alert(err);
+    });
+
+    this.setState({
+      tags: res.data,
     });
   }
 
-  fetchAllUsers = () => {
-    axios.get('/super/users', {
+  fetchAllUsers = async () => {
+    const res = await axios.get('/super/users', {
       headers: {
         Accept: 'application/json',
       },
       params: {
         per_page: 999,
       },
-    }).then((res) => {
-      this.setState({
-        users: res.data.users,
-      });
-    }).catch((err) => {
-      alert(err);
+    });
+
+    this.setState({
+      users: res.data.users,
     });
   }
 
-  fetchTagsForGroup = (groupId) => {
-    axios.get(`/super/groups/${groupId}/tags?is_use=1`)
-      .then((res) => {
-        this.setState({
-          tagsAssigned: res.data,
-          selectedGroupId: groupId,
-        });
-      }).catch((err) => {
-        alert(err);
-      });
+  fetchTagsForGroup = async (groupId) => {
+    const res = await axios.get(`/super/groups/${groupId}/tags?is_use=1`);
+
+    this.setState({
+      tagsAssigned: res.data,
+      selectedGroupId: groupId,
+    });
   }
 
-  fetchUsersForGroup = (groupId) => {
-    axios.get(`/super/groups/${groupId}/users?is_use=1`)
-      .then((res) => {
-        this.setState({
-          usersAssigned: res.data,
-          selectedGroupId: groupId,
-        });
-      }).catch((err) => {
-        alert(err);
-      });
+  fetchUsersForGroup = async (groupId) => {
+    const res = await axios.get(`/super/groups/${groupId}/users?is_use=1`);
+
+    this.setState({
+      usersAssigned: res.data,
+      selectedGroupId: groupId,
+    });
   }
 
   render() {
