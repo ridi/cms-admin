@@ -19,20 +19,6 @@ export default class GroupApp extends React.Component {
       usersAssigned: null,
       selectedGroupId: 0,
     };
-
-    this.handleShowTagsDlg = this.handleShowTagsDlg.bind(this);
-    this.handleCloseTagsDlg = this.handleCloseTagsDlg.bind(this);
-    this.handleShowUsersDlg = this.handleShowUsersDlg.bind(this);
-    this.handleCloseUsersDlg = this.handleCloseUsersDlg.bind(this);
-    this.handleCreateGroup = this.handleCreateGroup.bind(this);
-    this.handleAddTag = this.handleAddTag.bind(this);
-    this.handleDeleteTag = this.handleDeleteTag.bind(this);
-    this.handleAddUser = this.handleAddUser.bind(this);
-    this.handleDeleteUser = this.handleDeleteUser.bind(this);
-    this.fetchTagsForGroup = this.fetchTagsForGroup.bind(this);
-    this.fetchUsersForGroup = this.fetchUsersForGroup.bind(this);
-    this.fetchAllTags = this.fetchAllTags.bind(this);
-    this.fetchAllUsers = this.fetchAllUsers.bind(this);
   }
 
   async componentDidMount() {
@@ -40,7 +26,7 @@ export default class GroupApp extends React.Component {
     this.fetchAllUsers();
   }
 
-  handleCreateGroup(name, isUse) {
+  handleCreateGroup = (name, isUse) => {
     const data = {
       name,
       is_use: isUse,
@@ -55,7 +41,7 @@ export default class GroupApp extends React.Component {
     });
   }
 
-  handleShowTagsDlg(groupId) {
+  handleShowTagsDlg = (groupId) => {
     this.fetchTagsForGroup(groupId);
     this.setState({
       showTagsDlg: true,
@@ -63,29 +49,29 @@ export default class GroupApp extends React.Component {
     });
   }
 
-  handleCloseTagsDlg() {
+  handleCloseTagsDlg = () => {
     this.setState({
       showTagsDlg: false,
-      assignedTags: null,
+      tagsAssigned: null,
       selectedGroupId: 0,
     });
   }
 
-  handleShowUsersDlg(groupId) {
+  handleShowUsersDlg = (groupId) => {
     this.fetchUsersForGroup(groupId);
     this.setState({
       showUsersDlg: true,
     });
   }
 
-  handleCloseUsersDlg() {
+  handleCloseUsersDlg = () => {
     this.setState({
       showUsersDlg: false,
       usersAssigned: null,
     });
   }
 
-  handleAddTag(groupId, tagId) {
+  handleAddTag = (groupId, tagId) => {
     axios.post(`/super/groups/${groupId}/tags`, {
       tag_id: tagId,
     }).then(() => {
@@ -95,7 +81,7 @@ export default class GroupApp extends React.Component {
     });
   }
 
-  handleDeleteTag(groupId, tagId) {
+  handleDeleteTag = (groupId, tagId) => {
     axios.delete(`/super/groups/${groupId}/tags/${tagId}`)
       .then(() => {
         this.fetchTagsForGroup(groupId);
@@ -104,7 +90,7 @@ export default class GroupApp extends React.Component {
       });
   }
 
-  handleAddUser(groupId, userId) {
+  handleAddUser = (groupId, userId) => {
     axios.post(`/super/groups/${groupId}/users`, { user_id: userId })
       .then(() => {
         this.fetchUsersForGroup(groupId);
@@ -113,7 +99,7 @@ export default class GroupApp extends React.Component {
       });
   }
 
-  handleDeleteUser(groupId, userId) {
+  handleDeleteUser = (groupId, userId) => {
     axios.delete(`/super/groups/${groupId}/users/${userId}`)
       .then(() => {
         this.fetchUsersForGroup(groupId);
@@ -122,53 +108,56 @@ export default class GroupApp extends React.Component {
       });
   }
 
-  fetchAllTags() {
+  fetchAllTags = () => {
     axios.get('/super/tags', {
       headers: {
         Accept: 'application/json',
       },
     }).then((res) => {
-      this.setState(Object.assign({}, this.state, {
+      this.setState({
         tags: res.data,
-      }));
+      });
     }).catch((err) => {
       alert(err);
     });
   }
 
-  fetchAllUsers() {
+  fetchAllUsers = () => {
     axios.get('/super/users', {
       headers: {
         Accept: 'application/json',
       },
+      params: {
+        per_page: 999,
+      },
     }).then((res) => {
-      this.setState(Object.assign({}, this.state, {
+      this.setState({
         users: res.data.users,
-      }));
+      });
     }).catch((err) => {
       alert(err);
     });
   }
 
-  fetchTagsForGroup(groupId) {
+  fetchTagsForGroup = (groupId) => {
     axios.get(`/super/groups/${groupId}/tags?is_use=1`)
       .then((res) => {
-        this.setState(Object.assign({}, this.state, {
-          assignedTags: res.data,
+        this.setState({
+          tagsAssigned: res.data,
           selectedGroupId: groupId,
-        }));
+        });
       }).catch((err) => {
         alert(err);
       });
   }
 
-  fetchUsersForGroup(groupId) {
+  fetchUsersForGroup = (groupId) => {
     axios.get(`/super/groups/${groupId}/users?is_use=1`)
       .then((res) => {
-        this.setState(Object.assign({}, this.state, {
+        this.setState({
           usersAssigned: res.data,
           selectedGroupId: groupId,
-        }));
+        });
       }).catch((err) => {
         alert(err);
       });
@@ -198,9 +187,9 @@ export default class GroupApp extends React.Component {
           show={this.state.showTagsDlg}
           onClose={this.handleCloseTagsDlg}
           subjectId={this.state.selectedGroupId}
-          loading={this.state.assignedTags == null}
+          loading={this.state.tagsAssigned == null}
           data={tagDlgData}
-          selectedItems={this.state.assignedTags}
+          selectedItems={this.state.tagsAssigned}
           onAdd={this.handleAddTag}
           onDelete={this.handleDeleteTag}
         />

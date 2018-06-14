@@ -6,27 +6,23 @@ export default class GroupCreator extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleSave = this.handleSave.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleIsUseChange = this.handleIsUseChange.bind(this);
-
     this.state = {
       name: '',
       isUse: '1',
     };
   }
 
-  handleSave() {
+  handleSave = () => {
     this.props.onCreateGroup(this.state.name, this.state.isUse);
   }
 
-  handleNameChange(event) {
+  handleNameChange = (event) => {
     this.setState({
       name: event.target.value,
     });
   }
 
-  handleIsUseChange(event) {
+  handleIsUseChange = (event) => {
     this.setState({
       isUse: event.target.value,
     });

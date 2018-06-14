@@ -7,9 +7,6 @@ class UserGroupForm extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleGroupAdd = this.handleGroupAdd.bind(this);
-    this.handleGroupRemove = this.handleGroupRemove.bind(this);
-
     this.state = {
       groups: null,
       groupsAssigned: [],
@@ -78,7 +75,7 @@ class UserGroupForm extends React.Component {
     });
   }
 
-  async handleGroupAdd(id) {
+  handleGroupAdd = async (id) => {
     this.setState({
       tagsInherited: null,
       groupsFetching: true,
@@ -89,7 +86,7 @@ class UserGroupForm extends React.Component {
     this.fetchGroupsAssigned();
   }
 
-  async handleGroupRemove(id) {
+  handleGroupRemove = async (id) => {
     this.setState({
       tagsInherited: null,
       groupsFetching: true,
