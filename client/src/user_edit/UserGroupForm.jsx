@@ -31,7 +31,7 @@ class UserGroupForm extends React.Component {
     });
 
     this.setState({
-      groups: data.map(group => ({ id: group.id, text: group.name })),
+      groups: data && data.map(group => ({ id: group.id, text: group.name })),
     });
   }
 
@@ -59,7 +59,7 @@ class UserGroupForm extends React.Component {
     });
 
     this.setState({
-      tags: data.map(tag => ({ id: tag.id, text: tag.name })),
+      tags: data && data.map(tag => ({ id: tag.id, text: tag.name })),
     });
   }
 
