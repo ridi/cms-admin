@@ -58,7 +58,7 @@ export default class GroupList extends React.Component {
         <tr>
           <th />
           <th>ID</th>
-          <th>태그 이름</th>
+          <th>그룹 이름</th>
           <th>생성자</th>
           <th>사용 여부</th>
           <th>최초 생성일</th>
