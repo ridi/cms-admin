@@ -32,6 +32,16 @@ class AdminUser extends Model
         );
     }
 
+    public function tags_group_joined()
+    {
+        return $this->belongsToMany(
+            AdminTag::class,
+            'v_admin2_user_tag_group_joined',
+            'user_id',
+            'tag_id'
+        );
+    }
+
     public function menus()
     {
         return $this->belongsToMany(
@@ -39,6 +49,16 @@ class AdminUser extends Model
             'tb_admin2_user_menu',
             'user_id',
             'menu_id'
+        );
+    }
+
+    public function groups()
+    {
+        return $this->belongsToMany(
+            AdminGroup::class,
+            'tb_admin2_group_user',
+            'user_id',
+            'group_id'
         );
     }
 

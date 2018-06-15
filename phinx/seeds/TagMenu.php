@@ -19,9 +19,22 @@ class TagMenu extends AbstractSeed
             [
                 'tag_id' => 1,
                 'menu_id' => 4,
-            ],[
+            ],
+            [
                 'tag_id' => 1,
                 'menu_id' => 5,
+            ],
+            [
+                'tag_id' => 1,
+                'menu_id' => 6,
+            ],
+            [
+                'tag_id' => 2,
+                'menu_id' => 7,
+            ],
+            [
+                'tag_id' => 1,
+                'menu_id' => 8,
             ],
         ];
 

@@ -1,8 +1,10 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import { Button } from 'react-bootstrap';
 import SearchForm from '../components/SearchForm';
 import UserDetailForm from './UserDetailForm';
+import UserGroupForm from './UserGroupForm';
 import UserPermissionForm from './UserPermissionForm';
 import UserCpForm from './UserCpForm';
 
@@ -24,10 +26,7 @@ class UserEditApp extends React.Component {
       return;
     }
 
-    fetch(`/super/users/${id}`, {
-      method: 'DELETE',
-      credentials: 'include',
-    }).then(() => {
+    axios.delete(`/super/users/${id}`).then(() => {
       alert('성공적으로 삭제되었습니다.');
       window.location.href = '/super/users';
     }).catch(e => alert(e));
@@ -50,6 +49,16 @@ class UserEditApp extends React.Component {
     const isUse = userDetail.is_use;
     return (
       <UserDetailForm id={id} name={name} team={team} isUse={isUse} />
+    );
+  }
+
+  renderGroupFrom() {
+    if (!this.props.userDetail || !this.props.userDetail.id) {
+      return null;
+    }
+
+    return (
+      <UserGroupForm id={this.props.userDetail.id} />
     );
   }
 
@@ -96,6 +105,7 @@ class UserEditApp extends React.Component {
 
         <div className="col-xs-12 col-md-6">
           {this.renderDetailForm()}
+          {this.renderGroupFrom()}
         </div>
 
         <div className="col-xs-12 col-md-6">

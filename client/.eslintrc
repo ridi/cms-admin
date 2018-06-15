@@ -8,6 +8,7 @@
   },
   "rules": {
     "no-alert": 0,
-    "jsx-a11y/label-has-for": 0
+    "jsx-a11y/label-has-for": 0,
+    "class-methods-use-this": 0
   }
 }

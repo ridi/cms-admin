@@ -24,6 +24,8 @@ class UserControllerProvider implements ControllerProviderInterface
         $controllers->delete('/users/{user_id}', [$this, 'deleteUser']);
         $controllers->post('/users/{user_id}/permissions', [$this, 'updateUserPermissions']);
         $controllers->get('/users/{user_id}/logs/permissions', [$this, 'permissionLogs']);
+        $controllers->get('/users/{user_id}/tags/inherited', [$this, 'getTagsInherited']);
+        $controllers->get('/users/{user_id}/groups', [$this, 'getGroups']);
 
         return $controllers;
     }
@@ -168,5 +170,17 @@ class UserControllerProvider implements ControllerProviderInterface
     {
         $logs = AdminUserService::permissionLogs($user_id);
         return $app->json($logs);
+    }
+
+    public function getTagsInherited(CmsApplication $app, $user_id)
+    {
+        $tags = AdminUserService::getTagsInheritedFromGroups($user_id);
+        return $app->json($tags);
+    }
+
+    public function getGroups(CmsApplication $app, $user_id)
+    {
+        $groups = AdminUserService::getAdminGroups($user_id);
+        return $app->json($groups);
     }
 }

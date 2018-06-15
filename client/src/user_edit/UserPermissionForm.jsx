@@ -108,11 +108,7 @@ class UserPermissionForm extends React.Component {
     form.append('tag_ids', this.state.tags.join(','));
     form.append('menu_ids', this.state.menus.join(','));
 
-    fetch(`/super/users/${this.props.id}/permissions`, {
-      method: 'POST',
-      credentials: 'include',
-      body: form,
-    }).then(() => {
+    axios.post(`/super/users/${this.props.id}/permissions`, form).then(() => {
       alert('성공적으로 업데이트 되었습니다.');
     }).catch(err => alert(err));
   }
