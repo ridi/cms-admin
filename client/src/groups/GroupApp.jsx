@@ -17,6 +17,8 @@ export default class GroupApp extends React.Component {
       users: [],
       tagsAssigned: null,
       usersAssigned: null,
+      tagsLock: false,
+      usersLock: false,
       selectedGroupId: 0,
     };
   }
@@ -70,30 +72,48 @@ export default class GroupApp extends React.Component {
     });
   };
 
-  handleAddTag = async (groupId, tagId) => {
-    await axios.post(`/super/groups/${groupId}/tags`, {
-      tag_id: tagId,
-    });
+  lockState = async (operation, stateKey) => {
+    this.setState({ [stateKey] : true });
+    await operation();
+    this.setState({ [stateKey] : false });
+  }
 
-    this.fetchTagsForGroup(groupId);
+  handleAddTag = async (groupId, tagId) => {
+    this.lockState(async () => {
+      await axios.post(`/super/groups/${groupId}/tags`, {
+        tag_id: tagId,
+      });
+      this.setState((prevState) => {
+        return { tagsAssigned: [...prevState.tagsAssigned, tagId] };
+      });
+    }, 'tagsLock');
   };
 
   handleDeleteTag = async (groupId, tagId) => {
-    await axios.delete(`/super/groups/${groupId}/tags/${tagId}`);
-
-    this.fetchTagsForGroup(groupId);
+    this.lockState(async () => {
+      await axios.delete(`/super/groups/${groupId}/tags/${tagId}`);
+      this.setState((prevState) => {
+        return { tagsAssigned: prevState.tagsAssigned.filter(tag => tag !== tagId) };
+      });
+    }, 'tagsLock');
   };
 
   handleAddUser = async (groupId, userId) => {
-    await axios.post(`/super/groups/${groupId}/users`, { user_id: userId });
-
-    this.fetchUsersForGroup(groupId);
+    this.lockState(async () => {
+      await axios.post(`/super/groups/${groupId}/users`, { user_id: userId });
+      this.setState((prevState) => {
+        return { usersAssigned: [...prevState.usersAssigned, userId] };
+      });
+    }, 'usersLock');
   };
 
   handleDeleteUser = async (groupId, userId) => {
-    await axios.delete(`/super/groups/${groupId}/users/${userId}`);
-
-    this.fetchUsersForGroup(groupId);
+    this.lockState(async () => {
+      await axios.delete(`/super/groups/${groupId}/users/${userId}`);
+      this.setState((prevState) => {
+        return { usersAssigned: prevState.usersAssigned.filter(user => user !== userId) };
+      });
+    }, 'usersLock');
   };
 
   fetchAllTags = async () => {
@@ -166,6 +186,7 @@ export default class GroupApp extends React.Component {
           onClose={this.handleCloseTagsDlg}
           subjectId={this.state.selectedGroupId}
           loading={this.state.tagsAssigned == null}
+          disabled={this.state.tagsLock}
           data={tagDlgData}
           selectedItems={this.state.tagsAssigned}
           onAdd={this.handleAddTag}
@@ -177,6 +198,7 @@ export default class GroupApp extends React.Component {
           onClose={this.handleCloseUsersDlg}
           subjectId={this.state.selectedGroupId}
           loading={this.state.usersAssigned == null}
+          disabled={this.state.usersLock}
           data={userDlgData}
           selectedItems={this.state.usersAssigned}
           onAdd={this.handleAddUser}
