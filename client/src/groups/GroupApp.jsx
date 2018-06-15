@@ -164,7 +164,7 @@ export default class GroupApp extends React.Component {
   render() {
     const tagDlgData = this.state.tags.map(tag => ({
       id: tag.id,
-      text: tag.name,
+      text: tag.display_name,
     }));
 
     const userDlgData = this.state.users.map(user => ({

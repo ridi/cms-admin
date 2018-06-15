@@ -59,7 +59,7 @@ class UserGroupForm extends React.Component {
     });
 
     this.setState({
-      tags: data && data.map(tag => ({ id: tag.id, text: tag.name })),
+      tags: data && data.map(tag => ({ id: tag.id, text: tag.display_name })),
     });
   }
 
