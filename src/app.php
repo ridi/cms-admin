@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use JG\Silex\Provider\CapsuleServiceProvider;
 use Moriony\Silex\Provider\SentryServiceProvider;
-use Ridibooks\Cms\Admin\WebpackManifestVersionStrategy;
+use Ridibooks\Cms\Admin\Lib\WebpackManifestVersionStrategy;
 use Ridibooks\Cms\CmsApplication;
 use Symfony\Component\Asset\PathPackage;
 use Symfony\Component\HttpFoundation\Request;

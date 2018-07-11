@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Ridibooks\Cms\Admin;
+namespace Ridibooks\Cms\Admin\Lib;
 
 use Symfony\Component\Asset\VersionStrategy\VersionStrategyInterface;
 

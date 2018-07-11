@@ -1,9 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Ridibooks\Cms\Admin;
+namespace Ridibooks\Cms\Admin\Test\Service;
 
 use PHPUnit\Framework\TestCase;
+use Ridibooks\Cms\Admin\Service\GroupService;
+use Ridibooks\Cms\Admin\Service\UserService;
 
 class UserServiceTest extends TestCase
 {

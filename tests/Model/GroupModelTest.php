@@ -1,9 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Ridibooks\Cms\Admin\Model;
+namespace Ridibooks\Cms\Admin\Test\Model;
 
 use PHPUnit\Framework\TestCase;
+use Ridibooks\Cms\Admin\Model\AdminGroup;
+use Ridibooks\Cms\Admin\Model\AdminUser;
+use Ridibooks\Cms\Admin\Model\AdminTag;
 
 class GroupModelTest extends TestCase
 {

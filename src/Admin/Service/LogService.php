@@ -1,5 +1,5 @@
 <?php
-namespace Ridibooks\Cms\Admin;
+namespace Ridibooks\Cms\Admin\Service;
 
 use Illuminate\Database\Capsule\Manager as DB;
 use Ridibooks\Cms\Admin\Model\AdminUser;

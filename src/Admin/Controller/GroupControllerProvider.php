@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Ridibooks\Cms\Admin\Controller;
 
-use Ridibooks\Cms\Admin\GroupService;
+use Ridibooks\Cms\Admin\Service\GroupService;
 use Ridibooks\Cms\CmsApplication;
 use Silex\Application;
 use Silex\Api\ControllerProviderInterface;

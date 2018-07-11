@@ -1,5 +1,5 @@
 <?php
-namespace Ridibooks\Cms\Admin;
+namespace Ridibooks\Cms\Admin\Service;
 
 use Ridibooks\Cms\Admin\Model\AdminTag;
 use Ridibooks\Cms\Auth\LoginService;

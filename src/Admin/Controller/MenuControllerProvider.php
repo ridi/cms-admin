@@ -2,7 +2,7 @@
 namespace Ridibooks\Cms\Admin\Controller;
 
 use Moriony\Silex\Provider\SentryServiceProvider;
-use Ridibooks\Cms\Admin\MenuService as AdminMenuService;
+use Ridibooks\Cms\Admin\Service\MenuService as AdminMenuService;
 use Ridibooks\Cms\CmsApplication;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
