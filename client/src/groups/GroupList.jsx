@@ -59,12 +59,12 @@ export default class GroupList extends React.Component {
           <th />
           <th>ID</th>
           <th>그룹 이름</th>
-          <th>생성자</th>
-          <th>사용 여부</th>
-          <th>최초 생성일</th>
-          <th>최근 수정일</th>
           <th>부여된 태그</th>
           <th>사용자</th>
+          <th>사용 여부</th>
+          <th>생성자</th>
+          <th>최초 생성일</th>
+          <th>최근 수정일</th>
         </tr>
       </thead>
     );
@@ -89,18 +89,18 @@ export default class GroupList extends React.Component {
                 </td>
                 <td>{id}</td>
                 <td><input type="text" className="input-block-level" name="name" defaultValue={name} /></td>
-                <td>{creator}</td>
-                <td>
-                  <input type="checkbox" className="input-block-level" name="is_use" defaultChecked={is_use} />
-                </td>
-                <td>{created_at}</td>
-                <td>{updated_at}</td>
                 <td>
                   <Button onClick={() => onShowTagsClick(id)}>보기</Button>
                 </td>
                 <td>
                   <Button onClick={() => onShowUsersClick(id)}>보기</Button>
                 </td>
+                <td>
+                  <input type="checkbox" className="input-block-level" name="is_use" defaultChecked={is_use} />
+                </td>
+                <td>{creator}</td>
+                <td>{created_at}</td>
+                <td>{updated_at}</td>
               </tr>
             );
           })

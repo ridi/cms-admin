@@ -75,13 +75,13 @@ export default class TagList extends React.Component {
             <col width="20" />
             <col width="" />
             <col width="" />
+            <col width="90" />
+            <col width="90" />
+            <col width="90" />
             <col width="80" />
             <col width="80" />
             <col width="140" />
             <col width="140" />
-            <col width="90" />
-            <col width="90" />
-            <col width="90" />
           </colgroup>
           <thead>
             <tr>
@@ -89,13 +89,13 @@ export default class TagList extends React.Component {
               <th>ID</th>
               <th>태그 이름</th>
               <th>표시 이름</th>
-              <th>생성자</th>
-              <th>사용 여부</th>
-              <th>최초 생성일</th>
-              <th>최근 수정일</th>
               <th>포함된 메뉴</th>
               <th>사용 중인<br />활성화 계정</th>
               <th>사용 중인<br />비활성화 계정</th>
+              <th>사용 여부</th>
+              <th>생성자</th>
+              <th>최초 생성일</th>
+              <th>최근 수정일</th>
             </tr>
           </thead>
           <tbody>

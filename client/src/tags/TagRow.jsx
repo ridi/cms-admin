@@ -17,12 +17,6 @@ const TagRow = (props) => {
       <td>{id}</td>
       <td><input type="text" className="input-block-level" name="name" defaultValue={name} /></td>
       <td><input type="text" className="input-block-level" name="display_name" defaultValue={displayName} /></td>
-      <td>{creator}</td>
-      <td>
-        <input type="checkbox" className="input-block-level" name="is_use" defaultChecked={isUse} />
-      </td>
-      <td>{createdAt}</td>
-      <td>{updatedAt}</td>
       <td>
         <Button onClick={onMenusCountClick}>{menusCount}</Button>
       </td>
@@ -32,6 +26,12 @@ const TagRow = (props) => {
       <td>
         <Button onClick={onInactiveUsersCountClick}>{inactiveUsersCount}</Button>
       </td>
+      <td>
+        <input type="checkbox" className="input-block-level" name="is_use" defaultChecked={isUse} />
+      </td>
+      <td>{creator}</td>
+      <td>{createdAt}</td>
+      <td>{updatedAt}</td>
     </tr>
   );
 };
