@@ -16,7 +16,7 @@
     "symfony/asset": "^3.3",
     "vlucas/phpdotenv": "^2.4",
     "jguyomard/silex-capsule-eloquent": "^2.0",
-    "ridibooks/cms-sdk": "^2.3.3"
+    "ridibooks/cms-sdk": "^2.3.7"
   },
   "require-dev": {
     "robmorgan/phinx": "^0.8.0",
