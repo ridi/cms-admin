@@ -81,6 +81,9 @@ export default class MenuTree extends React.Component {
             <button className="btn btn-default">사용자 보기</button>
             <button className="btn btn-default">태그 보기</button>
           </div>
+          {node.isModified && (
+            <div className="message">변경 됨</div>
+          )}
         </div>,
       ],
     };

@@ -13,3 +13,7 @@ body {
   margin: -1rem;
   margin-top: -20px;
 }
+
+#content > .menus {
+  height: 100%;
+}

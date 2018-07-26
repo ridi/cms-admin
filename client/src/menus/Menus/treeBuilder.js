@@ -33,8 +33,20 @@ export const buildMenuTrees = (menus) => {
 };
 
 export const flattenMenuTrees = (nodes) => {
-  return _.flatMapDeep(nodes, node => ([
-    _.omit(node, 'children'),
-    flattenMenuTrees(node.children),
-  ]));
+  const menus = _.flatMapDeep(nodes, node => {
+    const children = _.map(node.children, child => ({
+      ...child,
+      depth: node.depth + 1,
+    }));
+
+    return [
+      _.omit(node, 'children'),
+      flattenMenuTrees(children),
+    ];
+  });
+
+  return _.map(menus, (menu, index) => ({
+    ...menu,
+    order: index,
+  }));
 };
