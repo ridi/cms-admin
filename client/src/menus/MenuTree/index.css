@@ -1,0 +1,28 @@
+.menu_tree .menu_tree__item.depth_0 .rst__rowContents {
+  background: #dff0d8;
+}
+
+.menu_tree .menu_tree__item:not(.is_show) .rst__rowContents {
+  background: #fcf8e3;
+}
+
+.menu_tree .menu_tree__item:not(.is_use) .rst__rowContents {
+  background: #f2dede;
+}
+
+.menu_tree .menu_tree__item .toolbar > * {
+  display: inline-block;
+}
+
+.menu_tree .menu_tree__item .toolbar > *:not(:last-child) {
+  margin-right: .5rem;
+}
+
+.menu_tree .menu_tree__item .toolbar input[type="checkbox"] {
+  margin: 0 .25rem;
+}
+
+.menu_tree .menu_tree__item .toolbar .checkbox-group > *:not(:last-child),
+.menu_tree .menu_tree__item .toolbar .button-group > *:not(:last-child) {
+  margin-right: .25rem;
+}

@@ -5,3 +5,7 @@ html {
 body {
   padding: 1rem;
 }
+
+label {
+  cursor: pointer;
+}

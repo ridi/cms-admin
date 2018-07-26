@@ -34,8 +34,10 @@
     })();
   </script>
 
-  <h3>{{ block('title') }}</h3>
-  <hr>
+  <div>
+    <h3>{{ block('title') }}</h3>
+    <hr>
+  </div>
 
   {% for type, messages in app.flashes %}
     {% for message in messages %}
