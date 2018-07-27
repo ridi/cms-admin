@@ -46,28 +46,23 @@ class MenuService
             /** @var AdminMenu $adminMenu */
             $adminMenu = AdminMenu::find($menu['id']);
             $old_menu_order = $adminMenu->menu_order;
-            $new_menu_order = $menu['menu_order'];
+            $new_menu_order = $menu['menu_order'] ?? AdminMenu::max('menu_order') + 1; // 입력받은 메뉴 순서값 없을 경우 메뉴 순서값을 max+1 해준다.
 
-            if ($new_menu_order == null) { // 입력받은 메뉴 순서값 없을 경우 메뉴 순서값을 max+1 해준다.
-                $max_order = AdminMenu::max('menu_order');
-                $menu['menu_order'] = $max_order + 1;
-            } else {
-                if (!is_numeric($new_menu_order)) {
-                    throw new \Exception('메뉴 순서는 숫자만 입력 가능합니다.');
-                }
+            if (!is_numeric($new_menu_order)) {
+                throw new \Exception('메뉴 순서는 숫자만 입력 가능합니다.');
+            }
 
-                if (AdminMenu::where('menu_order',
-                    $new_menu_order)->first()
-                ) { //입력받은 메뉴 순서값이 이미 존재하고 있을 경우 메뉴 순서를 재 정렬할 필요가 있다.
-                    if ($old_menu_order > $new_menu_order) { //밑에 있는 메뉴를 위로 올릴때
-                        AdminMenu::where('menu_order', '<', $old_menu_order)
-                            ->where('menu_order', '>=', $new_menu_order)
-                            ->increment('menu_order');
-                    } elseif ($old_menu_order < $new_menu_order) { //위에 있는 메뉴를 아래로 내릴때
-                        AdminMenu::where('menu_order', '>', $old_menu_order)
-                            ->where('menu_order', '<=', $new_menu_order)
-                            ->decrement('menu_order');
-                    }
+            if (AdminMenu::where('menu_order',
+                $new_menu_order)->first()
+            ) { //입력받은 메뉴 순서값이 이미 존재하고 있을 경우 메뉴 순서를 재 정렬할 필요가 있다.
+                if ($old_menu_order > $new_menu_order) { //밑에 있는 메뉴를 위로 올릴때
+                    AdminMenu::where('menu_order', '<', $old_menu_order)
+                        ->where('menu_order', '>=', $new_menu_order)
+                        ->increment('menu_order');
+                } elseif ($old_menu_order < $new_menu_order) { //위에 있는 메뉴를 아래로 내릴때
+                    AdminMenu::where('menu_order', '>', $old_menu_order)
+                        ->where('menu_order', '<=', $new_menu_order)
+                        ->decrement('menu_order');
                 }
             }
 
