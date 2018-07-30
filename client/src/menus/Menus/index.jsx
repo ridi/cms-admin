@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import axios from 'axios';
+import { Button, ButtonToolbar } from 'react-bootstrap';
 import MenuTree from '../MenuTree';
 import { mapMenuToRawMenu, mapRawMenuToMenu } from './menuMapper';
 import { buildMenuTrees, flattenMenuTrees } from './treeBuilder';
@@ -59,15 +60,15 @@ export default class Menus extends React.Component {
           onChange={this.onMenuTreeItemsChange}
         />
 
-        <div className="toolbar btn-group">
-          <button
-            className="btn btn-primary"
+        <ButtonToolbar className="menus__toolbar">
+          <Button
+            bsStyle="primary"
             onClick={this.onSaveButtonClick}
             disabled={this.state.isFetching}
           >
             저장
-          </button>
-        </div>
+          </Button>
+        </ButtonToolbar>
       </div>
     );
   };

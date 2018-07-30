@@ -34,8 +34,8 @@
   margin: 0 .25rem;
 }
 
-.menu_tree .item .toolbar .checkbox-group > *:not(:last-child),
-.menu_tree .item .toolbar .button-group > *:not(:last-child) {
+.menu_tree .item .toolbar .checkbox-group > *,
+.menu_tree .item .toolbar .button-group > * {
   margin: 0 .1rem;
 }
 

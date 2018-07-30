@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import SortableTree, { changeNodeAtPath } from 'react-sortable-tree';
+import { Button } from 'react-bootstrap';
 import AutosizeInput from 'react-input-autosize';
 import './index.css';
 
@@ -85,9 +86,9 @@ export default class MenuTree extends React.Component {
             <NodePropCheckBox node={node} updateNode={updateNode} propKey="isShow">노출</NodePropCheckBox>
           </div>
           <div className="button-group btn-group-xs">
-            <button className="btn btn-default">Ajax 관리</button>
-            <button className="btn btn-default">사용자 보기</button>
-            <button className="btn btn-default">태그 보기</button>
+            <Button>Ajax 관리</Button>
+            <Button>사용자 보기</Button>
+            <Button>태그 보기</Button>
           </div>
           {node.isModified && (
             <div className="message">변경 됨</div>
