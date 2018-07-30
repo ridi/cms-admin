@@ -1,34 +1,45 @@
-.menu_tree .menu_tree__item.depth_0 .rst__rowContents {
+.menu_tree .item.depth_0 .rst__rowContents {
   background: #dff0d8;
 }
 
-.menu_tree .menu_tree__item:not(.is_show) .rst__rowContents {
+.menu_tree .item:not(.is_show) .rst__rowContents {
   background: #fcf8e3;
 }
 
-.menu_tree .menu_tree__item:not(.is_use) .rst__rowContents {
+.menu_tree .item:not(.is_use) .rst__rowContents {
   background: #f2dede;
 }
 
-.menu_tree .menu_tree__item .toolbar {
+.menu_tree .item .rst__rowLabel input {
+  padding: 0;
+  margin: 0;
+  min-width: 10rem;
+}
+
+.menu_tree .item .rst__rowLabel input:not(:focus):not(:hover) {
+  background: transparent;
+  border-color: transparent;
+}
+
+.menu_tree .item .toolbar {
   padding: 0 .25rem;
 }
 
-.menu_tree .menu_tree__item .toolbar > * {
+.menu_tree .item .toolbar > * {
   display: inline-block;
   margin: 0 .25rem;
 }
 
-.menu_tree .menu_tree__item .toolbar input[type="checkbox"] {
+.menu_tree .item .toolbar input[type="checkbox"] {
   margin: 0 .25rem;
 }
 
-.menu_tree .menu_tree__item .toolbar .checkbox-group > *:not(:last-child),
-.menu_tree .menu_tree__item .toolbar .button-group > *:not(:last-child) {
+.menu_tree .item .toolbar .checkbox-group > *:not(:last-child),
+.menu_tree .item .toolbar .button-group > *:not(:last-child) {
   margin: 0 .1rem;
 }
 
-.menu_tree .menu_tree__item .toolbar .message {
+.menu_tree .item .toolbar .message {
   color: #000;
   opacity: .5;
 }

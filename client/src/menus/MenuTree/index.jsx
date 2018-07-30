@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import SortableTree, { changeNodeAtPath } from 'react-sortable-tree';
+import AutosizeInput from 'react-input-autosize';
 import './index.css';
 
 const itemShape = {
@@ -18,13 +19,34 @@ const itemShape = {
 itemShape.children = PropTypes.arrayOf(PropTypes.shape(itemShape));
 const itemType = PropTypes.shape(itemShape);
 
+const getNodeKey = ({ node }) => node.id;
+
+const NodePropTextInput = ({ node, updateNode, propKey, children }) => (
+  <div>
+    <AutosizeInput
+      value={node[propKey]}
+      onChange={(event) => updateNode({ [propKey]: event.target.value })}
+    />
+    {children}
+  </div>
+);
+
+const NodePropCheckBox = ({ node, updateNode, propKey, children }) => (
+  <label>
+    <input
+      type="checkbox"
+      checked={node[propKey]}
+      onChange={(event) => updateNode({ [propKey]: event.target.checked })}
+    />
+    {children}
+  </label>
+);
+
 export default class MenuTree extends React.Component {
   static propTypes = {
     items: PropTypes.arrayOf(itemType),
     onChange: PropTypes.func.isRequired,
   };
-
-  getNodeKey = ({ node }) => node.id;
 
   generateNodeProps = ({ node, path }) => {
     const {
@@ -36,32 +58,16 @@ export default class MenuTree extends React.Component {
       const newTreeData = changeNodeAtPath({
         treeData: items,
         path,
-        newNode: {
-          ...node,
-          ...newNode,
-        },
-        getNodeKey: this.getNodeKey,
+        newNode: { ...node, ...newNode },
+        getNodeKey,
         ignoreCollapsed: false,
       });
       onChange(newTreeData);
     };
 
-    const NodePropCheckBox = ({ propKey, children }) => (
-      <label>
-        <input
-          type="checkbox"
-          checked={node[propKey]}
-          onChange={() => updateNode({ [propKey]: !node[propKey] })}
-        />
-        {children}
-      </label>
-    );
-
     return {
-      title: <div>{node.title}</div>,
-      subtitle: <div>{node.url}</div>,
       className: cn(
-        'menu_tree__item',
+        'item',
         `depth_${node.depth}`,
         {
           is_new_tab: node.isNewTab,
@@ -69,12 +75,14 @@ export default class MenuTree extends React.Component {
           is_show: node.isShow,
         },
       ),
+      title: <NodePropTextInput node={node} updateNode={updateNode} propKey="title" />,
+      subtitle: <NodePropTextInput node={node} updateNode={updateNode} propKey="url" />,
       buttons: [
         <div className="toolbar">
           <div className="checkbox-group">
-            <NodePropCheckBox propKey="isNewTab">새 탭</NodePropCheckBox>
-            <NodePropCheckBox propKey="isUse">사용</NodePropCheckBox>
-            <NodePropCheckBox propKey="isShow">노출</NodePropCheckBox>
+            <NodePropCheckBox node={node} updateNode={updateNode} propKey="isNewTab">새 탭</NodePropCheckBox>
+            <NodePropCheckBox node={node} updateNode={updateNode} propKey="isUse">사용</NodePropCheckBox>
+            <NodePropCheckBox node={node} updateNode={updateNode} propKey="isShow">노출</NodePropCheckBox>
           </div>
           <div className="button-group btn-group-xs">
             <button className="btn btn-default">Ajax 관리</button>
@@ -99,8 +107,9 @@ export default class MenuTree extends React.Component {
       <SortableTree
         className={cn('menu_tree')}
         treeData={items}
+        rowHeight={70}
         onChange={onChange}
-        getNodeKey={this.getNodeKey}
+        getNodeKey={getNodeKey}
         generateNodeProps={this.generateNodeProps}
       />
     );

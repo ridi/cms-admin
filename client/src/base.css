@@ -6,6 +6,7 @@ body {
   padding: 1rem;
 }
 
-label {
+label,
+label > * {
   cursor: pointer;
 }
