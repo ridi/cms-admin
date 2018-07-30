@@ -9,7 +9,8 @@ import './index.css';
 
 const mapRawMenusToMenuTreeItems = (rawMenus) => {
   const menus = _.map(rawMenus, mapRawMenuToMenu);
-  return buildMenuTrees(menus);
+  const sortedMenus = _.sortBy(menus, ['order']);
+  return buildMenuTrees(sortedMenus);
 };
 
 export default class Menus extends React.Component {
