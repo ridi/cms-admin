@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import SortableTree, { changeNodeAtPath } from 'react-sortable-tree';
+import SortableTree, { map, changeNodeAtPath } from 'react-sortable-tree';
 import { Button } from 'react-bootstrap';
 import AutosizeInput from 'react-input-autosize';
 import './index.css';
@@ -49,10 +49,34 @@ export default class MenuTree extends React.Component {
     onChange: PropTypes.func.isRequired,
   };
 
+  onChange = (treeData) => {
+    const {
+      onChange,
+    } = this.props;
+
+    const mapper = ({
+      node,
+      path,
+      treeIndex,
+    }) => ({
+      ...node,
+      depth: path.length - 1,
+      order: treeIndex,
+    });
+
+    const depthAndOrderCorrectedTreeData = map({
+      treeData,
+      getNodeKey,
+      ignoreCollapsed: false,
+      callback: mapper,
+    });
+
+    onChange(depthAndOrderCorrectedTreeData);
+  };
+
   generateNodeProps = ({ node, path }) => {
     const {
       items,
-      onChange,
     } = this.props;
 
     const updateNode = (newNode) => {
@@ -63,7 +87,7 @@ export default class MenuTree extends React.Component {
         getNodeKey,
         ignoreCollapsed: false,
       });
-      onChange(newTreeData);
+      this.onChange(newTreeData);
     };
 
     return {
@@ -101,7 +125,6 @@ export default class MenuTree extends React.Component {
   render = () => {
     const {
       items,
-      onChange,
     } = this.props;
 
     return (
@@ -109,7 +132,7 @@ export default class MenuTree extends React.Component {
         className={cn('menu_tree')}
         treeData={items}
         rowHeight={70}
-        onChange={onChange}
+        onChange={this.onChange}
         getNodeKey={getNodeKey}
         generateNodeProps={this.generateNodeProps}
       />
