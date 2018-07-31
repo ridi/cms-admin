@@ -4,7 +4,7 @@ import { isDescendant } from 'react-sortable-tree';
 import cn from 'classnames';
 import './index.css';
 
-class NodeRendererDefault extends Component {
+class NodeContentRenderer extends Component {
   render() {
     const {
       scaffoldBlockPxWidth,
@@ -143,7 +143,7 @@ class NodeRendererDefault extends Component {
   }
 }
 
-NodeRendererDefault.defaultProps = {
+NodeContentRenderer.defaultProps = {
   isSearchMatch: false,
   isSearchFocus: false,
   canDrag: false,
@@ -159,7 +159,7 @@ NodeRendererDefault.defaultProps = {
   rowDirection: 'ltr',
 };
 
-NodeRendererDefault.propTypes = {
+NodeContentRenderer.propTypes = {
   node: PropTypes.shape({}).isRequired,
   title: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   subtitle: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
@@ -193,4 +193,4 @@ NodeRendererDefault.propTypes = {
   rowDirection: PropTypes.string,
 };
 
-export default NodeRendererDefault;
+export default NodeContentRenderer;

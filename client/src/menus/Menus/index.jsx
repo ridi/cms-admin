@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Button, ButtonToolbar, Glyphicon } from 'react-bootstrap';
 import { getPassThroughProps } from '../../utils/component';
 import MenuTree from '../MenuTree';
+import MenuTreeTheme from '../MenuTreeTheme';
 import Submenus from '../Submenus';
 import MenuUsers from '../MenuUsers';
 import { mapMenuToRawMenu, mapRawMenuToMenu } from './menuMapper';
@@ -118,6 +119,7 @@ export default class Menus extends React.Component {
       <div className="menus" {...getPassThroughProps(this)}>
         <MenuTree
           items={menuTreeItems}
+          theme={MenuTreeTheme}
           onChange={this.onMenuTreeItemsChange}
           onShowSubmenusButtonClick={this.onShowSubmenusButtonClick}
           onShowUsersButtonClick={this.onShowUsersButtonClick}
