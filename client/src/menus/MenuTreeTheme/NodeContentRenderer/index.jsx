@@ -7,29 +7,37 @@ import './index.css';
 class NodeContentRenderer extends Component {
   render() {
     const {
-      scaffoldBlockPxWidth,
-      toggleChildrenVisibility,
+      // DnD props
       connectDragPreview,
       connectDragSource,
       isDragging,
-      canDrop,
-      canDrag,
-      node,
-      title, // Unused, but preserved for otherProps not to include
-      subtitle, // Unused, but preserved for otherProps not to include
+      didDrop,
       draggedNode,
-      path,
+      isOver, // Not needed, but preserved for other renderers
+      canDrop,
+
+      // Shared props
       treeIndex,
+      scaffoldBlockPxWidth,
+      node,
+      path,
+      treeId,
+      rowDirection,
+
+      // Node props
+      parentNode, // Needed for dndManager
       isSearchMatch,
       isSearchFocus,
-      buttons, // Unused, but preserved for otherProps not to include
+      canDrag,
+      toggleChildrenVisibility,
+
+      // Custom Node props
+      title, // Delete from otherProps
+      subtitle, // Delete from otherProps
+      buttons, // Delete from otherProps
       className,
       style,
-      didDrop,
-      treeId,
-      isOver, // Not needed, but preserved for other renderers
-      parentNode, // Needed for dndManager
-      rowDirection,
+
       ...otherProps
     } = this.props;
     const rowDirectionClass = rowDirection === 'rtl' ? 'rst__rtl' : null;
@@ -48,7 +56,7 @@ class NodeContentRenderer extends Component {
                   key={index}
                   className={cn(
                     'rst__loadingCirclePoint',
-                    rowDirectionClass
+                    rowDirectionClass,
                   )}
                 />
               ))}
@@ -82,7 +90,7 @@ class NodeContentRenderer extends Component {
               aria-label={node.expanded ? 'Collapse' : 'Expand'}
               className={cn(
                 node.expanded ? 'rst__collapseButton' : 'rst__expandButton',
-                rowDirectionClass
+                rowDirectionClass,
               )}
               style={buttonStyle}
               onClick={() =>
@@ -100,7 +108,7 @@ class NodeContentRenderer extends Component {
                 style={{ width: scaffoldBlockPxWidth }}
                 className={cn(
                   'rst__lineChildren',
-                  rowDirectionClass
+                  rowDirectionClass,
                 )}
               />
             )}
@@ -118,7 +126,7 @@ class NodeContentRenderer extends Component {
                 isSearchMatch && 'rst__rowSearchMatch',
                 isSearchFocus && 'rst__rowSearchFocus',
                 rowDirectionClass,
-                className
+                className,
               )}
               style={{
                 opacity: isDraggedDescendant ? 0.5 : 1,
@@ -131,11 +139,11 @@ class NodeContentRenderer extends Component {
                 className={cn(
                   'rst__rowContents',
                   !canDrag && 'rst__rowContentsDragDisabled',
-                  rowDirectionClass
+                  rowDirectionClass,
                 )}
               >
               </div>
-            </div>
+            </div>,
           )}
         </div>
       </div>
@@ -143,54 +151,62 @@ class NodeContentRenderer extends Component {
   }
 }
 
+NodeContentRenderer.propTypes = {
+  // DnD props
+  connectDragPreview: PropTypes.func.isRequired,
+  connectDragSource: PropTypes.func.isRequired,
+  isDragging: PropTypes.bool.isRequired,
+  didDrop: PropTypes.bool.isRequired,
+  draggedNode: PropTypes.shape({}),
+  isOver: PropTypes.bool.isRequired,
+  canDrop: PropTypes.bool,
+
+  // Shared props
+  treeIndex: PropTypes.number.isRequired,
+  scaffoldBlockPxWidth: PropTypes.number.isRequired,
+  node: PropTypes.shape({}).isRequired,
+  path: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  ).isRequired,
+  treeId: PropTypes.string.isRequired,
+  rowDirection: PropTypes.string, // rtl support
+
+  // Node props
+  parentNode: PropTypes.shape({}), // Needed for dndManager
+  isSearchMatch: PropTypes.bool,
+  isSearchFocus: PropTypes.bool,
+  canDrag: PropTypes.bool,
+  toggleChildrenVisibility: PropTypes.func,
+
+  // Custom Node props
+  title: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+  subtitle: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+  buttons: PropTypes.arrayOf(PropTypes.node),
+  className: PropTypes.string,
+  style: PropTypes.shape({}),
+};
+
 NodeContentRenderer.defaultProps = {
+  // DnD props
+  draggedNode: null,
+  canDrop: false,
+
+  // Shared props
+  rowDirection: 'ltr',
+
+  // Node props
+  parentNode: null,
   isSearchMatch: false,
   isSearchFocus: false,
   canDrag: false,
   toggleChildrenVisibility: null,
+
+  // Custom Node props
+  title: null,
+  subtitle: null,
   buttons: [],
   className: '',
   style: {},
-  parentNode: null,
-  draggedNode: null,
-  canDrop: false,
-  title: null,
-  subtitle: null,
-  rowDirection: 'ltr',
-};
-
-NodeContentRenderer.propTypes = {
-  node: PropTypes.shape({}).isRequired,
-  title: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-  subtitle: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-  path: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-  ).isRequired,
-  treeIndex: PropTypes.number.isRequired,
-  treeId: PropTypes.string.isRequired,
-  isSearchMatch: PropTypes.bool,
-  isSearchFocus: PropTypes.bool,
-  canDrag: PropTypes.bool,
-  scaffoldBlockPxWidth: PropTypes.number.isRequired,
-  toggleChildrenVisibility: PropTypes.func,
-  buttons: PropTypes.arrayOf(PropTypes.node),
-  className: PropTypes.string,
-  style: PropTypes.shape({}),
-
-  // Drag and drop API functions
-  // Drag source
-  connectDragPreview: PropTypes.func.isRequired,
-  connectDragSource: PropTypes.func.isRequired,
-  parentNode: PropTypes.shape({}), // Needed for dndManager
-  isDragging: PropTypes.bool.isRequired,
-  didDrop: PropTypes.bool.isRequired,
-  draggedNode: PropTypes.shape({}),
-  // Drop target
-  isOver: PropTypes.bool.isRequired,
-  canDrop: PropTypes.bool,
-
-  // rtl support
-  rowDirection: PropTypes.string,
 };
 
 export default NodeContentRenderer;
