@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Button, ButtonToolbar, Glyphicon } from 'react-bootstrap';
 import { getPassThroughProps } from '../../utils/component';
 import MenuTree from '../MenuTree';
+import Submenus from '../Submenus';
 import { mapMenuToRawMenu, mapRawMenuToMenu } from './menuMapper';
 import { buildMenuTrees, flattenMenuTrees } from './treeBuilder';
 import './index.css';
@@ -21,6 +22,8 @@ export default class Menus extends React.Component {
     menuTreeItems: mapRawMenusToMenuTreeItems(this.props.menus),
     isFetching: false,
   };
+
+  submenusModal = React.createRef();
 
   onAddMenuButtonClick = () => {
     const { menuTreeItems } = this.state;
@@ -78,6 +81,10 @@ export default class Menus extends React.Component {
     });
   };
 
+  onSubmenusButtonClick = (menu) => {
+    this.submenusModal.current.show(menu.id, menu.title);
+  };
+
   render = () => {
     const {
       menuTreeItems,
@@ -89,6 +96,7 @@ export default class Menus extends React.Component {
         <MenuTree
           items={menuTreeItems}
           onChange={this.onMenuTreeItemsChange}
+          onSubmenusButtonClick={this.onSubmenusButtonClick}
         />
 
         <ButtonToolbar className="menus__toolbar">
@@ -108,6 +116,8 @@ export default class Menus extends React.Component {
             저장
           </Button>
         </ButtonToolbar>
+
+        <Submenus ref={this.submenusModal} />
       </div>
     );
   };

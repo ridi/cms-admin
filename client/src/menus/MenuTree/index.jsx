@@ -47,8 +47,9 @@ const NodePropCheckBox = ({ node, updateNode, propKey, children }) => (
 
 export default class MenuTree extends React.Component {
   static propTypes = {
-    items: PropTypes.arrayOf(itemType),
+    items: PropTypes.arrayOf(itemType).isRequired,
     onChange: PropTypes.func.isRequired,
+    onSubmenusButtonClick: PropTypes.func.isRequired,
   };
 
   onChange = (treeData) => {
@@ -79,6 +80,7 @@ export default class MenuTree extends React.Component {
   generateNodeProps = ({ node, path }) => {
     const {
       items,
+      onSubmenusButtonClick,
     } = this.props;
 
     const updateNode = (newNode) => {
@@ -113,7 +115,7 @@ export default class MenuTree extends React.Component {
             <NodePropCheckBox node={node} updateNode={updateNode} propKey="isShow">노출</NodePropCheckBox>
           </div>
           <div className="button-group btn-group-xs">
-            <Button>Ajax 관리</Button>
+            <Button onClick={() => onSubmenusButtonClick(node)}>Ajax 관리</Button>
             <Button>사용자 보기</Button>
             <Button>태그 보기</Button>
           </div>
