@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import axios from 'axios';
-import { Button, ButtonToolbar } from 'react-bootstrap';
+import { Button, ButtonToolbar, Glyphicon } from 'react-bootstrap';
+import { getPassThroughProps } from '../../utils/component';
 import MenuTree from '../MenuTree';
 import { mapMenuToRawMenu, mapRawMenuToMenu } from './menuMapper';
 import { buildMenuTrees, flattenMenuTrees } from './treeBuilder';
@@ -21,17 +22,42 @@ export default class Menus extends React.Component {
     isFetching: false,
   };
 
+  onAddMenuButtonClick = () => {
+    const { menuTreeItems } = this.state;
+
+    const newMenu = {
+      id: -Date.now(), // temporary numeric id
+      title: '새 메뉴',
+      url: '#',
+      depth: 0,
+      order: 0,
+      isUse: false,
+      isNewTab: false,
+      isShow: false,
+    };
+
+    this.onMenuTreeItemsChange([
+      ...menuTreeItems,
+      newMenu,
+    ]);
+  };
+
   onMenuTreeItemsChange = (menuTreeItems) => {
     const menus = flattenMenuTrees(menuTreeItems);
 
     const modificationCheckedMenus = _.map(menus, menu => {
       const originalMenu = this.state.menuDict[menu.id];
-      const isModified = _.some(_.keys(originalMenu), key => (
+
+      const isUnsaved = !originalMenu || _.some(_.keys(originalMenu), key => (
         menu[key] !== originalMenu[key]
       ));
+
+      const isCreated = !originalMenu;
+
       return {
         ...menu,
-        isModified,
+        isUnsaved,
+        isCreated,
       };
     });
 
@@ -42,9 +68,9 @@ export default class Menus extends React.Component {
     this.setState({ isFetching: true }, async () => {
       try {
         const menus = flattenMenuTrees(this.state.menuTreeItems);
-        const modifiedMenus = _.filter(menus, menu => menu.isModified);
-        const modifiedRawMenus = _.map(modifiedMenus, mapMenuToRawMenu);
-        await axios.put('/super/menus', modifiedRawMenus);
+        const unsavedMenus = _.filter(menus, menu => menu.isUnsaved);
+        const unsavedRawMenus = _.map(unsavedMenus, mapMenuToRawMenu);
+        await axios.put('/super/menus', unsavedRawMenus);
         window.location.reload();
       } finally {
         this.setState({ isFetching: false });
@@ -53,18 +79,31 @@ export default class Menus extends React.Component {
   };
 
   render = () => {
+    const {
+      menuTreeItems,
+      isFetching,
+    } = this.state;
+
     return (
-      <div className="menus">
+      <div className="menus" {...getPassThroughProps(this)}>
         <MenuTree
-          items={this.state.menuTreeItems}
+          items={menuTreeItems}
           onChange={this.onMenuTreeItemsChange}
         />
 
         <ButtonToolbar className="menus__toolbar">
           <Button
+            bsStyle="success"
+            disabled={isFetching}
+            onClick={this.onAddMenuButtonClick}
+          >
+            <Glyphicon glyph="plus" /> 새 메뉴
+          </Button>
+
+          <Button
             bsStyle="primary"
+            disabled={isFetching}
             onClick={this.onSaveButtonClick}
-            disabled={this.state.isFetching}
           >
             저장
           </Button>

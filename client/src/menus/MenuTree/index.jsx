@@ -4,6 +4,7 @@ import cn from 'classnames';
 import SortableTree, { map, changeNodeAtPath } from 'react-sortable-tree';
 import { Button } from 'react-bootstrap';
 import AutosizeInput from 'react-input-autosize';
+import { getPassThroughProps } from '../../utils/component';
 import './index.css';
 
 const itemShape = {
@@ -15,7 +16,8 @@ const itemShape = {
   isUse: PropTypes.bool,
   isNewTab: PropTypes.bool,
   isShow: PropTypes.bool,
-  isModified: PropTypes.bool,
+  isUnsaved: PropTypes.bool,
+  isCreated: PropTypes.bool,
 };
 itemShape.children = PropTypes.arrayOf(PropTypes.shape(itemShape));
 const itemType = PropTypes.shape(itemShape);
@@ -105,7 +107,8 @@ export default class MenuTree extends React.Component {
       buttons: [
         <div className="toolbar">
           <div className="checkbox-group">
-            <NodePropCheckBox node={node} updateNode={updateNode} propKey="isNewTab">새 탭</NodePropCheckBox>
+            <NodePropCheckBox node={node} updateNode={updateNode} propKey="isNewTab">새
+              탭</NodePropCheckBox>
             <NodePropCheckBox node={node} updateNode={updateNode} propKey="isUse">사용</NodePropCheckBox>
             <NodePropCheckBox node={node} updateNode={updateNode} propKey="isShow">노출</NodePropCheckBox>
           </div>
@@ -114,9 +117,9 @@ export default class MenuTree extends React.Component {
             <Button>사용자 보기</Button>
             <Button>태그 보기</Button>
           </div>
-          {node.isModified && (
-            <div className="message">변경 됨</div>
-          )}
+          <div className="message">
+            {node.isCreated ? '추가 됨' : node.isUnsaved ? '변경 됨' : ''}
+          </div>
         </div>,
       ],
     };
@@ -135,6 +138,7 @@ export default class MenuTree extends React.Component {
         onChange={this.onChange}
         getNodeKey={getNodeKey}
         generateNodeProps={this.generateNodeProps}
+        {...getPassThroughProps(this)}
       />
     );
   };

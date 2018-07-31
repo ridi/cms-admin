@@ -21,7 +21,7 @@ class MenuService
         DB::connection()->transaction(function () use ($menu) {
             self::_validateMenu($menu);
 
-            if ($menu['menu_order'] == null) { //메뉴 순서값이 없을 경우 메뉴 순서값을 max+1 해준다.
+            if (!isset($menu['menu_order'])) { // 메뉴 순서값이 없을 경우 메뉴 순서값을 max+1 해준다.
                 $menu['menu_order'] = AdminMenu::max('menu_order') + 1;
             }
 
@@ -45,8 +45,13 @@ class MenuService
 
             /** @var AdminMenu $adminMenu */
             $adminMenu = AdminMenu::find($menu['id']);
+
+            if (!isset($menu['menu_order'])) { // 메뉴 순서값이 없을 경우 메뉴 순서값을 max+1 해준다.
+                $menu['menu_order'] = AdminMenu::max('menu_order') + 1;
+            }
+
             $old_menu_order = $adminMenu->menu_order;
-            $new_menu_order = $menu['menu_order'] ?? AdminMenu::max('menu_order') + 1; // 입력받은 메뉴 순서값 없을 경우 메뉴 순서값을 max+1 해준다.
+            $new_menu_order = $menu['menu_order'];
 
             if (!is_numeric($new_menu_order)) {
                 throw new \Exception('메뉴 순서는 숫자만 입력 가능합니다.');
@@ -71,10 +76,17 @@ class MenuService
         });
     }
 
-    public static function updateMenus(array $menus)
+    public static function updateOrCreateMenus(array $menus)
     {
         DB::connection()->transaction(function () use ($menus) {
             foreach ($menus as $menu) {
+                $existingMenu = AdminMenu::find($menu['id']);
+
+                if (!$existingMenu) {
+                    self::insertMenu($menu);
+                    continue;
+                }
+
                 self::updateMenu($menu);
             }
         });

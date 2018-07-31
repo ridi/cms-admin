@@ -20,7 +20,7 @@ class MenuControllerProvider implements ControllerProviderInterface
 
         $controllers->get('/menus', [$this, 'menus']);
         $controllers->post('/menus', [$this, 'createMenu']);
-        $controllers->put('/menus', [$this, 'updateMenus']);
+        $controllers->put('/menus', [$this, 'updateOrCreateMenus']);
 
         $controllers->get('/menus/{menu_id}/submenus', [$this, 'submenus']);
         $controllers->post('/menus/{menu_id}/submenus', [$this, 'createSubmenu']);
@@ -81,12 +81,12 @@ class MenuControllerProvider implements ControllerProviderInterface
         return $app->redirect('/super/menus');
     }
 
-    public function updateMenus(CmsApplication $app, Request $request)
+    public function updateOrCreateMenus(CmsApplication $app, Request $request)
     {
         $menus = $request->request->all();
 
         try {
-            AdminMenuService::updateMenus($menus);
+            AdminMenuService::updateOrCreateMenus($menus);
         } catch (\Exception $e) {
             if (!is_a($e, 'HttpException')) {
                 $e = new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, $e->getMessage());
