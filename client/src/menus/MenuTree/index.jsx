@@ -5,6 +5,7 @@ import SortableTree, { map, changeNodeAtPath } from 'react-sortable-tree';
 import { Button } from 'react-bootstrap';
 import AutosizeInput from 'react-input-autosize';
 import { getPassThroughProps } from '../../utils/component';
+import NodeRenderer from './NodeRenderer';
 import './index.css';
 
 const itemShape = {
@@ -137,6 +138,7 @@ export default class MenuTree extends React.Component {
     return (
       <SortableTree
         className={cn('menu_tree')}
+        nodeContentRenderer={NodeRenderer}
         treeData={items}
         rowHeight={70}
         onChange={this.onChange}
