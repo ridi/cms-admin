@@ -58,7 +58,11 @@ class MenuUsersTable extends React.Component {
 }
 
 MenuUsersTable.propTypes = {
-  menuId: PropTypes.number.isRequired,
+  menuId: PropTypes.number,
+};
+
+MenuUsersTable.defaultProps = {
+  menuId: undefined,
 };
 
 export default function MenuUsers(props) {
@@ -80,7 +84,13 @@ export default function MenuUsers(props) {
 }
 
 MenuUsers.propTypes = {
-  menuId: PropTypes.number.isRequired,
-  showModal: PropTypes.bool.isRequired,
-  closeModal: PropTypes.func.isRequired,
+  menuId: PropTypes.number,
+  showModal: PropTypes.bool,
+  closeModal: PropTypes.func,
+};
+
+MenuUsers.defaultProps = {
+  menuId: undefined,
+  showModal: false,
+  closeModal: () => {},
 };

@@ -6,6 +6,7 @@ import { Button, ButtonToolbar, Glyphicon } from 'react-bootstrap';
 import { getPassThroughProps } from '../../utils/component';
 import MenuTree from '../MenuTree';
 import Submenus from '../Submenus';
+import MenuUsers from '../MenuUsers';
 import { mapMenuToRawMenu, mapRawMenuToMenu } from './menuMapper';
 import { buildMenuTrees, flattenMenuTrees } from './treeBuilder';
 import './index.css';
@@ -21,6 +22,10 @@ export default class Menus extends React.Component {
     menuDict: _.keyBy(_.map(this.props.menus, mapRawMenuToMenu), 'id'),
     menuTreeItems: mapRawMenusToMenuTreeItems(this.props.menus),
     isFetching: false,
+    menuUsers: {
+      show: false,
+      menuId: undefined,
+    },
   };
 
   submenusModal = React.createRef();
@@ -81,8 +86,26 @@ export default class Menus extends React.Component {
     });
   };
 
-  onSubmenusButtonClick = (menu) => {
+  onShowSubmenusButtonClick = (menu) => {
     this.submenusModal.current.show(menu.id, menu.title);
+  };
+
+  onShowUsersButtonClick = (menu) => {
+    this.setState({
+      menuUsers: {
+        show: true,
+        menuId: menu.id,
+      },
+    });
+  };
+
+  onHideUsersButtonClick = () => {
+    this.setState({
+      menuUsers: {
+        show: false,
+        menuId: undefined,
+      },
+    });
   };
 
   render = () => {
@@ -96,7 +119,8 @@ export default class Menus extends React.Component {
         <MenuTree
           items={menuTreeItems}
           onChange={this.onMenuTreeItemsChange}
-          onSubmenusButtonClick={this.onSubmenusButtonClick}
+          onShowSubmenusButtonClick={this.onShowSubmenusButtonClick}
+          onShowUsersButtonClick={this.onShowUsersButtonClick}
         />
 
         <ButtonToolbar className="menus__toolbar">
@@ -118,6 +142,11 @@ export default class Menus extends React.Component {
         </ButtonToolbar>
 
         <Submenus ref={this.submenusModal} />
+        <MenuUsers
+          menuId={this.state.menuUsers.menuId}
+          showModal={this.state.menuUsers.show}
+          closeModal={this.onHideUsersButtonClick}
+        />
       </div>
     );
   };
