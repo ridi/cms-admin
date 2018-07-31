@@ -15,14 +15,14 @@ class NodeRendererDefault extends Component {
       canDrop,
       canDrag,
       node,
-      title,
-      subtitle,
+      title, // Unused, but preserved for otherProps not to include
+      subtitle, // Unused, but preserved for otherProps not to include
       draggedNode,
       path,
       treeIndex,
       isSearchMatch,
       isSearchFocus,
-      buttons,
+      buttons, // Unused, but preserved for otherProps not to include
       className,
       style,
       didDrop,
@@ -32,8 +32,6 @@ class NodeRendererDefault extends Component {
       rowDirection,
       ...otherProps
     } = this.props;
-    const nodeTitle = title || node.title;
-    const nodeSubtitle = subtitle || node.subtitle;
     const rowDirectionClass = rowDirection === 'rtl' ? 'rst__rtl' : null;
 
     let handle;
@@ -136,45 +134,6 @@ class NodeRendererDefault extends Component {
                   rowDirectionClass
                 )}
               >
-                <div className={cn('rst__rowLabel', rowDirectionClass)}>
-                  <span
-                    className={cn(
-                      'rst__rowTitle',
-                      node.subtitle && 'rst__rowTitleWithSubtitle'
-                    )}
-                  >
-                    {typeof nodeTitle === 'function'
-                      ? nodeTitle({
-                        node,
-                        path,
-                        treeIndex,
-                      })
-                      : nodeTitle}
-                  </span>
-
-                  {nodeSubtitle && (
-                    <span className="rst__rowSubtitle">
-                      {typeof nodeSubtitle === 'function'
-                        ? nodeSubtitle({
-                          node,
-                          path,
-                          treeIndex,
-                        })
-                        : nodeSubtitle}
-                    </span>
-                  )}
-                </div>
-
-                <div className="rst__rowToolbar">
-                  {buttons.map((btn, index) => (
-                    <div
-                      key={index} // eslint-disable-line react/no-array-index-key
-                      className="rst__toolbarButton"
-                    >
-                      {btn}
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           )}
