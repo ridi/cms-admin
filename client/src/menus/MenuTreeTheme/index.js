@@ -14,5 +14,6 @@ import nodeContentRenderer from './NodeContentRenderer';
 
 export default {
   nodeContentRenderer,
+  placeholderRenderer: () => null,
   rowHeight: 70,
 };

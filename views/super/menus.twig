@@ -5,8 +5,5 @@
 {% endblock %}
 
 {% block bottom_script %}
-  <script>
-    window.menus = {{ menu_list|json_encode|raw }};
-  </script>
   <script src="{{ asset('menus.js') }}"></script>
 {% endblock %}

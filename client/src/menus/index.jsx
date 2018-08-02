@@ -5,7 +5,7 @@ import Menus from './Menus';
 import './index.css';
 
 ReactDOM.render(
-  <Menus menus={window.menus} />,
+  <Menus />,
   document.getElementById('content'),
 );
 

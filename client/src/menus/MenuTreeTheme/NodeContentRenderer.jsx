@@ -197,7 +197,7 @@ NodeContentRenderer.defaultProps = {
   toggleChildrenVisibility: null,
 
   // Content renderer props
-  contentRenderer: () => {},
+  contentRenderer: () => null,
   contentRendererProps: undefined,
 };
 

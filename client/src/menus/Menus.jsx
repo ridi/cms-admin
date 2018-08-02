@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
 import axios from 'axios';
 import { Button, ButtonToolbar, Glyphicon } from 'react-bootstrap';
 import { getPassThroughProps } from '../utils/component';
+import SpinnerOverlay from '../components/SpinnerOverlay';
 import MenuTree from './MenuTree';
 import Submenus from './Submenus';
 import MenuUsers from './MenuUsers';
@@ -11,16 +11,10 @@ import { mapMenuToRawMenu, mapRawMenuToMenu } from './menuMapper';
 import { buildMenuTrees, flattenMenuTrees } from './menuTreeBuilder';
 import './Menus.css';
 
-const mapRawMenusToMenuTreeItems = (rawMenus) => {
-  const menus = _.map(rawMenus, mapRawMenuToMenu);
-  const sortedMenus = _.sortBy(menus, ['order']);
-  return buildMenuTrees(sortedMenus);
-};
-
 export default class Menus extends React.Component {
   state = {
-    menuDict: _.keyBy(_.map(this.props.menus, mapRawMenuToMenu), 'id'),
-    menuTreeItems: mapRawMenusToMenuTreeItems(this.props.menus),
+    menuDict: undefined,
+    menuTreeItems: undefined,
     isFetching: false,
     menuUsers: {
       show: false,
@@ -29,6 +23,34 @@ export default class Menus extends React.Component {
   };
 
   submenusModal = React.createRef();
+
+  componentDidMount = async () => {
+    await this.loadMenus();
+  };
+
+  loadMenus = () => new Promise((resolve) => {
+    this.setState({ isFetching: true }, async () => {
+      try {
+        const { data: rawMenus } = await axios.get('/super/menus');
+
+        const menuDict = _.keyBy(_.map(rawMenus, mapRawMenuToMenu), 'id');
+        const menuTreeItems = this.mapRawMenusToMenuTreeItems(rawMenus);
+
+        this.setState({
+          menuDict,
+          menuTreeItems,
+        });
+      } finally {
+        this.setState({ isFetching: false }, resolve);
+      }
+    });
+  });
+
+  mapRawMenusToMenuTreeItems = (rawMenus) => {
+    const menus = _.map(rawMenus, mapRawMenuToMenu);
+    const sortedMenus = _.sortBy(menus, ['order']);
+    return buildMenuTrees(sortedMenus);
+  };
 
   onAddMenuButtonClick = () => {
     const { menuTreeItems } = this.state;
@@ -77,7 +99,7 @@ export default class Menus extends React.Component {
         const unsavedMenus = _.filter(menus, menu => menu.isUnsaved);
         const unsavedRawMenus = _.map(unsavedMenus, mapMenuToRawMenu);
         await axios.put('/super/menus', unsavedRawMenus);
-        window.location.reload();
+        await this.loadMenus();
       } finally {
         this.setState({ isFetching: false });
       }
@@ -145,20 +167,9 @@ export default class Menus extends React.Component {
           showModal={this.state.menuUsers.show}
           closeModal={this.onHideUsersButtonClick}
         />
+
+        <SpinnerOverlay show={isFetching} />
       </div>
     );
   };
 }
-
-Menus.propTypes = {
-  menus: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    menu_title: PropTypes.string,
-    menu_url: PropTypes.string,
-    menu_deep: PropTypes.number,
-    menu_order: PropTypes.number,
-    is_use: PropTypes.bool,
-    is_show: PropTypes.bool,
-    is_newtab: PropTypes.bool,
-  })).isRequired,
-};

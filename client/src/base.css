@@ -3,6 +3,7 @@ html {
 }
 
 body {
+  position: relative;
   padding: 1rem;
 }
 

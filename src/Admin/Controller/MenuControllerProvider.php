@@ -50,12 +50,12 @@ class MenuControllerProvider implements ControllerProviderInterface
     public function menus(CmsApplication $app, Request $request)
     {
         if (in_array('application/json', $request->getAcceptableContentTypes())) {
-            return $app->json(AdminMenuService::getMenuList(1));
+            $is_use = $request->get('is_use');
+            return $app->json(AdminMenuService::getMenuList($is_use));
         }
 
         return $app->render('super/menus.twig', [
             'title' => '메뉴 관리',
-            'menu_list' => AdminMenuService::getMenuList(),
         ]);
     }
 

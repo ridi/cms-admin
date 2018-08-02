@@ -23,10 +23,14 @@ const itemType = PropTypes.shape(itemShape);
 
 export default class MenuTree extends React.Component {
   static propTypes = {
-    items: PropTypes.arrayOf(itemType).isRequired,
+    items: PropTypes.arrayOf(itemType),
     onChange: PropTypes.func.isRequired,
     onShowSubmenusButtonClick: PropTypes.func.isRequired,
     onShowUsersButtonClick: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    items: [],
   };
 
   getNodeKey = ({ node }) => node.id;
