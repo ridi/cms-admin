@@ -6,10 +6,20 @@ import { Button } from 'react-bootstrap';
 import AutosizeInput from 'react-input-autosize';
 import './MenuRenderer.css';
 
-const PropTextInput = ({ node, path, propKey, className, children, onChange, ...props }) => (
+const PropTextInput = ({
+  node,
+  path,
+  propKey,
+  className,
+  children,
+  placeholder,
+  onChange,
+  ...props
+}) => (
   <div className={cn(_.snakeCase(propKey), 'prop_text_input', className)} {...props}>
     <AutosizeInput
       value={node[propKey]}
+      placeholder={placeholder}
       onChange={(event) => onChange({
         ...node,
         [propKey]: event.target.value,
@@ -19,11 +29,21 @@ const PropTextInput = ({ node, path, propKey, className, children, onChange, ...
   </div>
 );
 
-const PropCheckbox = ({ node, path, propKey, className, children, onChange, ...props }) => (
+const PropCheckbox = ({
+  node,
+  path,
+  propKey,
+  className,
+  children,
+  placeholder,
+  onChange,
+  ...props
+}) => (
   <label className={cn(_.snakeCase(propKey), 'prop_checkbox', className)} {...props}>
     <input
       type="checkbox"
       checked={node[propKey]}
+      placeholder={placeholder}
       onChange={(event) => onChange({
         ...node,
         [propKey]: event.target.checked,
@@ -61,8 +81,8 @@ const MenuRenderer = ({
       {...props}
     >
       <div className="title_container">
-        <PropTextInput {...inputProps} propKey="title" />
-        <PropTextInput {...inputProps} propKey="url" />
+        <PropTextInput {...inputProps} propKey="title" placeholder="메뉴 제목" />
+        <PropTextInput {...inputProps} propKey="url" placeholder="메뉴 URL" />
       </div>
 
       <div className="checkbox-group">

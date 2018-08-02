@@ -35,8 +35,8 @@ export default class Menus extends React.Component {
 
     const newMenu = {
       id: -Date.now(), // temporary numeric id
-      title: '새 메뉴',
-      url: '#',
+      title: '',
+      url: '',
       depth: 0,
       order: 0,
       isUse: false,
