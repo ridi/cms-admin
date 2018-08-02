@@ -88,11 +88,7 @@ class MenuControllerProvider implements ControllerProviderInterface
         try {
             AdminMenuService::updateOrCreateMenus($menus);
         } catch (\Exception $e) {
-            if (!is_a($e, 'HttpException')) {
-                $e = new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, $e->getMessage());
-            }
-
-            return $this->sendErrorResponse($app, $e);
+            return $app->abort(Response::HTTP_INTERNAL_SERVER_ERROR, $e->getMessage());
         }
 
         return $app->json([

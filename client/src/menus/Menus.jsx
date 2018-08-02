@@ -28,7 +28,7 @@ export default class Menus extends React.Component {
     await this.loadMenus();
   };
 
-  loadMenus = () => new Promise((resolve) => {
+  loadMenus = () => new Promise((resolve, reject) => {
     this.setState({ isFetching: true }, async () => {
       try {
         const { data: rawMenus } = await axios.get('/super/menus');
@@ -39,9 +39,11 @@ export default class Menus extends React.Component {
         this.setState({
           menuDict,
           menuTreeItems,
-        });
+        }, resolve);
+      } catch (e) {
+        reject(e);
       } finally {
-        this.setState({ isFetching: false }, resolve);
+        this.setState({ isFetching: false });
       }
     });
   });
@@ -100,6 +102,8 @@ export default class Menus extends React.Component {
         const unsavedRawMenus = _.map(unsavedMenus, mapMenuToRawMenu);
         await axios.put('/super/menus', unsavedRawMenus);
         await this.loadMenus();
+      } catch (e) {
+        alert(e.response ? e.response.data : e.message);
       } finally {
         this.setState({ isFetching: false });
       }
