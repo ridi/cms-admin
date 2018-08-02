@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import SortableTree, { map, changeNodeAtPath } from 'react-sortable-tree';
-import { getPassThroughProps } from '../../utils/component';
+import { getPassThroughProps } from '../utils/component';
 import MenuTreeTheme from './MenuTreeTheme';
-import './index.css';
 
 const itemShape = {
   id: PropTypes.number,

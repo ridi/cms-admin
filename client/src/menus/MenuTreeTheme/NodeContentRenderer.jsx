@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isDescendant } from 'react-sortable-tree';
 import cn from 'classnames';
-import MenuRenderer from '../MenuRenderer';
-import './index.css';
+import MenuRenderer from './MenuRenderer';
+import './NodeContentRenderer.css';
 
 class NodeContentRenderer extends Component {
   render() {

@@ -4,7 +4,7 @@ import _ from 'lodash';
 import cn from 'classnames';
 import { Button } from 'react-bootstrap';
 import AutosizeInput from 'react-input-autosize';
-import './index.css';
+import './MenuRenderer.css';
 
 const PropTextInput = ({ node, path, propKey, className, children, onChange, ...props }) => (
   <div className={cn(_.snakeCase(propKey), 'prop_text_input', className)} {...props}>

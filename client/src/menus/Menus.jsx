@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import axios from 'axios';
 import { Button, ButtonToolbar, Glyphicon } from 'react-bootstrap';
-import { getPassThroughProps } from '../../utils/component';
-import MenuTree from '../MenuTree';
-import Submenus from '../Submenus';
-import MenuUsers from '../MenuUsers';
+import { getPassThroughProps } from '../utils/component';
+import MenuTree from './MenuTree';
+import Submenus from './Submenus';
+import MenuUsers from './MenuUsers';
 import { mapMenuToRawMenu, mapRawMenuToMenu } from './menuMapper';
-import { buildMenuTrees, flattenMenuTrees } from './treeBuilder';
-import './index.css';
+import { buildMenuTrees, flattenMenuTrees } from './menuTreeBuilder';
+import './Menus.css';
 
 const mapRawMenusToMenuTreeItems = (rawMenus) => {
   const menus = _.map(rawMenus, mapRawMenuToMenu);
