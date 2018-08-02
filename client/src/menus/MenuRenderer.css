@@ -1,0 +1,55 @@
+.menu_tree__menu {
+  height: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  padding: 0 .1rem;
+}
+
+.menu_tree__menu.depth_0 {
+  background: #dff0d8;
+}
+
+.menu_tree__menu:not(.is_show) {
+  background: #fcf8e3;
+}
+
+.menu_tree__menu:not(.is_use) {
+  background: #f2dede;
+}
+
+.menu_tree__menu > * {
+  margin: 0 .1rem;
+}
+
+.menu_tree__menu .title_container input {
+  min-width: 10rem;
+}
+
+.menu_tree__menu .title_container input:not(:focus):not(:hover) {
+  background: transparent;
+  border-color: transparent;
+}
+
+.menu_tree__menu .prop_text_input.title {
+  font-size: .85rem;
+  font-weight: bold;
+}
+
+.menu_tree__menu .prop_text_input.url {
+  font-size: .7rem;
+}
+
+.menu_tree__menu .prop_checkbox input[type="checkbox"] {
+  margin: 0 .2rem;
+}
+
+.menu_tree__menu .checkbox-group > *,
+.menu_tree__menu .button-group > * {
+  margin: 0 .1rem;
+}
+
+.menu_tree__menu .message {
+  color: #000;
+  opacity: .5;
+}

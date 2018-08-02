@@ -1,0 +1,8 @@
+.rst__rowContents {
+  display: block;
+  padding: 0;
+}
+
+.rst__rtl.rst__rowContents {
+  padding: 0;
+}

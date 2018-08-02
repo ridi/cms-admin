@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import axios from 'axios';
 import { Button, ButtonToolbar, Glyphicon } from 'react-bootstrap';
-import { getPassThroughProps } from '../../utils/component';
-import MenuTree from '../MenuTree';
-import Submenus from '../Submenus';
-import MenuUsers from '../MenuUsers';
+import { getPassThroughProps } from '../utils/component';
+import MenuTree from './MenuTree';
+import Submenus from './Submenus';
+import MenuUsers from './MenuUsers';
 import { mapMenuToRawMenu, mapRawMenuToMenu } from './menuMapper';
-import { buildMenuTrees, flattenMenuTrees } from './treeBuilder';
-import './index.css';
+import { buildMenuTrees, flattenMenuTrees } from './menuTreeBuilder';
+import './Menus.css';
 
 const mapRawMenusToMenuTreeItems = (rawMenus) => {
   const menus = _.map(rawMenus, mapRawMenuToMenu);
@@ -55,12 +55,10 @@ export default class Menus extends React.Component {
 
     const modificationCheckedMenus = _.map(menus, menu => {
       const originalMenu = this.state.menuDict[menu.id];
-
-      const isUnsaved = !originalMenu || _.some(_.keys(originalMenu), key => (
-        menu[key] !== originalMenu[key]
-      ));
-
       const isCreated = !originalMenu;
+      const isUnsaved = isCreated || _.some(originalMenu, (value, key) => (
+        menu[key] !== value
+      ));
 
       return {
         ...menu,
