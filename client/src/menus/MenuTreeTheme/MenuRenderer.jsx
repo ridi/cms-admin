@@ -33,7 +33,7 @@ const PropCheckbox = ({ node, path, propKey, className, children, onChange, ...p
   </label>
 );
 
-const Index = ({
+const MenuRenderer = ({
   node,
   path,
   onChange,
@@ -82,7 +82,7 @@ const Index = ({
   );
 };
 
-Index.propTypes = {
+MenuRenderer.propTypes = {
   node: PropTypes.shape({}).isRequired,
   path: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -93,4 +93,4 @@ Index.propTypes = {
   onShowUsersButtonClick: PropTypes.func.isRequired,
 };
 
-export default Index;
+export default MenuRenderer;
