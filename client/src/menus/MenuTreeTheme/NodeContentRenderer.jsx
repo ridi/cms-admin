@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isDescendant } from 'react-sortable-tree';
 import cn from 'classnames';
-import MenuRenderer from './MenuRenderer';
 import './NodeContentRenderer.css';
 
 class NodeContentRenderer extends Component {
@@ -32,10 +31,9 @@ class NodeContentRenderer extends Component {
       canDrag,
       toggleChildrenVisibility,
 
-      // Custom Node props
-      onChange,
-      onShowSubmenusButtonClick,
-      onShowUsersButtonClick,
+      // Content renderer props
+      contentRenderer,
+      contentRendererProps,
 
       ...otherProps
     } = this.props;
@@ -77,6 +75,8 @@ class NodeContentRenderer extends Component {
     if (rowDirection === 'rtl') {
       buttonStyle = { right: -0.5 * scaffoldBlockPxWidth };
     }
+
+    const ContentRenderer = contentRenderer;
 
     return (
       <div style={{ height: '100%' }} {...otherProps}>
@@ -139,13 +139,7 @@ class NodeContentRenderer extends Component {
                   rowDirectionClass,
                 )}
               >
-                <MenuRenderer
-                  node={node}
-                  path={path}
-                  onChange={onChange}
-                  onShowSubmenusButtonClick={onShowSubmenusButtonClick}
-                  onShowUsersButtonClick={onShowUsersButtonClick}
-                />
+                <ContentRenderer {...contentRendererProps} />
               </div>
             </div>,
           )}
@@ -182,10 +176,9 @@ NodeContentRenderer.propTypes = {
   canDrag: PropTypes.bool,
   toggleChildrenVisibility: PropTypes.func,
 
-  // Custom Node props
-  onChange: PropTypes.func.isRequired,
-  onShowSubmenusButtonClick: PropTypes.func.isRequired,
-  onShowUsersButtonClick: PropTypes.func.isRequired,
+  // Content renderer props
+  contentRenderer: PropTypes.func,
+  contentRendererProps: PropTypes.shape({}),
 };
 
 NodeContentRenderer.defaultProps = {
@@ -203,7 +196,9 @@ NodeContentRenderer.defaultProps = {
   canDrag: false,
   toggleChildrenVisibility: null,
 
-  // Custom Node props
+  // Content renderer props
+  contentRenderer: () => {},
+  contentRendererProps: undefined,
 };
 
 export default NodeContentRenderer;

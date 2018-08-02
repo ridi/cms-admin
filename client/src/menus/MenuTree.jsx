@@ -4,6 +4,7 @@ import cn from 'classnames';
 import SortableTree, { map, changeNodeAtPath } from 'react-sortable-tree';
 import { getPassThroughProps } from '../utils/component';
 import MenuTreeTheme from './MenuTreeTheme';
+import MenuRenderer from './MenuRenderer';
 
 const itemShape = {
   id: PropTypes.number,
@@ -59,11 +60,16 @@ export default class MenuTree extends React.Component {
     this.onChange(newTreeData);
   };
 
-  generateNodeProps = () => {
+  generateNodeProps = ({ node, path }) => {
     return {
-      onChange: this.updateNode,
-      onShowSubmenusButtonClick: this.props.onShowSubmenusButtonClick,
-      onShowUsersButtonClick: this.props.onShowUsersButtonClick,
+      contentRenderer: MenuRenderer,
+      contentRendererProps: {
+        node,
+        path,
+        onChange: this.updateNode,
+        onShowSubmenusButtonClick: this.props.onShowSubmenusButtonClick,
+        onShowUsersButtonClick: this.props.onShowUsersButtonClick,
+      },
     };
   };
 
