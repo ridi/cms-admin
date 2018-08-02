@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isDescendant } from 'react-sortable-tree';
 import cn from 'classnames';
+import MenuRenderer from '../MenuRenderer';
 import './index.css';
 
 class NodeContentRenderer extends Component {
@@ -32,11 +33,9 @@ class NodeContentRenderer extends Component {
       toggleChildrenVisibility,
 
       // Custom Node props
-      title, // Delete from otherProps
-      subtitle, // Delete from otherProps
-      buttons, // Delete from otherProps
-      className,
-      style,
+      onChange,
+      onShowSubmenusButtonClick,
+      onShowUsersButtonClick,
 
       ...otherProps
     } = this.props;
@@ -126,11 +125,9 @@ class NodeContentRenderer extends Component {
                 isSearchMatch && 'rst__rowSearchMatch',
                 isSearchFocus && 'rst__rowSearchFocus',
                 rowDirectionClass,
-                className,
               )}
               style={{
                 opacity: isDraggedDescendant ? 0.5 : 1,
-                ...style,
               }}
             >
               {handle}
@@ -142,6 +139,13 @@ class NodeContentRenderer extends Component {
                   rowDirectionClass,
                 )}
               >
+                <MenuRenderer
+                  node={node}
+                  path={path}
+                  onChange={onChange}
+                  onShowSubmenusButtonClick={onShowSubmenusButtonClick}
+                  onShowUsersButtonClick={onShowUsersButtonClick}
+                />
               </div>
             </div>,
           )}
@@ -179,11 +183,9 @@ NodeContentRenderer.propTypes = {
   toggleChildrenVisibility: PropTypes.func,
 
   // Custom Node props
-  title: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-  subtitle: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-  buttons: PropTypes.arrayOf(PropTypes.node),
-  className: PropTypes.string,
-  style: PropTypes.shape({}),
+  onChange: PropTypes.func.isRequired,
+  onShowSubmenusButtonClick: PropTypes.func.isRequired,
+  onShowUsersButtonClick: PropTypes.func.isRequired,
 };
 
 NodeContentRenderer.defaultProps = {
@@ -202,11 +204,6 @@ NodeContentRenderer.defaultProps = {
   toggleChildrenVisibility: null,
 
   // Custom Node props
-  title: null,
-  subtitle: null,
-  buttons: [],
-  className: '',
-  style: {},
 };
 
 export default NodeContentRenderer;

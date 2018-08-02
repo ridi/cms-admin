@@ -14,4 +14,5 @@ import nodeContentRenderer from './NodeContentRenderer';
 
 export default {
   nodeContentRenderer,
+  rowHeight: 70,
 };
