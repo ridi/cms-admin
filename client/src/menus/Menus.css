@@ -1,8 +1,5 @@
-.menus {
-}
-
 .menus > .menus__toolbar {
-  position: fixed;
+  position: absolute;
+  top: 2rem;
   right: 1rem;
-  bottom: 1rem;
 }

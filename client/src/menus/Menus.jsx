@@ -15,6 +15,7 @@ export default class Menus extends React.Component {
   state = {
     menuDict: undefined,
     menuTreeItems: undefined,
+    hasUnsavedMenus: false,
     isFetching: false,
     menuUsers: {
       show: false,
@@ -24,8 +25,8 @@ export default class Menus extends React.Component {
 
   submenusModal = React.createRef();
 
-  componentDidMount = async () => {
-    await this.loadMenus();
+  componentDidMount = () => {
+    this.loadMenus();
   };
 
   loadMenus = () => new Promise((resolve, reject) => {
@@ -39,6 +40,7 @@ export default class Menus extends React.Component {
         this.setState({
           menuDict,
           menuTreeItems,
+          hasUnsavedMenus: false,
         }, resolve);
       } catch (e) {
         reject(e);
@@ -74,6 +76,12 @@ export default class Menus extends React.Component {
     ]);
   };
 
+  onRefreshButtonClick = () => {
+    if (!this.state.hasUnsavedMenus || confirm('변경사항이 사라집니다. 계속하시겠습니까?')) {
+      this.loadMenus();
+    }
+  };
+
   onMenuTreeItemsChange = (menuTreeItems) => {
     const menus = flattenMenuTrees(menuTreeItems);
 
@@ -91,7 +99,12 @@ export default class Menus extends React.Component {
       };
     });
 
-    this.setState({ menuTreeItems: buildMenuTrees(modificationCheckedMenus) });
+    const hasUnsavedMenus = _.some(modificationCheckedMenus, menu => menu.isUnsaved);
+
+    this.setState({
+      menuTreeItems: buildMenuTrees(modificationCheckedMenus),
+      hasUnsavedMenus,
+    });
   };
 
   onSaveButtonClick = () => {
@@ -135,6 +148,7 @@ export default class Menus extends React.Component {
   render = () => {
     const {
       menuTreeItems,
+      hasUnsavedMenus,
       isFetching,
     } = this.state;
 
@@ -149,6 +163,13 @@ export default class Menus extends React.Component {
 
         <ButtonToolbar className="menus__toolbar">
           <Button
+            disabled={isFetching}
+            onClick={this.onRefreshButtonClick}
+          >
+            <Glyphicon glyph="refresh" /> 새로 고침
+          </Button>
+
+          <Button
             bsStyle="success"
             disabled={isFetching}
             onClick={this.onAddMenuButtonClick}
@@ -158,7 +179,7 @@ export default class Menus extends React.Component {
 
           <Button
             bsStyle="primary"
-            disabled={isFetching}
+            disabled={isFetching || !hasUnsavedMenus}
             onClick={this.onSaveButtonClick}
           >
             저장
