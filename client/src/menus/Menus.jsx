@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Button, ButtonToolbar, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { getPassThroughProps } from '../utils/component';
+import { connectStateStorage, getPassThroughProps } from '../utils/component';
 import SpinnerOverlay from '../components/SpinnerOverlay';
 import MenuTree from './MenuTree';
 import MenuTreeDragSource from './MenuTreeDragSource';
@@ -29,6 +29,7 @@ class Menus extends React.Component {
   state = {
     menuDict: undefined,
     menuTreeItems: undefined,
+    menuExpandedStates: {},
     hasUnsavedMenus: false,
     isFetching: false,
     menuUsers: {
@@ -38,6 +39,13 @@ class Menus extends React.Component {
   };
 
   submenusModal = React.createRef();
+
+  constructor(props) {
+    super(props);
+    connectStateStorage(this, {
+      stateKeys: ['menuExpandedStates'],
+    });
+  }
 
   componentDidMount = () => {
     this.loadMenus();
@@ -65,8 +73,18 @@ class Menus extends React.Component {
   });
 
   mapRawMenusToMenuTreeItems = (rawMenus) => {
-    const menus = _.map(rawMenus, mapRawMenuToMenu);
+    const restoreMenuExpandedState = menu => ({
+      ...menu,
+      expanded: !!this.state.menuExpandedStates[menu.id],
+    });
+
+    const menus = _.map(rawMenus, _.flow([
+      mapRawMenuToMenu,
+      restoreMenuExpandedState,
+    ]));
+
     const sortedMenus = _.sortBy(menus, ['order']);
+
     return buildMenuTrees(sortedMenus);
   };
 
@@ -109,6 +127,15 @@ class Menus extends React.Component {
     this.setState({
       menuTreeItems: buildMenuTrees(modificationCheckedMenus),
       hasUnsavedMenus,
+    });
+  };
+
+  onMenuTreeItemVisibilityToggle = ({ node, expanded }) => {
+    this.setState({
+      menuExpandedStates: {
+        ...this.state.menuExpandedStates,
+        [node.id]: expanded,
+      },
     });
   };
 
@@ -162,6 +189,7 @@ class Menus extends React.Component {
         <MenuTree
           items={menuTreeItems}
           onChange={this.onMenuTreeItemsChange}
+          onVisibilityToggle={this.onMenuTreeItemVisibilityToggle}
           onShowSubmenusButtonClick={this.onShowSubmenusButtonClick}
           onShowUsersButtonClick={this.onShowUsersButtonClick}
         />
