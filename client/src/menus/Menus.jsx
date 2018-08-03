@@ -1,17 +1,31 @@
 import React from 'react';
 import _ from 'lodash';
 import axios from 'axios';
-import { Button, ButtonToolbar, Glyphicon } from 'react-bootstrap';
+import { Button, ButtonToolbar, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import { getPassThroughProps } from '../utils/component';
 import SpinnerOverlay from '../components/SpinnerOverlay';
 import MenuTree from './MenuTree';
+import MenuTreeDragSource from './MenuTreeDragSource';
 import Submenus from './Submenus';
 import MenuUsers from './MenuUsers';
 import { mapMenuToRawMenu, mapRawMenuToMenu } from './menuMapper';
 import { buildMenuTrees, flattenMenuTrees } from './menuTreeBuilder';
 import './Menus.css';
 
-export default class Menus extends React.Component {
+const createMenu = () => ({
+  id: -Date.now(), // temporary numeric id
+  title: '',
+  url: '',
+  depth: 0,
+  order: 0,
+  isUse: false,
+  isNewTab: false,
+  isShow: false,
+});
+
+class Menus extends React.Component {
   state = {
     menuDict: undefined,
     menuTreeItems: undefined,
@@ -59,16 +73,7 @@ export default class Menus extends React.Component {
   onAddMenuButtonClick = () => {
     const { menuTreeItems } = this.state;
 
-    const newMenu = {
-      id: -Date.now(), // temporary numeric id
-      title: '',
-      url: '',
-      depth: 0,
-      order: 0,
-      isUse: false,
-      isNewTab: false,
-      isShow: false,
-    };
+    const newMenu = createMenu();
 
     this.onMenuTreeItemsChange([
       ...menuTreeItems,
@@ -169,13 +174,20 @@ export default class Menus extends React.Component {
             <Glyphicon glyph="refresh" /> 새로 고침
           </Button>
 
-          <Button
-            bsStyle="success"
-            disabled={isFetching}
-            onClick={this.onAddMenuButtonClick}
+          <OverlayTrigger
+            placement="left"
+            overlay={<Tooltip id="add_menu_button_tooltip">클릭 또는 원하는 곳으로 드래그하세요!</Tooltip>}
           >
-            <Glyphicon glyph="plus" /> 새 메뉴
-          </Button>
+            <MenuTreeDragSource
+              item={createMenu()}
+              component="button"
+              className="btn btn-success"
+              disabled={isFetching}
+              onClick={this.onAddMenuButtonClick}
+            >
+              <Glyphicon glyph="plus" /> 새 메뉴
+            </MenuTreeDragSource>
+          </OverlayTrigger>
 
           <Button
             bsStyle="primary"
@@ -198,3 +210,5 @@ export default class Menus extends React.Component {
     );
   };
 }
+
+export default DragDropContext(HTML5Backend)(Menus);

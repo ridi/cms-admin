@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import SortableTree, { map, changeNodeAtPath } from 'react-sortable-tree';
+import { SortableTreeWithoutDndContext as SortableTree, map, changeNodeAtPath } from 'react-sortable-tree';
 import { getPassThroughProps } from '../utils/component';
 import MenuTreeTheme from './MenuTreeTheme';
 import MenuRenderer from './MenuRenderer';
 
-const itemShape = {
+export const DragSourceType = 'MenuTreeItem';
+
+const MenuTreeItemShape = {
   id: PropTypes.number,
   title: PropTypes.string,
   url: PropTypes.string,
@@ -18,12 +20,12 @@ const itemShape = {
   isUnsaved: PropTypes.bool,
   isCreated: PropTypes.bool,
 };
-itemShape.children = PropTypes.arrayOf(PropTypes.shape(itemShape));
-const itemType = PropTypes.shape(itemShape);
+MenuTreeItemShape.children = PropTypes.arrayOf(PropTypes.shape(MenuTreeItemShape));
+export const MenuTreeItemType = PropTypes.shape(MenuTreeItemShape);
 
 export default class MenuTree extends React.Component {
   static propTypes = {
-    items: PropTypes.arrayOf(itemType),
+    items: PropTypes.arrayOf(MenuTreeItemType),
     onChange: PropTypes.func.isRequired,
     onShowSubmenusButtonClick: PropTypes.func.isRequired,
     onShowUsersButtonClick: PropTypes.func.isRequired,
@@ -83,6 +85,7 @@ export default class MenuTree extends React.Component {
         className={cn('menu_tree')}
         treeData={this.props.items}
         theme={MenuTreeTheme}
+        dndType={DragSourceType}
         onChange={this.onChange}
         getNodeKey={this.getNodeKey}
         generateNodeProps={this.generateNodeProps}
