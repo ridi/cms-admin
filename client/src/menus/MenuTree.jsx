@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { SortableTreeWithoutDndContext as SortableTree, map, changeNodeAtPath } from 'react-sortable-tree';
+import {
+  SortableTreeWithoutDndContext as SortableTree,
+  map,
+  changeNodeAtPath,
+  removeNodeAtPath,
+} from 'react-sortable-tree';
 import { getPassThroughProps } from '../utils/component';
 import MenuTreeTheme from './MenuTreeTheme';
 import MenuRenderer from './MenuRenderer';
@@ -66,6 +71,17 @@ export default class MenuTree extends React.Component {
     this.onChange(newTreeData);
   };
 
+  removeNode = (node, path) => {
+    const newTreeData = removeNodeAtPath({
+      treeData: this.props.items,
+      path,
+      getNodeKey: this.getNodeKey,
+      ignoreCollapsed: false,
+    });
+
+    this.onChange(newTreeData);
+  };
+
   generateNodeProps = ({ node, path }) => {
     return {
       contentRenderer: MenuRenderer,
@@ -75,6 +91,7 @@ export default class MenuTree extends React.Component {
         onChange: this.updateNode,
         onShowSubmenusButtonClick: this.props.onShowSubmenusButtonClick,
         onShowUsersButtonClick: this.props.onShowUsersButtonClick,
+        onRemoveButtonClick: this.removeNode,
       },
     };
   };
