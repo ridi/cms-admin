@@ -38,6 +38,7 @@ class Menus extends React.Component {
     },
   };
 
+  reactVirtualizedList = React.createRef();
   submenusModal = React.createRef();
 
   constructor(props) {
@@ -104,7 +105,10 @@ class Menus extends React.Component {
     this.onMenuTreeItemsChange([
       ...menuTreeItems,
       newMenu,
-    ]);
+    ], () => {
+      const scrollContainer = this.reactVirtualizedList.current.container;
+      scrollContainer.scrollTop = scrollContainer.scrollHeight;
+    });
   };
 
   onRefreshButtonClick = async () => {
@@ -117,7 +121,7 @@ class Menus extends React.Component {
     }
   };
 
-  onMenuTreeItemsChange = (menuTreeItems) => {
+  onMenuTreeItemsChange = (menuTreeItems, callback) => {
     const menus = flattenMenuTrees(menuTreeItems);
 
     const modificationCheckedMenus = _.map(menus, menu => {
@@ -139,7 +143,7 @@ class Menus extends React.Component {
     this.setState({
       menuTreeItems: buildMenuTrees(modificationCheckedMenus),
       hasUnsavedMenus,
-    });
+    }, callback);
   };
 
   onMenuTreeItemVisibilityToggle = ({ node, expanded }) => {
@@ -232,6 +236,7 @@ class Menus extends React.Component {
 
         <MenuTree
           items={menuTreeItems}
+          reactVirtualizedListProps={{ ref: this.reactVirtualizedList }}
           onChange={this.onMenuTreeItemsChange}
           onVisibilityToggle={this.onMenuTreeItemVisibilityToggle}
           onShowSubmenusButtonClick={this.onShowSubmenusButtonClick}
