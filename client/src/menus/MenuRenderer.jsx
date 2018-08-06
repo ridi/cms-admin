@@ -101,7 +101,6 @@ const MenuRenderer = ({
       <div className="button-group btn-group-xs">
         <Button onClick={() => onShowSubmenusButtonClick(node)}>Ajax 관리</Button>
         <Button onClick={() => onShowUsersButtonClick(node)}>사용자 보기</Button>
-        <Button>태그 보기</Button>
         {node.isCreated && (
           <Button bsStyle="danger" onClick={() => onRemoveButtonClick(node, path)}>삭제</Button>
         )}
