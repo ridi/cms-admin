@@ -186,14 +186,6 @@ class Menus extends React.Component {
 
     return (
       <div className="menus" {...getPassThroughProps(this)}>
-        <MenuTree
-          items={menuTreeItems}
-          onChange={this.onMenuTreeItemsChange}
-          onVisibilityToggle={this.onMenuTreeItemVisibilityToggle}
-          onShowSubmenusButtonClick={this.onShowSubmenusButtonClick}
-          onShowUsersButtonClick={this.onShowUsersButtonClick}
-        />
-
         <ButtonToolbar className="menus__toolbar">
           <Button
             disabled={isFetching}
@@ -225,6 +217,14 @@ class Menus extends React.Component {
             저장
           </Button>
         </ButtonToolbar>
+
+        <MenuTree
+          items={menuTreeItems}
+          onChange={this.onMenuTreeItemsChange}
+          onVisibilityToggle={this.onMenuTreeItemVisibilityToggle}
+          onShowSubmenusButtonClick={this.onShowSubmenusButtonClick}
+          onShowUsersButtonClick={this.onShowUsersButtonClick}
+        />
 
         <Submenus ref={this.submenusModal} />
         <MenuUsers

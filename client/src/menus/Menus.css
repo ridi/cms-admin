@@ -1,5 +1,9 @@
+.menus {
+  position: relative;
+}
+
 .menus > .menus__toolbar {
   position: absolute;
-  top: 2rem;
+  top: -3.2rem;
   right: 1rem;
 }
