@@ -21,59 +21,59 @@
   border-left-width: 5px;
 }
 
-.menu_tree__menu:not(.is_show) .title_container:not(:hover) {
+.menu_tree__menu:not(.is_show) .menu_tree__menu__title_container:not(:hover) {
   color: rgba(0, 0, 0, .5);
 }
 
-.menu_tree__menu:not(.is_use) .title_container:not(:hover) {
+.menu_tree__menu:not(.is_use) .menu_tree__menu__title_container:not(:hover) {
   color: rgba(0, 0, 0, .1);
 }
 
-.menu_tree__menu .title_container {
+.menu_tree__menu__title_container {
   height: 100%;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
 }
 
-.menu_tree__menu .title_container input {
+.menu_tree__menu__title_container input {
   min-width: 10rem;
   height: 100%;
 }
 
-.menu_tree__menu .title_container input:not(:focus):not(:hover) {
+.menu_tree__menu__title_container input:not(:focus):not(:hover) {
   background: transparent;
   border-color: transparent;
 }
 
-.menu_tree__menu .prop_text_input.title {
+.menu_tree__menu__prop_text_input.title {
   font-size: .85rem;
   font-weight: bold;
 }
 
-.menu_tree__menu .prop_text_input.url {
+.menu_tree__menu__prop_text_input.url {
   font-size: .7rem;
 }
 
-.menu_tree__menu .checkbox-group,
-.menu_tree__menu .button-group {
+.menu_tree__menu__checkbox_group,
+.menu_tree__menu__button_group {
   height: 1.4rem;
 }
 
-.menu_tree__menu .checkbox-group {
+.menu_tree__menu__checkbox_group {
   margin-right: .5rem;
 }
 
-.menu_tree__menu .prop_checkbox input[type="checkbox"] {
+.menu_tree__menu__prop_checkbox input[type="checkbox"] {
   margin: 0 .2rem;
 }
 
-.menu_tree__menu .checkbox-group > *:not(:last-child),
-.menu_tree__menu .button-group > *:not(:last-child) {
+.menu_tree__menu__checkbox_group > *:not(:last-child),
+.menu_tree__menu__button_group > *:not(:last-child) {
   margin-right: .1rem;
 }
 
-.menu_tree__menu .message {
+.menu_tree__menu__message {
   position: absolute;
   top: 0;
   right: 0;

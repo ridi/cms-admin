@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import cn from 'classnames';
-import { Button, Label } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import AutosizeInput from 'react-input-autosize';
 import './MenuRenderer.css';
 
@@ -16,7 +16,7 @@ const PropTextInput = ({
   onChange,
   ...props
 }) => (
-  <div className={cn(_.snakeCase(propKey), 'prop_text_input', className)} {...props}>
+  <div className={cn(_.snakeCase(propKey), 'menu_tree__menu__prop_text_input', className)} {...props}>
     <AutosizeInput
       value={node[propKey]}
       placeholder={placeholder}
@@ -39,7 +39,7 @@ const PropCheckbox = ({
   onChange,
   ...props
 }) => (
-  <label className={cn(_.snakeCase(propKey), 'prop_checkbox', className)} {...props}>
+  <label className={cn(_.snakeCase(propKey), 'menu_tree__menu__prop_checkbox', className)} {...props}>
     <input
       type="checkbox"
       checked={node[propKey]}
@@ -88,17 +88,17 @@ const MenuRenderer = ({
     <div className={className} {...props}>
       {handle}
 
-      <div className="title_container">
+      <div className="menu_tree__menu__title_container">
         <PropTextInput {...inputProps} propKey="title" placeholder="메뉴 제목" />
         <PropTextInput {...inputProps} propKey="url" placeholder="메뉴 URL" />
       </div>
 
-      <div className="checkbox-group">
+      <div className="menu_tree__menu__checkbox_group">
         <PropCheckbox {...inputProps} propKey="isNewTab">새 탭</PropCheckbox>
         <PropCheckbox {...inputProps} propKey="isUse">사용</PropCheckbox>
         <PropCheckbox {...inputProps} propKey="isShow">노출</PropCheckbox>
       </div>
-      <div className="button-group btn-group-xs">
+      <div className="menu_tree__menu__button_group btn-group-xs">
         <Button onClick={() => onShowSubmenusButtonClick(node)}>Ajax 관리</Button>
         <Button onClick={() => onShowUsersButtonClick(node)}>사용자 보기</Button>
         {node.isCreated && (
@@ -106,7 +106,7 @@ const MenuRenderer = ({
         )}
       </div>
       {message && (
-        <div className="message">
+        <div className="menu_tree__menu__message">
           {message}
         </div>
       )}
