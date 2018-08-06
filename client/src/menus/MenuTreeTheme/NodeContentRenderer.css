@@ -1,8 +1,32 @@
-.rst__rowContents {
-  display: block;
-  padding: 0;
+.rst__row {
+  overflow: hidden;
 }
 
-.rst__rtl.rst__rowContents {
+.rst__lineChildren::after {
+  background-color: #bbb;
+}
+
+.rst__rowLandingPad,
+.rst__rowCancelPad {
+  background: none;
+}
+
+.rst__rowContents {
+  border: none;
+  box-shadow: none;
+  display: block;
   padding: 0;
+  background: transparent;
+}
+
+.rst__moveHandle {
+  display: flex;
+  align-items: center;
+  width: auto;
+  top: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: .5rem;
+  color: #bbb;
 }

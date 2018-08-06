@@ -10,10 +10,13 @@
 // nodeContentRenderer: PropTypes.func,
 // placeholderRenderer: PropTypes.func,
 
+import treeNodeRenderer from './TreeNodeRenderer';
 import nodeContentRenderer from './NodeContentRenderer';
+import placeholderRenderer from './PlaceholderRenderer';
 
 export default {
+  treeNodeRenderer,
   nodeContentRenderer,
-  placeholderRenderer: () => null,
+  placeholderRenderer,
   rowHeight: 70,
 };

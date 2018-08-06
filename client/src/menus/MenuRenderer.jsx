@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import cn from 'classnames';
-import { Button } from 'react-bootstrap';
+import { Button, Label } from 'react-bootstrap';
 import AutosizeInput from 'react-input-autosize';
 import './MenuRenderer.css';
 
@@ -56,6 +56,7 @@ const PropCheckbox = ({
 const MenuRenderer = ({
   node,
   path,
+  handle,
   onChange,
   onShowSubmenusButtonClick,
   onShowUsersButtonClick,
@@ -68,19 +69,25 @@ const MenuRenderer = ({
     onChange,
   };
 
+  const className = cn(
+    'menu_tree__menu',
+    'panel',
+    'panel-default', {
+      is_new_tab: node.isNewTab,
+      is_use: node.isUse,
+      is_show: node.isShow,
+    }, {
+      created: node.isCreated,
+      unsaved: node.isUnsaved,
+    },
+  );
+
+  const message = node.isCreated ? '추가됨' : node.isUnsaved ? '변경됨' : '';
+
   return (
-    <div
-      className={cn(
-        'menu_tree__menu',
-        `depth_${node.depth}`,
-        {
-          is_new_tab: node.isNewTab,
-          is_use: node.isUse,
-          is_show: node.isShow,
-        },
-      )}
-      {...props}
-    >
+    <div className={className} {...props}>
+      {handle}
+
       <div className="title_container">
         <PropTextInput {...inputProps} propKey="title" placeholder="메뉴 제목" />
         <PropTextInput {...inputProps} propKey="url" placeholder="메뉴 URL" />
@@ -99,9 +106,11 @@ const MenuRenderer = ({
           <Button bsStyle="danger" onClick={() => onRemoveButtonClick(node, path)}>삭제</Button>
         )}
       </div>
-      <div className="message">
-        {node.isCreated ? '추가 됨' : node.isUnsaved ? '변경 됨' : ''}
-      </div>
+      {message && (
+        <div className="message">
+          {message}
+        </div>
+      )}
     </div>
   );
 };
@@ -111,6 +120,7 @@ MenuRenderer.propTypes = {
   path: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   ).isRequired,
+  handle: PropTypes.node.isRequired,
 
   onChange: PropTypes.func.isRequired,
   onShowSubmenusButtonClick: PropTypes.func.isRequired,

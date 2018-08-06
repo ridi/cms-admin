@@ -1,8 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isDescendant } from 'react-sortable-tree';
 import cn from 'classnames';
+import { isDescendant } from 'react-sortable-tree';
 import './NodeContentRenderer.css';
+
+const HandleRenderer = ({ node, canDrag, connectDragSource, className, ...props }) => {
+  if (!canDrag) {
+    return null;
+  }
+
+  return connectDragSource(
+    <span
+      className={cn(
+        'rst__moveHandle',
+        'glyphicon',
+        'glyphicon-menu-hamburger',
+        className,
+      )}
+      {...props}
+    />,
+    { dropEffect: 'move' },
+  );
+};
 
 class NodeContentRenderer extends Component {
   render() {
@@ -38,35 +57,6 @@ class NodeContentRenderer extends Component {
       ...otherProps
     } = this.props;
     const rowDirectionClass = rowDirection === 'rtl' ? 'rst__rtl' : null;
-
-    let handle;
-    if (canDrag) {
-      if (typeof node.children === 'function' && node.expanded) {
-        // Show a loading symbol on the handle when the children are expanded
-        //  and yet still defined by a function (a callback to fetch the children)
-        handle = (
-          <div className="rst__loadingHandle">
-            <div className="rst__loadingCircle">
-              {[...new Array(12)].map((_, index) => (
-                <div
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={index}
-                  className={cn(
-                    'rst__loadingCirclePoint',
-                    rowDirectionClass,
-                  )}
-                />
-              ))}
-            </div>
-          </div>
-        );
-      } else {
-        // Show the handle used to initiate a drag-and-drop
-        handle = connectDragSource(<div className="rst__moveHandle" />, {
-          dropEffect: 'copy',
-        });
-      }
-    }
 
     const isDraggedDescendant = draggedNode && isDescendant(draggedNode, node);
     const isLandingPadActive = !didDrop && isDragging;
@@ -130,17 +120,16 @@ class NodeContentRenderer extends Component {
                 opacity: isDraggedDescendant ? 0.5 : 1,
               }}
             >
-              {handle}
-
-              <div
-                className={cn(
-                  'rst__rowContents',
-                  !canDrag && 'rst__rowContentsDragDisabled',
-                  rowDirectionClass,
-                )}
-              >
-                <ContentRenderer {...contentRendererProps} />
-              </div>
+              <ContentRenderer
+                handle={
+                  <HandleRenderer
+                    node={node}
+                    canDrag={canDrag}
+                    connectDragSource={connectDragSource}
+                  />
+                }
+                {...contentRendererProps}
+              />
             </div>,
           )}
         </div>
