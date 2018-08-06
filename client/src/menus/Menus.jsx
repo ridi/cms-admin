@@ -47,8 +47,12 @@ class Menus extends React.Component {
     });
   }
 
-  componentDidMount = () => {
-    this.loadMenus();
+  componentDidMount = async () => {
+    try {
+      await this.loadMenus();
+    } catch (e) {
+      this.handleError(e);
+    }
   };
 
   loadMenus = () => new Promise((resolve, reject) => {
@@ -88,6 +92,10 @@ class Menus extends React.Component {
     return buildMenuTrees(sortedMenus);
   };
 
+  handleError = (e) => {
+    alert(e.response && e.response.data ? e.response.data : e.message);
+  };
+
   onAddMenuButtonClick = () => {
     const { menuTreeItems } = this.state;
 
@@ -99,9 +107,13 @@ class Menus extends React.Component {
     ]);
   };
 
-  onRefreshButtonClick = () => {
+  onRefreshButtonClick = async () => {
     if (!this.state.hasUnsavedMenus || confirm('변경사항이 사라집니다. 계속하시겠습니까?')) {
-      this.loadMenus();
+      try {
+        await this.loadMenus();
+      } catch (e) {
+        this.handleError(e);
+      }
     }
   };
 
@@ -148,7 +160,7 @@ class Menus extends React.Component {
         await axios.put('/super/menus', unsavedRawMenus);
         await this.loadMenus();
       } catch (e) {
-        alert(e.response ? e.response.data : e.message);
+        this.handleError(e);
       } finally {
         this.setState({ isFetching: false });
       }
