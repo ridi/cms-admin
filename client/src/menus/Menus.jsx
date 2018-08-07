@@ -142,19 +142,17 @@ class Menus extends React.Component {
 
     const hasUnsavedMenus = _.some(modificationCheckedMenus, menu => menu.isUnsaved);
 
+    const menuDict = _.keyBy(menus, 'id');
+    const menuExpandedStates = _.mapValues(menuDict, menu => menu.expanded);
+
     this.setState({
       menuTreeItems: buildMenuTrees(modificationCheckedMenus),
       hasUnsavedMenus,
-    }, callback);
-  };
-
-  onMenuTreeItemVisibilityToggle = ({ node, expanded }) => {
-    this.setState({
       menuExpandedStates: {
         ...this.state.menuExpandedStates,
-        [node.id]: expanded,
+        ...menuExpandedStates,
       },
-    });
+    }, callback);
   };
 
   onSaveButtonClick = () => {
@@ -257,7 +255,6 @@ class Menus extends React.Component {
           items={menuTreeItems}
           getOriginalMenu={this.getOriginalMenu}
           onChange={this.onMenuTreeItemsChange}
-          onVisibilityToggle={this.onMenuTreeItemVisibilityToggle}
           onShowSubmenusButtonClick={this.onShowSubmenusButtonClick}
           onShowUsersButtonClick={this.onShowUsersButtonClick}
         />
