@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import cn from 'classnames';
-import { Button } from 'react-bootstrap';
+import { Button, Glyphicon, OverlayTrigger, Popover, Table } from 'react-bootstrap';
 import AutosizeInput from 'react-input-autosize';
+import { mapMenuToRawMenu } from './menuMapper';
 import './MenuRenderer.css';
 
 const PropTextInput = ({
-  node,
+  menu,
   path,
   propKey,
   className,
@@ -18,10 +19,10 @@ const PropTextInput = ({
 }) => (
   <div className={cn(_.snakeCase(propKey), 'menu_tree__menu__prop_text_input', className)} {...props}>
     <AutosizeInput
-      value={node[propKey]}
+      value={menu[propKey]}
       placeholder={placeholder}
       onChange={(event) => onChange({
-        ...node,
+        ...menu,
         [propKey]: event.target.value,
       }, path)}
     />
@@ -30,7 +31,7 @@ const PropTextInput = ({
 );
 
 const PropCheckbox = ({
-  node,
+  menu,
   path,
   propKey,
   className,
@@ -42,10 +43,10 @@ const PropCheckbox = ({
   <label className={cn(_.snakeCase(propKey), 'menu_tree__menu__prop_checkbox', className)} {...props}>
     <input
       type="checkbox"
-      checked={node[propKey]}
+      checked={menu[propKey]}
       placeholder={placeholder}
       onChange={(event) => onChange({
-        ...node,
+        ...menu,
         [propKey]: event.target.checked,
       }, path)}
     />
@@ -53,69 +54,142 @@ const PropCheckbox = ({
   </label>
 );
 
-const MenuRenderer = ({
-  node,
-  path,
-  handle,
-  onChange,
-  onShowSubmenusButtonClick,
-  onShowUsersButtonClick,
-  onRemoveButtonClick,
-  ...props
-}) => {
-  const inputProps = {
-    node,
-    path,
-    onChange,
-  };
+const MenuDetails = ({ menu, originalMenu = {}, className, ...props }) => {
+  const rawMenu = mapMenuToRawMenu(menu);
+  const originalRawMenu = mapMenuToRawMenu(originalMenu);
 
-  const className = cn(
-    'menu_tree__menu',
-    'panel',
-    'panel-default', {
-      is_new_tab: node.isNewTab,
-      is_use: node.isUse,
-      is_show: node.isShow,
-    }, {
-      created: node.isCreated,
-      unsaved: node.isUnsaved,
-    },
-  );
-
-  const message = node.isCreated ? '추가됨' : node.isUnsaved ? '변경됨' : '';
+  const created = menu.isCreated;
+  if (created) {
+    rawMenu.id = undefined;
+  }
 
   return (
-    <div className={className} {...props}>
-      {handle}
-
-      <div className="menu_tree__menu__title_container">
-        <PropTextInput {...inputProps} propKey="title" placeholder="메뉴 제목" />
-        <PropTextInput {...inputProps} propKey="url" placeholder="메뉴 URL" />
-      </div>
-
-      <div className="menu_tree__menu__checkbox_group">
-        <PropCheckbox {...inputProps} propKey="isNewTab">새 탭</PropCheckbox>
-        <PropCheckbox {...inputProps} propKey="isUse">사용</PropCheckbox>
-        <PropCheckbox {...inputProps} propKey="isShow">노출</PropCheckbox>
-      </div>
-      <div className="menu_tree__menu__button_group btn-group-xs">
-        <Button onClick={() => onShowSubmenusButtonClick(node)}>Ajax 관리</Button>
-        <Button onClick={() => onShowUsersButtonClick(node)}>사용자 보기</Button>
-        {node.isCreated && (
-          <Button bsStyle="danger" onClick={() => onRemoveButtonClick(node, path)}>삭제</Button>
-        )}
-      </div>
-      {message && (
-        <div className="menu_tree__menu__message">
-          {message}
-        </div>
+    <Table
+      className={cn(
+        'menu_tree__menu__menu_details',
+        { created },
+        className,
       )}
-    </div>
+      condensed
+      hover
+      {...props}
+    >
+      <tbody>
+        {_.map(rawMenu, (value, key) => {
+          const originalValue = originalRawMenu[key];
+          const modified = !created && value !== originalValue;
+
+          return (
+            <tr key={key} className={cn({ modified })}>
+              <td className="key">{key}</td>
+              <td className="value">
+                {modified ? (
+                  <React.Fragment>
+                    <span className="original">{String(originalRawMenu[key])}</span>
+                    <span className="new">{String(rawMenu[key])}</span>
+                  </React.Fragment>
+                ) : (
+                  String(rawMenu[key])
+                )}
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </Table>
   );
 };
 
+class MenuRenderer extends React.Component {
+  render = () => {
+    const {
+      container,
+      menu,
+      originalMenu,
+      path,
+      handle,
+      onChange,
+      onShowSubmenusButtonClick,
+      onShowUsersButtonClick,
+      onRemoveButtonClick,
+      ...props
+    } = this.props;
+
+    const inputProps = {
+      menu,
+      path,
+      onChange,
+    };
+
+    const className = cn(
+      'menu_tree__menu',
+      'panel',
+      'panel-default', {
+        is_new_tab: menu.isNewTab,
+        is_use: menu.isUse,
+        is_show: menu.isShow,
+      }, {
+        created: menu.isCreated,
+        unsaved: menu.isUnsaved,
+      },
+    );
+
+    const message = menu.isCreated ? '추가됨' : menu.isUnsaved ? '변경됨' : '';
+
+    return (
+      <div className={className} {...props}>
+        {handle}
+
+        <div className="menu_tree__menu__title_container">
+          <PropTextInput {...inputProps} propKey="title" placeholder="메뉴 제목" />
+          <PropTextInput {...inputProps} propKey="url" placeholder="메뉴 URL" />
+        </div>
+
+        <div className="menu_tree__menu__checkbox_group">
+          <PropCheckbox {...inputProps} propKey="isNewTab">새 탭</PropCheckbox>
+          <PropCheckbox {...inputProps} propKey="isUse">사용</PropCheckbox>
+          <PropCheckbox {...inputProps} propKey="isShow">노출</PropCheckbox>
+        </div>
+
+        <div className="menu_tree__menu__button_group btn-group-xs">
+          <Button onClick={() => onShowSubmenusButtonClick(menu)}>Ajax 관리</Button>
+          <Button onClick={() => onShowUsersButtonClick(menu)}>사용자 보기</Button>
+          {menu.isCreated && (
+            <Button bsStyle="danger" onClick={() => onRemoveButtonClick(menu, path)}>삭제</Button>
+          )}
+        </div>
+
+        <OverlayTrigger
+          rootClose
+          trigger="click"
+          container={container}
+          overlay={
+            <Popover
+              id={`menu_tree__menu__popover_${menu.id}`}
+              className="menu_tree__menu__popover"
+            >
+              <MenuDetails menu={menu} originalMenu={originalMenu} />
+            </Popover>
+          }
+        >
+          <div className="menu_tree__menu__status">
+            {message && (
+              <span className="menu_tree__menu__message">
+                {message}
+              </span>
+            )}
+            <Glyphicon glyph="info-sign" />
+          </div>
+        </OverlayTrigger>
+      </div>
+    );
+  };
+}
+
 MenuRenderer.propTypes = {
-  node: PropTypes.shape({}).isRequired,
+  container: PropTypes.shape({}).isRequired,
+  menu: PropTypes.shape({}).isRequired,
+  originalMenu: PropTypes.shape({}),
   path: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   ).isRequired,
@@ -125,6 +199,10 @@ MenuRenderer.propTypes = {
   onShowSubmenusButtonClick: PropTypes.func.isRequired,
   onShowUsersButtonClick: PropTypes.func.isRequired,
   onRemoveButtonClick: PropTypes.func.isRequired,
+};
+
+MenuRenderer.defaultProps = {
+  originalMenu: undefined,
 };
 
 export default MenuRenderer;

@@ -1,7 +1,3 @@
-.rst__row {
-  overflow: hidden;
-}
-
 .rst__lineChildren::after {
   background-color: #bbb;
 }

@@ -31,6 +31,7 @@ export const MenuTreeItemType = PropTypes.shape(MenuTreeItemShape);
 export default class MenuTree extends React.Component {
   static propTypes = {
     items: PropTypes.arrayOf(MenuTreeItemType),
+    getOriginalMenu: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
     onShowSubmenusButtonClick: PropTypes.func.isRequired,
     onShowUsersButtonClick: PropTypes.func.isRequired,
@@ -40,7 +41,11 @@ export default class MenuTree extends React.Component {
     items: [],
   };
 
+  reactVirtualizedList = React.createRef();
+
   getNodeKey = ({ node }) => node.id;
+
+  getContainer = () => this.reactVirtualizedList.current.container;
 
   onChange = (treeData) => {
     const depthAndOrderUpdater = ({ node, path, treeIndex }) => ({
@@ -86,7 +91,9 @@ export default class MenuTree extends React.Component {
     return {
       contentRenderer: MenuRenderer,
       contentRendererProps: {
-        node,
+        container: this.getContainer(),
+        menu: node,
+        originalMenu: this.props.getOriginalMenu(node.id),
         path,
         onChange: this.updateNode,
         onShowSubmenusButtonClick: this.props.onShowSubmenusButtonClick,
@@ -106,6 +113,7 @@ export default class MenuTree extends React.Component {
         onChange={this.onChange}
         getNodeKey={this.getNodeKey}
         generateNodeProps={this.generateNodeProps}
+        reactVirtualizedListProps={{ ref: this.reactVirtualizedList }}
         {...getPassThroughProps(this)}
       />
     );

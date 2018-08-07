@@ -4,8 +4,8 @@ export const mapRawMenuToMenu = (rawMenu) => ({
   url: rawMenu.menu_url,
   depth: rawMenu.menu_deep,
   order: rawMenu.menu_order,
-  isUse: rawMenu.is_use,
   isNewTab: rawMenu.is_newtab,
+  isUse: rawMenu.is_use,
   isShow: rawMenu.is_show,
 });
 
@@ -15,7 +15,7 @@ export const mapMenuToRawMenu = (menu) => ({
   menu_url: menu.url,
   menu_deep: menu.depth,
   menu_order: menu.order,
-  is_use: menu.isUse,
   is_newtab: menu.isNewTab,
+  is_use: menu.isUse,
   is_show: menu.isShow,
 });

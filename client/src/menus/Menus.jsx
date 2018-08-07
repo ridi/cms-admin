@@ -27,7 +27,7 @@ const createMenu = () => ({
 
 class Menus extends React.Component {
   state = {
-    menuDict: undefined,
+    originalMenuDict: undefined,
     menuTreeItems: undefined,
     menuExpandedStates: {},
     hasUnsavedMenus: false,
@@ -38,7 +38,7 @@ class Menus extends React.Component {
     },
   };
 
-  reactVirtualizedList = React.createRef();
+  menuTree = React.createRef();
   submenusModal = React.createRef();
 
   constructor(props) {
@@ -56,16 +56,18 @@ class Menus extends React.Component {
     }
   };
 
+  getOriginalMenu = (menuId) => this.state.originalMenuDict[menuId];
+
   loadMenus = () => new Promise((resolve, reject) => {
     this.setState({ isFetching: true }, async () => {
       try {
         const { data: rawMenus } = await axios.get('/super/menus');
 
-        const menuDict = _.keyBy(_.map(rawMenus, mapRawMenuToMenu), 'id');
+        const originalMenuDict = _.keyBy(_.map(rawMenus, mapRawMenuToMenu), 'id');
         const menuTreeItems = this.mapRawMenusToMenuTreeItems(rawMenus);
 
         this.setState({
-          menuDict,
+          originalMenuDict,
           menuTreeItems,
           hasUnsavedMenus: false,
         }, resolve);
@@ -106,7 +108,7 @@ class Menus extends React.Component {
       ...menuTreeItems,
       newMenu,
     ], () => {
-      const scrollContainer = this.reactVirtualizedList.current.container;
+      const scrollContainer = this.menuTree.current.getContainer();
       scrollContainer.scrollTop = scrollContainer.scrollHeight;
     });
   };
@@ -125,7 +127,7 @@ class Menus extends React.Component {
     const menus = flattenMenuTrees(menuTreeItems);
 
     const modificationCheckedMenus = _.map(menus, menu => {
-      const originalMenu = this.state.menuDict[menu.id];
+      const originalMenu = this.getOriginalMenu(menu.id);
       const isCreated = !originalMenu;
       const isUnsaved = isCreated || _.some(originalMenu, (value, key) => (
         menu[key] !== value
@@ -235,8 +237,9 @@ class Menus extends React.Component {
         </ButtonToolbar>
 
         <MenuTree
+          ref={this.menuTree}
           items={menuTreeItems}
-          reactVirtualizedListProps={{ ref: this.reactVirtualizedList }}
+          getOriginalMenu={this.getOriginalMenu}
           onChange={this.onMenuTreeItemsChange}
           onVisibilityToggle={this.onMenuTreeItemVisibilityToggle}
           onShowSubmenusButtonClick={this.onShowSubmenusButtonClick}
