@@ -160,10 +160,26 @@ class Menus extends React.Component {
   onSaveButtonClick = () => {
     this.setState({ isFetching: true }, async () => {
       try {
-        const menus = flattenMenuTrees(this.state.menuTreeItems);
-        const unsavedMenus = _.filter(menus, menu => menu.isUnsaved);
-        const unsavedRawMenus = _.map(unsavedMenus, mapMenuToRawMenu);
+        const filterUnsavedMenus = menus => _.filter(menus, menu => menu.isUnsaved);
+
+        const removeTemporaryIds = menus => _.map(menus, menu => {
+          if (menu.isCreated) {
+            return _.omit(menu, ['id']);
+          }
+          return menu;
+        });
+
+        const mapMenusToRawMenus = menus => _.map(menus, mapMenuToRawMenu);
+
+        const unsavedRawMenus = _.flow([
+          flattenMenuTrees,
+          filterUnsavedMenus,
+          removeTemporaryIds,
+          mapMenusToRawMenus,
+        ])(this.state.menuTreeItems);
+
         await axios.put('/super/menus', unsavedRawMenus);
+
         await this.loadMenus();
       } catch (e) {
         this.handleError(e);
