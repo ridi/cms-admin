@@ -19,6 +19,7 @@
     "react-bootstrap": "^0.32.1",
     "react-dnd": "^3.0.2",
     "react-dnd-html5-backend": "^3.0.2",
+    "react-dnd-touch-backend": "^0.5.1",
     "react-dom": "^16.3.1",
     "react-input-autosize": "^2.2.1",
     "react-sortable-tree": "^2.2.0",

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Button, ButtonToolbar, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import TouchBackend from 'react-dnd-touch-backend';
 import { connectStateStorage, getPassThroughProps } from '../utils/component';
 import SpinnerOverlay from '../components/SpinnerOverlay';
 import MenuTree from './MenuTree';
@@ -13,6 +14,10 @@ import MenuUsers from './MenuUsers';
 import { mapMenuToRawMenu, mapRawMenuToMenu } from './menuMapper';
 import { buildMenuTrees, flattenMenuTrees } from './menuTreeBuilder';
 import './Menus.css';
+
+const isTouchDevice = !!('ontouchstart' in window || navigator.maxTouchPoints);
+
+const DndBackend = isTouchDevice ? TouchBackend : HTML5Backend;
 
 const createMenu = () => ({
   id: -Date.now(), // temporary numeric id
@@ -272,4 +277,4 @@ class Menus extends React.Component {
   };
 }
 
-export default DragDropContext(HTML5Backend)(Menus);
+export default DragDropContext(DndBackend)(Menus);
