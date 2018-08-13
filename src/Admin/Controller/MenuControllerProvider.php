@@ -29,6 +29,8 @@ class MenuControllerProvider implements ControllerProviderInterface
 
         $controllers->get('/menus/{menu_id}/users', [$this, 'users']);
 
+        $controllers->get('/menus/{menu_id}/permissions', [$this, 'permissions']);
+
         return $controllers;
     }
 
@@ -147,5 +149,12 @@ class MenuControllerProvider implements ControllerProviderInterface
         $users = AdminMenuService::getUsersByMenuId($menu_id);
 
         return $app->json($users);
+    }
+
+    public function permissions(CmsApplication $app, $menu_id)
+    {
+        $permissions = AdminMenuService::getPermissions($menu_id);
+
+        return $app->json($permissions);
     }
 }
