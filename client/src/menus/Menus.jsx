@@ -11,7 +11,7 @@ import SpinnerOverlay from '../components/SpinnerOverlay';
 import MenuTree from './MenuTree';
 import MenuTreeDragSource from './MenuTreeDragSource';
 import Submenus from './Submenus';
-import MenuUsers from './MenuUsers';
+import MenuPermissions from './MenuPermissions';
 import { mapMenuToRawMenu, mapRawMenuToMenu } from './menuMapper';
 import { buildMenuTrees, flattenMenuTrees } from './menuTreeBuilder';
 import './Menus.css';
@@ -38,7 +38,7 @@ class Menus extends React.Component {
     menuExpandedStates: {},
     hasUnsavedMenus: false,
     isFetching: false,
-    menuUsers: {
+    menuPermissions: {
       show: false,
       menuId: undefined,
     },
@@ -228,18 +228,18 @@ class Menus extends React.Component {
     this.submenusModal.current.show(menu.id, menu.title);
   };
 
-  onShowUsersButtonClick = (menu) => {
+  onShowMenuPermissionsButtonClick = async (menu) => {
     this.setState({
-      menuUsers: {
+      menuPermissions: {
         show: true,
         menuId: menu.id,
       },
     });
   };
 
-  onHideUsersButtonClick = () => {
+  onHideMenuPermissions = () => {
     this.setState({
-      menuUsers: {
+      menuPermissions: {
         show: false,
         menuId: undefined,
       },
@@ -301,14 +301,14 @@ class Menus extends React.Component {
           getOriginalMenu={this.getOriginalMenu}
           onChange={this.updateMenuTreeItems}
           onShowSubmenusButtonClick={this.onShowSubmenusButtonClick}
-          onShowUsersButtonClick={this.onShowUsersButtonClick}
+          onShowPermissionsButtonClick={this.onShowMenuPermissionsButtonClick}
         />
 
         <Submenus ref={this.submenusModal} />
-        <MenuUsers
-          menuId={this.state.menuUsers.menuId}
-          showModal={this.state.menuUsers.show}
-          closeModal={this.onHideUsersButtonClick}
+        <MenuPermissions
+          menuId={this.state.menuPermissions.menuId}
+          show={this.state.menuPermissions.show}
+          onHide={this.onHideMenuPermissions}
         />
 
         <SpinnerOverlay show={isFetching} />

@@ -1,0 +1,7 @@
+.menu_permissions .spinner_overlay {
+  position: static;
+}
+
+.menu_permissions .modal-body {
+  height: 500px;
+}

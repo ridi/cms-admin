@@ -34,7 +34,7 @@ export default class MenuTree extends React.Component {
     getOriginalMenu: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
     onShowSubmenusButtonClick: PropTypes.func.isRequired,
-    onShowUsersButtonClick: PropTypes.func.isRequired,
+    onShowPermissionsButtonClick: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -96,7 +96,7 @@ export default class MenuTree extends React.Component {
         path,
         onChange: this.updateNode,
         onShowSubmenusButtonClick: this.props.onShowSubmenusButtonClick,
-        onShowUsersButtonClick: this.props.onShowUsersButtonClick,
+        onShowPermissionsButtonClick: this.props.onShowPermissionsButtonClick,
         onRemoveButtonClick: this.removeNode,
       },
     };
