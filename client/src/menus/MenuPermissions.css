@@ -1,3 +1,16 @@
+.menu_permissions .menu {
+  margin-bottom: 1rem;
+}
+
+.menu_permissions .menu .title {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.menu_permissions .menu .url {
+  font-size: .7rem;
+}
+
 .menu_permissions .label {
   display: inline-block;
   margin-right: .1rem;

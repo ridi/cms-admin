@@ -9,7 +9,7 @@ import { handleError } from '../utils/error';
 import SpinnerOverlay from '../components/SpinnerOverlay';
 import './MenuPermissions.css';
 
-const TagsRenderer = ({tags, ...props}) => (
+const TagsRenderer = ({ tags, ...props }) => (
   <Table striped condensed hover {...props}>
     <thead>
       <tr>
@@ -32,7 +32,7 @@ const TagsRenderer = ({tags, ...props}) => (
   </Table>
 );
 
-const GroupsRenderer = ({groups, ...props}) => (
+const GroupsRenderer = ({ groups, ...props }) => (
   <Table striped condensed hover {...props}>
     <thead>
       <tr>
@@ -61,7 +61,7 @@ const GroupsRenderer = ({groups, ...props}) => (
   </Table>
 );
 
-const UsersRenderer = ({users, ...props}) => (
+const UsersRenderer = ({ users, ...props }) => (
   <Table striped condensed hover {...props}>
     <thead>
       <tr>
@@ -126,10 +126,10 @@ class MenuPermissions extends React.Component {
   loadData = () => {
     this.setState({ isFetching: true }, async () => {
       try {
-        const { menuId } = this.props;
-        const { data: menu } = await axios.get(`/super/menus/${menuId}/permissions`);
+        const { menu } = this.props;
+        const { data: result } = await axios.get(`/super/menus/${menu.id}/permissions`);
 
-        const allTags = menu.tags;
+        const allTags = result.tags;
         const tags = _.flow([
           tags => _.sortBy(tags, [tag => !tag.is_use, 'display_name']),
         ])(allTags);
@@ -145,7 +145,7 @@ class MenuPermissions extends React.Component {
         ])(allGroups);
 
         const allUsers = [
-          ...menu.users,
+          ...result.users,
           ..._.flatMap(tags, tag => tag.users),
           ..._.flatMap(groups, group => group.users),
         ];
@@ -154,7 +154,7 @@ class MenuPermissions extends React.Component {
           users => _.sortBy(users, [user => !user.is_use, 'name']),
           users => _.map(users, user => ({
             ...user,
-            hasDirectPermission: !!_.find(menu.users, value => value.id === user.id),
+            hasDirectPermission: !!_.find(result.users, value => value.id === user.id),
             tags: _.filter(tags, tag => _.find(tag.users, value => value.id === user.id)),
             groups: _.filter(groups, group => _.find(group.users, value => value.id === user.id)),
           })),
@@ -186,6 +186,7 @@ class MenuPermissions extends React.Component {
   render = () => {
     const {
       className,
+      menu,
       show,
       onHide,
     } = this.props;
@@ -211,6 +212,11 @@ class MenuPermissions extends React.Component {
         </Modal.Header>
 
         <Modal.Body>
+          <div className="menu">
+            <div className="title">{menu.title}</div>
+            <div className="url">{menu.url}</div>
+          </div>
+
           <Tabs
             id="menu_permission_tabs"
             activeKey={activeTabKey}
@@ -218,7 +224,7 @@ class MenuPermissions extends React.Component {
             onSelect={this.handleSelect}
           >
             <Tab eventKey={MenuPermissions.TabKeys.TAGS} title={`태그 (${_.size(data.tags)})`}>
-              <TagsRenderer tags={data.tags}/>
+              <TagsRenderer tags={data.tags} />
             </Tab>
             <Tab eventKey={MenuPermissions.TabKeys.GROUPS} title={`그룹 (${_.size(data.groups)})`}>
               <GroupsRenderer groups={data.groups} />
@@ -242,13 +248,17 @@ class MenuPermissions extends React.Component {
 MenuPermissions.propTypes = {
   ...Modal.propTypes,
   className: PropTypes.string,
-  menuId: PropTypes.number,
+  menu: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    url: PropTypes.string,
+  }),
 };
 
 MenuPermissions.defaultProps = {
   ...Modal.defaultProps,
   className: undefined,
-  menuId: undefined,
+  menu: {},
 };
 
 export default MenuPermissions;

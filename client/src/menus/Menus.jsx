@@ -232,7 +232,7 @@ class Menus extends React.Component {
     this.setState({
       menuPermissions: {
         show: true,
-        menuId: menu.id,
+        menu,
       },
     });
   };
@@ -241,7 +241,7 @@ class Menus extends React.Component {
     this.setState({
       menuPermissions: {
         show: false,
-        menuId: undefined,
+        menu: undefined,
       },
     });
   };
@@ -306,7 +306,7 @@ class Menus extends React.Component {
 
         <Submenus ref={this.submenusModal} />
         <MenuPermissions
-          menuId={this.state.menuPermissions.menuId}
+          menu={this.state.menuPermissions.menu}
           show={this.state.menuPermissions.show}
           onHide={this.onHideMenuPermissions}
         />
