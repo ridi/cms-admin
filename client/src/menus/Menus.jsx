@@ -6,6 +6,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackend from 'react-dnd-touch-backend';
 import { connectStateStorage, getPassThroughProps } from '../utils/component';
+import { handleError } from '../utils/error';
 import SpinnerOverlay from '../components/SpinnerOverlay';
 import MenuTree from './MenuTree';
 import MenuTreeDragSource from './MenuTreeDragSource';
@@ -57,7 +58,7 @@ class Menus extends React.Component {
     try {
       await this.loadMenus();
     } catch (e) {
-      this.handleError(e);
+      handleError(e);
     }
   };
 
@@ -100,10 +101,6 @@ class Menus extends React.Component {
     return buildMenuTrees(sortedMenus);
   };
 
-  handleError = (e) => {
-    alert(e.response && e.response.data ? e.response.data : e.message);
-  };
-
   onAddMenuButtonClick = () => {
     const { menuTreeItems } = this.state;
 
@@ -123,7 +120,7 @@ class Menus extends React.Component {
       try {
         await this.loadMenus();
       } catch (e) {
-        this.handleError(e);
+        handleError(e);
       }
     }
   };
@@ -185,7 +182,7 @@ class Menus extends React.Component {
 
         await this.loadMenus();
       } catch (e) {
-        this.handleError(e);
+        handleError(e);
       } finally {
         this.setState({ isFetching: false });
       }
