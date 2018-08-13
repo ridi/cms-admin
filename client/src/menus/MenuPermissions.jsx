@@ -67,9 +67,9 @@ const UsersRenderer = ({ users, ...props }) => (
       <tr>
         <th>ID</th>
         <th>이름</th>
-        <th>직접 권한</th>
-        <th>태그 권한</th>
         <th>그룹 권한</th>
+        <th>태그 권한</th>
+        <th>직접 권한</th>
       </tr>
     </thead>
     <tbody>
@@ -84,9 +84,9 @@ const UsersRenderer = ({ users, ...props }) => (
             </a>
           </td>
           <td>
-            {user.hasDirectPermission && (
-              <Glyphicon glyph="ok" />
-            )}
+            {_.map(user.groups, group => (
+              <Label key={group.id} bsStyle="success">{group.name}</Label>
+            ))}
           </td>
           <td>
             {_.map(user.tags, tag => (
@@ -94,9 +94,9 @@ const UsersRenderer = ({ users, ...props }) => (
             ))}
           </td>
           <td>
-            {_.map(user.groups, group => (
-              <Label key={group.id} bsStyle="success">{group.name}</Label>
-            ))}
+            {user.hasDirectPermission && (
+              <Glyphicon glyph="ok" />
+            )}
           </td>
         </tr>
       ))}
@@ -223,14 +223,14 @@ class MenuPermissions extends React.Component {
             animation={false}
             onSelect={this.handleSelect}
           >
-            <Tab eventKey={MenuPermissions.TabKeys.TAGS} title={`태그 (${_.size(data.tags)})`}>
-              <TagsRenderer tags={data.tags} />
+            <Tab eventKey={MenuPermissions.TabKeys.USERS} title={`사용자 (${_.size(data.users)})`}>
+              <UsersRenderer users={data.users} />
             </Tab>
             <Tab eventKey={MenuPermissions.TabKeys.GROUPS} title={`그룹 (${_.size(data.groups)})`}>
               <GroupsRenderer groups={data.groups} />
             </Tab>
-            <Tab eventKey={MenuPermissions.TabKeys.USERS} title={`사용자 (${_.size(data.users)})`}>
-              <UsersRenderer users={data.users} />
+            <Tab eventKey={MenuPermissions.TabKeys.TAGS} title={`태그 (${_.size(data.tags)})`}>
+              <TagsRenderer tags={data.tags} />
             </Tab>
           </Tabs>
 
