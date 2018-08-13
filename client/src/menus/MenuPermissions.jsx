@@ -3,58 +3,75 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import cn from 'classnames';
 import axios from 'axios';
-import { Button, Modal } from 'react-bootstrap';
-import { SortableTreeWithoutDndContext as SortableTree } from 'react-sortable-tree';
+import { Button, Glyphicon, Label, Modal, Tab, Tabs, Table } from 'react-bootstrap';
 import { getPassThroughProps } from '../utils/component';
 import { handleError } from '../utils/error';
 import SpinnerOverlay from '../components/SpinnerOverlay';
 import './MenuPermissions.css';
 
 class MenuPermissions extends React.Component {
-  state = {
-    treeData: [],
+  static TabKeys = {
+    TAGS: 'tags',
+    GROUPS: 'groups',
+    USERS: 'users',
+  };
+
+  static defaultState = {
+    data: {
+      tags: [],
+      groups: [],
+      users: [],
+    },
+    activeTabKey: MenuPermissions.TabKeys.USERS,
     isFetching: false,
   };
 
-  loadPermissions = () => {
+  state = MenuPermissions.defaultState;
+
+  loadData = () => {
     this.setState({ isFetching: true }, async () => {
       try {
         const { menuId } = this.props;
-        const { data } = await axios.get(`/super/menus/${menuId}/permissions`);
-        const treeData = [{
-          ...data,
-          title: data.menu_title,
-          subtitle: data.menu_url,
-          expanded: true,
-          children: [
-            ..._.map(data.tags, tag => ({
-              ...tag,
-              title: tag.display_name,
-              children: [
-                ..._.map(tag.groups, group => ({
-                  ...group,
-                  title: group.name,
-                  children: _.map(group.users, user => ({
-                    ...user,
-                    title: user.name,
-                    subtitle: user.id,
-                  })),
-                })),
-                ..._.map(tag.users, user => ({
-                  ...user,
-                  title: user.name,
-                  subtitle: user.id,
-                })),
-              ],
-            })),
-            ..._.map(data.users, user => ({
-              ...user,
-              title: user.name,
-              subtitle: user.id,
-            })),
-          ],
-        }];
-        this.setState({ treeData });
+        const { data: menu } = await axios.get(`/super/menus/${menuId}/permissions`);
+
+        const allTags = menu.tags;
+        const tags = _.flow([
+          tags => _.sortBy(tags, [tag => !tag.is_use, 'display_name']),
+        ])(allTags);
+
+        const allGroups = _.flatMap(tags, tag => tag.groups);
+        const groups = _.flow([
+          groups => _.uniqBy(groups, 'id'),
+          groups => _.sortBy(groups, [group => !group.is_use, 'name']),
+          groups => _.map(groups, group => ({
+            ...group,
+            tags: _.filter(tags, tag => _.find(tag.groups, value => value.id === group.id)),
+          })),
+        ])(allGroups);
+
+        const allUsers = [
+          ...menu.users,
+          ..._.flatMap(tags, tag => tag.users),
+          ..._.flatMap(groups, group => group.users),
+        ];
+        const users = _.flow([
+          users => _.uniqBy(users, 'id'),
+          users => _.sortBy(users, [user => !user.is_use, 'name']),
+          users => _.map(users, user => ({
+            ...user,
+            hasDirectPermission: !!_.find(menu.users, value => value.id === user.id),
+            tags: _.filter(tags, tag => _.find(tag.users, value => value.id === user.id)),
+            groups: _.filter(groups, group => _.find(group.users, value => value.id === user.id)),
+          })),
+        ])(allUsers);
+
+        const data = {
+          tags,
+          groups,
+          users,
+        };
+
+        this.setState({ data });
       } catch (e) {
         handleError(e);
       } finally {
@@ -63,12 +80,12 @@ class MenuPermissions extends React.Component {
     });
   };
 
-  unloadPermissions = () => {
-    this.setState({ treeData: [] });
+  unloadData = () => {
+    this.setState({ data: MenuPermissions.defaultState.data });
   };
 
-  onSortableTreeChange = (treeData) => {
-    this.setState({ treeData });
+  handleSelect = activeTabKey => {
+    this.setState({ activeTabKey });
   };
 
   render = () => {
@@ -79,30 +96,130 @@ class MenuPermissions extends React.Component {
     } = this.props;
 
     const {
-      treeData,
+      data,
+      activeTabKey,
       isFetching,
     } = this.state;
 
     return (
       <Modal
         className={cn('menu_permissions', className)}
+        bsSize="large"
         show={show}
         onHide={onHide}
-        onEnter={this.loadPermissions}
-        onExited={this.unloadPermissions}
+        onEnter={this.loadData}
+        onExited={this.unloadData}
         {...getPassThroughProps(this)}
       >
         <Modal.Header closeButton>
           <Modal.Title>메뉴 권한</Modal.Title>
         </Modal.Header>
+
         <Modal.Body>
-          <SortableTree
-            treeData={treeData}
-            canDrag={() => false}
-            onChange={this.onSortableTreeChange}
-          />
+          <Tabs
+            id="menu_permission_tabs"
+            activeKey={activeTabKey}
+            animation={false}
+            onSelect={this.handleSelect}
+          >
+            <Tab eventKey={MenuPermissions.TabKeys.TAGS} title={`태그 (${_.size(data.tags)})`}>
+              <Table striped condensed hover>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>이름</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {_.map(data.tags, tag => (
+                    <tr key={tag.id} className={cn('tag', { use: tag.is_use })}>
+                      <td>{tag.id}</td>
+                      <td>
+                        <Label bsStyle="primary">
+                          {tag.display_name}
+                        </Label>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Tab>
+
+            <Tab eventKey={MenuPermissions.TabKeys.GROUPS} title={`그룹 (${_.size(data.groups)})`}>
+              <Table striped condensed hover>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>이름</th>
+                    <th>태그 권한</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {_.map(data.groups, group => (
+                    <tr key={group.id} className={cn('group', { use: group.is_use })}>
+                      <td>{group.id}</td>
+                      <td>
+                        <Label bsStyle="success">
+                          {group.name}
+                        </Label>
+                      </td>
+                      <td>
+                        {_.map(group.tags, tag => (
+                          <Label key={tag.id} bsStyle="primary">{tag.display_name}</Label>
+                        ))}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Tab>
+
+            <Tab eventKey={MenuPermissions.TabKeys.USERS} title={`사용자 (${_.size(data.users)})`}>
+              <Table striped condensed hover>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>이름</th>
+                    <th>직접 권한</th>
+                    <th>태그 권한</th>
+                    <th>그룹 권한</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {_.map(data.users, user => (
+                    <tr key={user.id} className={cn('user', { use: user.is_use })}>
+                      <td>{user.id}</td>
+                      <td>
+                        <a href={`/super/users/${user.id}`} target="_blank">
+                          <Label>
+                            {user.name}
+                          </Label>
+                        </a>
+                      </td>
+                      <td>
+                        {user.hasDirectPermission && (
+                          <Glyphicon glyph="ok" />
+                        )}
+                      </td>
+                      <td>
+                        {_.map(user.tags, tag => (
+                          <Label key={tag.id} bsStyle="primary">{tag.display_name}</Label>
+                        ))}
+                      </td>
+                      <td>
+                        {_.map(user.groups, group => (
+                          <Label key={group.id} bsStyle="success">{group.name}</Label>
+                        ))}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Tab>
+          </Tabs>
           <SpinnerOverlay show={isFetching} />
         </Modal.Body>
+
         <Modal.Footer>
           <Button onClick={onHide}>Close</Button>
         </Modal.Footer>

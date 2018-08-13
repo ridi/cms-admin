@@ -1,7 +1,12 @@
-.menu_permissions .spinner_overlay {
-  position: static;
+.menu_permissions .label {
+  display: inline-block;
+  margin-right: .1rem;
 }
 
-.menu_permissions .modal-body {
-  height: 500px;
+.menu_permissions th {
+  white-space: nowrap;
+}
+
+.menu_permissions tbody tr:not(.use):not(:hover) > * {
+  opacity: .1;
 }
