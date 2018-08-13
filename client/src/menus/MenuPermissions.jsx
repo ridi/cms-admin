@@ -9,6 +9,101 @@ import { handleError } from '../utils/error';
 import SpinnerOverlay from '../components/SpinnerOverlay';
 import './MenuPermissions.css';
 
+const TagsRenderer = ({tags, ...props}) => (
+  <Table striped condensed hover {...props}>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>이름</th>
+      </tr>
+    </thead>
+    <tbody>
+      {_.map(tags, tag => (
+        <tr key={tag.id} className={cn('tag', { use: tag.is_use })}>
+          <td>{tag.id}</td>
+          <td>
+            <Label bsStyle="primary">
+              {tag.display_name}
+            </Label>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </Table>
+);
+
+const GroupsRenderer = ({groups, ...props}) => (
+  <Table striped condensed hover {...props}>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>이름</th>
+        <th>태그 권한</th>
+      </tr>
+    </thead>
+    <tbody>
+      {_.map(groups, group => (
+        <tr key={group.id} className={cn('group', { use: group.is_use })}>
+          <td>{group.id}</td>
+          <td>
+            <Label bsStyle="success">
+              {group.name}
+            </Label>
+          </td>
+          <td>
+            {_.map(group.tags, tag => (
+              <Label key={tag.id} bsStyle="primary">{tag.display_name}</Label>
+            ))}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </Table>
+);
+
+const UsersRenderer = ({users, ...props}) => (
+  <Table striped condensed hover {...props}>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>이름</th>
+        <th>직접 권한</th>
+        <th>태그 권한</th>
+        <th>그룹 권한</th>
+      </tr>
+    </thead>
+    <tbody>
+      {_.map(users, user => (
+        <tr key={user.id} className={cn('user', { use: user.is_use })}>
+          <td>{user.id}</td>
+          <td>
+            <a href={`/super/users/${user.id}`} target="_blank">
+              <Label>
+                {user.name}
+              </Label>
+            </a>
+          </td>
+          <td>
+            {user.hasDirectPermission && (
+              <Glyphicon glyph="ok" />
+            )}
+          </td>
+          <td>
+            {_.map(user.tags, tag => (
+              <Label key={tag.id} bsStyle="primary">{tag.display_name}</Label>
+            ))}
+          </td>
+          <td>
+            {_.map(user.groups, group => (
+              <Label key={group.id} bsStyle="success">{group.name}</Label>
+            ))}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </Table>
+);
+
 class MenuPermissions extends React.Component {
   static TabKeys = {
     TAGS: 'tags',
@@ -123,100 +218,16 @@ class MenuPermissions extends React.Component {
             onSelect={this.handleSelect}
           >
             <Tab eventKey={MenuPermissions.TabKeys.TAGS} title={`태그 (${_.size(data.tags)})`}>
-              <Table striped condensed hover>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>이름</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {_.map(data.tags, tag => (
-                    <tr key={tag.id} className={cn('tag', { use: tag.is_use })}>
-                      <td>{tag.id}</td>
-                      <td>
-                        <Label bsStyle="primary">
-                          {tag.display_name}
-                        </Label>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              <TagsRenderer tags={data.tags}/>
             </Tab>
-
             <Tab eventKey={MenuPermissions.TabKeys.GROUPS} title={`그룹 (${_.size(data.groups)})`}>
-              <Table striped condensed hover>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>이름</th>
-                    <th>태그 권한</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {_.map(data.groups, group => (
-                    <tr key={group.id} className={cn('group', { use: group.is_use })}>
-                      <td>{group.id}</td>
-                      <td>
-                        <Label bsStyle="success">
-                          {group.name}
-                        </Label>
-                      </td>
-                      <td>
-                        {_.map(group.tags, tag => (
-                          <Label key={tag.id} bsStyle="primary">{tag.display_name}</Label>
-                        ))}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              <GroupsRenderer groups={data.groups} />
             </Tab>
-
             <Tab eventKey={MenuPermissions.TabKeys.USERS} title={`사용자 (${_.size(data.users)})`}>
-              <Table striped condensed hover>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>이름</th>
-                    <th>직접 권한</th>
-                    <th>태그 권한</th>
-                    <th>그룹 권한</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {_.map(data.users, user => (
-                    <tr key={user.id} className={cn('user', { use: user.is_use })}>
-                      <td>{user.id}</td>
-                      <td>
-                        <a href={`/super/users/${user.id}`} target="_blank">
-                          <Label>
-                            {user.name}
-                          </Label>
-                        </a>
-                      </td>
-                      <td>
-                        {user.hasDirectPermission && (
-                          <Glyphicon glyph="ok" />
-                        )}
-                      </td>
-                      <td>
-                        {_.map(user.tags, tag => (
-                          <Label key={tag.id} bsStyle="primary">{tag.display_name}</Label>
-                        ))}
-                      </td>
-                      <td>
-                        {_.map(user.groups, group => (
-                          <Label key={group.id} bsStyle="success">{group.name}</Label>
-                        ))}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              <UsersRenderer users={data.users} />
             </Tab>
           </Tabs>
+
           <SpinnerOverlay show={isFetching} />
         </Modal.Body>
 
