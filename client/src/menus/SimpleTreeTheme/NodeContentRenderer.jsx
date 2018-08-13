@@ -12,7 +12,7 @@ const HandleRenderer = ({ node, canDrag, connectDragSource, className, ...props 
   return connectDragSource(
     <span
       className={cn(
-        'rst__moveHandle',
+        'stt__moveHandle',
         'glyphicon',
         'glyphicon-menu-hamburger',
         className,
@@ -56,7 +56,7 @@ class NodeContentRenderer extends Component {
 
       ...otherProps
     } = this.props;
-    const rowDirectionClass = rowDirection === 'rtl' ? 'rst__rtl' : null;
+    const rowDirectionClass = rowDirection === 'rtl' ? 'stt__rtl' : null;
 
     const isDraggedDescendant = draggedNode && isDescendant(draggedNode, node);
     const isLandingPadActive = !didDrop && isDragging;
@@ -78,7 +78,7 @@ class NodeContentRenderer extends Component {
               type="button"
               aria-label={node.expanded ? 'Collapse' : 'Expand'}
               className={cn(
-                node.expanded ? 'rst__collapseButton' : 'rst__expandButton',
+                node.expanded ? 'stt__collapseButton' : 'stt__expandButton',
                 rowDirectionClass,
               )}
               style={buttonStyle}
@@ -96,7 +96,7 @@ class NodeContentRenderer extends Component {
               <div
                 style={{ width: scaffoldBlockPxWidth }}
                 className={cn(
-                  'rst__lineChildren',
+                  'stt__lineChildren',
                   rowDirectionClass,
                 )}
               />
@@ -104,16 +104,16 @@ class NodeContentRenderer extends Component {
           </div>
         )}
 
-        <div className={cn('rst__rowWrapper', rowDirectionClass)}>
+        <div className={cn('stt__rowWrapper', rowDirectionClass)}>
           {/* Set the row preview to be used during drag and drop */}
           {connectDragPreview(
             <div
               className={cn(
-                'rst__row',
-                isLandingPadActive && 'rst__rowLandingPad',
-                isLandingPadActive && !canDrop && 'rst__rowCancelPad',
-                isSearchMatch && 'rst__rowSearchMatch',
-                isSearchFocus && 'rst__rowSearchFocus',
+                'stt__row',
+                isLandingPadActive && 'stt__rowLandingPad',
+                isLandingPadActive && !canDrop && 'stt__rowCancelPad',
+                isSearchMatch && 'stt__rowSearchMatch',
+                isSearchFocus && 'stt__rowSearchFocus',
                 rowDirectionClass,
               )}
               style={{

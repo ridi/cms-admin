@@ -26,7 +26,7 @@ class TreeNodeRenderer extends Component {
       ...otherProps
     } = this.props;
 
-    const rowDirectionClass = rowDirection === 'rtl' ? 'rst__rtl' : null;
+    const rowDirectionClass = rowDirection === 'rtl' ? 'stt__rtl' : null;
 
     // Construct the scaffold representing the structure of the tree
     const scaffoldBlockCount = lowerSiblingCounts.length;
@@ -44,7 +44,7 @@ class TreeNodeRenderer extends Component {
           // |  |  |
           // +--+--+
           lineClass =
-            'rst__lineHalfHorizontalRight rst__lineHalfVerticalBottom';
+            'stt__lineHalfHorizontalRight stt__lineHalfVerticalBottom';
         } else if (i === scaffoldBlockCount - 1) {
           // Last scaffold block in the row, right before the row content
           // +--+--+
@@ -52,7 +52,7 @@ class TreeNodeRenderer extends Component {
           // |  +--+
           // |  |  |
           // +--+--+
-          lineClass = 'rst__lineHalfHorizontalRight rst__lineFullVertical';
+          lineClass = 'stt__lineHalfHorizontalRight stt__lineFullVertical';
         } else {
           // Simply connecting the line extending down to the next sibling on this level
           // +--+--+
@@ -60,7 +60,7 @@ class TreeNodeRenderer extends Component {
           // |  |  |
           // |  |  |
           // +--+--+
-          lineClass = 'rst__lineFullVertical';
+          lineClass = 'stt__lineFullVertical';
         }
       } else if (listIndex === 0) {
         // Top-left corner of the tree, but has no siblings
@@ -69,7 +69,7 @@ class TreeNodeRenderer extends Component {
         // |  +--+
         // |     |
         // +-----+
-        lineClass = 'rst__lineHalfHorizontalRight';
+        lineClass = 'stt__lineHalfHorizontalRight';
       } else if (i === scaffoldBlockCount - 1) {
         // The last or only node in this level of the tree
         // +--+--+
@@ -77,14 +77,14 @@ class TreeNodeRenderer extends Component {
         // |  +--+
         // |     |
         // +-----+
-        lineClass = 'rst__lineHalfVerticalTop rst__lineHalfHorizontalRight';
+        lineClass = 'stt__lineHalfVerticalTop stt__lineHalfHorizontalRight';
       }
 
       scaffold.push(
         <div
           key={`pre_${1 + i}`}
           style={{ width: scaffoldBlockPxWidth }}
-          className={cn('rst__lineBlock', lineClass, rowDirectionClass)}
+          className={cn('stt__lineBlock', lineClass, rowDirectionClass)}
         />,
       );
 
@@ -96,13 +96,13 @@ class TreeNodeRenderer extends Component {
         if (listIndex === swapFrom + swapLength - 1) {
           // This block is on the bottom (target) line
           // This block points at the target block (where the row will go when released)
-          highlightLineClass = 'rst__highlightBottomLeftCorner';
+          highlightLineClass = 'stt__highlightBottomLeftCorner';
         } else if (treeIndex === swapFrom) {
           // This block is on the top (source) line
-          highlightLineClass = 'rst__highlightTopLeftCorner';
+          highlightLineClass = 'stt__highlightTopLeftCorner';
         } else {
           // This block is between the bottom and top
-          highlightLineClass = 'rst__highlightLineVertical';
+          highlightLineClass = 'stt__highlightLineVertical';
         }
 
         let style;
@@ -125,7 +125,7 @@ class TreeNodeRenderer extends Component {
             key={i}
             style={style}
             className={cn(
-              'rst__absoluteLineBlock',
+              'stt__absoluteLineBlock',
               highlightLineClass,
               rowDirectionClass,
             )}
@@ -145,11 +145,11 @@ class TreeNodeRenderer extends Component {
     return connectDropTarget(
       <div
         {...otherProps}
-        className={cn('rst__node', rowDirectionClass)}
+        className={cn('stt__node', rowDirectionClass)}
       >
         {scaffold}
 
-        <div className="rst__nodeContent" style={style}>
+        <div className="stt__nodeContent" style={style}>
           {Children.map(children, child =>
             cloneElement(child, {
               isOver,

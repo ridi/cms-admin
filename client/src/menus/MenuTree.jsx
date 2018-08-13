@@ -8,7 +8,7 @@ import {
   removeNodeAtPath,
 } from 'react-sortable-tree';
 import { getPassThroughProps } from '../utils/component';
-import MenuTreeTheme from './MenuTreeTheme';
+import SimpleTreeTheme from './SimpleTreeTheme';
 import MenuRenderer from './MenuRenderer';
 
 export const DragSourceType = 'MenuTreeItem';
@@ -108,7 +108,7 @@ export default class MenuTree extends React.Component {
       <SortableTree
         className={cn('menu_tree')}
         treeData={this.props.items}
-        theme={MenuTreeTheme}
+        theme={SimpleTreeTheme}
         dndType={DragSourceType}
         onChange={this.onChange}
         getNodeKey={this.getNodeKey}
