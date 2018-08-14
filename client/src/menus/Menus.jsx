@@ -128,7 +128,39 @@ class Menus extends React.Component {
   onMenuTreeItemsChange = (menuTreeItems, callback) => {
     const menus = flattenMenuTrees(menuTreeItems);
 
-    const modificationCheckedMenus = _.map(menus, menu => {
+    const orderCorrectedMenus = _.reduce(menus, (newMenus, menu, index) => {
+      const prevMenu = newMenus[index - 1];
+      const nextMenu = newMenus[index + 1];
+      const originalMenu = this.getOriginalMenu(menu.id);
+
+      const prevMenuOrder = prevMenu ? prevMenu.order : index - 1;
+      const nextMenuOrder = nextMenu ? nextMenu.order : index + 1;
+      const originalMenuOrder = originalMenu ? originalMenu.order : menu.order;
+
+      if (originalMenuOrder <= prevMenuOrder) {
+        newMenus[index] = {
+          ...menu,
+          order: prevMenuOrder + 1,
+        };
+        return newMenus;
+      }
+
+      if (originalMenuOrder > nextMenuOrder) {
+        newMenus[index] = {
+          ...menu,
+          order: prevMenuOrder + 1,
+        };
+        return newMenus;
+      }
+
+      newMenus[index] = {
+        ...menu,
+        order: originalMenuOrder,
+      };
+      return newMenus;
+    }, [...menus]);
+
+    const modificationCheckedMenus = _.map(orderCorrectedMenus, menu => {
       const originalMenu = this.getOriginalMenu(menu.id);
       const isCreated = !originalMenu;
       const isUnsaved = isCreated || _.some(originalMenu, (value, key) => (
