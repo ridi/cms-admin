@@ -126,13 +126,13 @@ class Menus extends React.Component {
     const menus = flattenMenuTrees(menuTreeItems);
 
     const orderCorrectedMenus = _.reduce(menus, (newMenus, menu, index) => {
+      const originalMenu = this.getOriginalMenu(menu.id);
       const prevMenu = newMenus[index - 1];
       const nextMenu = newMenus[index + 1];
-      const originalMenu = this.getOriginalMenu(menu.id);
 
+      const originalMenuOrder = originalMenu ? originalMenu.order : index;
       const prevMenuOrder = prevMenu ? prevMenu.order : index - 1;
-      const nextMenuOrder = nextMenu ? nextMenu.order : index + 1;
-      const originalMenuOrder = originalMenu ? originalMenu.order : menu.order;
+      const nextMenuOrder = nextMenu ? nextMenu.order : originalMenuOrder + 1;
 
       if (originalMenuOrder > prevMenuOrder && originalMenuOrder <= nextMenuOrder) {
         newMenus[index] = {
