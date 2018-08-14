@@ -21,13 +21,17 @@ const defaultEntry = [
 // So we need to tell webpack to generate the common CSS file and add it into manifest file
 // so that make it possible to link the common CSS file from html.
 const createManifestPlugin = (options) => {
-  const cssFilename = 'commons.css';
+  const cssFilenames = _.map(
+    ['commons', ..._.keys(config.entry)],
+    name => `${name}.css`,
+  );
 
   // Add the common CSS file path to manifest file
   const manifestPlugin = new ManifestPlugin({
-    seed: {
-      'commons.css': `${PUBLIC_URL}${cssFilename}`,
-    },
+    seed: _.mapValues(
+      _.keyBy(cssFilenames, _.identity),
+      cssFilename => `${PUBLIC_URL}${cssFilename}`,
+    ),
     ...options,
   });
 
@@ -41,10 +45,12 @@ const createManifestPlugin = (options) => {
       // It's just OK to serve empty file
       // because the actual CSS is injected into <style> tag by style-loader
       compiler.hooks.compilation.tap('DummyCssPlugin', (compilation) => {
-        compilation.assets[cssFilename] = {
-          source: () => '',
-          size: () => 0,
-        };
+        _.forEach(cssFilenames, cssFilename => {
+          compilation.assets[cssFilename] = {
+            source: () => '',
+            size: () => 0,
+          };
+        });
       });
 
       // Apply original ManifestPlugin
