@@ -137,25 +137,17 @@ class Menus extends React.Component {
       const nextMenuOrder = nextMenu ? nextMenu.order : index + 1;
       const originalMenuOrder = originalMenu ? originalMenu.order : menu.order;
 
-      if (originalMenuOrder <= prevMenuOrder) {
+      if (originalMenuOrder > prevMenuOrder && originalMenuOrder <= nextMenuOrder) {
         newMenus[index] = {
           ...menu,
-          order: prevMenuOrder + 1,
-        };
-        return newMenus;
-      }
-
-      if (originalMenuOrder > nextMenuOrder) {
-        newMenus[index] = {
-          ...menu,
-          order: prevMenuOrder + 1,
+          order: originalMenuOrder,
         };
         return newMenus;
       }
 
       newMenus[index] = {
         ...menu,
-        order: originalMenuOrder,
+        order: prevMenuOrder + 1,
       };
       return newMenus;
     }, [...menus]);

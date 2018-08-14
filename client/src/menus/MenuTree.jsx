@@ -48,10 +48,9 @@ export default class MenuTree extends React.Component {
   getContainer = () => this.reactVirtualizedList.current.container;
 
   onChange = (treeData) => {
-    const depthAndOrderUpdater = ({ node, path, treeIndex }) => ({
+    const depthAndOrderUpdater = ({ node, path }) => ({
       ...node,
       depth: path.length - 1,
-      order: treeIndex,
     });
 
     const depthAndOrderCorrectedTreeData = map({
