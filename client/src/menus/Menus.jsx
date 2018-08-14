@@ -64,26 +64,21 @@ class Menus extends React.Component {
 
   getOriginalMenu = (menuId) => this.state.originalMenuDict[menuId];
 
-  loadMenus = () => new Promise((resolve, reject) => {
-    this.setState({ isFetching: true }, async () => {
-      try {
-        const { data: rawMenus } = await axios.get('/super/menus');
+  loadMenus = async () => {
+    try {
+      await this.setStateAsync({ isFetching: true });
 
-        const originalMenuDict = _.keyBy(_.map(rawMenus, mapRawMenuToMenu), 'id');
-        const menuTreeItems = this.mapRawMenusToMenuTreeItems(rawMenus);
+      const { data: rawMenus } = await axios.get('/super/menus');
 
-        this.setState({
-          originalMenuDict,
-          menuTreeItems,
-          hasUnsavedMenus: false,
-        }, resolve);
-      } catch (e) {
-        reject(e);
-      } finally {
-        this.setState({ isFetching: false });
-      }
-    });
-  });
+      const originalMenuDict = _.keyBy(_.map(rawMenus, mapRawMenuToMenu), 'id');
+      const menuTreeItems = this.mapRawMenusToMenuTreeItems(rawMenus);
+
+      await this.setStateAsync({ originalMenuDict });
+      await this.updateMenuTreeItems(menuTreeItems);
+    } finally {
+      await this.setStateAsync({ isFetching: false });
+    }
+  };
 
   mapRawMenusToMenuTreeItems = (rawMenus) => {
     const restoreMenuExpandedState = menu => ({
@@ -101,18 +96,20 @@ class Menus extends React.Component {
     return buildMenuTrees(sortedMenus);
   };
 
-  onAddMenuButtonClick = () => {
+  onAddMenuButtonClick = async () => {
     const { menuTreeItems } = this.state;
 
     const newMenu = createMenu();
-
-    this.onMenuTreeItemsChange([
+    const newMenuTreeItems = [
       ...menuTreeItems,
       newMenu,
-    ], () => {
-      const scrollContainer = this.menuTree.current.getContainer();
-      scrollContainer.scrollTop = scrollContainer.scrollHeight;
-    });
+    ];
+
+    await this.updateMenuTreeItems(newMenuTreeItems);
+
+    // Scroll to added menu
+    const scrollContainer = this.menuTree.current.getContainer();
+    scrollContainer.scrollTop = scrollContainer.scrollHeight;
   };
 
   onRefreshButtonClick = async () => {
@@ -125,7 +122,7 @@ class Menus extends React.Component {
     }
   };
 
-  onMenuTreeItemsChange = (menuTreeItems, callback) => {
+  updateMenuTreeItems = async (menuTreeItems) => {
     const menus = flattenMenuTrees(menuTreeItems);
 
     const orderCorrectedMenus = _.reduce(menus, (newMenus, menu, index) => {
@@ -166,51 +163,53 @@ class Menus extends React.Component {
       };
     });
 
+    const newMenuTreeItems = buildMenuTrees(modificationCheckedMenus);
+
     const hasUnsavedMenus = _.some(modificationCheckedMenus, menu => menu.isUnsaved);
 
     const menuDict = _.keyBy(menus, 'id');
     const menuExpandedStates = _.mapValues(menuDict, menu => menu.expanded);
 
-    this.setState({
-      menuTreeItems: buildMenuTrees(modificationCheckedMenus),
+    await this.setStateAsync({
+      menuTreeItems: newMenuTreeItems,
       hasUnsavedMenus,
       menuExpandedStates: {
         ...this.state.menuExpandedStates,
         ...menuExpandedStates,
       },
-    }, callback);
+    });
   };
 
-  onSaveButtonClick = () => {
-    this.setState({ isFetching: true }, async () => {
-      try {
-        const filterUnsavedMenus = menus => _.filter(menus, menu => menu.isUnsaved);
+  onSaveButtonClick = async () => {
+    try {
+      await this.setStateAsync({ isFetching: true });
 
-        const removeTemporaryIds = menus => _.map(menus, menu => {
-          if (menu.isCreated) {
-            return _.omit(menu, ['id']);
-          }
-          return menu;
-        });
+      const filterUnsavedMenus = menus => _.filter(menus, menu => menu.isUnsaved);
 
-        const mapMenusToRawMenus = menus => _.map(menus, mapMenuToRawMenu);
+      const removeTemporaryIds = menus => _.map(menus, menu => {
+        if (menu.isCreated) {
+          return _.omit(menu, ['id']);
+        }
+        return menu;
+      });
 
-        const unsavedRawMenus = _.flow([
-          flattenMenuTrees,
-          filterUnsavedMenus,
-          removeTemporaryIds,
-          mapMenusToRawMenus,
-        ])(this.state.menuTreeItems);
+      const mapMenusToRawMenus = menus => _.map(menus, mapMenuToRawMenu);
 
-        await axios.put('/super/menus', unsavedRawMenus);
+      const unsavedRawMenus = _.flow([
+        flattenMenuTrees,
+        filterUnsavedMenus,
+        removeTemporaryIds,
+        mapMenusToRawMenus,
+      ])(this.state.menuTreeItems);
 
-        await this.loadMenus();
-      } catch (e) {
-        handleError(e);
-      } finally {
-        this.setState({ isFetching: false });
-      }
-    });
+      await axios.put('/super/menus', unsavedRawMenus);
+
+      await this.loadMenus();
+    } catch (e) {
+      handleError(e);
+    } finally {
+      this.setState({ isFetching: false });
+    }
   };
 
   onShowSubmenusButtonClick = (menu) => {
@@ -234,6 +233,14 @@ class Menus extends React.Component {
       },
     });
   };
+
+  setStateAsync = (stateChange) => new Promise((resolve, reject) => {
+    try {
+      this.setState(stateChange, resolve);
+    } catch (e) {
+      reject(e);
+    }
+  });
 
   render = () => {
     const {
@@ -280,7 +287,7 @@ class Menus extends React.Component {
           ref={this.menuTree}
           items={menuTreeItems}
           getOriginalMenu={this.getOriginalMenu}
-          onChange={this.onMenuTreeItemsChange}
+          onChange={this.updateMenuTreeItems}
           onShowSubmenusButtonClick={this.onShowSubmenusButtonClick}
           onShowUsersButtonClick={this.onShowUsersButtonClick}
         />
