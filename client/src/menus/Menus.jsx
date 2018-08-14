@@ -26,9 +26,9 @@ const createMenu = () => ({
   url: '',
   depth: 0,
   order: 0,
-  isUse: false,
+  isUse: true,
   isNewTab: false,
-  isShow: false,
+  isShow: true,
 });
 
 class Menus extends React.Component {
