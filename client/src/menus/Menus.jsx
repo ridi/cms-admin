@@ -125,19 +125,27 @@ class Menus extends React.Component {
   updateMenuTreeItems = async (menuTreeItems) => {
     const menus = flattenMenuTrees(menuTreeItems);
 
-    const orderCorrectedMenus = _.reduce(menus, (newMenus, menu, index) => {
+    const menusWithOriginalOrder = _.map(menus, (menu, index) => {
       const originalMenu = this.getOriginalMenu(menu.id);
+      const order = originalMenu ? originalMenu.order : index;
+      return {
+        ...menu,
+        order,
+      }
+    });
+
+    const orderCorrectedMenus = _.reduce(menusWithOriginalOrder, (newMenus, menu, index) => {
       const prevMenu = newMenus[index - 1];
       const nextMenu = newMenus[index + 1];
 
-      const originalMenuOrder = originalMenu ? originalMenu.order : index;
+      const menuOrder = menu.order;
       const prevMenuOrder = prevMenu ? prevMenu.order : index - 1;
-      const nextMenuOrder = nextMenu ? nextMenu.order : originalMenuOrder + 1;
+      const nextMenuOrder = nextMenu ? nextMenu.order : menuOrder + 1;
 
-      if (originalMenuOrder > prevMenuOrder && originalMenuOrder <= nextMenuOrder) {
+      if (menuOrder > prevMenuOrder && menuOrder <= nextMenuOrder) {
         newMenus[index] = {
           ...menu,
-          order: originalMenuOrder,
+          order: menuOrder,
         };
         return newMenus;
       }
@@ -147,7 +155,7 @@ class Menus extends React.Component {
         order: prevMenuOrder + 1,
       };
       return newMenus;
-    }, [...menus]);
+    }, [...menusWithOriginalOrder]);
 
     const modificationCheckedMenus = _.map(orderCorrectedMenus, menu => {
       const originalMenu = this.getOriginalMenu(menu.id);
