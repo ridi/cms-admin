@@ -4,9 +4,11 @@
   메뉴 관리
 {% endblock %}
 
+{% block style %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('menus.css') }}">
+{% endblock %}
+
 {% block bottom_script %}
-  <script>
-    window.menus = {{ menu_list|json_encode|raw }};
-  </script>
   <script src="{{ asset('menus.js') }}"></script>
 {% endblock %}

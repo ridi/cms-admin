@@ -37,7 +37,11 @@ class UserPermissionForm extends React.Component {
   }
 
   async getMenus() {
-    const { data } = await axios('/super/menus');
+    const { data } = await axios('/super/menus', {
+      params:  {
+        is_use: 1,
+      },
+    });
     return data;
   }
 

@@ -58,6 +58,9 @@ class LogApp extends React.Component {
     if (!this.menuSaved) {
       const { data } = await axios('/super/menus', {
         headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        params:  {
+          is_use: 1,
+        },
       });
       this.menuSaved = data;
     }

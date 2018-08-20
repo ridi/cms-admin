@@ -1,0 +1,20 @@
+html {
+  height: 100%;
+  display: flex;
+}
+
+body {
+  flex: 1;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+#content {
+  flex: 1;
+  margin: -1rem;
+  margin-top: -20px;
+}
+
+#content > .menus {
+  height: 100%;
+}
