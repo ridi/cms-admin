@@ -26,6 +26,16 @@ class AdminMenu extends Model
         'is_newtab' => 'boolean'
     ];
 
+    public function tags()
+    {
+        return $this->belongsToMany(
+            AdminTag::class,
+            'tb_admin2_tag_menu',
+            'menu_id',
+            'tag_id'
+        );
+    }
+
     public function users()
     {
         return $this->belongsToMany(

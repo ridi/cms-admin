@@ -131,6 +131,22 @@ class MenuService
         return AdminMenu::find($menu_id)->users->toArray();
     }
 
+    public static function getPermissions($menu_id)
+    {
+        $menu = AdminMenu::find($menu_id);
+
+        // Retrieve associated data
+        foreach ($menu->tags as $tag) {
+            foreach ($tag->groups as $group) {
+                $group->users;
+            }
+            $tag->users;
+        }
+        $menu->users;
+
+        return $menu;
+    }
+
     private static function _validateMenu(array $menuArray)
     {
         if (!isset($menuArray['menu_title']) || $menuArray['menu_title'] === '') {

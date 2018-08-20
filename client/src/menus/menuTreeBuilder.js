@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export const buildMenuTrees = (menus) => {
   const rootNode = {
     id: 0,

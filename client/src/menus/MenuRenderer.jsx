@@ -110,7 +110,7 @@ class MenuRenderer extends React.Component {
       handle,
       onChange,
       onShowSubmenusButtonClick,
-      onShowUsersButtonClick,
+      onShowPermissionsButtonClick,
       onRemoveButtonClick,
       ...props
     } = this.props;
@@ -153,7 +153,7 @@ class MenuRenderer extends React.Component {
 
         <div className="menu_tree__menu__button_group btn-group-xs">
           <Button onClick={() => onShowSubmenusButtonClick(menu)}>Ajax 관리</Button>
-          <Button onClick={() => onShowUsersButtonClick(menu)}>사용자 보기</Button>
+          <Button onClick={() => onShowPermissionsButtonClick(menu)}>권한 보기</Button>
           {menu.isCreated && (
             <Button bsStyle="danger" onClick={() => onRemoveButtonClick(menu, path)}>삭제</Button>
           )}
@@ -197,7 +197,7 @@ MenuRenderer.propTypes = {
 
   onChange: PropTypes.func.isRequired,
   onShowSubmenusButtonClick: PropTypes.func.isRequired,
-  onShowUsersButtonClick: PropTypes.func.isRequired,
+  onShowPermissionsButtonClick: PropTypes.func.isRequired,
   onRemoveButtonClick: PropTypes.func.isRequired,
 };
 
