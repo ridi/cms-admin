@@ -142,7 +142,7 @@ class Menus extends React.Component {
       const prevMenuOrder = prevMenu ? prevMenu.order : index - 1;
       const nextMenuOrder = nextMenu ? nextMenu.order : menuOrder + 1;
 
-      if (menuOrder > prevMenuOrder && menuOrder <= nextMenuOrder) {
+      if (menuOrder > prevMenuOrder && menuOrder < nextMenuOrder) {
         newMenus[index] = {
           ...menu,
           order: menuOrder,
@@ -201,12 +201,16 @@ class Menus extends React.Component {
         return menu;
       });
 
+      // To guarantee order correction in server-side to be applied appropriately
+      const sortMenusDescendingOrder = menus => _.sortBy(menus, [menu => -menu.order]);
+
       const mapMenusToRawMenus = menus => _.map(menus, mapMenuToRawMenu);
 
       const unsavedRawMenus = _.flow([
         flattenMenuTrees,
         filterUnsavedMenus,
         removeTemporaryIds,
+        sortMenusDescendingOrder,
         mapMenusToRawMenus,
       ])(this.state.menuTreeItems);
 
