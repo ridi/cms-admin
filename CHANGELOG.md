@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 
-## [2.1.12] - 2018-08-21
+## [2.2.0] - 2018-08-21
 ### Changed
 - Change groups, tags column name and order | d1f435e, 6c29f77
 - Move services into `service` namespace | 100b5d6
