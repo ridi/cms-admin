@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [2.2.1] - 2018-08-29
+### Changed
+- Set CI trigger to terraform-aws
+
 ## [2.2.0] - 2018-08-21
 ### Changed
 - Change groups, tags column name and order | d1f435e, 6c29f77
