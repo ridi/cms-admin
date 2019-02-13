@@ -2,3 +2,7 @@
 node_modules
 web/static
 vendor
+
+venv
+php-old
+
