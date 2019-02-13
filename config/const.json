@@ -1,8 +1,0 @@
-{
-  "WEBPACK_OUTPUT_DIR": "/web/static/dist",
-  "ASSET_PUBLIC_PATH": "/super/static/dist",
-  "ASSET_MANIFEST_FILENAME": "manifest.json",
-  "CMS_STATIC_URL": "/static",
-  "CMS_BOWER_PATH": "/static/bower_components"
-}
-
