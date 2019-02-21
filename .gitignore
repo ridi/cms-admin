@@ -6,3 +6,4 @@ vendor
 venv
 php-old
 
+*.pyc
