@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+   cms-admin-python:
+     build:
+       context: .
+       args:
+         - DJANGO_SETTINGS_MODULE=cms_admin.settings
+     env_file: ./.env
+     environment:
+       - DJANGO_DEBUG=True
+       - PYTHONDONTWRITEBYTECODE=1
+       - PYTHONUNBUFFERED=1
+     volumes:
+       - .:/app/
+     ports:
+       - 8000:8000
+     command: python /app/src/manage.py runserver 0.0.0.0:8000
