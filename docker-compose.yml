@@ -11,8 +11,11 @@ services:
        - DJANGO_DEBUG=True
        - PYTHONDONTWRITEBYTECODE=1
        - PYTHONUNBUFFERED=1
+       - PYTHONUSERBASE=/mnt/vendor
      volumes:
        - .:/app/
+       - ./venv:/mnt/vender/
      ports:
        - 8000:8000
      command: python /app/src/manage.py runserver 0.0.0.0:8000
+     restart: always
