@@ -1,31 +1,18 @@
-.PHONY: all dev server client clean docker-run
+.PHONY: all dev clean up down log
 
-all: server client
+all: dev up 
 
 dev:
-	composer install
-	make -C client
-
-server:
-	composer install --no-dev --optimize-autoloader
-
-client:
-	make -C client
-
-init-db:
-	bin/setup.sh
+	virtualenv venv --python=python3.7
 
 clean:
-	rm -rf vendor
-	rm -rf web/static
+	rm -rf venv
 
-docker-up:
-	docker run -itd \
-		--name cms-admin \
-		--env-file .env \
-		-p 80:80 \
-		-v $(shell pwd):/var/www/html \
-		ridibooks/cms-admin:latest
+up:
+	docker-compose up -d
 
-docker-down:
-	docker stop cms-admin && docker rm cms-admin
+down:
+	docker-compose stop
+
+log:
+	docker-compose logs -f
