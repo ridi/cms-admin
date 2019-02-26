@@ -11,4 +11,4 @@ curl -X POST \
     -F "variables[ENV]=${CI_TRIGGER_ENV}" \
     -F "variables[TARGET]=${CI_TRIGGER_TARGET}" \
     -F "variables[DOCKER_TAG]=${CI_TRIGGER_TAG}" \
-    https://gitlab.ridi.io/api/v4/projects/373/trigger/pipeline
+    https://gitlab.com/api/v4/projects/8980863/trigger/pipeline
