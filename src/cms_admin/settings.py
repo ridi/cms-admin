@@ -42,11 +42,19 @@ INSTALLED_APPS = [
     'apps.users',
 ]
 
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+SOUTH_TESTS_MIGRATE = False
+
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
-    )
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+    ),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 
 MIDDLEWARE = [
@@ -90,7 +98,12 @@ DATABASES = {
         'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD', ''),
         'HOST': os.environ.get('DJANGO_DB_HOST', '127.0.0.1'),
         'PORT': os.environ.get('DJANGO_DB_PORT', '3306'),
-    }
+        'TEST': {
+            'NAME': 'cms_test',
+            'CHARSET': 'utf8',
+            'COLLATION': 'utf8_general_ci',
+        },
+    },
 }
 
 
