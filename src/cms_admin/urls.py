@@ -21,6 +21,6 @@ urlpatterns = [
     path('super/tags', include('apps.tags.urls')),
     #path('super/groups', include('apps.groups.urls')),
     #path('super/menus', include('apps.menus.urls')),
-    #path('super/users', include('apps.users.urls')),
+    path('super/users', include('apps.users.urls')),
     #path('super/logs', include('apps.logs.urls')),
 ]
