@@ -7,8 +7,8 @@ class User(models.Model):
     email = models.CharField(max_length=128)
     name = models.CharField(max_length=32)
     team = models.CharField(max_length=32)
-    is_use = models.IntegerField()
-    reg_date = models.DateTimeField()
+    is_use = models.IntegerField(default=1)
+    reg_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'tb_admin2_user'
