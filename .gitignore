@@ -2,9 +2,28 @@
 node_modules
 web/static
 vendor
-
-venv
 php-old
 
-*.pyc
+### Vritual Env ###
+venv/
+
+### Editors ###
 .vscode/
+
+### OSX ###
+.DS_Store
+.AppleDouble
+.LSOverride
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+#### Distribution / packaging ###
+.Python
+
+### Django ###
+*.log
+*.pot
+*.pyc
