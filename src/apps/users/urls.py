@@ -7,5 +7,5 @@ app_name = 'users'
 
 urlpatterns = [
     path('', views.UserListCreateAPIView.as_view(), name='list'),
-    path('<int:pk>/', views.UserDetailsAPIView.as_view(), name="detail"),
+    path('<str:pk>/', views.UserDetailAPIView.as_view(), name="detail"),
 ]
