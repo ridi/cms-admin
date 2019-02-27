@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'apps.tags',
     'apps.groups',
+    'apps.menus',
     'apps.users',
 ]
 
