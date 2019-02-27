@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'apps.tags',
+    'apps.groups',
+    'apps.users',
 ]
 
 REST_FRAMEWORK = {
