@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'apps.users',
 ]
 
+AUTH_USER_MODEL = 'users.User'
+
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 SOUTH_TESTS_MIGRATE = False
