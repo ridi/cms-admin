@@ -1,4 +1,5 @@
 import json
+from faker import Faker
 
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -14,17 +15,18 @@ from apps.tags.serializers import TagSerializer
 class TagListCreateAPIViewTestCase(APITestCase):
     def setUp(self):
         self.url = reverse('tags:list')
+        self.fake = Faker('ko_KR')
         self.tag_data = {
-            'name' : '태그이름',
-            'display_name' : '보이는 태그이름',
+            'name' : self.fake.workd + '태그',
+            'display_name' : self.fake.workd + '태그',
             'is_use' : 1,
         }
         self.user_data = {
-            'id' : 'testuser',
-            'name' : '홍길동',
-            'email' : 'test@ridi.com',
-            'team' : '퍼포먼스팀',
-            'password' : 'this_is_secure_password!',
+            'id' : self.fake.user_name(),
+            'name' : self.fake.name(),
+            'email' : self.fake.email(),
+            'team' : self.fake.job() + '팀',
+            'password' : self.fake.password(),
             'is_use' : 1,
         }
         self.user, _ = get_user_model().objects.get_or_create(**self.user_data)
@@ -44,17 +46,18 @@ class TagListCreateAPIViewTestCase(APITestCase):
 
 class TagDetailAPIViewTestCase(APITestCase):
     def setUp(self):
+        self.fake = Faker('ko_KR')
         self.user_data = {
-            'id' : 'testuser',
-            'name' : '홍길동',
-            'email' : 'test@ridi.com',
-            'team' : '퍼포먼스팀',
-            'password' : 'this_is_secure_password!',
+            'id' : self.fake.user_name(),
+            'name' : self.fake.name(),
+            'email' : self.fake.email(),
+            'team' : self.fake.job() + '팀',
+            'password' : self.fake.password(),
             'is_use' : 1,
         }
         self.tag_data = {
-            'name' : '태그이름',
-            'display_name' : '보이는 태그이름',
+            'name' : self.fake.word() + '태그',
+            'display_name' : self.fake.word() + '태그',
             'is_use' : 1,
         }
         self.user, _ = get_user_model().objects.get_or_create(**self.user_data)
