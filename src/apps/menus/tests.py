@@ -1,8 +1,9 @@
 import json
 import random
+from faker import Faker
+# not printing "Faker/faker.factory" debug message as a stdout
 import logging
 logging.getLogger('faker.factory').setLevel(logging.WARNING)
-from faker import Faker
 
 from django.urls import reverse
 from django.contrib.auth import get_user_model
@@ -13,20 +14,6 @@ from rest_framework.test import APITestCase, force_authenticate
 from apps.menus.models import Menu
 from apps.menus.serializers import MenuSerializer
 
-# not printing "Faker/faker.factory" debug message as a stdout
-
-'''
-[
-    {
-        "menu_title":"새로운매뉴",
-        "menu_url":"/super/new",
-        "menu_deep":0,"menu_order":16,
-        "is_newtab":false,
-        "is_use":true,
-        "is_show":true
-    }
-]
-'''
 class MenuRetrieveUpdateAPIViewTestCase(APITestCase):
     def setUp(self):
         self.fake = Faker('ko_KR')
@@ -65,14 +52,14 @@ class MenuRetrieveUpdateAPIViewTestCase(APITestCase):
     def test_can_update_multiple_menu(self):
         Menu.objects.bulk_create(self._generate_menus())
         menus = MenuSerializer(Menu.objects.all(), many=True).data
-        last_menu = menus.pop()
-        last_menu['menu_order'] = 0
+        update_menu = menus.pop()
+        update_menu ['menu_order'] = 0
         list(map(lambda m: m.update({'menu_order': m['menu_order'] + 1}), menus)) # Push it back a other menus
-        menus.append(last_menu)
+        menus.append(update_menu)
         response = self.client.put(self.url, menus)
         self.assertEqual(status.HTTP_200_OK, response.status_code, response.data)
-        self.assertEqual(menus, MenuSerializer(Menu.objects.all(), many=True).data)
-
+        except_response = MenuSerializer(Menu.objects.all(), many=True).data
+        self.assertEqual(except_response, json.loads(response.content))
 
     def _generate_menus(self, total=5):
         menus = (Menu(**{'menu_title' : self.fake.word(),
