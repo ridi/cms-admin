@@ -7,7 +7,7 @@
     "url": "git+https://github.com/ridibooks/cms-admin.git"
   },
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.18.1",
     "bootstrap": "^3.4.1",
     "classnames": "^2.2.6",
     "exports-loader": "^0.7.0",
